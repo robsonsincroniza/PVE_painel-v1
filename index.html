@@ -108,6 +108,19 @@
         .bg-amber-status::before { background-color: #fef3c7; border: 1px solid #fcd34d; }
         .bg-emerald-status::before { background-color: #d1fae5; border: 1px solid #6ee7b7; }
         .bg-blue-status::before { background-color: #dbeafe; border: 1px solid #93c5fd; }
+        
+        /* Cores dos Subníveis */
+        .sub-l1-minus { background-color: #fca5a5; color: #7f1d1d; }
+        .sub-l1 { background-color: #f87171; color: #450a0a; }
+        .sub-l1-plus { background-color: #ef4444; color: #fff; }
+        .sub-l2-minus { background-color: #fcd34d; color: #78350f; }
+        .sub-l2 { background-color: #fbbf24; color: #78350f; }
+        .sub-l2-plus { background-color: #f59e0b; color: #fff; }
+        .sub-l3-minus { background-color: #6ee7b7; color: #064e3b; }
+        .sub-l3 { background-color: #34d399; color: #064e3b; }
+        .sub-l3-plus { background-color: #10b981; color: #fff; }
+        .sub-l4-minus { background-color: #93c5fd; color: #1e3a8a; }
+        .sub-l4 { background-color: #3b82f6; color: #fff; }
     </style>
 </head>
 <body class="flex h-screen bg-slate-50">
@@ -130,9 +143,17 @@
                     <i class="ph ph-table text-xl mr-3 group-hover:text-blue-400 transition-colors"></i>
                     <span class="font-medium text-sm">Mapa & Raio-X</span>
                 </button>
+                <button id="nav-page-regua" onclick="switchPage('page-regua')" class="nav-link w-full flex items-center px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
+                    <i class="ph ph-ruler text-xl mr-3 group-hover:text-blue-400 transition-colors"></i>
+                    <span class="font-medium text-sm">Régua de Maturidade</span>
+                </button>
                 <button id="nav-page-cluster" onclick="switchPage('page-cluster')" class="nav-link w-full flex items-center px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
                     <i class="ph ph-graph text-xl mr-3 group-hover:text-blue-400 transition-colors"></i>
                     <span class="font-medium text-sm">Trilhas & Clusters</span>
+                </button>
+                <button id="nav-page-metas" onclick="switchPage('page-metas')" class="nav-link w-full flex items-center px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
+                    <i class="ph ph-target text-xl mr-3 group-hover:text-blue-400 transition-colors"></i>
+                    <span class="font-medium text-sm">Metas 2026</span>
                 </button>
             </nav>
         </div>
@@ -157,7 +178,6 @@
             <div class="flex items-center space-x-3">
                 <span class="text-sm font-semibold text-slate-500 mr-2"><i class="ph ph-funnel mr-1"></i> Filtros Ativos:</span>
                 
-                <!-- Dropdown Estado -->
                 <div class="custom-select-wrapper" id="wrapperEstado">
                     <div class="custom-select-button" onclick="toggleDropdown('dropdownEstado')">
                         <span id="labelEstado" class="truncate">Estado: Todos</span>
@@ -171,7 +191,6 @@
                     </div>
                 </div>
 
-                <!-- Dropdown Municipio -->
                 <div class="custom-select-wrapper" id="wrapperMunicipio">
                     <div class="custom-select-button" onclick="toggleDropdown('dropdownMunicipio')">
                         <span id="labelMunicipio" class="truncate">Município: Todos</span>
@@ -229,8 +248,8 @@
                 <!-- Gráfico de Distribuição -->
                 <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-slate-100 mt-6">
                     <div class="mb-6 border-b border-slate-100 pb-4">
-                        <h3 class="text-lg font-bold text-slate-800">Distribuição de Maturidade por Frente</h3>
-                        <p class="text-sm text-slate-500">Contagem de municípios nos 4 níveis oficiais da Matriz.</p>
+                        <h3 class="text-lg font-bold text-slate-800">Distribuição de Maturidade por Frente (Visão Macro)</h3>
+                        <p class="text-sm text-slate-500">Contagem de municípios agrupados nos 4 níveis oficiais da Matriz.</p>
                     </div>
                     <div class="chart-container h-80 md:h-[400px]">
                         <canvas id="chartDistribution"></canvas>
@@ -304,29 +323,18 @@
                     </div>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-0">
-                        <!-- Chart Area -->
                         <div class="lg:col-span-2 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-slate-200">
                             <div class="chart-container h-[350px] md:h-[450px]">
                                 <canvas id="chartRadar"></canvas>
                             </div>
                         </div>
                         
-                        <!-- Insights de Texto Dinâmicos & Interpretativos -->
                         <div class="lg:col-span-1 bg-white p-6 md:p-8 flex flex-col">
                             <h4 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1">Interpretação de Resultados</h4>
-                            <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">Diagnóstico detalhado da seleção em foco.</p>
+                            <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">O que significa este recorte selecionado?</p>
                             
                             <div id="radarInsightContent" class="space-y-4 flex-1">
                                 <!-- Preenchido via JS -->
-                                <div class="animate-pulse flex space-x-4">
-                                    <div class="flex-1 space-y-4 py-1">
-                                        <div class="h-2 bg-slate-200 rounded"></div>
-                                        <div class="space-y-3">
-                                            <div class="grid grid-cols-3 gap-4"><div class="h-2 bg-slate-200 rounded col-span-2"></div><div class="h-2 bg-slate-200 rounded col-span-1"></div></div>
-                                            <div class="h-2 bg-slate-200 rounded"></div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -334,108 +342,111 @@
 
             </div>
 
-            <!-- PÁGINA 3: CLUSTERIZAÇÃO & TRILHAS -->
-            <div id="page-cluster" class="page-section space-y-8 hidden fade-update">
+            <!-- PÁGINA 3: RÉGUA DE MATURIDADE DETALHADA -->
+            <div id="page-regua" class="page-section space-y-8 hidden fade-update">
                 
+                <div class="border-l-4 border-emerald-500 pl-4 mb-6">
+                    <h2 class="text-2xl font-bold text-slate-900">Régua de Maturidade (Microavanços)</h2>
+                    <p class="mt-1 text-slate-600">Acompanhamento detalhado das 11 faixas de maturidade para direcionar metas específicas (100, 300, 500).</p>
+                </div>
+
+                <!-- Gráfico Detalhado de Distribuição -->
+                <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
+                    <div class="p-6 border-b border-slate-100 bg-slate-50">
+                        <h3 class="font-bold text-slate-800 text-lg">Distribuição Detalhada (Subníveis)</h3>
+                        <p class="text-xs text-slate-500 mt-1">Onde os municípios da seleção atual estão alocados com base na Média Geral.</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="chart-container h-[550px]">
+                            <canvas id="chartRegua"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Régua Visual Explicativa -->
+                    <div class="bg-slate-800 p-4 flex flex-col md:flex-row text-center text-[10px] font-bold text-white uppercase tracking-wider">
+                        <div class="flex-1 border-r border-slate-600 p-2"><span class="block text-red-400 mb-1">Nível 1 (Frágil)</span> 1- (1.0) | 1 (1.5) | 1+ (2.0)</div>
+                        <div class="flex-1 border-r border-slate-600 p-2"><span class="block text-amber-400 mb-1">Nível 2 (Em Consolidação)</span> 2- (2.5) | 2 (2.75) | 2+ (3.0)</div>
+                        <div class="flex-1 border-r border-slate-600 p-2"><span class="block text-emerald-400 mb-1">Nível 3 (Consolidado)</span> 3- (3.25) | 3 (3.4) | 3+ (3.55)</div>
+                        <div class="flex-1 p-2"><span class="block text-blue-400 mb-1">Nível 4 (Robusto)</span> 4- (3.7) | 4 (3.8 a 4.0)</div>
+                    </div>
+                </div>
+
+                <!-- Tabela de Acompanhamento e Gaps -->
+                <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden mt-8">
+                    <div class="p-6 border-b border-slate-100 bg-slate-50">
+                        <h3 class="font-bold text-slate-800 text-lg">Acompanhamento e Distância para Próxima Meta</h3>
+                        <p class="text-xs text-slate-500 mt-1">Verifique a pontuação exata de cada município e quanto falta para saltar para o próximo subnível.</p>
+                    </div>
+                    <div class="overflow-x-auto max-h-[500px]">
+                        <table class="min-w-full text-sm">
+                            <thead class="sticky top-0 z-10 shadow-sm">
+                                <tr class="bg-slate-100 text-slate-600 uppercase text-[10px] font-bold tracking-wider leading-normal border-b border-slate-200">
+                                    <th class="py-3 px-6 text-left">MUNICÍPIO (UF)</th>
+                                    <th class="py-3 px-4 text-center">GEDU</th>
+                                    <th class="py-3 px-4 text-center">GESC</th>
+                                    <th class="py-3 px-4 text-center">MOB</th>
+                                    <th class="py-3 px-4 text-center bg-slate-200">MÉDIA GERAL</th>
+                                    <th class="py-3 px-4 text-center bg-slate-200 border-l border-white">SUBNÍVEL ATUAL</th>
+                                    <th class="py-3 px-4 text-center bg-slate-200">GAP P/ PRÓX. NÍVEL</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reguaBody" class="text-slate-700 font-medium">
+                                <!-- Dynamic -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PÁGINA 4: CLUSTERIZAÇÃO & TRILHAS -->
+            <div id="page-cluster" class="page-section space-y-8 hidden fade-update">
                 <div class="border-l-4 border-indigo-500 pl-4 mb-6">
                     <h2 class="text-2xl font-bold text-slate-900">Inteligência de Trilhas e Clusters</h2>
                     <p class="mt-1 text-slate-600">Cruze quaisquer competências e descubra exatamente o que exige ação imediata.</p>
                 </div>
-
                 <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
                     
-                    <!-- Bubble Chart com Novo Dropdown Dinâmico (Lista Completa) -->
+                    <!-- Bubble Chart -->
                     <div class="bg-white rounded-xl shadow-lg border border-slate-200 flex flex-col">
                         <div class="p-5 border-b border-slate-100 bg-slate-50">
                             <div class="mb-4">
                                 <h3 class="font-bold text-lg text-slate-800">Clusterização Flexível</h3>
                                 <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold mt-1">Defina o cruzamento de eixos com toda a matriz</p>
                             </div>
-                            
-                            <!-- Controles de Eixos (Lista Única e Completa) -->
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-xs font-bold text-blue-600 mb-1">Eixo Horizontal (X)</label>
                                     <select id="selEixoX" class="w-full text-xs border border-slate-300 rounded-lg px-2 py-2 focus:ring-blue-500 bg-white font-medium shadow-sm" onchange="updateClusters()">
-                                        <optgroup label="Médias Gerais">
-                                            <option value="gesc">Média Gestão Escolar (GESC)</option>
-                                            <option value="gedu">Média Gestão Educ. (GEDU)</option>
-                                            <option value="mob">Média Mobilização (MOB)</option>
-                                        </optgroup>
-                                        <optgroup label="Gestão Escolar (GESC)">
-                                            <option value="gesc_c1">C1 - Processos de gestão</option>
-                                            <option value="gesc_c2">C2 - Registro e doc.</option>
-                                            <option value="gesc_c3">C3 - Acompanhamento aprend.</option>
-                                            <option value="gesc_c4">C4 - Equipe colaborativa</option>
-                                            <option value="gesc_c5">C5 - Parcerias/Mobilização</option>
-                                            <option value="gesc_c6">C6 - Articulação de redes</option>
-                                            <option value="gesc_c7">C7 - Formação continuada</option>
-                                            <option value="gesc_c8">C8 - Gestão de recursos</option>
-                                        </optgroup>
-                                        <optgroup label="Gestão Educacional (GEDU)">
-                                            <option value="gedu_c1">C1 - Processos de gestão</option>
-                                            <option value="gedu_c2">C2 - Registro e doc.</option>
-                                            <option value="gedu_c3">C3 - Acompanhamento aprend.</option>
-                                            <option value="gedu_c4">C4 - Equipe colaborativa</option>
-                                            <option value="gedu_c5">C5 - Parcerias/Mobilização</option>
-                                            <option value="gedu_c6">C6 - Articulação de redes</option>
-                                            <option value="gedu_c7">C7 - Formação continuada</option>
-                                            <option value="gedu_c8">C8 - Gestão de recursos</option>
-                                        </optgroup>
-                                        <optgroup label="Mobilização Social (MOB)">
-                                            <option value="mob_c1">C1 - Conhecimento</option>
-                                            <option value="mob_c2">C2 - Atitude</option>
-                                            <option value="mob_c3">C3 - Estrutura</option>
-                                            <option value="mob_c4">C4 - Vitalidade</option>
-                                            <option value="mob_c5">C5 - Cobertura</option>
-                                        </optgroup>
+                                        <optgroup label="Médias Gerais"><option value="gesc">Média Gestão Escolar (GESC)</option><option value="gedu">Média Gestão Educ. (GEDU)</option><option value="mob">Média Mobilização (MOB)</option></optgroup>
+                                        <optgroup label="Gestão Escolar (GESC)"><option value="gesc_c1">C1 - Processos de gestão</option><option value="gesc_c2">C2 - Registro e doc.</option><option value="gesc_c3">C3 - Acompanhamento aprend.</option><option value="gesc_c4">C4 - Equipe colaborativa</option><option value="gesc_c5">C5 - Parcerias/Mobilização</option><option value="gesc_c6">C6 - Articulação de redes</option><option value="gesc_c7">C7 - Formação continuada</option><option value="gesc_c8">C8 - Gestão de recursos</option></optgroup>
+                                        <optgroup label="Gestão Educacional (GEDU)"><option value="gedu_c1">C1 - Processos de gestão</option><option value="gedu_c2">C2 - Registro e doc.</option><option value="gedu_c3">C3 - Acompanhamento aprend.</option><option value="gedu_c4">C4 - Equipe colaborativa</option><option value="gedu_c5">C5 - Parcerias/Mobilização</option><option value="gedu_c6">C6 - Articulação de redes</option><option value="gedu_c7">C7 - Formação continuada</option><option value="gedu_c8">C8 - Gestão de recursos</option></optgroup>
+                                        <optgroup label="Mobilização Social (MOB)"><option value="mob_c1">C1 - Conhecimento</option><option value="mob_c2">C2 - Atitude</option><option value="mob_c3">C3 - Estrutura</option><option value="mob_c4">C4 - Vitalidade</option><option value="mob_c5">C5 - Cobertura</option></optgroup>
                                     </select>
                                 </div>
-                                
                                 <div>
                                     <label class="block text-xs font-bold text-blue-600 mb-1">Eixo Vertical (Y)</label>
                                     <select id="selEixoY" class="w-full text-xs border border-slate-300 rounded-lg px-2 py-2 focus:ring-blue-500 bg-white font-medium shadow-sm" onchange="updateClusters()">
-                                        <optgroup label="Médias Gerais">
-                                            <option value="gedu" selected>Média Gestão Educ. (GEDU)</option>
-                                            <option value="gesc">Média Gestão Escolar (GESC)</option>
-                                            <option value="mob">Média Mobilização (MOB)</option>
-                                        </optgroup>
-                                        <optgroup label="Gestão Escolar (GESC)">
-                                            <option value="gesc_c1">C1 - Processos de gestão</option>
-                                            <option value="gesc_c2">C2 - Registro e doc.</option>
-                                            <option value="gesc_c3">C3 - Acompanhamento aprend.</option>
-                                            <option value="gesc_c4">C4 - Equipe colaborativa</option>
-                                            <option value="gesc_c5">C5 - Parcerias/Mobilização</option>
-                                            <option value="gesc_c6">C6 - Articulação de redes</option>
-                                            <option value="gesc_c7">C7 - Formação continuada</option>
-                                            <option value="gesc_c8">C8 - Gestão de recursos</option>
-                                        </optgroup>
-                                        <optgroup label="Gestão Educacional (GEDU)">
-                                            <option value="gedu_c1">C1 - Processos de gestão</option>
-                                            <option value="gedu_c2">C2 - Registro e doc.</option>
-                                            <option value="gedu_c3">C3 - Acompanhamento aprend.</option>
-                                            <option value="gedu_c4">C4 - Equipe colaborativa</option>
-                                            <option value="gedu_c5">C5 - Parcerias/Mobilização</option>
-                                            <option value="gedu_c6">C6 - Articulação de redes</option>
-                                            <option value="gedu_c7">C7 - Formação continuada</option>
-                                            <option value="gedu_c8">C8 - Gestão de recursos</option>
-                                        </optgroup>
-                                        <optgroup label="Mobilização Social (MOB)">
-                                            <option value="mob_c1">C1 - Conhecimento</option>
-                                            <option value="mob_c2">C2 - Atitude</option>
-                                            <option value="mob_c3">C3 - Estrutura</option>
-                                            <option value="mob_c4">C4 - Vitalidade</option>
-                                            <option value="mob_c5">C5 - Cobertura</option>
-                                        </optgroup>
+                                        <optgroup label="Médias Gerais"><option value="gedu" selected>Média Gestão Educ. (GEDU)</option><option value="gesc">Média Gestão Escolar (GESC)</option><option value="mob">Média Mobilização (MOB)</option></optgroup>
+                                        <optgroup label="Gestão Escolar (GESC)"><option value="gesc_c1">C1 - Processos de gestão</option><option value="gesc_c2">C2 - Registro e doc.</option><option value="gesc_c3">C3 - Acompanhamento aprend.</option><option value="gesc_c4">C4 - Equipe colaborativa</option><option value="gesc_c5">C5 - Parcerias/Mobilização</option><option value="gesc_c6">C6 - Articulação de redes</option><option value="gesc_c7">C7 - Formação continuada</option><option value="gesc_c8">C8 - Gestão de recursos</option></optgroup>
+                                        <optgroup label="Gestão Educacional (GEDU)"><option value="gedu_c1">C1 - Processos de gestão</option><option value="gedu_c2">C2 - Registro e doc.</option><option value="gedu_c3">C3 - Acompanhamento aprend.</option><option value="gedu_c4">C4 - Equipe colaborativa</option><option value="gedu_c5">C5 - Parcerias/Mobilização</option><option value="gedu_c6">C6 - Articulação de redes</option><option value="gedu_c7">C7 - Formação continuada</option><option value="gedu_c8">C8 - Gestão de recursos</option></optgroup>
+                                        <optgroup label="Mobilização Social (MOB)"><option value="mob_c1">C1 - Conhecimento</option><option value="mob_c2">C2 - Atitude</option><option value="mob_c3">C3 - Estrutura</option><option value="mob_c4">C4 - Vitalidade</option><option value="mob_c5">C5 - Cobertura</option></optgroup>
                                     </select>
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="p-6 flex-1">
-                            <p class="text-[10px] text-slate-400 mb-2 uppercase tracking-widest font-bold text-center">O Tamanho da Bolha representa a Média Geral da Frente correspondente ao Eixo X</p>
-                            <div class="chart-container h-72 md:h-80">
+                        <div class="p-6 flex-1 flex flex-col">
+                            <div class="chart-container h-72 md:h-80 flex-1">
                                 <canvas id="chartClustering"></canvas>
+                            </div>
+                            <div class="mt-4 border-t border-slate-100 pt-4">
+                                <h4 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 text-center">Entenda os Níveis da Matriz</h4>
+                                <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 text-[10px] leading-tight">
+                                    <div class="bg-red-50 border-l-2 border-red-500 p-2 rounded shadow-sm"><span class="font-bold text-red-700 block mb-1">Nível 1: Frágil (< 2.5)</span><span class="text-slate-600">Conhecimento inicial. Sem práticas estabelecidas.</span></div>
+                                    <div class="bg-amber-50 border-l-2 border-amber-500 p-2 rounded shadow-sm"><span class="font-bold text-amber-700 block mb-1">Nível 2: Consolidação (2.5-2.9)</span><span class="text-slate-600">Conhecimento em progresso. Rotinas em construção.</span></div>
+                                    <div class="bg-emerald-50 border-l-2 border-emerald-500 p-2 rounded shadow-sm"><span class="font-bold text-emerald-700 block mb-1">Nível 3: Consolidado (3.0-3.4)</span><span class="text-slate-600">Conhecimento pleno. Práticas rotineiras e estabelecidas.</span></div>
+                                    <div class="bg-blue-50 border-l-2 border-blue-500 p-2 rounded shadow-sm"><span class="font-bold text-blue-700 block mb-1">Nível 4: Robusto (≥ 3.5)</span><span class="text-slate-600">Conhecimento avançado. Rotinas formalizadas e consistentes.</span></div>
+                                </div>
+                                <p class="text-[9px] text-slate-400 mt-3 text-center uppercase tracking-widest font-bold">O tamanho da bolha reflete a média da frente selecionada no Eixo X.</p>
                             </div>
                         </div>
                     </div>
@@ -444,57 +455,103 @@
                     <div class="bg-white rounded-xl shadow-lg border border-slate-200 flex flex-col overflow-hidden">
                         <div class="p-6 bg-slate-800 text-white border-b border-slate-700 flex justify-between items-center">
                             <div>
-                                <h3 class="font-bold text-xl flex items-center">
-                                    <i class="ph-fill ph-crosshair text-blue-400 mr-3 text-2xl"></i>
-                                    Motor de Priorização
-                                </h3>
+                                <h3 class="font-bold text-xl flex items-center"><i class="ph-fill ph-crosshair text-blue-400 mr-3 text-2xl"></i> Motor de Priorização</h3>
                                 <p class="text-xs text-slate-300 mt-1 opacity-80">Análise automática de TODAS as competências filtradas.</p>
                             </div>
                         </div>
-                        
                         <div class="p-6 flex-1 bg-slate-50 overflow-y-auto">
-                            <!-- Lista Crítica -->
                             <div class="mb-6">
-                                <h4 class="text-sm font-bold text-red-700 uppercase tracking-widest border-b border-red-200 pb-2 mb-3 flex items-center">
-                                    <i class="ph-fill ph-warning-octagon mr-2 text-lg"></i> Prioridade Crítica (< 2.5)
-                                </h4>
-                                <ul id="listCritico" class="space-y-2">
-                                    <li class="text-sm text-slate-500 italic">A processar dados...</li>
-                                </ul>
+                                <h4 class="text-sm font-bold text-red-700 uppercase tracking-widest border-b border-red-200 pb-2 mb-3 flex items-center"><i class="ph-fill ph-warning-octagon mr-2 text-lg"></i> Prioridade Crítica (< 2.5)</h4>
+                                <ul id="listCritico" class="space-y-2"><li class="text-sm text-slate-500 italic">A processar dados...</li></ul>
                             </div>
-
-                            <!-- Lista Atenção -->
                             <div>
-                                <h4 class="text-sm font-bold text-amber-700 uppercase tracking-widest border-b border-amber-200 pb-2 mb-3 flex items-center">
-                                    <i class="ph-fill ph-warning mr-2 text-lg"></i> Em Atenção (2.5 - 2.9)
-                                </h4>
-                                <ul id="listAtencao" class="space-y-2">
-                                    <li class="text-sm text-slate-500 italic">A processar dados...</li>
-                                </ul>
+                                <h4 class="text-sm font-bold text-amber-700 uppercase tracking-widest border-b border-amber-200 pb-2 mb-3 flex items-center"><i class="ph-fill ph-warning mr-2 text-lg"></i> Em Atenção (2.5 - 2.9)</h4>
+                                <ul id="listAtencao" class="space-y-2"><li class="text-sm text-slate-500 italic">A processar dados...</li></ul>
                             </div>
                         </div>
-                        
-                        <!-- INTEGRAÇÃO COM IA -->
                         <div class="p-4 bg-white border-t border-slate-200 text-center">
-                            <button onclick="generatePrompt()" class="w-full bg-blue-600 text-white px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-wide hover:bg-blue-700 transition-colors shadow-md flex justify-center items-center">
-                                <i class="ph-bold ph-magic-wand mr-2"></i> Gerar Comando para IA (Copiloto)
-                            </button>
+                            <button onclick="generatePrompt()" class="w-full bg-blue-600 text-white px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-wide hover:bg-blue-700 transition-colors shadow-md flex justify-center items-center"><i class="ph-bold ph-magic-wand mr-2"></i> Gerar Comando para IA (Copiloto)</button>
                         </div>
-                        
-                        <!-- TEXT AREA DO PROMPT GERADO (Oculto) -->
                         <div id="promptContainer" class="hidden p-4 bg-blue-50 border-t border-blue-100 flex flex-col">
                             <div class="flex justify-between items-center mb-2">
                                 <label class="text-[11px] font-bold text-blue-800 uppercase tracking-widest">Texto Gerado (Copie e cole no Gemini):</label>
                                 <button onclick="document.getElementById('promptContainer').classList.add('hidden')" class="text-slate-400 hover:text-slate-600"><i class="ph-bold ph-x"></i></button>
                             </div>
                             <textarea id="promptTextArea" class="w-full h-48 p-3 text-xs font-mono text-slate-700 border border-blue-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 mb-3 bg-white" readonly></textarea>
-                            <button onclick="copyPrompt()" id="btnCopyPrompt" class="w-full bg-slate-800 text-white px-4 py-2.5 rounded-lg text-sm font-bold hover:bg-slate-700 transition-colors flex justify-center items-center shadow-md">
-                                <i class="ph-bold ph-copy mr-2"></i> Copiar Texto
-                            </button>
+                            <button onclick="copyPrompt()" id="btnCopyPrompt" class="w-full bg-slate-800 text-white px-4 py-2.5 rounded-lg text-sm font-bold hover:bg-slate-700 transition-colors flex justify-center items-center shadow-md"><i class="ph-bold ph-copy mr-2"></i> Copiar Texto</button>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- ========================================== -->
+            <!-- PÁGINA 5: METAS DE AVANÇO 2026 -->
+            <!-- ========================================== -->
+            <div id="page-metas" class="page-section space-y-8 hidden fade-update">
+                
+                <div class="border-l-4 border-violet-600 pl-4 mb-6">
+                    <h2 class="text-2xl font-bold text-slate-900">Metas e Contratualização 2026</h2>
+                    <p class="mt-1 text-slate-600">Projeção automática de metas de avanço (100, 300, 500) com base no nível de maturidade aferido no ciclo anterior.</p>
+                </div>
+
+                <!-- Resumo Executivo das Metas -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="bg-white rounded-xl shadow-md p-6 border border-slate-100 flex flex-col justify-center">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-target text-slate-500 mr-2"></i> Municípios Analisados</h4>
+                        <span id="metaTotalMun" class="text-4xl font-bold text-slate-800 mt-2">-</span>
+                        <p class="text-xs text-slate-500 mt-2">No recorte de filtros atual.</p>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-amber-500 flex flex-col justify-center">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-arrow-circle-up text-amber-500 mr-2"></i> Alta Intensidade (Nível 2)</h4>
+                        <span id="metaAltaIntensidade" class="text-4xl font-bold text-amber-600 mt-2">-</span>
+                        <p class="text-xs text-slate-500 mt-2">Precisam avançar entre 7 e 10 competências (Meta 100 a 500).</p>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-emerald-500 flex flex-col justify-center">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-check-circle text-emerald-500 mr-2"></i> Refinamento (Nível 3 e 4)</h4>
+                        <span id="metaRefinamento" class="text-4xl font-bold text-emerald-600 mt-2">-</span>
+                        <p class="text-xs text-slate-500 mt-2">Foco em manutenção e saltos curtos (4 a 6 competências).</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                    <!-- Gráfico de Distribuição do Esforço -->
+                    <div class="xl:col-span-1 bg-white rounded-xl shadow-lg border border-slate-200 p-6 flex flex-col">
+                        <h3 class="font-bold text-lg text-slate-800 mb-1">Perfil de Esforço da Rede</h3>
+                        <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold mb-6">Distribuição com base na Meta 100</p>
+                        <div class="chart-container flex-1 min-h-[250px]">
+                            <canvas id="chartMetasDoughnut"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Tabela de Contratualização de Metas -->
+                    <div class="xl:col-span-2 bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden flex flex-col">
+                        <div class="p-6 border-b border-slate-100 bg-slate-50 flex justify-between items-center flex-wrap gap-4">
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-lg">Painel de Metas Individuais</h3>
+                                <p class="text-xs text-slate-500 mt-1">Cálculo gerado automaticamente segundo a tabela oficial do PVE IV BNDES.</p>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto max-h-[400px]">
+                            <table class="min-w-full text-sm">
+                                <thead class="sticky top-0 z-10 shadow-sm">
+                                    <tr class="bg-slate-800 text-white uppercase text-[10px] font-bold tracking-wider leading-normal">
+                                        <th class="py-3 px-6 text-left">MUNICÍPIO (UF)</th>
+                                        <th class="py-3 px-4 text-center">NÍVEL ATUAL (2025)</th>
+                                        <th class="py-3 px-4 text-center bg-violet-600">META 100</th>
+                                        <th class="py-3 px-4 text-center bg-violet-700">META 300</th>
+                                        <th class="py-3 px-4 text-center bg-violet-800">META 500</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="metasBody" class="text-slate-700 font-medium">
+                                    <!-- Dynamic -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </main>
     </div>
 
@@ -550,98 +607,36 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
             'gedu_c1': 'GEDU C1 - Proc. Gestão', 'gedu_c2': 'GEDU C2 - Registro', 'gedu_c3': 'GEDU C3 - Acompanhamento', 'gedu_c4': 'GEDU C4 - Equipe Colab.', 'gedu_c5': 'GEDU C5 - Parcerias', 'gedu_c6': 'GEDU C6 - Articulação', 'gedu_c7': 'GEDU C7 - Formação', 'gedu_c8': 'GEDU C8 - Recursos',
         };
 
-        // NOVO: Dicionário Pedagógico de Insights
         const insightsPedagogicos = {
-            'mob_c1': { 
-                alavanca: 'Utilize o excelente mapeamento do território desta seleção para embasar decisões complexas e guiar o planejamento das outras áreas.', 
-                gargalo: 'A falta de clareza sobre as reais características e necessidades do território (diagnóstico local) está a impedir a criação de ações de mobilização focadas e efetivas.' 
-            },
-            'mob_c2': { 
-                alavanca: 'A atitude colaborativa é um motor incrível aqui. Engaje os líderes locais desta seleção para tracionar ações e mentorar as demais equipes.', 
-                gargalo: 'Observa-se grande dispersão e baixo engajamento nas ações. É urgente criar estratégias de sensibilização para unir os atores locais antes de propor novos projetos.' 
-            },
-            'mob_c3': { 
-                alavanca: 'As rotinas de gestão e governança da mobilização estão bem definidas. Foque agora em escalar estas ações para alcançar novos públicos.', 
-                gargalo: 'Falta uma estrutura formal de rotinas e governança para a mobilização. As ações ocorrem de forma solta, necessitando de urgência na definição de papéis e fóruns regulares.' 
-            },
-            'mob_c4': { 
-                alavanca: 'A vitalidade e constância nas ações são exemplares. O desafio agora é manter a motivação com campanhas de reconhecimento e inovação.', 
-                gargalo: 'As ações de mobilização são esporádicas e perdem tração rapidamente. A prioridade deve ser garantir ritmo e continuidade nas atividades ao longo do ano letivo.' 
-            },
-            'mob_c5': { 
-                alavanca: 'A capilaridade alcançada é excelente. Como o volume de pessoas já não é um problema, a próxima pauta deve focar na qualidade e profundidade da interação com este público.', 
-                gargalo: 'O alcance da mobilização está estagnado e restrito a poucos grupos. É vital desenhar estratégias ativas de comunicação para trazer novas famílias e parceiros para a rede.' 
-            },
-            'gesc_c1': { 
-                alavanca: 'O planejamento escolar é muito sólido. A equipe gestora deve ser incentivada a inovar nas práticas e a partilhar os seus métodos com as escolas mais frágeis.', 
-                gargalo: 'Há uma fragilidade crítica no planejamento (PPP e planos de ação). A formação deve focar na criação conjunta de metas claras e alcançáveis para a escola.' 
-            },
-            'gesc_c2': { 
-                alavanca: 'A cultura de evidências e documentação está bem consolidada. O próximo passo é utilizar ativamente estes registros para tomada de decisão em tempo real.', 
-                gargalo: 'Faltam registros sistemáticos e evidências das ações. A prioridade é instigar uma cultura onde a documentação não seja burocracia, mas sim ferramenta de gestão.' 
-            },
-            'gesc_c3': { 
-                alavanca: 'O acompanhamento de aprendizagem é efetivo. A pauta deve evoluir para a personalização do ensino e intervenções pedagógicas avançadas.', 
-                gargalo: 'Existe uma defasagem estrutural no monitoramento dos alunos. É urgente implementar rotinas de observação de sala de aula e conselhos de classe baseados em dados de avaliações.' 
-            },
-            'gesc_c4': { 
-                alavanca: 'Há um forte senso de equipe colaborativa. Aproveite essa coesão para delegar responsabilidades maiores e fomentar a gestão democrática participativa.', 
-                gargalo: 'O trabalho da gestão apresenta-se isolado e centralizado. As dinâmicas devem focar urgente em delegação, escuta ativa e construção de confiança entre a equipe escolar.' 
-            },
-            'gesc_c5': { 
-                alavanca: 'A articulação com parceiros locais é fantástica. Estes parceiros podem ser convidados a co-criar projetos interdisciplinares para enriquecer o currículo.', 
-                gargalo: 'A escola atua de forma isolada da comunidade. É preciso mapear potenciais aliados no entorno (empresas, ONGs, saúde) para fortalecer a rede de apoio ao aluno.' 
-            },
-            'gesc_c6': { 
-                alavanca: 'A escola está perfeitamente alinhada às políticas da Secretaria. Este grupo pode ser o polo validador de novas diretrizes antes da expansão para toda a rede.', 
-                gargalo: 'Observa-se um forte desalinhamento entre o que a escola executa e as diretrizes da rede. A pauta deve focar na comunicação clara das políticas e sua tradução para a realidade escolar.' 
-            },
-            'gesc_c7': { 
-                alavanca: 'A cultura de formação em serviço é um ponto alto. Desafie a equipe a produzir artigos ou liderar workshops internos para disseminar esse conhecimento.', 
-                gargalo: 'A formação continuada dos professores (HTPC/Aulas de Trabalho) está negligenciada ou é ineficaz. Urge estruturar momentos formativos focados nas necessidades reais da sala de aula.' 
-            },
-            'gesc_c8': { 
-                alavanca: 'A gestão de recursos (físicos, financeiros e de tempo) é muito otimizada. Garantir que este modelo eficiente não sobrecarregue os gestores a longo prazo.', 
-                gargalo: 'Há ineficiência e dificuldade na alocação de recursos (verbas, infraestrutura ou até mesmo do tempo da equipe). Focar em organização, priorização e transparência.' 
-            },
-            'gedu_c1': { 
-                alavanca: 'A Secretaria possui um planejamento estratégico invejável. O momento é de garantir que este plano se desdobre sem ruídos até o chão de fábrica (escolas).', 
-                gargalo: 'A rede opera de forma reativa. É imprescindível criar um plano estratégico claro, com metas de curto e médio prazo que orientem todas as ações da Secretaria.' 
-            },
-            'gedu_c2': { 
-                alavanca: 'Os processos estão bem documentados. A Secretaria pode agora focar na automação e em dashboards de gestão para dar agilidade à tomada de decisão.', 
-                gargalo: 'Falta histórico e formalização dos processos na Secretaria. A mudança de gestões passadas pode ter deixado lacunas severas que precisam ser registradas e padronizadas agora.' 
-            },
-            'gedu_c3': { 
-                alavanca: 'O sistema de avaliação de rede funciona muito bem. O foco formativo deve ser garantir que as escolas saibam interpretar e agir em cima dos boletins gerados.', 
-                gargalo: 'A rede não tem visibilidade clara da aprendizagem dos alunos ao longo do ano. É crítico implementar avaliações diagnósticas e formativas em escala de rede imediatamente.' 
-            },
-            'gedu_c4': { 
-                alavanca: 'A equipa técnica da Secretaria trabalha em excelente sintonia. O desafio é manter a motivação e evitar a sobrecarga dos quadros de excelência.', 
-                gargalo: 'Os departamentos da Secretaria não conversam entre si (trabalho em silos). A formação deve quebrar estas barreiras através de projetos intersetoriais conjuntos.' 
-            },
-            'gedu_c5': { 
-                alavanca: 'A rede tem grande capacidade de atrair parcerias e apoios externos. Utilize este prestígio para captar recursos focados nas escolas mais vulneráveis.', 
-                gargalo: 'A Secretaria atua de forma fechada. Precisa ser orientada a buscar ativamente consórcios, ONGs e apoio do setor privado para potencializar suas ações.' 
-            },
-            'gedu_c6': { 
-                alavanca: 'As políticas desenhadas refletem de forma fiel as necessidades locais. A coordenação deve celebrar esse alinhamento e focar na qualidade da entrega final.', 
-                gargalo: 'Há uma ruptura entre as políticas desenhadas pela rede e o que as escolas conseguem absorver. É vital revisar a viabilidade e comunicação dos programas implementados.' 
-            },
-            'gedu_c7': { 
-                alavanca: 'O plano de formação da rede é robusto e atualizado. A estratégia deve focar agora em avaliar o impacto real dessa formação no aprendizado do aluno.', 
-                gargalo: 'Os professores não estão recebendo o suporte formativo adequado da Secretaria. A criação de um calendário de formação continuada coerente com as dores da rede é inadiável.' 
-            },
-            'gedu_c8': { 
-                alavanca: 'A transparência e alocação de fundos são eficientes. O próximo nível de maturidade é a captação inteligente e a busca por editais de fomento à educação.', 
-                gargalo: 'Dificuldades crônicas na gestão do orçamento, merenda ou infraestrutura. A prioridade máxima é alinhar os processos administrativos para garantir o básico de funcionamento da rede.' 
-            }
+            'mob_c1': { alavanca: 'Utilize o excelente mapeamento do território desta seleção para embasar decisões complexas.', gargalo: 'A falta de clareza sobre as reais características e necessidades do território (diagnóstico local) impede ações focadas.' },
+            'mob_c2': { alavanca: 'Engaje os líderes locais desta seleção para tracionar ações e mentorar as demais equipes.', gargalo: 'Observa-se grande dispersão e baixo engajamento nas ações. É urgente criar estratégias de sensibilização.' },
+            'mob_c3': { alavanca: 'As rotinas de governança estão bem definidas. Foque agora em escalar estas ações para novos públicos.', gargalo: 'Falta uma estrutura formal de rotinas e governança para a mobilização.' },
+            'mob_c4': { alavanca: 'A vitalidade nas ações é exemplar. O desafio agora é manter a motivação com campanhas de reconhecimento.', gargalo: 'As ações de mobilização são esporádicas e perdem tração rapidamente. A prioridade é garantir ritmo.' },
+            'mob_c5': { alavanca: 'A capilaridade alcançada é excelente. A próxima pauta deve focar na profundidade da interação.', gargalo: 'O alcance da mobilização está estagnado e restrito a poucos grupos.' },
+            'gesc_c1': { alavanca: 'O planejamento escolar é sólido. A equipe deve ser incentivada a partilhar os seus métodos com escolas mais frágeis.', gargalo: 'Há uma fragilidade crítica no planejamento (PPP e planos de ação). Focar na criação conjunta de metas claras.' },
+            'gesc_c2': { alavanca: 'A cultura de evidências e documentação está bem consolidada. Utilize estes registros para tomada de decisão em tempo real.', gargalo: 'Faltam registros sistemáticos e evidências das ações. Instigar uma cultura onde documentação não seja burocracia.' },
+            'gesc_c3': { alavanca: 'O acompanhamento de aprendizagem é efetivo. A pauta deve evoluir para a personalização do ensino.', gargalo: 'Existe uma defasagem estrutural no monitoramento dos alunos. É urgente implementar rotinas de observação de sala.' },
+            'gesc_c4': { alavanca: 'Há um forte senso de equipe colaborativa. Aproveite essa coesão para fomentar a gestão democrática participativa.', gargalo: 'O trabalho da gestão apresenta-se isolado e centralizado. As dinâmicas devem focar urgente em delegação e escuta.' },
+            'gesc_c5': { alavanca: 'A articulação com parceiros locais é fantástica. Estes parceiros podem ser convidados a co-criar projetos interdisciplinares.', gargalo: 'A escola atua de forma isolada da comunidade. É preciso mapear potenciais aliados no entorno.' },
+            'gesc_c6': { alavanca: 'A escola está perfeitamente alinhada às políticas da Secretaria. Este grupo pode ser o polo validador de novas diretrizes.', gargalo: 'Observa-se um forte desalinhamento entre o que a escola executa e as diretrizes da rede.' },
+            'gesc_c7': { alavanca: 'A cultura de formação em serviço é um ponto alto. Desafie a equipe a liderar workshops internos.', gargalo: 'A formação continuada dos professores (HTPC) está negligenciada ou é ineficaz.' },
+            'gesc_c8': { alavanca: 'A gestão de recursos é muito otimizada. Garantir que este modelo eficiente não sobrecarregue os gestores a longo prazo.', gargalo: 'Há ineficiência e dificuldade na alocação de recursos (verbas, tempo). Focar em organização e priorização.' },
+            'gedu_c1': { alavanca: 'A Secretaria possui um planejamento estratégico invejável. Garantir que este plano se desdobre até o chão de fábrica.', gargalo: 'A rede opera de forma reativa. É imprescindível criar um plano estratégico claro com metas de curto e médio prazo.' },
+            'gedu_c2': { alavanca: 'Os processos estão bem documentados. A Secretaria pode agora focar na automação e em dashboards de gestão.', gargalo: 'Falta histórico e formalização dos processos na Secretaria.' },
+            'gedu_c3': { alavanca: 'O sistema de avaliação de rede funciona muito bem. O foco formativo deve ser garantir que as escolas saibam agir em cima dos dados.', gargalo: 'A rede não tem visibilidade clara da aprendizagem dos alunos. É crítico implementar avaliações em escala de rede.' },
+            'gedu_c4': { alavanca: 'A equipa técnica trabalha em excelente sintonia. O desafio é evitar a sobrecarga dos quadros de excelência.', gargalo: 'Os departamentos da Secretaria não conversam entre si (silos). A formação deve quebrar estas barreiras.' },
+            'gedu_c5': { alavanca: 'A rede tem grande capacidade de atrair parceiros. Utilize este prestígio para focar nas escolas mais vulneráveis.', gargalo: 'A Secretaria atua de forma fechada. Precisa ser orientada a buscar ativamente consórcios e apoios externos.' },
+            'gedu_c6': { alavanca: 'As políticas desenhadas refletem de forma fiel as necessidades locais. Focar agora na qualidade da entrega final.', gargalo: 'Há uma ruptura entre as políticas desenhadas e o que as escolas conseguem absorver.' },
+            'gedu_c7': { alavanca: 'O plano de formação da rede é robusto. A estratégia deve focar agora em avaliar o impacto no aprendizado do aluno.', gargalo: 'Os professores não recebem suporte formativo adequado. A criação de um calendário coerente com as dores da rede é inadiável.' },
+            'gedu_c8': { alavanca: 'A transparência e alocação de fundos são eficientes. O próximo nível é a busca por editais de fomento à educação.', gargalo: 'Dificuldades crônicas na gestão do orçamento, merenda ou infraestrutura.' }
         };
 
         const pageTitles = {
             'page-visao': 'Visão Executiva',
+            'page-regua': 'Régua de Maturidade e Gaps',
             'page-mapa': 'Diagnóstico & Raio-X',
-            'page-cluster': 'Trilhas & Clusters'
+            'page-cluster': 'Trilhas & Clusters',
+            'page-metas': 'Metas e Contratualização 2026'
         };
 
         function getLevelInfo(score) {
@@ -649,6 +644,26 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
             if(score < 3.0) return { label: 'Em Consolidação', color: '#F59E0B', bg: 'bg-amber-status', text: 'text-amber-700', border: 'border-amber-200', textClass: 'text-amber-500' };
             if(score < 3.5) return { label: 'Consolidado', color: '#10B981', bg: 'bg-emerald-status', text: 'text-emerald-700', border: 'border-emerald-200', textClass: 'text-emerald-500' };
             return { label: 'Robusto', color: '#3B82F6', bg: 'bg-blue-status', text: 'text-blue-700', border: 'border-blue-200', textClass: 'text-blue-600' };
+        }
+
+        // NOVO: Cálculo Integrado de Subnível e Metas 2026
+        function getSubLevelInfo(score) {
+            if(!score || score === 0) return { label: '-', class: 'bg-slate-100 text-slate-400 font-normal', gap: 0, nextTarget: 0, m100: '-', m300: '-', m500: '-' };
+            
+            if(score <= 1.5) return { label: 'Nível 1-', class: 'sub-l1-minus', gap: (1.500001 - score), nextTarget: 1.500001, m100: 'Avançar 5 Comp.', m300: 'Avançar 6 Comp.', m500: 'Avançar 7 Comp.' };
+            if(score <= 2.0) return { label: 'Nível 1', class: 'sub-l1', gap: (2.000001 - score), nextTarget: 2.000001, m100: 'Avançar 5 Comp.', m300: 'Avançar 6 Comp.', m500: 'Avançar 7 Comp.' };
+            if(score <= 2.5) return { label: 'Nível 1+', class: 'sub-l1-plus', gap: (2.500001 - score), nextTarget: 2.500001, m100: 'Avançar 5 Comp.', m300: 'Avançar 6 Comp.', m500: 'Avançar 7 Comp.' };
+            
+            if(score <= 2.75) return { label: 'Nível 2-', class: 'sub-l2-minus', gap: (2.750001 - score), nextTarget: 2.750001, m100: 'Avançar 8 Comp.', m300: 'Avançar 9 Comp.', m500: 'Avançar 10 Comp.' };
+            if(score <= 3.0) return { label: 'Nível 2', class: 'sub-l2', gap: (3.000001 - score), nextTarget: 3.000001, m100: 'Avançar 8 Comp.', m300: 'Avançar 9 Comp.', m500: 'Avançar 10 Comp.' };
+            if(score <= 3.25) return { label: 'Nível 2+', class: 'sub-l2-plus', gap: (3.2500001 - score), nextTarget: 3.2500001, m100: 'Avançar 7 Comp.', m300: 'Avançar 8 Comp.', m500: 'Avançar 9 Comp.' };
+            
+            if(score <= 3.4) return { label: 'Nível 3-', class: 'sub-l3-minus', gap: (3.400001 - score), nextTarget: 3.400001, m100: 'Avançar 4 Comp.', m300: 'Avançar 5 Comp.', m500: 'Avançar 6 Comp.' };
+            if(score <= 3.55) return { label: 'Nível 3', class: 'sub-l3', gap: (3.5500001 - score), nextTarget: 3.5500001, m100: 'Avançar 4 Comp.', m300: 'Avançar 5 Comp.', m500: 'Avançar 6 Comp.' };
+            if(score <= 3.7) return { label: 'Nível 3+', class: 'sub-l3-plus', gap: (3.700001 - score), nextTarget: 3.700001, m100: 'Manter Nível 3', m300: 'Avançar 1 Comp.', m500: 'Avançar 2 Comp.' };
+            
+            if(score <= 3.8) return { label: 'Nível 4-', class: 'sub-l4-minus', gap: (3.800001 - score), nextTarget: 3.800001, m100: 'Manter Nível 4', m300: 'Avançar 1 Comp.', m500: 'Avançar 2 Comp.' };
+            return { label: 'Nível 4', class: 'sub-l4', gap: 0, nextTarget: 4.0, m100: 'Manter Nível 4', m300: 'Avançar 1 Comp.', m500: 'Avançar 2 Comp.' };
         }
 
         function switchPage(pageId) {
@@ -672,8 +687,10 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
 
             setTimeout(() => {
                 if (pageId === 'page-visao' && chartInstances.dist) chartInstances.dist.resize();
+                if (pageId === 'page-regua' && chartInstances.regua) chartInstances.regua.resize();
                 if (pageId === 'page-mapa' && chartInstances.radar) chartInstances.radar.resize();
                 if (pageId === 'page-cluster' && chartInstances.cluster) updateClusters(); 
+                if (pageId === 'page-metas' && chartInstances.metasDoughnut) chartInstances.metasDoughnut.resize();
             }, 50);
         }
 
@@ -820,7 +837,7 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
                     let cityName = cell.replace(/ Pós Conselho/ig, '').trim();
                     cities.push({
                         index: i, municipio: cityName, uf: 'N/A', 
-                        gedu: 0, gesc: 0, mob: 0,
+                        gedu: 0, gesc: 0, mob: 0, geral: 0,
                         mob_c1: 0, mob_c2: 0, mob_c3: 0, mob_c4: 0, mob_c5: 0,
                         gesc_c1: 0, gesc_c2: 0, gesc_c3: 0, gesc_c4: 0, gesc_c5: 0, gesc_c6: 0, gesc_c7: 0, gesc_c8: 0,
                         gedu_c1: 0, gedu_c2: 0, gedu_c3: 0, gedu_c4: 0, gedu_c5: 0, gedu_c6: 0, gedu_c7: 0, gedu_c8: 0
@@ -844,6 +861,7 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
                 else if (colStr.includes('GEDU - MÉDIA')) metric = 'gedu';
                 else if (colStr.includes('GESC - MÉDIA')) metric = 'gesc';
                 else if (colStr.includes('MOB - MÉDIA')) metric = 'mob';
+                else if (colStr.includes('GERAL')) metric = 'geral'; 
                 else {
                     for(let c=0; c<=5; c++) {
                         let cell = (row[c] || '').toString().toUpperCase().trim();
@@ -878,6 +896,14 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
             cities.forEach(city => {
                 city.uf = ufMap[city.municipio] || 'Outro';
                 if (city.mob === 0 && city.mob_c1 > 0) city.mob = (city.mob_c1 + city.mob_c2 + city.mob_c3 + city.mob_c4 + city.mob_c5) / 5;
+                
+                if(city.geral === 0 && city.gedu > 0) {
+                    let sum = 0, count = 0;
+                    if(city.gedu > 0) { sum+=city.gedu; count++; }
+                    if(city.gesc > 0) { sum+=city.gesc; count++; }
+                    if(city.mob > 0) { sum+=city.mob; count++; }
+                    city.geral = count > 0 ? sum / count : 0;
+                }
             });
 
             dbData = cities;
@@ -915,6 +941,8 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
 
             updateKPIs();
             updateHeatmap();
+            updateReguaTable(); 
+            updateMetasTab(); // NOVO: Atualiza a página de metas
             updateCharts();
             updateRecommendationEngine();
             document.getElementById('promptContainer').classList.add('hidden');
@@ -959,7 +987,6 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
             setKpiUI('Mob', avgMob);
         }
 
-        // TEXTO DINÂMICO PARA O RAIO-X (DIAGNÓSTICO ESCRITO AVANÇADO)
         function updateRadarInsights(avgSelection, avgGlobal) {
             const insightBox = document.getElementById('radarInsightContent');
             const numCols = currentViewFrente === 'mob' ? 5 : 8;
@@ -988,7 +1015,6 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
             const isTodosMun = document.getElementById('chkMunTodos').checked;
             const selectionText = (currentData.length === 1) ? `o município de <strong>${currentData[0].municipio}</strong>` : (isTodosMun ? 'a <strong>Média Global do PVE</strong>' : `a seleção de <strong>${currentData.length} municípios</strong>`);
 
-            // Contexto com Gap Numérico
             let analiseContexto = "";
             let diffTotal = Math.abs(avgTotal - avgGlobalTotal).toFixed(2);
             if (avgTotal > avgGlobalTotal + 0.05) {
@@ -1009,7 +1035,6 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
                     </p>
             `;
 
-            // Dicionário Inteligente de Insights
             if (lowestComp !== '' && lowestCompIndex !== -1) {
                 let compId = `${currentViewFrente}_c${lowestCompIndex + 1}`;
                 let textoGargalo = insightsPedagogicos[compId] ? insightsPedagogicos[compId].gargalo : 'Esta área deve ser o foco principal das próximas formações e acompanhamentos.';
@@ -1040,7 +1065,6 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
             insightBox.innerHTML = html;
         }
 
-        // MOTOR DE RECOMENDAÇÃO (Texto Copiloto)
         function updateRecommendationEngine() {
             let allScores = [];
             Object.keys(dictNomesComp).forEach(key => {
@@ -1128,7 +1152,6 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
             }, 3000);
         }
 
-        // --- RENDERIZAÇÃO MAPA DE CALOR ---
         function updateHeatmap() {
             const tbody = document.getElementById('heatmapBody');
             tbody.innerHTML = '';
@@ -1164,6 +1187,100 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
                 tbody.appendChild(tr);
             });
         }
+
+        function updateReguaTable() {
+            const tbody = document.getElementById('reguaBody');
+            tbody.innerHTML = '';
+            
+            let sortedData = [...currentData].sort((a, b) => a.geral - b.geral);
+
+            sortedData.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-slate-100 hover:bg-slate-50 transition-colors';
+                
+                const local = row.uf !== 'Outro' ? `${row.municipio} <span class="text-[10px] text-slate-400 font-normal ml-1">(${row.uf})</span>` : row.municipio;
+                
+                const geduVal = row.gedu > 0 ? row.gedu.toFixed(2) : '-';
+                const gescVal = row.gesc > 0 ? row.gesc.toFixed(2) : '-';
+                const mobVal = row.mob > 0 ? row.mob.toFixed(2) : '-';
+                const geralVal = row.geral > 0 ? row.geral.toFixed(2) : '-';
+                
+                const subInfo = getSubLevelInfo(row.geral);
+                
+                let gapHtml = '-';
+                if(row.geral > 0) {
+                    if (subInfo.gap > 0) {
+                        gapHtml = `<span class="text-xs font-bold text-slate-600">Faltam <span class="text-blue-600">${subInfo.gap.toFixed(2)} pts</span> para ${subInfo.nextTarget.toFixed(2)}</span>`;
+                    } else {
+                        gapHtml = `<span class="text-xs font-bold text-emerald-600"><i class="ph-bold ph-check"></i> Meta Máxima</span>`;
+                    }
+                }
+
+                tr.innerHTML = `
+                    <td class="py-3 px-6 text-left whitespace-nowrap font-bold text-slate-800">${local}</td>
+                    <td class="py-3 px-4 text-center text-slate-600">${geduVal}</td>
+                    <td class="py-3 px-4 text-center text-slate-600">${gescVal}</td>
+                    <td class="py-3 px-4 text-center text-slate-600">${mobVal}</td>
+                    <td class="py-3 px-4 text-center font-bold text-slate-800 bg-slate-50">${geralVal}</td>
+                    <td class="py-3 px-4 text-center border-l border-white bg-slate-50">
+                        <span class="px-3 py-1 rounded text-xs font-bold shadow-sm ${subInfo.class}">${subInfo.label}</span>
+                    </td>
+                    <td class="py-3 px-4 text-center bg-slate-50">${gapHtml}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // NOVO: Renderização da Página de Metas
+        function updateMetasTab() {
+            const tbody = document.getElementById('metasBody');
+            tbody.innerHTML = '';
+
+            let countAltaIntensidade = 0;
+            let countRefinamento = 0;
+
+            let sortedData = [...currentData].sort((a, b) => a.geral - b.geral);
+
+            sortedData.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.className = 'border-b border-slate-100 hover:bg-slate-50 transition-colors';
+                const local = row.uf !== 'Outro' ? `${row.municipio} <span class="text-[10px] text-slate-400 font-normal ml-1">(${row.uf})</span>` : row.municipio;
+                
+                const subInfo = getSubLevelInfo(row.geral);
+
+                // Lógica de cores baseada no esforço (Slide 13)
+                let effortColor = 'bg-slate-50 text-slate-600';
+                if (subInfo.m100.includes('8') || subInfo.m100.includes('7') || subInfo.m100.includes('Avançar 5')) {
+                    effortColor = 'bg-amber-50 text-amber-700 font-bold'; // Muito esforço
+                    countAltaIntensidade++;
+                } else if (subInfo.m100.includes('Manter') || subInfo.m100.includes('4')) {
+                    effortColor = 'bg-emerald-50 text-emerald-700 font-bold'; // Refinamento
+                    countRefinamento++;
+                }
+
+                tr.innerHTML = `
+                    <td class="py-4 px-6 text-left whitespace-nowrap font-bold text-slate-800">${local}</td>
+                    <td class="py-4 px-4 text-center">
+                        <span class="px-3 py-1 rounded text-[11px] font-bold shadow-sm ${subInfo.class}">${subInfo.label}</span>
+                    </td>
+                    <td class="py-4 px-4 text-center ${effortColor} border-l border-white">${subInfo.m100}</td>
+                    <td class="py-4 px-4 text-center text-slate-500 bg-slate-50 border-l border-white">${subInfo.m300}</td>
+                    <td class="py-4 px-4 text-center text-slate-500 bg-slate-50 border-l border-white">${subInfo.m500}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('metaTotalMun').innerText = currentData.length;
+            document.getElementById('metaAltaIntensidade').innerText = countAltaIntensidade;
+            document.getElementById('metaRefinamento').innerText = countRefinamento;
+
+            // Atualiza o gráfico de Doughnut
+            if (chartInstances.metasDoughnut) {
+                chartInstances.metasDoughnut.data.datasets[0].data = [countAltaIntensidade, countRefinamento];
+                chartInstances.metasDoughnut.update();
+            }
+        }
+
 
         function processLabels(labels) {
             return labels.map(label => {
@@ -1206,6 +1323,48 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
                     } 
                 }
             });
+            
+            chartInstances.regua = new Chart(document.getElementById('chartRegua'), {
+                type: 'bar',
+                data: { 
+                    labels: ['Nível 1-', 'Nível 1', 'Nível 1+', 'Nível 2-', 'Nível 2', 'Nível 2+', 'Nível 3-', 'Nível 3', 'Nível 3+', 'Nível 4-', 'Nível 4'], 
+                    datasets: [] 
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    layout: { padding: { right: 280, top: 10, bottom: 10 } },
+                    scales: { 
+                        x: { beginAtZero: true, grid: {borderDash: [4,4]}, title: {display: true, text: 'Nº Municípios'}, ticks: { precision: 0 } }, 
+                        y: { grid: {display: false}, ticks: {font: {weight: 'bold', size: 12}} } 
+                    },
+                    plugins: { 
+                        legend: { display: false },
+                        datalabels: { 
+                            display: true, color: '#475569', font: {weight: '500', size: 10, family: 'Inter'}, 
+                            anchor: 'end', align: 'right', textAlign: 'left',
+                            formatter: function(val, context) {
+                                if(val === 0) return '';
+                                let names = context.dataset.names[context.dataIndex];
+                                let lines = [];
+                                let currentLine = "";
+                                for(let i=0; i<names.length; i++){
+                                    let sep = (i === names.length -1) ? "" : ", ";
+                                    if((currentLine + names[i] + sep).length > 45) {
+                                        lines.push(currentLine.trim());
+                                        currentLine = names[i] + sep;
+                                    } else {
+                                        currentLine += names[i] + sep;
+                                    }
+                                }
+                                if(currentLine) lines.push(currentLine.replace(/,\s*$/, ""));
+                                lines.unshift(`[ Total: ${val} ]`);
+                                return lines;
+                            }
+                        } 
+                    } 
+                }
+            });
 
             chartInstances.cluster = new Chart(document.getElementById('chartClustering'), {
                 type: 'bubble',
@@ -1217,6 +1376,7 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
                         y: { title: {display: true, text: '...', font: {weight: 'bold'}}, min: 1, max: 4 } 
                     },
                     plugins: { 
+                        legend: { display: true, position: 'bottom', labels: { usePointStyle: true, boxWidth: 8 } }, 
                         tooltip: { 
                             callbacks: { 
                                 label: function(c) {
@@ -1261,6 +1421,31 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
                     }
                 }
             });
+
+            // NOVO: Gráfico de Doughnut das Metas
+            chartInstances.metasDoughnut = new Chart(document.getElementById('chartMetasDoughnut'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Alta Intensidade (7 a 10 comps.)', 'Refinamento (Manter ou 4 a 6)'],
+                    datasets: [{
+                        data: [0, 0],
+                        backgroundColor: ['#F59E0B', '#10B981'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: {family: 'Inter', size: 11} } },
+                        datalabels: {
+                            color: '#fff', font: {weight: 'bold', size: 16},
+                            formatter: (value) => value > 0 ? value : ''
+                        }
+                    }
+                }
+            });
         }
 
         function updateClusters() {
@@ -1275,9 +1460,10 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
             chartInstances.cluster.options.scales.y.title.text = selectY.options[selectY.selectedIndex].text;
 
             const clusters = {
-                fragil: { label: 'Frágil (<2.5)', color: 'rgba(239, 68, 68, 0.7)', border: '#B91C1C', data: [] },
-                cons: { label: 'Em Consolidação (2.5-2.9)', color: 'rgba(245, 158, 11, 0.7)', border: '#B45309', data: [] },
-                destaque: { label: 'Consolidado/Robusto (≥3.0)', color: 'rgba(16, 185, 129, 0.7)', border: '#047857', data: [] }
+                fragil: { label: 'Nível 1: Frágil (< 2.5)', color: 'rgba(239, 68, 68, 0.7)', border: '#B91C1C', data: [] },
+                cons: { label: 'Nível 2: Em Consolidação (2.5 - 2.9)', color: 'rgba(245, 158, 11, 0.7)', border: '#B45309', data: [] },
+                consolidado: { label: 'Nível 3: Consolidado (3.0 - 3.4)', color: 'rgba(16, 185, 129, 0.7)', border: '#047857', data: [] },
+                robusto: { label: 'Nível 4: Robusto (≥ 3.5)', color: 'rgba(59, 130, 246, 0.7)', border: '#1D4ED8', data: [] }
             };
 
             currentData.forEach(row => {
@@ -1289,7 +1475,8 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
                     
                     if(bubbleBase < 2.5) clusters.fragil.data.push(point);
                     else if(bubbleBase < 3.0) clusters.cons.data.push(point);
-                    else clusters.destaque.data.push(point);
+                    else if(bubbleBase < 3.5) clusters.consolidado.data.push(point);
+                    else clusters.robusto.data.push(point);
                 }
             });
 
@@ -1324,6 +1511,40 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
             }));
             chartInstances.dist.update();
 
+            // Atualização da Régua
+            const subCounts = [0,0,0, 0,0,0, 0,0,0, 0,0]; 
+            const subNames = [[],[],[], [],[],[], [],[],[], [],[]];
+            const subColors = ['#fca5a5', '#f87171', '#ef4444', '#fcd34d', '#fbbf24', '#f59e0b', '#6ee7b7', '#34d399', '#10b981', '#93c5fd', '#3b82f6'];
+            
+            currentData.forEach(row => {
+                const score = row.geral;
+                if(score > 0) {
+                    let idx = -1;
+                    if(score <= 1.5) idx = 0;
+                    else if(score <= 2.0) idx = 1;
+                    else if(score <= 2.5) idx = 2;
+                    else if(score <= 2.75) idx = 3;
+                    else if(score <= 3.0) idx = 4;
+                    else if(score <= 3.25) idx = 5;
+                    else if(score <= 3.4) idx = 6;
+                    else if(score <= 3.55) idx = 7;
+                    else if(score <= 3.7) idx = 8;
+                    else if(score <= 3.8) idx = 9;
+                    else idx = 10;
+                    
+                    subCounts[idx]++;
+                    subNames[idx].push(row.municipio);
+                }
+            });
+            
+            chartInstances.regua.data.datasets = [{
+                data: subCounts,
+                backgroundColor: subColors,
+                borderRadius: 4,
+                names: subNames
+            }];
+            chartInstances.regua.update();
+
             updateClusters(); 
 
             // Radar Update
@@ -1357,7 +1578,6 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
             ];
             chartInstances.radar.update();
 
-            // Atualiza os Insights Escritos do Radar com a nova lógica interpretativa
             updateRadarInsights(avgSelection, avgGlobal);
         }
 
