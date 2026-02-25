@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PVE Gestão | Control Tower</title>
+    <title>PVE Gestão | Sincroniza Educação</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -163,6 +163,10 @@
                 <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
                 <span class="text-xs font-medium text-slate-400">Status: Conectado</span>
             </div>
+            <div class="px-2 mt-2">
+                <p class="text-[10px] text-slate-500">Suporte técnico:</p>
+                <a href="mailto:robson@sincronizaeducacao.com.br" class="text-[10px] text-blue-400 hover:underline">robson@sincronizaeducacao.com.br</a>
+            </div>
         </div>
     </aside>
 
@@ -178,6 +182,7 @@
             <div class="flex items-center space-x-3">
                 <span class="text-sm font-semibold text-slate-500 mr-2"><i class="ph ph-funnel mr-1"></i> Filtros Ativos:</span>
                 
+                <!-- Dropdown Estado -->
                 <div class="custom-select-wrapper" id="wrapperEstado">
                     <div class="custom-select-button" onclick="toggleDropdown('dropdownEstado')">
                         <span id="labelEstado" class="truncate">Estado: Todos</span>
@@ -191,6 +196,7 @@
                     </div>
                 </div>
 
+                <!-- Dropdown Municipio -->
                 <div class="custom-select-wrapper" id="wrapperMunicipio">
                     <div class="custom-select-button" onclick="toggleDropdown('dropdownMunicipio')">
                         <span id="labelMunicipio" class="truncate">Município: Todos</span>
@@ -214,54 +220,101 @@
         <main class="flex-1 overflow-y-auto p-6 md:p-8 bg-slate-50 relative z-0" id="mainContainer">
             
             <!-- PÁGINA 1: VISÃO EXECUTIVA -->
-            <div id="page-visao" class="page-section space-y-8 fade-update block">
+            <div id="page-visao" class="page-section space-y-6 fade-update block">
                 
-                <div class="border-l-4 border-blue-600 pl-4 mb-6">
+                <div class="border-l-4 border-blue-600 pl-4 mb-4">
                     <h2 class="text-2xl font-bold text-slate-900">Resultados e Maturidade Geral</h2>
-                    <p class="mt-1 text-slate-600">Acompanhamento do atingimento de metas nas três frentes do programa PVE.</p>
+                    <p class="mt-1 text-slate-600">Acompanhamento do impacto, esforço da rede e atingimento de metas do PVE.</p>
                 </div>
 
-                <!-- CARDS -->
+                <!-- Linha 1 - Operação e Impacto Reestruturada (Sem Dados Fictícios) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Impacto: IDEB -->
+                    <div class="bg-gradient-to-br from-indigo-700 to-blue-900 rounded-xl shadow-md p-6 text-white flex flex-col justify-center relative overflow-hidden">
+                        <i class="ph-fill ph-student absolute -right-4 -top-4 text-7xl text-white opacity-10"></i>
+                        <span class="text-blue-200 text-xs font-bold uppercase tracking-wider">Métrica de Impacto Final</span>
+                        <span class="text-4xl font-black mt-2 mb-2">Ideb +</span>
+                        <p class="text-xs text-blue-100 mb-3 max-w-sm leading-relaxed">
+                            A elevação dos índices de aprendizagem e da qualidade do ensino é o objetivo central de todas as ações de gestão e mobilização do programa.
+                        </p>
+                        <span class="text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider bg-white/20 border border-white/30 inline-block w-max">Foco na Aprendizagem</span>
+                    </div>
+                    
+                    <!-- Operação: Municípios -->
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-center">
+                        <span class="text-slate-400 text-xs font-bold uppercase tracking-widest flex items-center">
+                            <i class="ph-fill ph-map-pin mr-2 text-blue-500 text-lg"></i> Municípios Analisados
+                        </span>
+                        <span id="kpiOpMun" class="text-5xl font-bold text-slate-800 mt-2">-</span>
+                        <p class="text-xs text-slate-500 mt-3 border-t border-slate-100 pt-3">
+                            Volume exato de territórios abrangidos pelo recorte de filtros atual no topo da página.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- CARDS (Médias da Matriz) -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <div class="bg-white rounded-xl shadow-md p-6 border border-slate-100 flex flex-col items-center justify-center hover:shadow-lg transition">
-                        <span class="text-slate-400 text-xs font-bold uppercase tracking-wider">Média Global PVE</span>
-                        <span id="kpiGlobal" class="text-5xl font-bold text-blue-600 mt-2">-</span>
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col items-center justify-center hover:shadow-md transition">
+                        <span class="text-slate-400 text-[11px] font-bold uppercase tracking-widest">Média Global PVE</span>
+                        <span id="kpiGlobal" class="text-5xl font-black text-blue-600 mt-2">-</span>
                         <span class="text-slate-500 text-[10px] font-medium mt-2 uppercase tracking-wide bg-slate-50 px-2 py-1 rounded border border-slate-200">Consolidado 2025</span>
                     </div>
-                    <div class="bg-white rounded-xl shadow-md p-6 border border-slate-100 flex flex-col items-center justify-center hover:shadow-lg transition relative">
-                        <span class="text-slate-400 text-xs font-bold uppercase tracking-wider">Média GESC</span>
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col items-center justify-center hover:shadow-md transition relative">
+                        <span class="text-slate-400 text-[11px] font-bold uppercase tracking-widest">Média GESC</span>
                         <span id="kpiGesc" class="text-4xl font-bold mt-2">-</span>
                         <span id="labelGesc" class="text-[10px] font-bold mt-2 px-2 py-1 rounded uppercase tracking-wider">-</span>
                     </div>
-                    <div class="bg-white rounded-xl shadow-md p-6 border border-slate-100 flex flex-col items-center justify-center hover:shadow-lg transition">
-                        <span class="text-slate-400 text-xs font-bold uppercase tracking-wider">Média GEDU</span>
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col items-center justify-center hover:shadow-md transition">
+                        <span class="text-slate-400 text-[11px] font-bold uppercase tracking-widest">Média GEDU</span>
                         <span id="kpiGedu" class="text-4xl font-bold mt-2">-</span>
                         <span id="labelGedu" class="text-[10px] font-bold mt-2 px-2 py-1 rounded uppercase tracking-wider">-</span>
                     </div>
-                    <div class="bg-white rounded-xl shadow-md p-6 border border-slate-100 flex flex-col items-center justify-center hover:shadow-lg transition relative overflow-hidden">
-                        <span class="text-slate-400 text-xs font-bold uppercase tracking-wider">Média MOB</span>
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col items-center justify-center hover:shadow-md transition relative overflow-hidden">
+                        <span class="text-slate-400 text-[11px] font-bold uppercase tracking-widest">Média MOB</span>
                         <span id="kpiMob" class="text-4xl font-bold mt-2">-</span>
                         <span id="labelMob" class="text-[10px] font-bold mt-2 px-2 py-1 rounded uppercase tracking-wider">-</span>
                     </div>
                 </div>
 
-                <!-- Gráfico de Distribuição -->
-                <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-slate-100 mt-6">
-                    <div class="mb-6 border-b border-slate-100 pb-4">
-                        <h3 class="text-lg font-bold text-slate-800">Distribuição de Maturidade por Frente (Visão Macro)</h3>
-                        <p class="text-sm text-slate-500">Contagem de municípios agrupados nos 4 níveis oficiais da Matriz.</p>
+                <!-- Gráfico de Distribuição & Mini Metas -->
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                    <div class="xl:col-span-2 bg-white rounded-xl shadow-sm p-6 md:p-8 border border-slate-200">
+                        <div class="mb-4 border-b border-slate-100 pb-4">
+                            <h3 class="text-lg font-bold text-slate-800">Distribuição de Maturidade (Visão Macro)</h3>
+                            <p class="text-xs text-slate-500">Contagem de municípios agrupados nos 4 níveis oficiais da Matriz.</p>
+                        </div>
+                        <div class="chart-container h-64 md:h-[300px]">
+                            <canvas id="chartDistribution"></canvas>
+                        </div>
                     </div>
-                    <div class="chart-container h-80 md:h-[400px]">
-                        <canvas id="chartDistribution"></canvas>
-                    </div>
-                    <div class="mt-6 bg-slate-50 p-4 rounded-lg border border-slate-200 text-xs text-slate-600 flex flex-wrap gap-4 items-center justify-center font-medium">
-                        <span class="font-bold text-slate-800 mr-2 uppercase tracking-wide">Regra da Matriz:</span>
-                        <span class="flex items-center"><span class="w-3 h-3 bg-red-500 rounded-full mr-1 shadow-sm"></span> Frágil (< 2.5)</span>
-                        <span class="flex items-center"><span class="w-3 h-3 bg-amber-500 rounded-full mr-1 shadow-sm"></span> Em Consolidação (2.5 - 2.9)</span>
-                        <span class="flex items-center"><span class="w-3 h-3 bg-emerald-500 rounded-full mr-1 shadow-sm"></span> Consolidado (3.0 - 3.4)</span>
-                        <span class="flex items-center"><span class="w-3 h-3 bg-blue-500 rounded-full mr-1 shadow-sm"></span> Robusto (≥ 3.5)</span>
+                    
+                    <div class="xl:col-span-1 bg-white rounded-xl shadow-sm p-6 md:p-8 border border-slate-200 flex flex-col">
+                        <div class="mb-4 border-b border-slate-100 pb-4">
+                            <h3 class="text-lg font-bold text-slate-800">Termômetro de Metas 2026</h3>
+                            <p class="text-xs text-slate-500">Intensidade de esforço formativo.</p>
+                        </div>
+                        <div class="chart-container flex-1 min-h-[200px]">
+                            <canvas id="chartMiniMetas"></canvas>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Top Rankings Rápidos -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-emerald-100 border-t-4 border-t-emerald-500">
+                        <h3 class="font-bold text-slate-800 mb-4 flex items-center"><i class="ph-fill ph-trophy mr-2 text-emerald-500 text-xl"></i> Top 3: Destaques da Seleção</h3>
+                        <ul id="listTopDestaques" class="space-y-1">
+                            <!-- Preenchido via JS -->
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-rose-100 border-t-4 border-t-rose-500">
+                        <h3 class="font-bold text-slate-800 mb-4 flex items-center"><i class="ph-fill ph-warning-octagon mr-2 text-rose-500 text-xl"></i> Top 3: Atenção Crítica</h3>
+                        <ul id="listTopCriticos" class="space-y-1">
+                            <!-- Preenchido via JS -->
+                        </ul>
+                    </div>
+                </div>
+
             </div>
 
             <!-- PÁGINA 2: MAPA E RAIO-X -->
@@ -323,12 +376,14 @@
                     </div>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-0">
+                        <!-- Chart Area -->
                         <div class="lg:col-span-2 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-slate-200">
                             <div class="chart-container h-[350px] md:h-[450px]">
                                 <canvas id="chartRadar"></canvas>
                             </div>
                         </div>
                         
+                        <!-- Insights de Texto Dinâmicos & Interpretativos -->
                         <div class="lg:col-span-1 bg-white p-6 md:p-8 flex flex-col">
                             <h4 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1">Interpretação de Resultados</h4>
                             <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">O que significa este recorte selecionado?</p>
@@ -406,7 +461,7 @@
                 </div>
                 <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
                     
-                    <!-- Bubble Chart -->
+                    <!-- Bubble Chart com Novo Dropdown Dinâmico (Lista Completa) -->
                     <div class="bg-white rounded-xl shadow-lg border border-slate-200 flex flex-col">
                         <div class="p-5 border-b border-slate-100 bg-slate-50">
                             <div class="mb-4">
@@ -456,7 +511,7 @@
                         <div class="p-6 bg-slate-800 text-white border-b border-slate-700 flex justify-between items-center">
                             <div>
                                 <h3 class="font-bold text-xl flex items-center"><i class="ph-fill ph-crosshair text-blue-400 mr-3 text-2xl"></i> Motor de Priorização</h3>
-                                <p class="text-xs text-slate-300 mt-1 opacity-80">Análise automática de TODAS as competências filtradas.</p>
+                                <p class="text-xs text-slate-300 mt-1 opacity-80">Análise focada nas frentes selecionadas no gráfico ao lado.</p>
                             </div>
                         </div>
                         <div class="p-6 flex-1 bg-slate-50 overflow-y-auto">
@@ -469,7 +524,10 @@
                                 <ul id="listAtencao" class="space-y-2"><li class="text-sm text-slate-500 italic">A processar dados...</li></ul>
                             </div>
                         </div>
-                        <div class="p-4 bg-white border-t border-slate-200 text-center">
+                        <div class="p-5 bg-white border-t border-slate-200 flex flex-col items-center">
+                            <p class="text-xs text-slate-500 mb-3 text-center leading-relaxed">
+                                <strong>Assistente Pedagógico:</strong> Utilize a inteligência artificial para transformar os gargalos mapeados acima em uma proposta de pauta formativa prática e sob medida.
+                            </p>
                             <button onclick="generatePrompt()" class="w-full bg-blue-600 text-white px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-wide hover:bg-blue-700 transition-colors shadow-md flex justify-center items-center"><i class="ph-bold ph-magic-wand mr-2"></i> Gerar Comando para IA (Copiloto)</button>
                         </div>
                         <div id="promptContainer" class="hidden p-4 bg-blue-50 border-t border-blue-100 flex flex-col">
@@ -632,7 +690,7 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
         };
 
         const pageTitles = {
-            'page-visao': 'Visão Executiva',
+            'page-visao': 'Visão Executiva (Control Tower)',
             'page-regua': 'Régua de Maturidade e Gaps',
             'page-mapa': 'Diagnóstico & Raio-X',
             'page-cluster': 'Trilhas & Clusters',
@@ -646,7 +704,6 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
             return { label: 'Robusto', color: '#3B82F6', bg: 'bg-blue-status', text: 'text-blue-700', border: 'border-blue-200', textClass: 'text-blue-600' };
         }
 
-        // NOVO: Cálculo Integrado de Subnível e Metas 2026
         function getSubLevelInfo(score) {
             if(!score || score === 0) return { label: '-', class: 'bg-slate-100 text-slate-400 font-normal', gap: 0, nextTarget: 0, m100: '-', m300: '-', m500: '-' };
             
@@ -686,7 +743,10 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
             document.getElementById('mainContainer').scrollTop = 0;
 
             setTimeout(() => {
-                if (pageId === 'page-visao' && chartInstances.dist) chartInstances.dist.resize();
+                if (pageId === 'page-visao' && chartInstances.dist) {
+                    chartInstances.dist.resize();
+                    if(chartInstances.miniMetas) chartInstances.miniMetas.resize();
+                }
                 if (pageId === 'page-regua' && chartInstances.regua) chartInstances.regua.resize();
                 if (pageId === 'page-mapa' && chartInstances.radar) chartInstances.radar.resize();
                 if (pageId === 'page-cluster' && chartInstances.cluster) updateClusters(); 
@@ -940,12 +1000,48 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
             }
 
             updateKPIs();
+            updateExecutiveView(); 
             updateHeatmap();
             updateReguaTable(); 
-            updateMetasTab(); // NOVO: Atualiza a página de metas
+            updateMetasTab();
             updateCharts();
             updateRecommendationEngine();
             document.getElementById('promptContainer').classList.add('hidden');
+        }
+
+        // --- ATUALIZAÇÃO DA VISÃO EXECUTIVA (SEM DADOS FICTÍCIOS) ---
+        function updateExecutiveView() {
+            const numMun = currentData.length;
+            document.getElementById('kpiOpMun').innerText = numMun;
+
+            let sortedByGeral = [...currentData].sort((a, b) => b.geral - a.geral);
+            const listTop = document.getElementById('listTopDestaques');
+            const listBottom = document.getElementById('listTopCriticos');
+            listTop.innerHTML = '';
+            listBottom.innerHTML = '';
+
+            // Top 3
+            sortedByGeral.slice(0, 3).forEach((item, idx) => {
+                let li = `<li class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
+                    <span class="text-sm font-bold text-slate-700"><span class="text-emerald-500 mr-1">${idx+1}º</span> ${item.municipio} (${item.uf})</span>
+                    <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-0.5 rounded font-bold">${item.geral.toFixed(2)}</span>
+                </li>`;
+                listTop.innerHTML += li;
+            });
+
+            // Bottom 3
+            [...sortedByGeral].reverse().slice(0, 3).forEach((item, idx) => {
+                let li = `<li class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
+                    <span class="text-sm font-bold text-slate-700"><span class="text-rose-500 mr-1">▼</span> ${item.municipio} (${item.uf})</span>
+                    <span class="bg-rose-100 text-rose-800 text-xs px-2 py-0.5 rounded font-bold">${item.geral.toFixed(2)}</span>
+                </li>`;
+                listBottom.innerHTML += li;
+            });
+            
+            if(currentData.length === 0) {
+               listTop.innerHTML = '<li class="text-xs text-slate-400">Sem dados</li>';
+               listBottom.innerHTML = '<li class="text-xs text-slate-400">Sem dados</li>';
+            }
         }
 
         function getAvg(array, key) {
@@ -1066,10 +1162,19 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
         }
 
         function updateRecommendationEngine() {
+            // Lógica conectada aos Eixos do Gráfico de Bolhas
+            const valX = document.getElementById('selEixoX').value;
+            const valY = document.getElementById('selEixoY').value;
+
+            const frontX = valX.split('_')[0]; // 'gesc', 'gedu', or 'mob'
+            const frontY = valY.split('_')[0];
+
             let allScores = [];
             Object.keys(dictNomesComp).forEach(key => {
-                const val = getAvg(currentData, key);
-                if(val > 0) allScores.push({ key: key, nome: dictNomesComp[key], nota: val });
+                if (key.startsWith(frontX) || key.startsWith(frontY)) {
+                    const val = getAvg(currentData, key);
+                    if(val > 0) allScores.push({ key: key, nome: dictNomesComp[key], nota: val });
+                }
             });
             allScores.sort((a, b) => a.nota - b.nota);
 
@@ -1231,7 +1336,6 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
             });
         }
 
-        // NOVO: Renderização da Página de Metas
         function updateMetasTab() {
             const tbody = document.getElementById('metasBody');
             tbody.innerHTML = '';
@@ -1248,13 +1352,12 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
                 
                 const subInfo = getSubLevelInfo(row.geral);
 
-                // Lógica de cores baseada no esforço (Slide 13)
                 let effortColor = 'bg-slate-50 text-slate-600';
                 if (subInfo.m100.includes('8') || subInfo.m100.includes('7') || subInfo.m100.includes('Avançar 5')) {
-                    effortColor = 'bg-amber-50 text-amber-700 font-bold'; // Muito esforço
+                    effortColor = 'bg-amber-50 text-amber-700 font-bold'; 
                     countAltaIntensidade++;
                 } else if (subInfo.m100.includes('Manter') || subInfo.m100.includes('4')) {
-                    effortColor = 'bg-emerald-50 text-emerald-700 font-bold'; // Refinamento
+                    effortColor = 'bg-emerald-50 text-emerald-700 font-bold'; 
                     countRefinamento++;
                 }
 
@@ -1274,13 +1377,17 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
             document.getElementById('metaAltaIntensidade').innerText = countAltaIntensidade;
             document.getElementById('metaRefinamento').innerText = countRefinamento;
 
-            // Atualiza o gráfico de Doughnut
             if (chartInstances.metasDoughnut) {
                 chartInstances.metasDoughnut.data.datasets[0].data = [countAltaIntensidade, countRefinamento];
                 chartInstances.metasDoughnut.update();
             }
+            
+            // Atualiza o Mini Gráfico na aba Visão Executiva
+            if (chartInstances.miniMetas) {
+                chartInstances.miniMetas.data.datasets[0].data = [countAltaIntensidade, countRefinamento];
+                chartInstances.miniMetas.update();
+            }
         }
-
 
         function processLabels(labels) {
             return labels.map(label => {
@@ -1321,6 +1428,26 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
                         legend: { display: false },
                         datalabels: { display: false } 
                     } 
+                }
+            });
+            
+            chartInstances.miniMetas = new Chart(document.getElementById('chartMiniMetas'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Alta Intensidade (Avançar 7+)', 'Refinamento (Avançar 1 a 6)'],
+                    datasets: [{
+                        data: [0, 0],
+                        backgroundColor: ['#F59E0B', '#10B981'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false, cutout: '75%',
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: {family: 'Inter', size: 11} } },
+                        datalabels: { color: '#fff', font: {weight: 'bold', size: 14}, formatter: (value) => value > 0 ? value : '' }
+                    }
                 }
             });
             
@@ -1422,7 +1549,6 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
                 }
             });
 
-            // NOVO: Gráfico de Doughnut das Metas
             chartInstances.metasDoughnut = new Chart(document.getElementById('chartMetasDoughnut'), {
                 type: 'doughnut',
                 data: {
@@ -1484,6 +1610,8 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
                 label: c.label, data: c.data, backgroundColor: c.color, borderColor: c.border, borderWidth: 1
             }));
             chartInstances.cluster.update();
+            
+            updateRecommendationEngine();
         }
 
         function updateCharts() {
@@ -1511,7 +1639,6 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
             }));
             chartInstances.dist.update();
 
-            // Atualização da Régua
             const subCounts = [0,0,0, 0,0,0, 0,0,0, 0,0]; 
             const subNames = [[],[],[], [],[],[], [],[],[], [],[]];
             const subColors = ['#fca5a5', '#f87171', '#ef4444', '#fcd34d', '#fbbf24', '#f59e0b', '#6ee7b7', '#34d399', '#10b981', '#93c5fd', '#3b82f6'];
@@ -1547,7 +1674,6 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
 
             updateClusters(); 
 
-            // Radar Update
             const numCols = currentViewFrente === 'mob' ? 5 : 8;
             
             const avgGlobal = [];
