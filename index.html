@@ -227,7 +227,7 @@
                     <p class="mt-1 text-slate-600">Acompanhamento do impacto, esforço da rede e atingimento de metas do PVE.</p>
                 </div>
 
-                <!-- Linha 1 - Operação e Impacto Reestruturada (Sem Dados Fictícios) -->
+                <!-- Linha 1 - Operação e Impacto -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Impacto: IDEB -->
                     <div class="bg-gradient-to-br from-indigo-700 to-blue-900 rounded-xl shadow-md p-6 text-white flex flex-col justify-center relative overflow-hidden">
@@ -291,7 +291,7 @@
                     <div class="xl:col-span-1 bg-white rounded-xl shadow-sm p-6 md:p-8 border border-slate-200 flex flex-col">
                         <div class="mb-4 border-b border-slate-100 pb-4">
                             <h3 class="text-lg font-bold text-slate-800">Termômetro de Metas 2026</h3>
-                            <p class="text-xs text-slate-500">Intensidade de esforço formativo.</p>
+                            <p class="text-xs text-slate-500 leading-relaxed mt-1">Proporção de municípios categorizados pelo esforço exigido para atingir a Meta 100. Auxilia no dimensionamento e foco estratégico das ações formativas.</p>
                         </div>
                         <div class="chart-container flex-1 min-h-[200px]">
                             <canvas id="chartMiniMetas"></canvas>
@@ -1336,6 +1336,7 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
             });
         }
 
+        // NOVO: Atualizado para suportar o Gráfico Mini na Visão Executiva
         function updateMetasTab() {
             const tbody = document.getElementById('metasBody');
             tbody.innerHTML = '';
@@ -1431,6 +1432,7 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
                 }
             });
             
+            // NOVO: Mini Gráfico de Metas na Visão Executiva
             chartInstances.miniMetas = new Chart(document.getElementById('chartMiniMetas'), {
                 type: 'doughnut',
                 data: {
