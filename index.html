@@ -227,9 +227,8 @@
                     <p class="mt-1 text-slate-600">Acompanhamento do impacto, esforço da rede e atingimento de metas do PVE.</p>
                 </div>
 
-                <!-- Linha 1 - Operação e Impacto Reestruturada (Sem Dados Fictícios) -->
+                <!-- Linha 1 - Operação e Impacto -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Impacto: IDEB -->
                     <div class="bg-gradient-to-br from-indigo-700 to-blue-900 rounded-xl shadow-md p-6 text-white flex flex-col justify-center relative overflow-hidden">
                         <i class="ph-fill ph-student absolute -right-4 -top-4 text-7xl text-white opacity-10"></i>
                         <span class="text-blue-200 text-xs font-bold uppercase tracking-wider">Métrica de Impacto Final</span>
@@ -240,7 +239,6 @@
                         <span class="text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider bg-white/20 border border-white/30 inline-block w-max">Foco na Aprendizagem</span>
                     </div>
                     
-                    <!-- Operação: Municípios -->
                     <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-center">
                         <span class="text-slate-400 text-xs font-bold uppercase tracking-widest flex items-center">
                             <i class="ph-fill ph-map-pin mr-2 text-blue-500 text-lg"></i> Municípios Analisados
@@ -320,9 +318,22 @@
             <!-- PÁGINA 2: MAPA E RAIO-X -->
             <div id="page-mapa" class="page-section space-y-8 hidden fade-update">
                 
-                <div class="border-l-4 border-amber-500 pl-4 mb-6">
+                <div class="border-l-4 border-amber-500 pl-4 mb-4">
                     <h2 class="text-2xl font-bold text-slate-900">Mapa de Competências & Raio-X</h2>
                     <p class="mt-1 text-slate-600">Diagnóstico aprofundado com visualização completa de todas as competências avaliadas.</p>
+                </div>
+
+                <!-- Bloco de Contexto Estratégico (Mapa & Raio-X) -->
+                <div class="bg-amber-50 border border-amber-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
+                    <h4 class="text-sm font-bold text-amber-800 mb-2 flex items-center">
+                        <i class="ph-fill ph-info mr-2 text-lg"></i> Entenda o Mapa de Calor e o Raio-X
+                    </h4>
+                    <p class="text-xs text-slate-700 leading-relaxed mb-2">
+                        <strong>Objetivo desta página:</strong> Mergulhar no detalhe de cada frente (MOB, GESC, GEDU). O Mapa de Calor (Heatmap) funciona como um scanner, revelando rapidamente as notas de cada competência individual. Cores quentes (vermelho/laranja) indicam fragilidades, enquanto cores frias (verde/azul) indicam consolidação e robustez.
+                    </p>
+                    <p class="text-xs text-slate-700 leading-relaxed">
+                        <strong>Interpretação de Resultados:</strong> O Gráfico de Radar cruza o desempenho da seleção atual com a Média Nacional do PVE. Ao lado, o nosso motor traduz matematicamente esses dados para texto, apontando de forma objetiva qual competência deve ser a prioridade crítica de ação e qual pode ser usada como alavanca positiva na próxima formação.
+                    </p>
                 </div>
 
                 <!-- Tabela Heatmap -->
@@ -376,14 +387,12 @@
                     </div>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-0">
-                        <!-- Chart Area -->
                         <div class="lg:col-span-2 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-slate-200">
                             <div class="chart-container h-[350px] md:h-[450px]">
                                 <canvas id="chartRadar"></canvas>
                             </div>
                         </div>
                         
-                        <!-- Insights de Texto Dinâmicos & Interpretativos -->
                         <div class="lg:col-span-1 bg-white p-6 md:p-8 flex flex-col">
                             <h4 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1">Interpretação de Resultados</h4>
                             <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">O que significa este recorte selecionado?</p>
@@ -400,9 +409,22 @@
             <!-- PÁGINA 3: RÉGUA DE MATURIDADE DETALHADA -->
             <div id="page-regua" class="page-section space-y-8 hidden fade-update">
                 
-                <div class="border-l-4 border-emerald-500 pl-4 mb-6">
+                <div class="border-l-4 border-emerald-500 pl-4 mb-4">
                     <h2 class="text-2xl font-bold text-slate-900">Régua de Maturidade (Microavanços)</h2>
-                    <p class="mt-1 text-slate-600">Acompanhamento detalhado das 11 faixas de maturidade para direcionar metas específicas (100, 300, 500).</p>
+                    <p class="mt-1 text-slate-600">Acompanhamento detalhado das 11 faixas de maturidade para direcionar metas específicas.</p>
+                </div>
+
+                <!-- Bloco de Contexto Estratégico (Régua de Maturidade) -->
+                <div class="bg-emerald-50 border border-emerald-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
+                    <h4 class="text-sm font-bold text-emerald-800 mb-2 flex items-center">
+                        <i class="ph-fill ph-info mr-2 text-lg"></i> Entenda a Régua de Maturidade e os Microavanços
+                    </h4>
+                    <p class="text-xs text-slate-700 leading-relaxed mb-2">
+                        <strong>Objetivo desta página:</strong> Dar visibilidade ao esforço real do município através dos "microavanços". Muitas vezes, um território evolui consideravelmente na sua pontuação, mas mantém-se na mesma cor macro (Nível 1, 2, 3 ou 4). Esta régua de 11 faixas revela essa evolução e esforço oculto.
+                    </p>
+                    <p class="text-xs text-slate-700 leading-relaxed">
+                        <strong>Como utilizar:</strong> A tabela abaixo calcula o "Gap" exato (a distância em pontos numéricos) para o próximo subnível. Gestores podem e devem usar esta visão para encorajar municípios que estão a poucos décimos de bater a meta e desenhar intervenções mais agressivas e acompanhamento próximo para aqueles que estão estagnados.
+                    </p>
                 </div>
 
                 <!-- Gráfico Detalhado de Distribuição -->
@@ -460,7 +482,7 @@
                     <p class="mt-1 text-slate-600">Cruze quaisquer competências e descubra exatamente o que exige ação imediata.</p>
                 </div>
 
-                <!-- NOVO Bloco de Contexto Estratégico (Trilhas & Clusters) -->
+                <!-- Bloco de Contexto Estratégico (Trilhas & Clusters) -->
                 <div class="bg-indigo-50 border border-indigo-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
                     <h4 class="text-sm font-bold text-indigo-800 mb-2 flex items-center">
                         <i class="ph-fill ph-info mr-2 text-lg"></i> Entenda a Inteligência de Trilhas e Clusters
@@ -486,75 +508,19 @@
                                 <div>
                                     <label class="block text-xs font-bold text-blue-600 mb-1">Eixo Horizontal (X)</label>
                                     <select id="selEixoX" class="w-full text-xs border border-slate-300 rounded-lg px-2 py-2 focus:ring-blue-500 bg-white font-medium shadow-sm" onchange="updateClusters()">
-                                        <optgroup label="Médias Gerais">
-                                            <option value="mob" selected>Média Mobilização (MOB)</option>
-                                            <option value="gesc">Média Gestão Escolar (GESC)</option>
-                                            <option value="gedu">Média Gestão Educ. (GEDU)</option>
-                                        </optgroup>
-                                        <optgroup label="Gestão Escolar (GESC)">
-                                            <option value="gesc_c1">C1 - Processos de gestão</option>
-                                            <option value="gesc_c2">C2 - Registro e doc.</option>
-                                            <option value="gesc_c3">C3 - Acompanhamento aprend.</option>
-                                            <option value="gesc_c4">C4 - Equipe colaborativa</option>
-                                            <option value="gesc_c5">C5 - Parcerias/Mobilização</option>
-                                            <option value="gesc_c6">C6 - Articulação de redes</option>
-                                            <option value="gesc_c7">C7 - Formação continuada</option>
-                                            <option value="gesc_c8">C8 - Gestão de recursos</option>
-                                        </optgroup>
-                                        <optgroup label="Gestão Educacional (GEDU)">
-                                            <option value="gedu_c1">C1 - Processos de gestão</option>
-                                            <option value="gedu_c2">C2 - Registro e doc.</option>
-                                            <option value="gedu_c3">C3 - Acompanhamento aprend.</option>
-                                            <option value="gedu_c4">C4 - Equipe colaborativa</option>
-                                            <option value="gedu_c5">C5 - Parcerias/Mobilização</option>
-                                            <option value="gedu_c6">C6 - Articulação de redes</option>
-                                            <option value="gedu_c7">C7 - Formação continuada</option>
-                                            <option value="gedu_c8">C8 - Gestão de recursos</option>
-                                        </optgroup>
-                                        <optgroup label="Mobilização Social (MOB)">
-                                            <option value="mob_c1">C1 - Conhecimento</option>
-                                            <option value="mob_c2">C2 - Atitude</option>
-                                            <option value="mob_c3">C3 - Estrutura</option>
-                                            <option value="mob_c4">C4 - Vitalidade</option>
-                                            <option value="mob_c5">C5 - Cobertura</option>
-                                        </optgroup>
+                                        <optgroup label="Médias Gerais"><option value="gesc">Média Gestão Escolar (GESC)</option><option value="gedu">Média Gestão Educ. (GEDU)</option><option value="mob" selected>Média Mobilização (MOB)</option></optgroup>
+                                        <optgroup label="Gestão Escolar (GESC)"><option value="gesc_c1">C1 - Processos de gestão</option><option value="gesc_c2">C2 - Registro e doc.</option><option value="gesc_c3">C3 - Acompanhamento aprend.</option><option value="gesc_c4">C4 - Equipe colaborativa</option><option value="gesc_c5">C5 - Parcerias/Mobilização</option><option value="gesc_c6">C6 - Articulação de redes</option><option value="gesc_c7">C7 - Formação continuada</option><option value="gesc_c8">C8 - Gestão de recursos</option></optgroup>
+                                        <optgroup label="Gestão Educacional (GEDU)"><option value="gedu_c1">C1 - Processos de gestão</option><option value="gedu_c2">C2 - Registro e doc.</option><option value="gedu_c3">C3 - Acompanhamento aprend.</option><option value="gedu_c4">C4 - Equipe colaborativa</option><option value="gedu_c5">C5 - Parcerias/Mobilização</option><option value="gedu_c6">C6 - Articulação de redes</option><option value="gedu_c7">C7 - Formação continuada</option><option value="gedu_c8">C8 - Gestão de recursos</option></optgroup>
+                                        <optgroup label="Mobilização Social (MOB)"><option value="mob_c1">C1 - Conhecimento</option><option value="mob_c2">C2 - Atitude</option><option value="mob_c3">C3 - Estrutura</option><option value="mob_c4">C4 - Vitalidade</option><option value="mob_c5">C5 - Cobertura</option></optgroup>
                                     </select>
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold text-blue-600 mb-1">Eixo Vertical (Y)</label>
                                     <select id="selEixoY" class="w-full text-xs border border-slate-300 rounded-lg px-2 py-2 focus:ring-blue-500 bg-white font-medium shadow-sm" onchange="updateClusters()">
-                                        <optgroup label="Médias Gerais">
-                                            <option value="gesc" selected>Média Gestão Escolar (GESC)</option>
-                                            <option value="gedu">Média Gestão Educ. (GEDU)</option>
-                                            <option value="mob">Média Mobilização (MOB)</option>
-                                        </optgroup>
-                                        <optgroup label="Gestão Escolar (GESC)">
-                                            <option value="gesc_c1">C1 - Processos de gestão</option>
-                                            <option value="gesc_c2">C2 - Registro e doc.</option>
-                                            <option value="gesc_c3">C3 - Acompanhamento aprend.</option>
-                                            <option value="gesc_c4">C4 - Equipe colaborativa</option>
-                                            <option value="gesc_c5">C5 - Parcerias/Mobilização</option>
-                                            <option value="gesc_c6">C6 - Articulação de redes</option>
-                                            <option value="gesc_c7">C7 - Formação continuada</option>
-                                            <option value="gesc_c8">C8 - Gestão de recursos</option>
-                                        </optgroup>
-                                        <optgroup label="Gestão Educacional (GEDU)">
-                                            <option value="gedu_c1">C1 - Processos de gestão</option>
-                                            <option value="gedu_c2">C2 - Registro e doc.</option>
-                                            <option value="gedu_c3">C3 - Acompanhamento aprend.</option>
-                                            <option value="gedu_c4">C4 - Equipe colaborativa</option>
-                                            <option value="gedu_c5">C5 - Parcerias/Mobilização</option>
-                                            <option value="gedu_c6">C6 - Articulação de redes</option>
-                                            <option value="gedu_c7">C7 - Formação continuada</option>
-                                            <option value="gedu_c8">C8 - Gestão de recursos</option>
-                                        </optgroup>
-                                        <optgroup label="Mobilização Social (MOB)">
-                                            <option value="mob_c1">C1 - Conhecimento</option>
-                                            <option value="mob_c2">C2 - Atitude</option>
-                                            <option value="mob_c3">C3 - Estrutura</option>
-                                            <option value="mob_c4">C4 - Vitalidade</option>
-                                            <option value="mob_c5">C5 - Cobertura</option>
-                                        </optgroup>
+                                        <optgroup label="Médias Gerais"><option value="gedu">Média Gestão Educ. (GEDU)</option><option value="gesc" selected>Média Gestão Escolar (GESC)</option><option value="mob">Média Mobilização (MOB)</option></optgroup>
+                                        <optgroup label="Gestão Escolar (GESC)"><option value="gesc_c1">C1 - Processos de gestão</option><option value="gesc_c2">C2 - Registro e doc.</option><option value="gesc_c3">C3 - Acompanhamento aprend.</option><option value="gesc_c4">C4 - Equipe colaborativa</option><option value="gesc_c5">C5 - Parcerias/Mobilização</option><option value="gesc_c6">C6 - Articulação de redes</option><option value="gesc_c7">C7 - Formação continuada</option><option value="gesc_c8">C8 - Gestão de recursos</option></optgroup>
+                                        <optgroup label="Gestão Educacional (GEDU)"><option value="gedu_c1">C1 - Processos de gestão</option><option value="gedu_c2">C2 - Registro e doc.</option><option value="gedu_c3">C3 - Acompanhamento aprend.</option><option value="gedu_c4">C4 - Equipe colaborativa</option><option value="gedu_c5">C5 - Parcerias/Mobilização</option><option value="gedu_c6">C6 - Articulação de redes</option><option value="gedu_c7">C7 - Formação continuada</option><option value="gedu_c8">C8 - Gestão de recursos</option></optgroup>
+                                        <optgroup label="Mobilização Social (MOB)"><option value="mob_c1">C1 - Conhecimento</option><option value="mob_c2">C2 - Atitude</option><option value="mob_c3">C3 - Estrutura</option><option value="mob_c4">C4 - Vitalidade</option><option value="mob_c5">C5 - Cobertura</option></optgroup>
                                     </select>
                                 </div>
                             </div>
@@ -619,10 +585,10 @@
                 
                 <div class="border-l-4 border-violet-600 pl-4 mb-4">
                     <h2 class="text-2xl font-bold text-slate-900">Projeção de Metas 2026</h2>
-                    <p class="mt-1 text-slate-600">Direcionamento estratégico e expectativa de avanço (Metas 100, 300 e 500) por município.</p>
+                    <p class="mt-1 text-slate-600">Direcionamento estratégico e expectativa de avanço (Metas 100, 300, 500) por município.</p>
                 </div>
                 
-                <!-- NOVO Bloco de Contexto Estratégico -->
+                <!-- Bloco de Contexto Estratégico -->
                 <div class="bg-violet-50 border border-violet-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
                     <h4 class="text-sm font-bold text-violet-800 mb-2 flex items-center">
                         <i class="ph-fill ph-info mr-2 text-lg"></i> Entenda a Projeção de Metas
