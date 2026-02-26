@@ -153,7 +153,7 @@
                 </button>
                 <button id="nav-page-metas" onclick="switchPage('page-metas')" class="nav-link w-full flex items-center px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
                     <i class="ph ph-target text-xl mr-3 group-hover:text-blue-400 transition-colors"></i>
-                    <span class="font-medium text-sm">Metas 2026</span>
+                    <span class="font-medium text-sm">Projeção de Metas</span>
                 </button>
             </nav>
         </div>
@@ -227,7 +227,7 @@
                     <p class="mt-1 text-slate-600">Acompanhamento do impacto, esforço da rede e atingimento de metas do PVE.</p>
                 </div>
 
-                <!-- Linha 1 - Operação e Impacto -->
+                <!-- Linha 1 - Operação e Impacto Reestruturada (Sem Dados Fictícios) -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Impacto: IDEB -->
                     <div class="bg-gradient-to-br from-indigo-700 to-blue-900 rounded-xl shadow-md p-6 text-white flex flex-col justify-center relative overflow-hidden">
@@ -455,10 +455,24 @@
 
             <!-- PÁGINA 4: CLUSTERIZAÇÃO & TRILHAS -->
             <div id="page-cluster" class="page-section space-y-8 hidden fade-update">
-                <div class="border-l-4 border-indigo-500 pl-4 mb-6">
+                <div class="border-l-4 border-indigo-500 pl-4 mb-4">
                     <h2 class="text-2xl font-bold text-slate-900">Inteligência de Trilhas e Clusters</h2>
                     <p class="mt-1 text-slate-600">Cruze quaisquer competências e descubra exatamente o que exige ação imediata.</p>
                 </div>
+
+                <!-- NOVO Bloco de Contexto Estratégico (Trilhas & Clusters) -->
+                <div class="bg-indigo-50 border border-indigo-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
+                    <h4 class="text-sm font-bold text-indigo-800 mb-2 flex items-center">
+                        <i class="ph-fill ph-info mr-2 text-lg"></i> Entenda a Inteligência de Trilhas e Clusters
+                    </h4>
+                    <p class="text-xs text-slate-700 leading-relaxed mb-2">
+                        <strong>Objetivo desta página:</strong> Cruzar dados de diferentes frentes para identificar padrões de comportamento (clusters) entre os municípios. O gráfico de dispersão ajuda a visualizar rapidamente quem precisa de apoio integrado em áreas específicas.
+                    </p>
+                    <p class="text-xs text-slate-700 leading-relaxed">
+                        <strong>Motor de Priorização e IA:</strong> Com base nos eixos selecionados no gráfico, o motor analisa as competências com as menores notas e as consolida. O botão "Gerar Comando para IA" cria uma instrução perfeita para o <strong>Gemini</strong> sugerir pautas formativas e dinâmicas práticas sob medida para resolver essas fragilidades.
+                    </p>
+                </div>
+
                 <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
                     
                     <!-- Bubble Chart com Novo Dropdown Dinâmico (Lista Completa) -->
@@ -472,19 +486,75 @@
                                 <div>
                                     <label class="block text-xs font-bold text-blue-600 mb-1">Eixo Horizontal (X)</label>
                                     <select id="selEixoX" class="w-full text-xs border border-slate-300 rounded-lg px-2 py-2 focus:ring-blue-500 bg-white font-medium shadow-sm" onchange="updateClusters()">
-                                        <optgroup label="Médias Gerais"><option value="gesc">Média Gestão Escolar (GESC)</option><option value="gedu">Média Gestão Educ. (GEDU)</option><option value="mob">Média Mobilização (MOB)</option></optgroup>
-                                        <optgroup label="Gestão Escolar (GESC)"><option value="gesc_c1">C1 - Processos de gestão</option><option value="gesc_c2">C2 - Registro e doc.</option><option value="gesc_c3">C3 - Acompanhamento aprend.</option><option value="gesc_c4">C4 - Equipe colaborativa</option><option value="gesc_c5">C5 - Parcerias/Mobilização</option><option value="gesc_c6">C6 - Articulação de redes</option><option value="gesc_c7">C7 - Formação continuada</option><option value="gesc_c8">C8 - Gestão de recursos</option></optgroup>
-                                        <optgroup label="Gestão Educacional (GEDU)"><option value="gedu_c1">C1 - Processos de gestão</option><option value="gedu_c2">C2 - Registro e doc.</option><option value="gedu_c3">C3 - Acompanhamento aprend.</option><option value="gedu_c4">C4 - Equipe colaborativa</option><option value="gedu_c5">C5 - Parcerias/Mobilização</option><option value="gedu_c6">C6 - Articulação de redes</option><option value="gedu_c7">C7 - Formação continuada</option><option value="gedu_c8">C8 - Gestão de recursos</option></optgroup>
-                                        <optgroup label="Mobilização Social (MOB)"><option value="mob_c1">C1 - Conhecimento</option><option value="mob_c2">C2 - Atitude</option><option value="mob_c3">C3 - Estrutura</option><option value="mob_c4">C4 - Vitalidade</option><option value="mob_c5">C5 - Cobertura</option></optgroup>
+                                        <optgroup label="Médias Gerais">
+                                            <option value="mob" selected>Média Mobilização (MOB)</option>
+                                            <option value="gesc">Média Gestão Escolar (GESC)</option>
+                                            <option value="gedu">Média Gestão Educ. (GEDU)</option>
+                                        </optgroup>
+                                        <optgroup label="Gestão Escolar (GESC)">
+                                            <option value="gesc_c1">C1 - Processos de gestão</option>
+                                            <option value="gesc_c2">C2 - Registro e doc.</option>
+                                            <option value="gesc_c3">C3 - Acompanhamento aprend.</option>
+                                            <option value="gesc_c4">C4 - Equipe colaborativa</option>
+                                            <option value="gesc_c5">C5 - Parcerias/Mobilização</option>
+                                            <option value="gesc_c6">C6 - Articulação de redes</option>
+                                            <option value="gesc_c7">C7 - Formação continuada</option>
+                                            <option value="gesc_c8">C8 - Gestão de recursos</option>
+                                        </optgroup>
+                                        <optgroup label="Gestão Educacional (GEDU)">
+                                            <option value="gedu_c1">C1 - Processos de gestão</option>
+                                            <option value="gedu_c2">C2 - Registro e doc.</option>
+                                            <option value="gedu_c3">C3 - Acompanhamento aprend.</option>
+                                            <option value="gedu_c4">C4 - Equipe colaborativa</option>
+                                            <option value="gedu_c5">C5 - Parcerias/Mobilização</option>
+                                            <option value="gedu_c6">C6 - Articulação de redes</option>
+                                            <option value="gedu_c7">C7 - Formação continuada</option>
+                                            <option value="gedu_c8">C8 - Gestão de recursos</option>
+                                        </optgroup>
+                                        <optgroup label="Mobilização Social (MOB)">
+                                            <option value="mob_c1">C1 - Conhecimento</option>
+                                            <option value="mob_c2">C2 - Atitude</option>
+                                            <option value="mob_c3">C3 - Estrutura</option>
+                                            <option value="mob_c4">C4 - Vitalidade</option>
+                                            <option value="mob_c5">C5 - Cobertura</option>
+                                        </optgroup>
                                     </select>
                                 </div>
                                 <div>
                                     <label class="block text-xs font-bold text-blue-600 mb-1">Eixo Vertical (Y)</label>
                                     <select id="selEixoY" class="w-full text-xs border border-slate-300 rounded-lg px-2 py-2 focus:ring-blue-500 bg-white font-medium shadow-sm" onchange="updateClusters()">
-                                        <optgroup label="Médias Gerais"><option value="gedu" selected>Média Gestão Educ. (GEDU)</option><option value="gesc">Média Gestão Escolar (GESC)</option><option value="mob">Média Mobilização (MOB)</option></optgroup>
-                                        <optgroup label="Gestão Escolar (GESC)"><option value="gesc_c1">C1 - Processos de gestão</option><option value="gesc_c2">C2 - Registro e doc.</option><option value="gesc_c3">C3 - Acompanhamento aprend.</option><option value="gesc_c4">C4 - Equipe colaborativa</option><option value="gesc_c5">C5 - Parcerias/Mobilização</option><option value="gesc_c6">C6 - Articulação de redes</option><option value="gesc_c7">C7 - Formação continuada</option><option value="gesc_c8">C8 - Gestão de recursos</option></optgroup>
-                                        <optgroup label="Gestão Educacional (GEDU)"><option value="gedu_c1">C1 - Processos de gestão</option><option value="gedu_c2">C2 - Registro e doc.</option><option value="gedu_c3">C3 - Acompanhamento aprend.</option><option value="gedu_c4">C4 - Equipe colaborativa</option><option value="gedu_c5">C5 - Parcerias/Mobilização</option><option value="gedu_c6">C6 - Articulação de redes</option><option value="gedu_c7">C7 - Formação continuada</option><option value="gedu_c8">C8 - Gestão de recursos</option></optgroup>
-                                        <optgroup label="Mobilização Social (MOB)"><option value="mob_c1">C1 - Conhecimento</option><option value="mob_c2">C2 - Atitude</option><option value="mob_c3">C3 - Estrutura</option><option value="mob_c4">C4 - Vitalidade</option><option value="mob_c5">C5 - Cobertura</option></optgroup>
+                                        <optgroup label="Médias Gerais">
+                                            <option value="gesc" selected>Média Gestão Escolar (GESC)</option>
+                                            <option value="gedu">Média Gestão Educ. (GEDU)</option>
+                                            <option value="mob">Média Mobilização (MOB)</option>
+                                        </optgroup>
+                                        <optgroup label="Gestão Escolar (GESC)">
+                                            <option value="gesc_c1">C1 - Processos de gestão</option>
+                                            <option value="gesc_c2">C2 - Registro e doc.</option>
+                                            <option value="gesc_c3">C3 - Acompanhamento aprend.</option>
+                                            <option value="gesc_c4">C4 - Equipe colaborativa</option>
+                                            <option value="gesc_c5">C5 - Parcerias/Mobilização</option>
+                                            <option value="gesc_c6">C6 - Articulação de redes</option>
+                                            <option value="gesc_c7">C7 - Formação continuada</option>
+                                            <option value="gesc_c8">C8 - Gestão de recursos</option>
+                                        </optgroup>
+                                        <optgroup label="Gestão Educacional (GEDU)">
+                                            <option value="gedu_c1">C1 - Processos de gestão</option>
+                                            <option value="gedu_c2">C2 - Registro e doc.</option>
+                                            <option value="gedu_c3">C3 - Acompanhamento aprend.</option>
+                                            <option value="gedu_c4">C4 - Equipe colaborativa</option>
+                                            <option value="gedu_c5">C5 - Parcerias/Mobilização</option>
+                                            <option value="gedu_c6">C6 - Articulação de redes</option>
+                                            <option value="gedu_c7">C7 - Formação continuada</option>
+                                            <option value="gedu_c8">C8 - Gestão de recursos</option>
+                                        </optgroup>
+                                        <optgroup label="Mobilização Social (MOB)">
+                                            <option value="mob_c1">C1 - Conhecimento</option>
+                                            <option value="mob_c2">C2 - Atitude</option>
+                                            <option value="mob_c3">C3 - Estrutura</option>
+                                            <option value="mob_c4">C4 - Vitalidade</option>
+                                            <option value="mob_c5">C5 - Cobertura</option>
+                                        </optgroup>
                                     </select>
                                 </div>
                             </div>
@@ -501,7 +571,7 @@
                                     <div class="bg-emerald-50 border-l-2 border-emerald-500 p-2 rounded shadow-sm"><span class="font-bold text-emerald-700 block mb-1">Nível 3: Consolidado (3.0-3.4)</span><span class="text-slate-600">Conhecimento pleno. Práticas rotineiras e estabelecidas.</span></div>
                                     <div class="bg-blue-50 border-l-2 border-blue-500 p-2 rounded shadow-sm"><span class="font-bold text-blue-700 block mb-1">Nível 4: Robusto (≥ 3.5)</span><span class="text-slate-600">Conhecimento avançado. Rotinas formalizadas e consistentes.</span></div>
                                 </div>
-                                <p class="text-[9px] text-slate-400 mt-3 text-center uppercase tracking-widest font-bold">O tamanho da bolha reflete a média da frente selecionada no Eixo X.</p>
+                                <p class="text-[9px] text-slate-400 mt-3 text-center uppercase tracking-widest font-bold">O tamanho da bolha reflete a média da frente correspondente ao Eixo X.</p>
                             </div>
                         </div>
                     </div>
@@ -547,9 +617,22 @@
             <!-- ========================================== -->
             <div id="page-metas" class="page-section space-y-8 hidden fade-update">
                 
-                <div class="border-l-4 border-violet-600 pl-4 mb-6">
-                    <h2 class="text-2xl font-bold text-slate-900">Metas e Contratualização 2026</h2>
-                    <p class="mt-1 text-slate-600">Projeção automática de metas de avanço (100, 300, 500) com base no nível de maturidade aferido no ciclo anterior.</p>
+                <div class="border-l-4 border-violet-600 pl-4 mb-4">
+                    <h2 class="text-2xl font-bold text-slate-900">Projeção de Metas 2026</h2>
+                    <p class="mt-1 text-slate-600">Direcionamento estratégico e expectativa de avanço (Metas 100, 300 e 500) por município.</p>
+                </div>
+                
+                <!-- NOVO Bloco de Contexto Estratégico -->
+                <div class="bg-violet-50 border border-violet-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
+                    <h4 class="text-sm font-bold text-violet-800 mb-2 flex items-center">
+                        <i class="ph-fill ph-info mr-2 text-lg"></i> Entenda a Projeção de Metas
+                    </h4>
+                    <p class="text-xs text-slate-700 leading-relaxed mb-2">
+                        <strong>Objetivo desta página:</strong> Traduzir o diagnóstico do ciclo anterior em um norte claro para a equipe formativa. Sabendo exatamente quantas competências cada município precisa avançar, o formador pode calibrar a intensidade do seu acompanhamento e do plano de ação.
+                    </p>
+                    <p class="text-xs text-slate-700 leading-relaxed">
+                        <strong>Referência oficial:</strong> O cálculo segue as diretrizes metodológicas do <em>PVE IV BNDES</em>. A regra estabelece que municípios com maturidade menor (ex: Nível 2) possuem metas de <span class="text-amber-700 font-bold">alta intensidade</span> (avançar de 7 a 10 competências). Já os municípios mais consolidados (Níveis 3 e 4) possuem metas de <span class="text-emerald-700 font-bold">refinamento</span> (avançar poucas competências ou apenas focar na manutenção da excelência).
+                    </p>
                 </div>
 
                 <!-- Resumo Executivo das Metas -->
@@ -567,7 +650,7 @@
                     <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-emerald-500 flex flex-col justify-center">
                         <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-check-circle text-emerald-500 mr-2"></i> Refinamento (Nível 3 e 4)</h4>
                         <span id="metaRefinamento" class="text-4xl font-bold text-emerald-600 mt-2">-</span>
-                        <p class="text-xs text-slate-500 mt-2">Foco em manutenção e saltos curtos (4 a 6 competências).</p>
+                        <p class="text-xs text-slate-500 mt-2">Foco em manutenção e saltos curtos (1 a 6 competências).</p>
                     </div>
                 </div>
 
@@ -585,7 +668,7 @@
                     <div class="xl:col-span-2 bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden flex flex-col">
                         <div class="p-6 border-b border-slate-100 bg-slate-50 flex justify-between items-center flex-wrap gap-4">
                             <div>
-                                <h3 class="font-bold text-slate-800 text-lg">Painel de Metas Individuais</h3>
+                                <h3 class="font-bold text-slate-800 text-lg">Painel de Metas por Município</h3>
                                 <p class="text-xs text-slate-500 mt-1">Cálculo gerado automaticamente segundo a tabela oficial do PVE IV BNDES.</p>
                             </div>
                         </div>
@@ -694,7 +777,7 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
             'page-regua': 'Régua de Maturidade e Gaps',
             'page-mapa': 'Diagnóstico & Raio-X',
             'page-cluster': 'Trilhas & Clusters',
-            'page-metas': 'Metas e Contratualização 2026'
+            'page-metas': 'Projeção de Metas 2026'
         };
 
         function getLevelInfo(score) {
