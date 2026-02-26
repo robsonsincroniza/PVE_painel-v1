@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PVE Gestão | Sincroniza Educação</title>
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS com plugin de Tipografia (Para formatar o texto da IA) -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     
     <!-- Chart.js e Plugin para Rótulos -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -17,6 +17,9 @@
 
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Marked.js (Para converter o Markdown da IA em HTML visível) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -164,7 +167,7 @@
                 <span class="text-xs font-medium text-slate-400">Status: Conectado</span>
             </div>
             <div class="px-2 mt-2">
-                <p class="text-[10px] text-slate-500">Suporte:</p>
+                <p class="text-[10px] text-slate-500">Suporte técnico:</p>
                 <a href="mailto:robson@sincronizaeducacao.com.br" class="text-[10px] text-blue-400 hover:underline">robson@sincronizaeducacao.com.br</a>
             </div>
         </div>
@@ -229,6 +232,7 @@
 
                 <!-- Linha 1 - Operação e Impacto -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Impacto: IDEB -->
                     <div class="bg-gradient-to-br from-indigo-700 to-blue-900 rounded-xl shadow-md p-6 text-white flex flex-col justify-center relative overflow-hidden">
                         <i class="ph-fill ph-student absolute -right-4 -top-4 text-7xl text-white opacity-10"></i>
                         <span class="text-blue-200 text-xs font-bold uppercase tracking-wider">Métrica de Impacto Final</span>
@@ -239,6 +243,7 @@
                         <span class="text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider bg-white/20 border border-white/30 inline-block w-max">Foco na Aprendizagem</span>
                     </div>
                     
+                    <!-- Operação: Municípios -->
                     <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-center">
                         <span class="text-slate-400 text-xs font-bold uppercase tracking-widest flex items-center">
                             <i class="ph-fill ph-map-pin mr-2 text-blue-500 text-lg"></i> Municípios Analisados
@@ -297,7 +302,7 @@
                     </div>
                 </div>
 
-                <!-- Top Rankings Rápidos -->
+                <!-- Top Rankings Rápidos com Descrições -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-emerald-100 border-t-4 border-t-emerald-500">
                         <h3 class="font-bold text-slate-800 mb-2 flex items-center"><i class="ph-fill ph-trophy mr-2 text-emerald-500 text-xl"></i> Top 3: Destaques da Seleção</h3>
@@ -334,7 +339,7 @@
                         <strong>Objetivo desta página:</strong> Mergulhar no detalhe de cada frente (MOB, GESC, GEDU). O Mapa de Calor (Heatmap) funciona como um scanner, revelando rapidamente as notas de cada competência individual. Cores quentes (vermelho/laranja) indicam fragilidades, enquanto cores frias (verde/azul) indicam consolidação e robustez.
                     </p>
                     <p class="text-xs text-slate-700 leading-relaxed">
-                        <strong>Interpretação de Resultados:</strong> O Gráfico de Radar cruza o desempenho da seleção atual com a Média Nacional do PVE. Ao lado, o nosso motor traduz matematicamente esses dados para texto, apontando de forma objetiva qual competência deve ser a prioridade crítica de ação e qual pode ser usada como alavanca positiva na próxima formação.
+                        <strong>Interpretação de Resultados:</strong> O Gráfico de Radar cruza o desempenho da seleção atual com a Média Nacional do PVE. Ao lado, o motor traduz matematicamente esses dados para texto, apontando de forma objetiva qual competência deve ser a prioridade crítica de ação e qual pode ser usada como alavanca positiva na próxima formação.
                     </p>
                 </div>
 
@@ -389,12 +394,14 @@
                     </div>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-0">
+                        <!-- Chart Area -->
                         <div class="lg:col-span-2 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-slate-200">
                             <div class="chart-container h-[350px] md:h-[450px]">
                                 <canvas id="chartRadar"></canvas>
                             </div>
                         </div>
                         
+                        <!-- Insights de Texto Dinâmicos & Interpretativos -->
                         <div class="lg:col-span-1 bg-white p-6 md:p-8 flex flex-col">
                             <h4 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1">Interpretação de Resultados</h4>
                             <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">O que significa este recorte selecionado?</p>
@@ -493,7 +500,7 @@
                         <strong>Objetivo desta página:</strong> Cruzar dados de diferentes frentes para identificar padrões de comportamento (clusters) entre os municípios. O gráfico de dispersão ajuda a visualizar rapidamente quem precisa de apoio integrado em áreas específicas.
                     </p>
                     <p class="text-xs text-slate-700 leading-relaxed">
-                        <strong>Motor de Priorização e IA:</strong> Com base nos eixos selecionados no gráfico, o motor analisa as competências com as menores notas e as consolida. O botão "Gerar Comando para IA" cria uma instrução perfeita para o <strong>Gemini</strong> sugerir pautas formativas e dinâmicas práticas sob medida para resolver essas fragilidades.
+                        <strong>Motor de Priorização e IA:</strong> Com base nos eixos selecionados no gráfico, o motor analisa as competências com as menores notas e as consolida. O botão "Gerar Pauta Formativa com IA" envia essas lacunas para a API do Google Gemini, criando instantaneamente uma sugestão de agenda prática e dinâmicas adequadas.
                     </p>
                 </div>
 
@@ -544,7 +551,7 @@
                         </div>
                     </div>
 
-                    <!-- Engine de Priorização -->
+                    <!-- Engine de Priorização & IA API -->
                     <div class="bg-white rounded-xl shadow-lg border border-slate-200 flex flex-col overflow-hidden">
                         <div class="p-6 bg-slate-800 text-white border-b border-slate-700 flex justify-between items-center">
                             <div>
@@ -562,20 +569,40 @@
                                 <ul id="listAtencao" class="space-y-2"><li class="text-sm text-slate-500 italic">A processar dados...</li></ul>
                             </div>
                         </div>
-                        <div class="p-5 bg-white border-t border-slate-200 flex flex-col items-center">
+                        
+                        <!-- INTEGRAÇÃO NATIVA IA -->
+                        <div class="p-4 bg-white border-t border-slate-200 flex flex-col items-center">
                             <p class="text-xs text-slate-500 mb-3 text-center leading-relaxed">
-                                <strong>Assistente Pedagógico:</strong> Utilize a inteligência artificial para transformar os gargalos mapeados acima em uma proposta de pauta formativa prática e sob medida.
+                                <strong>Assistente Pedagógico (IA):</strong> Transforma os gargalos mapeados acima em uma proposta de pauta formativa prática e sob medida.
                             </p>
-                            <button onclick="generatePrompt()" class="w-full bg-blue-600 text-white px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-wide hover:bg-blue-700 transition-colors shadow-md flex justify-center items-center"><i class="ph-bold ph-magic-wand mr-2"></i> Gerar Comando para IA (Copiloto)</button>
+                            <button onclick="generateAIAgenda()" id="btnGenerateAI" class="w-full bg-blue-600 text-white px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-wide hover:bg-blue-700 transition-colors shadow-md flex justify-center items-center">
+                                <i class="ph-bold ph-magic-wand mr-2"></i> Gerar Pauta com Inteligência Artificial
+                            </button>
                         </div>
-                        <div id="promptContainer" class="hidden p-4 bg-blue-50 border-t border-blue-100 flex flex-col">
-                            <div class="flex justify-between items-center mb-2">
-                                <label class="text-[11px] font-bold text-blue-800 uppercase tracking-widest">Texto Gerado (Copie e cole no Gemini):</label>
-                                <button onclick="document.getElementById('promptContainer').classList.add('hidden')" class="text-slate-400 hover:text-slate-600"><i class="ph-bold ph-x"></i></button>
+                        
+                        <!-- RESULTADO DA IA -->
+                        <div id="aiResultContainer" class="hidden p-5 bg-blue-50 border-t border-blue-100 flex flex-col">
+                            <div class="flex justify-between items-center mb-3">
+                                <label class="text-[11px] font-bold text-blue-800 uppercase tracking-widest flex items-center">
+                                    <i class="ph-fill ph-robot mr-1 text-lg"></i> Resposta do Assistente PVE
+                                </label>
+                                <button onclick="document.getElementById('aiResultContainer').classList.add('hidden')" class="text-slate-400 hover:text-slate-600"><i class="ph-bold ph-x"></i></button>
                             </div>
-                            <textarea id="promptTextArea" class="w-full h-48 p-3 text-xs font-mono text-slate-700 border border-blue-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 mb-3 bg-white" readonly></textarea>
-                            <button onclick="copyPrompt()" id="btnCopyPrompt" class="w-full bg-slate-800 text-white px-4 py-2.5 rounded-lg text-sm font-bold hover:bg-slate-700 transition-colors flex justify-center items-center shadow-md"><i class="ph-bold ph-copy mr-2"></i> Copiar Texto</button>
+                            
+                            <div id="aiLoading" class="hidden flex flex-col items-center justify-center py-8">
+                                <i class="ph ph-spinner-gap text-4xl text-blue-500 animate-spin mb-3"></i>
+                                <p class="text-sm text-blue-800 font-medium">Analisando dados e gerando a pauta...</p>
+                            </div>
+
+                            <div id="aiContent" class="prose prose-sm prose-slate max-w-none text-slate-700 bg-white p-5 rounded-lg border border-blue-200 shadow-inner max-h-80 overflow-y-auto mb-3 hidden">
+                                <!-- Conteúdo injetado aqui via marked.js -->
+                            </div>
+
+                            <button onclick="copyAIResult()" id="btnCopyAIResult" class="w-full bg-slate-800 text-white px-4 py-2.5 rounded-lg text-sm font-bold hover:bg-slate-700 transition-colors flex justify-center items-center shadow-md hidden">
+                                <i class="ph-bold ph-copy mr-2"></i> Copiar Pauta Formativa
+                            </button>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -669,35 +696,35 @@
         Chart.register(ChartDataLabels);
 
         // ==========================================
-        // DADOS (Base de Dados Embutida Oficial)
+        // DADOS (Base de Dados Embutida Oficial Formatada Seguro/Commas)
         // ==========================================
         const RAW_CSV_DATA = `Instituto Votorantim,,,,Acaraú,Armação de Búzios,Bela Cruz,Cidreira Pós Conselho,Cordeiros,Cortês,Encruzilhada do Sul,Epitaciolândia,Extremoz,Formoso do Araguaia,Goiatins,Ilha de Itamaracá,Itapororoca,Jardim do Mulato Pós Conselho,Laranjal do Jari Pós Conselho,Monte Azul Paulista Pós Conselho,Monte Mor,Nova Timboteua,Ocara,Palmeira,Paraíso do Tocantins,Pau D'Arco Pós Conselho,Pitanga,Porto Nacional Pós Conselho,Porto Walter,Rio Tinto Pós Conselho,Salto de Pirapora Pós Conselho,Santo Antônio da Platina Pós Conselho,São Caitano,Videira Pós Conselho,Wanderlândia Pós Conselho
 META 2025,,,,Avançar 10 competências,Avançar 9 competências,Avançar 6 competências,Avançar 7 Competências,Avançar 10 competências,Avançar 10 competências,Avançar 10 competências,Avançar 6 competências,Avançar 10 competências,Avançar 6 competências,Avançar 9 competências,Avançar 10 competências,Avançar 9 competências,Avançar 6 Competências,Avançar 9 Competências,Avançar 10 Competências,Avançar 9 competências,Avançar 10 competências,Avançar 9 competências,Avançar 9 competências,Avançar 9 competências,Avançar 10 Competências,Avançar 9 competências,Avançar 10 Competências,Avançar 10 competências,Avançar 9 Competências,Avançar 9 Competências,Avançar 10 Competências,Avançar 10 competências,Avançar 9 Competências,Avançar 9 Competências
 GEDU - MÉDIA GERAL,,,,3.1,3.2,3.5,2.1,2.5,2.7,2.8,3.1,2.5,3.0,2.6,3.4,2.8,2.7,2.9,3.5,3.3,2.4,3.2,3.1,3.6,2.5,3.4,3.5,2.9,2.8,3.2,3.6,3.0,3.3,2.8
 GESC - MÉDIA GERAL,,,,3.2,3.1,3.6,2.3,2.6,2.8,2.9,3.2,2.6,3.1,2.7,3.5,2.9,2.8,3.0,3.6,3.4,2.5,3.3,3.2,3.7,2.6,3.5,3.6,3.0,2.9,3.3,3.7,3.1,3.4,2.9
 MOB - MÉDIA GERAL,,,,2.53,2.50,3.10,2.28,3.08,2.92,2.01,3.25,2.52,3.19,2.69,2.48,2.88,3.13,3.25,2.72,2.52,3.11,2.80,2.43,3.17,2.51,3.24,2.74,2.59,2.67,2.89,2.32,3.03,2.96,3.09
-Gestão educacional	Competência 1 - Processos de gestão	Planejar	1.1	3.14	3.28	3.57	3.07	3.43	3.50	3.25	3.70	2.91	3.75	2.86	2.75	3.82	3.75	3.44	3.75	3.83	2.89	3.31	3.17	3.37	2.95	3.35	3.48	3.35	3.15	2.71	2.80	3.24	2.44	2.80
-		C1		3.25	2.91	3.42	3.20	3.39	3.45	3.25	3.31	3.09	3.48	2.94	2.93	3.54	3.55	3.25	3.32	3.29	2.68	3.43	2.86	3.25	3.25	3.25	3.40	3.25	3.25	3.03	3.08	3.19	2.67	3.08
-	Competência 2 - Registro e documentação	C2		3.43	3.10	3.67	3.21	3.51	3.55	2.84	3.28	3.27	3.45	3.29	3.01	3.54	3.65	3.31	3.37	3.43	3.02	3.44	2.94	3.27	3.39	3.39	3.38	3.25	3.60	3.33	3.13	3.49	2.75	3.45
-	Competência 3 - Acompanhamento das aprendizagens	C3		3.67	3.07	3.67	3.24	3.48	3.49	2.80	3.60	3.23	3.64	3.25	3.30	3.70	3.72	3.63	3.09	3.51	3.01	3.74	2.63	3.64	3.26	3.42	3.39	3.25	3.48	3.25	3.25	3.60	3.25	3.25
-	Competência 4 - Constituição de equipe colaborativa	C4		3.34	2.87	3.56	3.28	3.24	3.46	3.25	3.46	3.11	3.46	3.29	2.66	3.70	3.60	3.09	3.33	3.38	2.79	3.40	2.69	3.25	3.34	3.34	3.25	3.25	3.25	2.80	3.29	3.11	2.96	3.25
-	Competência 5 - Parcerias e mobilização social	C5		3.30	2.78	3.51	3.00	3.17	3.25	2.52	3.25	3.01	3.43	3.25	2.61	3.34	3.05	3.25	3.05	3.26	2.65	3.40	2.75	3.25	2.66	3.25	3.26	2.61	3.52	3.25	3.25	3.25	2.69	3.32
-	Competência 6 - Articulação entre ações da escola e políticas da rede	C6		3.50	2.80	3.69	3.18	3.37	3.34	2.70	3.42	2.97	3.58	2.90	2.79	3.50	3.51	3.25	3.37	3.25	2.66	3.51	2.71	3.25	3.26	3.05	3.25	2.81	3.70	3.08	3.04	3.35	2.87	3.26
-	Competência 7 - Formação continuada	C7		3.28	2.58	3.49	2.75	2.99	3.52	3.25	3.48	3.20	3.61	3.25	3.01	3.41	3.57	3.25	3.46	3.25	2.88	3.70	2.09	3.25	2.90	3.28	3.35	2.70	3.73	3.06	3.25	2.90	2.96	3.41
-	Competência 8 - Gestão de recursos	C8		3.47	2.73	3.80	3.27	3.30	3.51	2.68	3.60	3.25	3.50	3.25	2.66	3.70	3.72	3.25	3.12	3.25	2.79	3.57	3.20	3.36	3.25	3.45	3.47	2.58	3.70	3.18	3.28	3.22	3.09	3.44
-Gestão escolar	Competência 1 - Processos de gestão	C1		3.45	2.94	3.55	3.07	3.32	3.44	3.33	3.32	3.10	3.68	3.25	3.31	3.25	3.60	3.56	3.20	3.44	3.37	3.25	3.35	3.25	3.25	3.36	3.42	3.25	3.25	3.34	3.40	3.27	3.38	3.38
-	Competência 2 - Registro e documentação	C2		3.70	3.02	3.77	3.18	3.65	3.47	3.55	3.42	3.32	3.69	3.62	3.61	3.30	3.55	3.77	3.45	3.70	3.62	3.53	3.51	3.50	3.49	3.57	3.69	2.91	3.38	3.33	3.61	3.45	3.63	3.66
-	Competência 3 - Acompanhamento das aprendizagens	C3		3.64	3.08	3.79	2.94	3.55	3.53	3.42	3.49	3.16	3.76	3.37	3.47	3.47	3.82	3.61	3.31	3.55	3.49	3.45	3.19	3.33	3.25	3.43	3.39	3.25	3.25	3.29	3.47	3.44	3.29	3.44
-	Competência 4 - Constituição de equipe colaborativa	C4		3.43	3.04	3.67	3.41	3.67	3.48	3.58	3.53	3.30	3.67	3.47	3.60	3.44	3.70	3.61	3.68	3.50	3.65	3.40	3.34	3.34	3.39	3.48	3.49	3.40	3.29	3.32	3.50	3.47	3.42	3.55
-	Competência 5 - Parcerias e mobilização social	C5		3.47	3.03	3.53	2.89	3.50	3.50	3.28	3.25	3.15	3.60	3.49	3.26	3.25	3.51	3.48	3.25	3.28	3.47	3.42	3.21	3.25	3.25	3.49	3.46	2.99	3.29	3.08	3.40	3.51	3.30	3.28
-	Competência 6 - Articulação entre ações da escola e políticas da rede	C6		3.70	3.10	3.74	3.24	3.70	3.63	3.30	3.46	3.25	3.74	3.45	3.48	3.42	3.63	3.48	3.40	3.48	3.63	3.70	2.67	3.48	3.59	3.57	3.41	3.36	3.70	3.25	3.60	3.61	3.46	3.45
-	Competência 7 - Formação continuada	C7		3.41	2.86	3.66	2.90	3.56	3.45	3.46	3.35	2.71	3.57	3.28	3.44	3.25	3.36	3.46	3.67	3.44	3.25	3.32	2.86	3.29	3.09	3.34	3.47	3.49	3.25	3.30	3.15	3.56	3.35	3.20
-	Competência 8 - Gestão de recursos	C8		3.50	3.25	3.72	3.22	3.66	3.48	3.73	3.43	3.39	3.67	3.67	3.48	3.40	3.69	3.64	3.55	3.70	3.72	3.57	3.57	3.47	3.41	3.71	3.53	3.44	3.46	3.40	3.70	3.58	3.69	3.37
-Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	2.60	2.50	3.25	2.08	3.18	2.50	2.58	2.67	3.08	3.25	2.42	2.50	3.25	3.25	2.45	3.29	2.75	3.25	3.25	2.50	2.51	3.25	2.69	3.17	3.26	3.17
-	Competência 2 - Atitude	C2		2.50	2.50	3.14	2.32	3.18	2.66	2.50	3.25	2.63	3.28	2.54	2.60	3.25	3.25	3.25	2.47	2.57	3.25	3.25	2.75	3.25	3.17	3.27	2.50	2.75	2.58	3.25	2.76	3.11	2.52	3.31
-	Competência 3 - Estrutura	C3		2.50	2.50	3.03	1.81	3.16	3.24	1.15	3.26	2.96	2.99	2.75	2.46	2.71	2.80	3.25	2.96	2.50	2.88	2.50	2.50	3.25	2.63	3.25	2.66	2.70	2.61	2.80	2.36	3.16	3.26	3.04
-	Competência 4 - Vitalidade	C4		2.60	2.51	3.08	1.92	3.02	2.87	1.50	3.25	2.83	3.17	2.83	2.56	3.25	3.25	3.25	2.78	2.51	3.17	2.50	2.48	3.25	2.33	3.08	2.58	2.50	2.81	2.60	2.08	2.67	3.25	3.00
-	Competência 5 - Cobertura	C5		2.54	2.50	2.96	2.25	2.93	3.25	2.38	3.26	2.11	3.31	2.83	2.19	2.51	3.25	3.25	2.95	2.50	3.00	2.51	1.99	2.81	1.67	3.33	2.71	2.50	2.86	2.52	1.71	3.06	2.53	2.94`;
+Gestão educacional,Competência 1 - Processos de gestão,Planejar,1.1,3.14,3.28,3.57,3.07,3.43,3.50,3.25,3.70,2.91,3.75,2.86,2.75,3.82,3.75,3.44,3.75,3.83,2.89,3.31,3.17,3.37,2.95,3.35,3.48,3.35,3.15,2.71,2.80,3.24,2.44,2.80
+,C1,,,3.25,2.91,3.42,3.20,3.39,3.45,3.25,3.31,3.09,3.48,2.94,2.93,3.54,3.55,3.25,3.32,3.29,2.68,3.43,2.86,3.25,3.25,3.25,3.40,3.25,3.25,3.03,3.08,3.19,2.67,3.08
+,Competência 2 - Registro e documentação,C2,,3.43,3.10,3.67,3.21,3.51,3.55,2.84,3.28,3.27,3.45,3.29,3.01,3.54,3.65,3.31,3.37,3.43,3.02,3.44,2.94,3.27,3.39,3.39,3.38,3.25,3.60,3.33,3.13,3.49,2.75,3.45
+,Competência 3 - Acompanhamento das aprendizagens,C3,,3.67,3.07,3.67,3.24,3.48,3.49,2.80,3.60,3.23,3.64,3.25,3.30,3.70,3.72,3.63,3.09,3.51,3.01,3.74,2.63,3.64,3.26,3.42,3.39,3.25,3.48,3.25,3.25,3.60,3.25,3.25
+,Competência 4 - Constituição de equipe colaborativa,C4,,3.34,2.87,3.56,3.28,3.24,3.46,3.25,3.46,3.11,3.46,3.29,2.66,3.70,3.60,3.09,3.33,3.38,2.79,3.40,2.69,3.25,3.34,3.34,3.25,3.25,3.25,2.80,3.29,3.11,2.96,3.25
+,Competência 5 - Parcerias e mobilização social,C5,,3.30,2.78,3.51,3.00,3.17,3.25,2.52,3.25,3.01,3.43,3.25,2.61,3.34,3.05,3.25,3.05,3.26,2.65,3.40,2.75,3.25,2.66,3.25,3.26,2.61,3.52,3.25,3.25,3.25,2.69,3.32
+,Competência 6 - Articulação entre ações da escola e políticas da rede,C6,,3.50,2.80,3.69,3.18,3.37,3.34,2.70,3.42,2.97,3.58,2.90,2.79,3.50,3.51,3.25,3.37,3.25,2.66,3.51,2.71,3.25,3.26,3.05,3.25,2.81,3.70,3.08,3.04,3.35,2.87,3.26
+,Competência 7 - Formação continuada,C7,,3.28,2.58,3.49,2.75,2.99,3.52,3.25,3.48,3.20,3.61,3.25,3.01,3.41,3.57,3.25,3.46,3.25,2.88,3.70,2.09,3.25,2.90,3.28,3.35,2.70,3.73,3.06,3.25,2.90,2.96,3.41
+,Competência 8 - Gestão de recursos,C8,,3.47,2.73,3.80,3.27,3.30,3.51,2.68,3.60,3.25,3.50,3.25,2.66,3.70,3.72,3.25,3.12,3.25,2.79,3.57,3.20,3.36,3.25,3.45,3.47,2.58,3.70,3.18,3.28,3.22,3.09,3.44
+Gestão escolar,Competência 1 - Processos de gestão,C1,,3.45,2.94,3.55,3.07,3.32,3.44,3.33,3.32,3.10,3.68,3.25,3.31,3.25,3.60,3.56,3.20,3.44,3.37,3.25,3.35,3.25,3.25,3.36,3.42,3.25,3.25,3.34,3.40,3.27,3.38,3.38
+,Competência 2 - Registro e documentação,C2,,3.70,3.02,3.77,3.18,3.65,3.47,3.55,3.42,3.32,3.69,3.62,3.61,3.30,3.55,3.77,3.45,3.70,3.62,3.53,3.51,3.50,3.49,3.57,3.69,2.91,3.38,3.33,3.61,3.45,3.63,3.66
+,Competência 3 - Acompanhamento das aprendizagens,C3,,3.64,3.08,3.79,2.94,3.55,3.53,3.42,3.49,3.16,3.76,3.37,3.47,3.47,3.82,3.61,3.31,3.55,3.49,3.45,3.19,3.33,3.25,3.43,3.39,3.25,3.25,3.29,3.47,3.44,3.29,3.44
+,Competência 4 - Constituição de equipe colaborativa,C4,,3.43,3.04,3.67,3.41,3.67,3.48,3.58,3.53,3.30,3.67,3.47,3.60,3.44,3.70,3.61,3.68,3.50,3.65,3.40,3.34,3.34,3.39,3.48,3.49,3.40,3.29,3.32,3.50,3.47,3.42,3.55
+,Competência 5 - Parcerias e mobilização social,C5,,3.47,3.03,3.53,2.89,3.50,3.50,3.28,3.25,3.15,3.60,3.49,3.26,3.25,3.51,3.48,3.25,3.28,3.47,3.42,3.21,3.25,3.25,3.49,3.46,2.99,3.29,3.08,3.40,3.51,3.30,3.28
+,Competência 6 - Articulação entre ações da escola e políticas da rede,C6,,3.70,3.10,3.74,3.24,3.70,3.63,3.30,3.46,3.25,3.74,3.45,3.48,3.42,3.63,3.48,3.40,3.48,3.63,3.70,2.67,3.48,3.59,3.57,3.41,3.36,3.70,3.25,3.60,3.61,3.46,3.45
+,Competência 7 - Formação continuada,C7,,3.41,2.86,3.66,2.90,3.56,3.45,3.46,3.35,2.71,3.57,3.28,3.44,3.25,3.36,3.46,3.67,3.44,3.25,3.32,2.86,3.29,3.09,3.34,3.47,3.49,3.25,3.30,3.15,3.56,3.35,3.20
+,Competência 8 - Gestão de recursos,C8,,3.50,3.25,3.72,3.22,3.66,3.48,3.73,3.43,3.39,3.67,3.67,3.48,3.40,3.69,3.64,3.55,3.70,3.72,3.57,3.57,3.47,3.41,3.71,3.53,3.44,3.46,3.40,3.70,3.58,3.69,3.37
+Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,2.60,2.50,3.25,2.08,3.18,2.50,2.58,2.67,3.08,3.25,2.42,2.50,3.25,3.25,2.45,3.29,2.75,3.25,3.25,2.50,2.51,3.25,2.69,3.17,3.26,3.17
+,Competência 2 - Atitude,C2,,2.50,2.50,3.14,2.32,3.18,2.66,2.50,3.25,2.63,3.28,2.54,2.60,3.25,3.25,3.25,2.47,2.57,3.25,3.25,2.75,3.25,3.17,3.27,2.50,2.75,2.58,3.25,2.76,3.11,2.52,3.31
+,Competência 3 - Estrutura,C3,,2.50,2.50,3.03,1.81,3.16,3.24,1.15,3.26,2.96,2.99,2.75,2.46,2.71,2.80,3.25,2.96,2.50,2.88,2.50,2.50,3.25,2.63,3.25,2.66,2.70,2.61,2.80,2.36,3.16,3.26,3.04
+,Competência 4 - Vitalidade,C4,,2.60,2.51,3.08,1.92,3.02,2.87,1.50,3.25,2.83,3.17,2.83,2.56,3.25,3.25,3.25,2.78,2.51,3.17,2.50,2.48,3.25,2.33,3.08,2.58,2.50,2.81,2.60,2.08,2.67,3.25,3.00
+,Competência 5 - Cobertura,C5,,2.54,2.50,2.96,2.25,2.93,3.25,2.38,3.26,2.11,3.31,2.83,2.19,2.51,3.25,3.25,2.95,2.50,3.00,2.51,1.99,2.81,1.67,3.33,2.71,2.50,2.86,2.52,1.71,3.06,2.53,2.94`;
 
         let dbData = [];
         let currentData = [];
@@ -924,10 +951,7 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
         }
 
         function loadData() {
-            let cleanedCSV = RAW_CSV_DATA.replace(/\t/g, ',');
-            cleanedCSV = cleanedCSV.replace(/"/g, ''); 
-
-            Papa.parse(cleanedCSV, {
+            Papa.parse(RAW_CSV_DATA, {
                 header: false,
                 skipEmptyLines: true,
                 complete: function(results) {
@@ -1057,10 +1081,9 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
             updateMetasTab();
             updateCharts();
             updateRecommendationEngine();
-            document.getElementById('promptContainer').classList.add('hidden');
+            document.getElementById('aiResultContainer').classList.add('hidden');
         }
 
-        // --- ATUALIZAÇÃO DA VISÃO EXECUTIVA (SEM DADOS FICTÍCIOS) ---
         function updateExecutiveView() {
             const numMun = currentData.length;
             document.getElementById('kpiOpMun').innerText = numMun;
@@ -1213,11 +1236,10 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
         }
 
         function updateRecommendationEngine() {
-            // Lógica conectada aos Eixos do Gráfico de Bolhas
             const valX = document.getElementById('selEixoX').value;
             const valY = document.getElementById('selEixoY').value;
 
-            const frontX = valX.split('_')[0]; // 'gesc', 'gedu', or 'mob'
+            const frontX = valX.split('_')[0]; 
             const frontY = valY.split('_')[0];
 
             let allScores = [];
@@ -1248,7 +1270,18 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
             if (!hasAtencao) ulAtencao.innerHTML = '<li class="text-sm text-slate-400 italic py-1">Nenhuma competência em atenção nesta seleção.</li>';
         }
 
-        function generatePrompt() {
+        async function generateAIAgenda() {
+            const aiContainer = document.getElementById('aiResultContainer');
+            const aiLoading = document.getElementById('aiLoading');
+            const aiContent = document.getElementById('aiContent');
+            const btnCopy = document.getElementById('btnCopyAIResult');
+
+            aiContainer.classList.remove('hidden');
+            aiLoading.classList.remove('hidden');
+            aiContent.classList.add('hidden');
+            btnCopy.classList.add('hidden');
+            aiContainer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
             const isTodosMun = document.getElementById('chkMunTodos').checked;
             let munText = isTodosMun ? "todos os municípios da rede" : "os municípios selecionados";
             if (!isTodosMun) {
@@ -1269,35 +1302,104 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
 
             if (criticos.length === 0 && atencao.length === 0) {
                 alert("Não há competências críticas ou em atenção para gerar pauta.");
+                aiContainer.classList.add('hidden');
                 return;
             }
 
-            let prompt = `Atue como um Consultor Educacional Especialista e Designer Instrucional, com profundo conhecimento em políticas públicas educacionais, gestão escolar e mobilização social (com foco nas diretrizes do programa PVE - Parceria pela Valorização da Educação).\n\nO objetivo é desenhar uma pauta de formação/intervenção altamente prática e aplicável para o(s) município(s): ${munText}.\n\nAtravés do nosso dashboard de maturidade, diagnosticamos os seguintes gargalos que precisam ser o foco desta formação:\n`;
+            let prompt = `Aja como um especialista em educação pública e coordenação pedagógica (foco no programa PVE do Instituto Votorantim).\n\nPreciso planejar uma formação ou pauta de intervenção para ${munText}.\n\nCom base nos dados recentes de maturidade, identifiquei as seguintes prioridades:\n`;
             
-            if (criticos.length > 0) prompt += `\n🔴 PRIORIDADE MÁXIMA (Nível Crítico - Notas < 2.5):\n- ${criticos.join('\n- ')}\n`;
-            if (atencao.length > 0) prompt += `\n🟡 PONTOS DE ATENÇÃO (Nível em Consolidação - Notas 2.5 a 2.9):\n- ${atencao.join('\n- ')}\n`;
+            if (criticos.length > 0) prompt += `\n🔴 FOCO CRÍTICO (Urgente - Notas < 2.5):\n- ${criticos.join('\n- ')}\n`;
+            if (atencao.length > 0) prompt += `\n🟡 PONTOS DE ATENÇÃO (Notas 2.5 a 2.9):\n- ${atencao.join('\n- ')}\n`;
 
-            prompt += `\nCom base nestes dados, elabore uma proposta de encontro formativo de 4 horas para a equipe local (gestores, diretores ou mobilizadores). A sua resposta deve conter OBRIGATORIAMENTE a seguinte estrutura:\n\n`;
-            prompt += `1. Título do Encontro e Objetivo Geral (Focado em resolver o problema da pior nota).\n`;
-            prompt += `2. Agenda Detalhada (Dividida em blocos de tempo, ex: 30 min - Acolhimento, etc).\n`;
-            prompt += `3. Duas Dinâmicas Práticas "Mão na Massa" (Descreva o passo a passo de como o formador vai mediar essas atividades para atacar as competências fracas).\n`;
-            prompt += `4. Ferramenta de Apoio (Sugira 1 ferramenta simples de gestão ou mobilização que eles podem aplicar no dia seguinte na escola/secretaria).\n\n`;
-            prompt += `O tom deve ser propositivo, empático, não punitivo (evitar jargões acadêmicos excessivos) e 100% voltado para a prática na realidade da escola pública brasileira.`;
+            prompt += `\nCom base nestes pontos, por favor, gere:\n1. Uma sugestão de pauta formativa de 4 horas abordando o foco crítico principal.\n2. Duas sugestões de dinâmicas práticas ou ferramentas de gestão para resolver estas lacunas.\n3. O tom da ementa deve ser encorajador, prático e focado na realidade da escola pública.\nRetorne a resposta com formatação Markdown adequada (use negritos, bullets e títulos). Não inclua o texto do prompt na resposta.`;
 
-            document.getElementById('promptTextArea').value = prompt;
-            document.getElementById('promptContainer').classList.remove('hidden');
-            document.getElementById('promptContainer').scrollIntoView({ behavior: 'smooth', block: 'end' });
+            let activeKey = "AIzaSyBA3D39fTmvGxUyL5Kp8naJMdoYFWATGo0"; 
+
+            const fetchWithRetry = async (url, options, retries = 5) => {
+                const delays = [1000, 2000, 4000, 8000, 16000];
+                for (let i = 0; i < retries; i++) {
+                    try {
+                        const res = await fetch(url, options);
+                        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                        return await res.json();
+                    } catch (error) {
+                        if (i === retries - 1) throw error;
+                        await new Promise(resolve => setTimeout(resolve, delays[i]));
+                    }
+                }
+            };
+
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${activeKey}`;
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }]
+            };
+
+            try {
+                const data = await fetchWithRetry(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const responseText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                
+                if (responseText) {
+                    aiContent.innerHTML = marked.parse(responseText);
+                    aiContent.dataset.raw = responseText; 
+                    aiLoading.classList.add('hidden');
+                    aiContent.classList.remove('hidden');
+                    btnCopy.classList.remove('hidden');
+                } else {
+                    throw new Error("Formato de resposta inválido ou vazio.");
+                }
+
+            } catch (error) {
+                console.error("Erro na API Gemini:", error);
+                aiLoading.classList.add('hidden');
+                aiContent.innerHTML = `
+                    <div class="bg-red-50 p-4 rounded-lg border border-red-200 text-center">
+                        <i class="ph-fill ph-warning-circle text-red-500 text-3xl mb-2"></i>
+                        <p class="text-sm font-bold text-red-700">Erro ao comunicar com a Inteligência Artificial.</p>
+                        <p class="text-xs text-red-600 mt-1">Por favor, verifique a sua conexão de internet ou tente novamente mais tarde.</p>
+                    </div>`;
+                aiContent.classList.remove('hidden');
+            }
         }
 
-        function copyPrompt() {
-            const copyText = document.getElementById("promptTextArea");
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); 
-            document.execCommand("copy"); 
+        function copyAIResult() {
+            const rawText = document.getElementById("aiContent").dataset.raw || document.getElementById("aiContent").innerText;
             
-            const btn = document.getElementById("btnCopyPrompt");
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(rawText).then(() => {
+                    showCopySuccess();
+                }).catch(err => fallbackCopyTextToClipboard(rawText));
+            } else {
+                fallbackCopyTextToClipboard(rawText);
+            }
+        }
+
+        function fallbackCopyTextToClipboard(text) {
+            var textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.position = "fixed";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                showCopySuccess();
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function showCopySuccess() {
+            const btn = document.getElementById("btnCopyAIResult");
             const originalText = btn.innerHTML;
-            btn.innerHTML = `<i class="ph-bold ph-check mr-2"></i> Copiado com sucesso!`;
+            btn.innerHTML = `<i class="ph-bold ph-check mr-2"></i> Pauta Copiada!`;
             btn.classList.replace('bg-slate-800', 'bg-emerald-600');
             btn.classList.replace('hover:bg-slate-700', 'hover:bg-emerald-700');
             
@@ -1387,7 +1489,6 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
             });
         }
 
-        // NOVO: Atualizado para suportar o Gráfico Mini na Visão Executiva
         function updateMetasTab() {
             const tbody = document.getElementById('metasBody');
             tbody.innerHTML = '';
@@ -1434,35 +1535,12 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
                 chartInstances.metasDoughnut.update();
             }
             
-            // Atualiza o Mini Gráfico na aba Visão Executiva
             if (chartInstances.miniMetas) {
                 chartInstances.miniMetas.data.datasets[0].data = [countAltaIntensidade, countRefinamento];
                 chartInstances.miniMetas.update();
             }
         }
 
-        function processLabels(labels) {
-            return labels.map(label => {
-                if (label.length > 15) {
-                    const words = label.split(' ');
-                    const lines = [];
-                    let currentLine = words[0];
-                    for (let i = 1; i < words.length; i++) {
-                        if (currentLine.length + 1 + words[i].length <= 15) {
-                            currentLine += ' ' + words[i];
-                        } else {
-                            lines.push(currentLine);
-                            currentLine = words[i];
-                        }
-                    }
-                    lines.push(currentLine);
-                    return lines;
-                }
-                return label;
-            });
-        }
-
-        // --- GRÁFICOS (CHART.JS) ---
         function initCharts() {
             Chart.defaults.font.family = "'Inter', sans-serif";
             Chart.defaults.color = '#475569';
@@ -1483,7 +1561,6 @@ Mobilização social	Competência 1 - Conhecimento	C1		2.50	2.51	3.31	3.13	3.11	
                 }
             });
             
-            // NOVO: Mini Gráfico de Metas na Visão Executiva
             chartInstances.miniMetas = new Chart(document.getElementById('chartMiniMetas'), {
                 type: 'doughnut',
                 data: {
