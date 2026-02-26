@@ -503,7 +503,7 @@
 
                 <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
                     
-                    <!-- Bubble Chart com Novo Dropdown Dinâmico (Lista Completa) -->
+                    <!-- Bubble Chart com Novo Dropdown Dinâmico -->
                     <div class="bg-white rounded-xl shadow-lg border border-slate-200 flex flex-col">
                         <div class="p-5 border-b border-slate-100 bg-slate-50">
                             <div class="mb-4">
@@ -595,7 +595,7 @@
                                 <!-- Conteúdo injetado aqui via marked.js -->
                             </div>
 
-                            <button onclick="copyAIResult()" id="btnCopyAIResult" class="w-full bg-slate-800 text-white px-4 py-2.5 rounded-lg text-sm font-bold hover:bg-slate-700 transition-colors flex justify-center items-center shadow-md hidden">
+                            <button onclick="copyAIResult()" id="btnCopyAIResult" class="w-full bg-slate-800 text-white px-4 py-2.5 rounded-lg text-sm font-bold hover:bg-slate-700 transition-colors flex justify-center items-center shadow-md hidden mt-3">
                                 <i class="ph-bold ph-copy mr-2"></i> Copiar Pauta Formativa
                             </button>
                         </div>
@@ -693,7 +693,7 @@
         Chart.register(ChartDataLabels);
 
         // ==========================================
-        // DADOS (Base de Dados Embutida Oficial)
+        // DADOS (Base de Dados Embutida Oficial Formatada Seguro/Commas)
         // ==========================================
         const RAW_CSV_DATA = `Instituto Votorantim,,,,Acaraú,Armação de Búzios,Bela Cruz,Cidreira Pós Conselho,Cordeiros,Cortês,Encruzilhada do Sul,Epitaciolândia,Extremoz,Formoso do Araguaia,Goiatins,Ilha de Itamaracá,Itapororoca,Jardim do Mulato Pós Conselho,Laranjal do Jari Pós Conselho,Monte Azul Paulista Pós Conselho,Monte Mor,Nova Timboteua,Ocara,Palmeira,Paraíso do Tocantins,Pau D'Arco Pós Conselho,Pitanga,Porto Nacional Pós Conselho,Porto Walter,Rio Tinto Pós Conselho,Salto de Pirapora Pós Conselho,Santo Antônio da Platina Pós Conselho,São Caitano,Videira Pós Conselho,Wanderlândia Pós Conselho
 META 2025,,,,Avançar 10 competências,Avançar 9 competências,Avançar 6 competências,Avançar 7 Competências,Avançar 10 competências,Avançar 10 competências,Avançar 10 competências,Avançar 6 competências,Avançar 10 competências,Avançar 6 competências,Avançar 9 competências,Avançar 10 competências,Avançar 9 competências,Avançar 6 Competências,Avançar 9 Competências,Avançar 10 Competências,Avançar 9 competências,Avançar 10 competências,Avançar 9 competências,Avançar 9 competências,Avançar 9 competências,Avançar 10 Competências,Avançar 9 competências,Avançar 10 Competências,Avançar 10 competências,Avançar 9 Competências,Avançar 9 Competências,Avançar 10 Competências,Avançar 10 competências,Avançar 9 Competências,Avançar 9 Competências
@@ -930,8 +930,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
         }
 
         function loadData() {
-            // CORREÇÃO: Converter tabulações em vírgulas antes de passar para o PapaParse
-            // Isso evita que os dados não sejam lidos e que os gráficos fiquem em branco na primeira carga
+            // Converter tabulações em vírgulas antes de passar para o PapaParse
             let cleanedCSV = RAW_CSV_DATA.replace(/\t/g, ',');
             cleanedCSV = cleanedCSV.replace(/"/g, ''); 
 
@@ -1028,15 +1027,13 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             dbData = cities;
             currentData = [...dbData];
 
-            renderMultiSelects(); // Cria os checkboxes HTML marcados e o UI
-            initCharts();         // Cria os gráficos vazios
+            renderMultiSelects(); 
+            initCharts();         
             
-            // Forçamos a seleção inicial e ativamos os cálculos todos
             currentViewFrente = 'mob';
             document.getElementById('radarTitleBadge').innerText = 'Frente Atual: Mobilização Social';
             applyFilters();
             
-            // Garantir que a Visão Executiva está selecionada para evitar gráficos "presos" no tamanho zero
             switchPage('page-visao');
         }
 
@@ -1296,26 +1293,34 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
 
             prompt += `\nCom base nestes pontos, por favor, gere:\n1. Uma sugestão de pauta formativa de 4 horas abordando o foco crítico principal.\n2. Duas sugestões de dinâmicas práticas ou ferramentas de gestão para resolver estas lacunas.\n3. O tom da ementa deve ser encorajador, prático e focado na realidade da escola pública.\nRetorne a resposta com formatação Markdown adequada (use negritos, bullets e títulos). Não inclua o texto do prompt na resposta.`;
 
-            // A CHAVE ESTÁ VAZIA DE PROPÓSITO. O AMBIENTE (CANVAS) INJETA A CHAVE DE FORMA SEGURA DURANTE A EXECUÇÃO.
-            const apiKey = ""; 
-
-            const fetchWithRetry = async (url, options, retries = 5) => {
-                const delays = [1000, 2000, 4000, 8000, 16000];
-                for (let i = 0; i < retries; i++) {
-                    try {
-                        const res = await fetch(url, options);
-                        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-                        return await res.json();
-                    } catch (error) {
-                        if (i === retries - 1) throw error;
-                        await new Promise(resolve => setTimeout(resolve, delays[i]));
-                    }
-                }
-            };
+            // CHAVE DA API FIXA CONFORME SOLICITADO (Acesso Restrito)
+            const apiKey = "AIzaSyBA3D39fTmvGxUyL5Kp8naJMdoYFWATGo0"; 
 
             const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
             const payload = {
                 contents: [{ parts: [{ text: prompt }] }]
+            };
+
+            const fetchWithRetry = async (url, options, retries = 3) => {
+                const delays = [1000, 2000, 4000];
+                for (let i = 0; i < retries; i++) {
+                    try {
+                        const res = await fetch(url, options);
+                        if (!res.ok) {
+                            if (res.status === 400 || res.status === 403) {
+                                throw new Error("Chave de API inválida ou sem permissão.");
+                            }
+                            if (res.status === 404) {
+                                throw new Error("Modelo da IA não encontrado.");
+                            }
+                            throw new Error(`Erro no servidor: ${res.status}`);
+                        }
+                        return await res.json();
+                    } catch (error) {
+                        if (i === retries - 1 || error.message.includes("inválida") || error.message.includes("não encontrado")) throw error;
+                        await new Promise(resolve => setTimeout(resolve, delays[i]));
+                    }
+                }
             };
 
             try {
@@ -1334,7 +1339,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                     aiContent.classList.remove('hidden');
                     btnCopy.classList.remove('hidden');
                 } else {
-                    throw new Error("Formato de resposta inválido ou vazio.");
+                    throw new Error("Formato de resposta da IA inválido ou vazio.");
                 }
 
             } catch (error) {
@@ -1344,7 +1349,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                     <div class="bg-red-50 p-4 rounded-lg border border-red-200 text-center">
                         <i class="ph-fill ph-warning-circle text-red-500 text-3xl mb-2"></i>
                         <p class="text-sm font-bold text-red-700">Erro ao comunicar com a Inteligência Artificial.</p>
-                        <p class="text-xs text-red-600 mt-1">Por favor, verifique a sua conexão de internet ou tente novamente mais tarde.</p>
+                        <p class="text-xs text-red-600 mt-1">${error.message}</p>
                     </div>`;
                 aiContent.classList.remove('hidden');
             }
