@@ -77,7 +77,7 @@
         }
 
         /* Custom Dropdown Multi-select */
-        .custom-select-wrapper { position: relative; display: inline-block; min-width: 200px; }
+        .custom-select-wrapper { position: relative; display: inline-block; min-width: 220px; }
         .custom-select-button {
             display: flex; justify-content: space-between; align-items: center;
             width: 100%; padding: 0.5rem 1rem; font-size: 0.875rem; font-weight: 500;
@@ -213,9 +213,6 @@
                     </div>
                 </div>
 
-                <button onclick="applyFilters()" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm font-bold transition-colors shadow-md ml-2 flex items-center">
-                    <i class="ph-bold ph-arrows-clockwise mr-2"></i> Atualizar
-                </button>
             </div>
         </header>
 
@@ -302,7 +299,7 @@
                     </div>
                 </div>
 
-                <!-- Top Rankings Rápidos com Descrições -->
+                <!-- Top Rankings Rápidos -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-emerald-100 border-t-4 border-t-emerald-500">
                         <h3 class="font-bold text-slate-800 mb-2 flex items-center"><i class="ph-fill ph-trophy mr-2 text-emerald-500 text-xl"></i> Top 3: Destaques da Seleção</h3>
@@ -696,7 +693,7 @@
         Chart.register(ChartDataLabels);
 
         // ==========================================
-        // DADOS (Base de Dados Embutida Oficial Formatada Seguro/Commas)
+        // DADOS (Base de Dados Embutida Oficial)
         // ==========================================
         const RAW_CSV_DATA = `Instituto Votorantim,,,,Acaraú,Armação de Búzios,Bela Cruz,Cidreira Pós Conselho,Cordeiros,Cortês,Encruzilhada do Sul,Epitaciolândia,Extremoz,Formoso do Araguaia,Goiatins,Ilha de Itamaracá,Itapororoca,Jardim do Mulato Pós Conselho,Laranjal do Jari Pós Conselho,Monte Azul Paulista Pós Conselho,Monte Mor,Nova Timboteua,Ocara,Palmeira,Paraíso do Tocantins,Pau D'Arco Pós Conselho,Pitanga,Porto Nacional Pós Conselho,Porto Walter,Rio Tinto Pós Conselho,Salto de Pirapora Pós Conselho,Santo Antônio da Platina Pós Conselho,São Caitano,Videira Pós Conselho,Wanderlândia Pós Conselho
 META 2025,,,,Avançar 10 competências,Avançar 9 competências,Avançar 6 competências,Avançar 7 Competências,Avançar 10 competências,Avançar 10 competências,Avançar 10 competências,Avançar 6 competências,Avançar 10 competências,Avançar 6 competências,Avançar 9 competências,Avançar 10 competências,Avançar 9 competências,Avançar 6 Competências,Avançar 9 Competências,Avançar 10 Competências,Avançar 9 competências,Avançar 10 competências,Avançar 9 competências,Avançar 9 competências,Avançar 9 competências,Avançar 10 Competências,Avançar 9 competências,Avançar 10 Competências,Avançar 10 competências,Avançar 9 Competências,Avançar 9 Competências,Avançar 10 Competências,Avançar 10 competências,Avançar 9 Competências,Avançar 9 Competências
@@ -741,30 +738,6 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             'mob_c1': 'MOB C1 - Conhecimento', 'mob_c2': 'MOB C2 - Atitude', 'mob_c3': 'MOB C3 - Estrutura', 'mob_c4': 'MOB C4 - Vitalidade', 'mob_c5': 'MOB C5 - Cobertura',
             'gesc_c1': 'GESC C1 - Proc. Gestão', 'gesc_c2': 'GESC C2 - Registro', 'gesc_c3': 'GESC C3 - Acompanhamento', 'gesc_c4': 'GESC C4 - Equipe Colab.', 'gesc_c5': 'GESC C5 - Parcerias', 'gesc_c6': 'GESC C6 - Articulação', 'gesc_c7': 'GESC C7 - Formação', 'gesc_c8': 'GESC C8 - Recursos',
             'gedu_c1': 'GEDU C1 - Proc. Gestão', 'gedu_c2': 'GEDU C2 - Registro', 'gedu_c3': 'GEDU C3 - Acompanhamento', 'gedu_c4': 'GEDU C4 - Equipe Colab.', 'gedu_c5': 'GEDU C5 - Parcerias', 'gedu_c6': 'GEDU C6 - Articulação', 'gedu_c7': 'GEDU C7 - Formação', 'gedu_c8': 'GEDU C8 - Recursos',
-        };
-
-        const insightsPedagogicos = {
-            'mob_c1': { alavanca: 'Utilize o excelente mapeamento do território desta seleção para embasar decisões complexas.', gargalo: 'A falta de clareza sobre as reais características e necessidades do território (diagnóstico local) impede ações focadas.' },
-            'mob_c2': { alavanca: 'Engaje os líderes locais desta seleção para tracionar ações e mentorar as demais equipes.', gargalo: 'Observa-se grande dispersão e baixo engajamento nas ações. É urgente criar estratégias de sensibilização.' },
-            'mob_c3': { alavanca: 'As rotinas de governança estão bem definidas. Foque agora em escalar estas ações para novos públicos.', gargalo: 'Falta uma estrutura formal de rotinas e governança para a mobilização.' },
-            'mob_c4': { alavanca: 'A vitalidade nas ações é exemplar. O desafio agora é manter a motivação com campanhas de reconhecimento.', gargalo: 'As ações de mobilização são esporádicas e perdem tração rapidamente. A prioridade é garantir ritmo.' },
-            'mob_c5': { alavanca: 'A capilaridade alcançada é excelente. A próxima pauta deve focar na profundidade da interação.', gargalo: 'O alcance da mobilização está estagnado e restrito a poucos grupos.' },
-            'gesc_c1': { alavanca: 'O planejamento escolar é sólido. A equipe deve ser incentivada a partilhar os seus métodos com escolas mais frágeis.', gargalo: 'Há uma fragilidade crítica no planejamento (PPP e planos de ação). Focar na criação conjunta de metas claras.' },
-            'gesc_c2': { alavanca: 'A cultura de evidências e documentação está bem consolidada. Utilize estes registros para tomada de decisão em tempo real.', gargalo: 'Faltam registros sistemáticos e evidências das ações. Instigar uma cultura onde documentação não seja burocracia.' },
-            'gesc_c3': { alavanca: 'O acompanhamento de aprendizagem é efetivo. A pauta deve evoluir para a personalização do ensino.', gargalo: 'Existe uma defasagem estrutural no monitoramento dos alunos. É urgente implementar rotinas de observação de sala.' },
-            'gesc_c4': { alavanca: 'Há um forte senso de equipe colaborativa. Aproveite essa coesão para fomentar a gestão democrática participativa.', gargalo: 'O trabalho da gestão apresenta-se isolado e centralizado. As dinâmicas devem focar urgente em delegação e escuta.' },
-            'gesc_c5': { alavanca: 'A articulação com parceiros locais é fantástica. Estes parceiros podem ser convidados a co-criar projetos interdisciplinares.', gargalo: 'A escola atua de forma isolada da comunidade. É preciso mapear potenciais aliados no entorno.' },
-            'gesc_c6': { alavanca: 'A escola está perfeitamente alinhada às políticas da Secretaria. Este grupo pode ser o polo validador de novas diretrizes.', gargalo: 'Observa-se um forte desalinhamento entre o que a escola executa e as diretrizes da rede.' },
-            'gesc_c7': { alavanca: 'A cultura de formação em serviço é um ponto alto. Desafie a equipe a liderar workshops internos.', gargalo: 'A formação continuada dos professores (HTPC) está negligenciada ou é ineficaz.' },
-            'gesc_c8': { alavanca: 'A gestão de recursos é muito otimizada. Garantir que este modelo eficiente não sobrecarregue os gestores a longo prazo.', gargalo: 'Há ineficiência e dificuldade na alocação de recursos (verbas, tempo). Focar em organização e priorização.' },
-            'gedu_c1': { alavanca: 'A Secretaria possui um planejamento estratégico invejável. Garantir que este plano se desdobre até o chão de fábrica.', gargalo: 'A rede opera de forma reativa. É imprescindível criar um plano estratégico claro com metas de curto e médio prazo.' },
-            'gedu_c2': { alavanca: 'Os processos estão bem documentados. A Secretaria pode agora focar na automação e em dashboards de gestão.', gargalo: 'Falta histórico e formalização dos processos na Secretaria.' },
-            'gedu_c3': { alavanca: 'O sistema de avaliação de rede funciona muito bem. O foco formativo deve ser garantir que as escolas saibam agir em cima dos dados.', gargalo: 'A rede não tem visibilidade clara da aprendizagem dos alunos. É crítico implementar avaliações em escala de rede.' },
-            'gedu_c4': { alavanca: 'A equipa técnica trabalha em excelente sintonia. O desafio é evitar a sobrecarga dos quadros de excelência.', gargalo: 'Os departamentos da Secretaria não conversam entre si (silos). A formação deve quebrar estas barreiras.' },
-            'gedu_c5': { alavanca: 'A rede tem grande capacidade de atrair parceiros. Utilize este prestígio para focar nas escolas mais vulneráveis.', gargalo: 'A Secretaria atua de forma fechada. Precisa ser orientada a buscar ativamente consórcios e apoios externos.' },
-            'gedu_c6': { alavanca: 'As políticas desenhadas refletem de forma fiel as necessidades locais. Focar agora na qualidade da entrega final.', gargalo: 'Há uma ruptura entre as políticas desenhadas e o que as escolas conseguem absorver.' },
-            'gedu_c7': { alavanca: 'O plano de formação da rede é robusto. A estratégia deve focar agora em avaliar o impacto no aprendizado do aluno.', gargalo: 'Os professores não recebem suporte formativo adequado. A criação de um calendário coerente com as dores da rede é inadiável.' },
-            'gedu_c8': { alavanca: 'A transparência e alocação de fundos são eficientes. O próximo nível é a busca por editais de fomento à educação.', gargalo: 'Dificuldades crônicas na gestão do orçamento, merenda ou infraestrutura.' }
         };
 
         const pageTitles = {
@@ -845,6 +818,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             }
         });
 
+        // NOVAS FUNÇÕES DOS FILTROS (Visual Checked por Padrão)
         function renderMultiSelects() {
             const listEst = document.getElementById('listEstados');
             listEst.innerHTML = '';
@@ -852,14 +826,14 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             ufs.forEach(uf => {
                 listEst.innerHTML += `
                     <label class="checkbox-label">
-                        <input type="checkbox" class="checkbox-input chk-estado" value="${uf}" onchange="handleSelection('Estado')"> ${uf}
+                        <input type="checkbox" class="checkbox-input chk-estado" value="${uf}" onchange="handleSelection('Estado')" checked> ${uf}
                     </label>
                 `;
             });
 
-            updateMunicipioOptions(dbData);
             document.getElementById('chkEstTodos').checked = true;
-            document.getElementById('chkMunTodos').checked = true;
+            updateMunicipioOptions(dbData);
+            updateLabels();
         }
 
         function updateMunicipioOptions(data) {
@@ -869,21 +843,24 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             muns.forEach(m => {
                 listMun.innerHTML += `
                     <label class="checkbox-label">
-                        <input type="checkbox" class="checkbox-input chk-municipio" value="${m}" onchange="handleSelection('Municipio')"> ${m}
+                        <input type="checkbox" class="checkbox-input chk-municipio" value="${m}" onchange="handleSelection('Municipio')" checked> ${m}
                     </label>
                 `;
             });
+            document.getElementById('chkMunTodos').checked = true;
         }
 
         function handleSelectAll(type) {
             const isChecked = document.getElementById(`chk${type.substring(0,3)}Todos`).checked;
-            document.querySelectorAll(`.chk-${type.toLowerCase()}`).forEach(cb => { cb.checked = false; });
-            updateLabels();
+            document.querySelectorAll(`.chk-${type.toLowerCase()}`).forEach(cb => { cb.checked = isChecked; });
+            
             if(type === 'Estado') {
-                updateMunicipioOptions(dbData);
-                document.getElementById('chkMunTodos').checked = true;
-                updateLabels();
+                let filteredData = isChecked ? dbData : [];
+                updateMunicipioOptions(filteredData);
             }
+            
+            updateLabels();
+            applyFilters();
         }
 
         function handleSelection(type) {
@@ -891,30 +868,32 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             const checkedBoxes = Array.from(allBoxes).filter(cb => cb.checked);
             const chkTodos = document.getElementById(`chk${type.substring(0,3)}Todos`);
             
-            if (checkedBoxes.length > 0) chkTodos.checked = false;
-            else chkTodos.checked = true;
-
-            updateLabels();
+            chkTodos.checked = (checkedBoxes.length === allBoxes.length && allBoxes.length > 0);
 
             if (type === 'Estado') {
                 let ufs = checkedBoxes.map(cb => cb.value);
-                let filteredData = ufs.length > 0 ? dbData.filter(d => ufs.includes(d.uf)) : dbData;
+                let filteredData = ufs.length > 0 ? dbData.filter(d => ufs.includes(d.uf)) : [];
                 updateMunicipioOptions(filteredData);
-                document.getElementById('chkMunTodos').checked = true; 
-                updateLabels();
             }
+            
+            updateLabels();
+            applyFilters();
         }
 
         function updateLabels() {
-            const estBoxes = Array.from(document.querySelectorAll('.chk-estado')).filter(cb => cb.checked);
-            const munBoxes = Array.from(document.querySelectorAll('.chk-municipio')).filter(cb => cb.checked);
+            const allEstBoxes = document.querySelectorAll('.chk-estado');
+            const estBoxes = Array.from(allEstBoxes).filter(cb => cb.checked);
+            const allMunBoxes = document.querySelectorAll('.chk-municipio');
+            const munBoxes = Array.from(allMunBoxes).filter(cb => cb.checked);
             
             const lEst = document.getElementById('labelEstado');
-            if(document.getElementById('chkEstTodos').checked) lEst.innerText = "Estado: Todos";
+            if(document.getElementById('chkEstTodos').checked || (estBoxes.length === allEstBoxes.length && allEstBoxes.length > 0)) lEst.innerText = "Estado: Todos";
+            else if(estBoxes.length === 0) lEst.innerText = "Estado: Nenhum";
             else lEst.innerText = `Estados (${estBoxes.length})`;
 
             const lMun = document.getElementById('labelMunicipio');
-            if(document.getElementById('chkMunTodos').checked) lMun.innerText = "Município: Todos";
+            if(document.getElementById('chkMunTodos').checked || (munBoxes.length === allMunBoxes.length && allMunBoxes.length > 0)) lMun.innerText = "Município: Todos";
+            else if(munBoxes.length === 0) lMun.innerText = "Município: Nenhum";
             else lMun.innerText = `Municípios (${munBoxes.length})`;
         }
 
@@ -951,7 +930,12 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
         }
 
         function loadData() {
-            Papa.parse(RAW_CSV_DATA, {
+            // CORREÇÃO: Converter tabulações em vírgulas antes de passar para o PapaParse
+            // Isso evita que os dados não sejam lidos e que os gráficos fiquem em branco na primeira carga
+            let cleanedCSV = RAW_CSV_DATA.replace(/\t/g, ',');
+            cleanedCSV = cleanedCSV.replace(/"/g, ''); 
+
+            Papa.parse(cleanedCSV, {
                 header: false,
                 skipEmptyLines: true,
                 complete: function(results) {
@@ -1044,15 +1028,20 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             dbData = cities;
             currentData = [...dbData];
 
-            renderMultiSelects();
-            initCharts();
-            changeViewFrente('mob'); 
+            renderMultiSelects(); // Cria os checkboxes HTML marcados e o UI
+            initCharts();         // Cria os gráficos vazios
+            
+            // Forçamos a seleção inicial e ativamos os cálculos todos
+            currentViewFrente = 'mob';
+            document.getElementById('radarTitleBadge').innerText = 'Frente Atual: Mobilização Social';
             applyFilters();
+            
+            // Garantir que a Visão Executiva está selecionada para evitar gráficos "presos" no tamanho zero
+            switchPage('page-visao');
         }
 
+        // LÓGICA REATIVA 
         function applyFilters() {
-            document.querySelectorAll('.custom-select-dropdown').forEach(d => d.classList.remove('show'));
-
             let ufs = Array.from(document.querySelectorAll('.chk-estado')).filter(cb => cb.checked).map(cb => cb.value);
             let muns = Array.from(document.querySelectorAll('.chk-municipio')).filter(cb => cb.checked).map(cb => cb.value);
             
@@ -1065,21 +1054,15 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                 return matchUf && matchMun;
             });
 
-            if(currentData.length === 0) {
-                alert("Não existem dados que correspondam a este filtro.");
-                document.getElementById('chkEstTodos').checked = true;
-                document.getElementById('chkMunTodos').checked = true;
-                handleSelectAll('Estado');
-                handleSelectAll('Municipio');
-                currentData = [...dbData];
-            }
-
+            // Refresh UI Core elements
             updateKPIs();
             updateExecutiveView(); 
-            updateHeatmap();
             updateReguaTable(); 
             updateMetasTab();
-            updateCharts();
+            
+            // Header e renderização das tabelas/gráficos
+            changeViewFrente(currentViewFrente);
+            
             updateRecommendationEngine();
             document.getElementById('aiResultContainer').classList.add('hidden');
         }
@@ -1313,7 +1296,8 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
 
             prompt += `\nCom base nestes pontos, por favor, gere:\n1. Uma sugestão de pauta formativa de 4 horas abordando o foco crítico principal.\n2. Duas sugestões de dinâmicas práticas ou ferramentas de gestão para resolver estas lacunas.\n3. O tom da ementa deve ser encorajador, prático e focado na realidade da escola pública.\nRetorne a resposta com formatação Markdown adequada (use negritos, bullets e títulos). Não inclua o texto do prompt na resposta.`;
 
-            let activeKey = "AIzaSyBA3D39fTmvGxUyL5Kp8naJMdoYFWATGo0"; 
+            // A CHAVE ESTÁ VAZIA DE PROPÓSITO. O AMBIENTE (CANVAS) INJETA A CHAVE DE FORMA SEGURA DURANTE A EXECUÇÃO.
+            const apiKey = ""; 
 
             const fetchWithRetry = async (url, options, retries = 5) => {
                 const delays = [1000, 2000, 4000, 8000, 16000];
@@ -1329,7 +1313,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                 }
             };
 
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${activeKey}`;
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
             const payload = {
                 contents: [{ parts: [{ text: prompt }] }]
             };
@@ -1539,6 +1523,27 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                 chartInstances.miniMetas.data.datasets[0].data = [countAltaIntensidade, countRefinamento];
                 chartInstances.miniMetas.update();
             }
+        }
+
+        function processLabels(labels) {
+            return labels.map(label => {
+                if (label.length > 15) {
+                    const words = label.split(' ');
+                    const lines = [];
+                    let currentLine = words[0];
+                    for (let i = 1; i < words.length; i++) {
+                        if (currentLine.length + 1 + words[i].length <= 15) {
+                            currentLine += ' ' + words[i];
+                        } else {
+                            lines.push(currentLine);
+                            currentLine = words[i];
+                        }
+                    }
+                    lines.push(currentLine);
+                    return lines;
+                }
+                return label;
+            });
         }
 
         function initCharts() {
@@ -1837,7 +1842,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             updateRadarInsights(avgSelection, avgGlobal);
         }
 
-        window.onload = loadData;
+        document.addEventListener('DOMContentLoaded', loadData);
     </script>
 </body>
 </html>
