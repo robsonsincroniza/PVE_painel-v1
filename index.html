@@ -494,7 +494,7 @@
                         <strong>Objetivo desta página:</strong> Cruzar dados de diferentes frentes para identificar padrões de comportamento (clusters) entre os municípios. O gráfico de dispersão ajuda a visualizar rapidamente quem precisa de apoio integrado em áreas específicas.
                     </p>
                     <p class="text-xs text-slate-700 leading-relaxed">
-                        <strong>Motor de Priorização e IA:</strong> Com base nos eixos selecionados no gráfico, o motor analisa as competências com as menores notas e as consolida. O botão "Gerar Comando para IA" cria uma instrução rica e detalhada para colar no Gemini, gerando uma sugestão de agenda prática e dinâmicas adequadas de forma segura.
+                        <strong>Motor de Priorização e IA:</strong> Com base nos eixos selecionados no gráfico, o motor analisa as competências com as menores notas e as consolida. O botão "Gerar Comando para IA" cria uma instrução rica e detalhada para colar no seu ChatGPT ou Gemini, gerando uma sugestão de agenda prática e dinâmicas adequadas de forma segura.
                     </p>
                 </div>
 
@@ -565,10 +565,17 @@
                         </div>
                         
                         <!-- GERAÇÃO DE PROMPT -->
-                        <div class="p-4 bg-white border-t border-slate-200 flex flex-col items-center">
-                            <p class="text-xs text-slate-500 mb-3 text-center leading-relaxed">
-                                <strong>Assistente Pedagógico:</strong> Transforme os gargalos mapeados numa proposta de pauta formativa.
-                            </p>
+                        <div class="p-5 bg-white border-t border-slate-200 flex flex-col items-center">
+                            <div class="mb-4 w-full">
+                                <p class="text-sm font-bold text-slate-800 mb-1 text-center">Assistente Pedagógico</p>
+                                <p class="text-xs text-slate-500 text-center leading-relaxed mb-3">
+                                    Gere automaticamente um comando (prompt) estruturado com base nos gargalos críticos identificados acima.
+                                </p>
+                                <div class="bg-amber-50 border border-amber-200 text-amber-800 text-[11px] p-3 rounded-lg text-left flex items-start shadow-sm">
+                                    <i class="ph-fill ph-warning-circle text-amber-500 text-base mr-2 shrink-0"></i>
+                                    <p class="leading-relaxed"><strong>Nota:</strong> Este prompt é uma <strong>sugestão inicial</strong>. Revise e adapte o conteúdo e as diretrizes à realidade específica do seu território antes de usá-lo em ferramentas como ChatGPT ou Gemini.</p>
+                                </div>
+                            </div>
                             <button onclick="generatePrompt()" class="w-full bg-blue-600 text-white px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-wide hover:bg-blue-700 transition-colors shadow-md flex justify-center items-center">
                                 <i class="ph-bold ph-magic-wand mr-2"></i> Gerar Comando para IA (Prompt)
                             </button>
