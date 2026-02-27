@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PVE Gestão | Simulação IDV</title>
+    <title>PVE Gestão | Control Tower</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -17,6 +17,9 @@
 
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Marked.js (Para converter o Markdown da IA em HTML visível) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -248,7 +251,7 @@
 
                 <!-- Linha 1 - Operação e Impacto -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Impacto: IDEB (Com Gradiente Laranja/Vermelho PVE) -->
+                    <!-- Impacto: IDEB -->
                     <div class="bg-gradient-to-br from-pve-orange to-pve-red rounded-xl shadow-md p-6 text-white flex flex-col justify-center relative overflow-hidden">
                         <i class="ph-fill ph-student absolute -right-4 -top-4 text-7xl text-white opacity-10"></i>
                         <span class="text-orange-200 text-xs font-bold uppercase tracking-wider">Métrica de Impacto Final</span>
@@ -310,7 +313,7 @@
                     <div class="xl:col-span-1 bg-white rounded-xl shadow-sm p-6 md:p-8 border border-slate-200 flex flex-col">
                         <div class="mb-4 border-b border-slate-100 pb-4">
                             <h3 class="text-lg font-bold text-slate-800">Termômetro de Metas 2026</h3>
-                            <p class="text-xs text-slate-500 leading-relaxed mt-1">Proporção de municípios categorizados pelo esforço exigido para atingir a Meta 100. Auxilia no dimensionamento e foco estratégico das ações formativas.</p>
+                            <p class="text-xs text-slate-500 leading-relaxed mt-1">Proporção de municípios categorizados pelo esforço exigido para atingir a Meta 100.</p>
                         </div>
                         <div class="chart-container flex-1 min-h-[200px]">
                             <canvas id="chartMiniMetas"></canvas>
@@ -318,7 +321,7 @@
                     </div>
                 </div>
 
-                <!-- Top Rankings Rápidos com Descrições -->
+                <!-- Top Rankings Rápidos -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-emerald-100 border-t-4 border-t-pve-green">
                         <h3 class="font-bold text-slate-800 mb-2 flex items-center"><i class="ph-fill ph-trophy mr-2 text-pve-green text-xl"></i> Top 3: Destaques da Seleção</h3>
@@ -756,6 +759,30 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             'gedu_c1': 'GEDU C1 - Proc. Gestão', 'gedu_c2': 'GEDU C2 - Registro', 'gedu_c3': 'GEDU C3 - Acompanhamento', 'gedu_c4': 'GEDU C4 - Equipe Colab.', 'gedu_c5': 'GEDU C5 - Parcerias', 'gedu_c6': 'GEDU C6 - Articulação', 'gedu_c7': 'GEDU C7 - Formação', 'gedu_c8': 'GEDU C8 - Recursos',
         };
 
+        const insightsPedagogicos = {
+            'mob_c1': { alavanca: 'Utilize o excelente mapeamento do território desta seleção para embasar decisões complexas.', gargalo: 'A falta de clareza sobre as reais características e necessidades do território (diagnóstico local) impede ações focadas.' },
+            'mob_c2': { alavanca: 'Engaje os líderes locais desta seleção para tracionar ações e mentorar as demais equipes.', gargalo: 'Observa-se grande dispersão e baixo engajamento nas ações. É urgente criar estratégias de sensibilização.' },
+            'mob_c3': { alavanca: 'As rotinas de governança estão bem definidas. Foque agora em escalar estas ações para novos públicos.', gargalo: 'Falta uma estrutura formal de rotinas e governança para a mobilização.' },
+            'mob_c4': { alavanca: 'A vitalidade nas ações é exemplar. O desafio agora é manter a motivação com campanhas de reconhecimento.', gargalo: 'As ações de mobilização são esporádicas e perdem tração rapidamente. A prioridade é garantir ritmo.' },
+            'mob_c5': { alavanca: 'A capilaridade alcançada é excelente. A próxima pauta deve focar na profundidade da interação.', gargalo: 'O alcance da mobilização está estagnado e restrito a poucos grupos.' },
+            'gesc_c1': { alavanca: 'O planejamento escolar é sólido. A equipe deve ser incentivada a partilhar os seus métodos com escolas mais frágeis.', gargalo: 'Há uma fragilidade crítica no planejamento (PPP e planos de ação). Focar na criação conjunta de metas claras.' },
+            'gesc_c2': { alavanca: 'A cultura de evidências e documentação está bem consolidada. Utilize estes registros para tomada de decisão em tempo real.', gargalo: 'Faltam registros sistemáticos e evidências das ações. Instigar uma cultura onde documentação não seja burocracia.' },
+            'gesc_c3': { alavanca: 'O acompanhamento de aprendizagem é efetivo. A pauta deve evoluir para a personalização do ensino.', gargalo: 'Existe uma defasagem estrutural no monitoramento dos alunos. É urgente implementar rotinas de observação de sala.' },
+            'gesc_c4': { alavanca: 'Há um forte senso de equipe colaborativa. Aproveite essa coesão para fomentar a gestão democrática participativa.', gargalo: 'O trabalho da gestão apresenta-se isolado e centralizado. As dinâmicas devem focar urgente em delegação e escuta.' },
+            'gesc_c5': { alavanca: 'A articulação com parceiros locais é fantástica. Estes parceiros podem ser convidados a co-criar projetos interdisciplinares.', gargalo: 'A escola atua de forma isolada da comunidade. É preciso mapear potenciais aliados no entorno.' },
+            'gesc_c6': { alavanca: 'A escola está perfeitamente alinhada às políticas da Secretaria. Este grupo pode ser o polo validador de novas diretrizes.', gargalo: 'Observa-se um forte desalinhamento entre o que a escola executa e as diretrizes da rede.' },
+            'gesc_c7': { alavanca: 'A cultura de formação em serviço é um ponto alto. Desafie a equipe a liderar workshops internos.', gargalo: 'A formação continuada dos professores (HTPC) está negligenciada ou é ineficaz.' },
+            'gesc_c8': { alavanca: 'A gestão de recursos é muito otimizada. Garantir que este modelo eficiente não sobrecarregue os gestores a longo prazo.', gargalo: 'Há ineficiência e dificuldade na alocação de recursos (verbas, tempo). Focar em organização e priorização.' },
+            'gedu_c1': { alavanca: 'A Secretaria possui um planejamento estratégico invejável. Garantir que este plano se desdobre até o chão de fábrica.', gargalo: 'A rede opera de forma reativa. É imprescindível criar um plano estratégico claro com metas de curto e médio prazo.' },
+            'gedu_c2': { alavanca: 'Os processos estão bem documentados. A Secretaria pode agora focar na automação e em dashboards de gestão.', gargalo: 'Falta histórico e formalização dos processos na Secretaria.' },
+            'gedu_c3': { alavanca: 'O sistema de avaliação de rede funciona muito bem. O foco formativo deve ser garantir que as escolas saibam agir em cima dos dados.', gargalo: 'A rede não tem visibilidade clara da aprendizagem dos alunos. É crítico implementar avaliações em escala de rede.' },
+            'gedu_c4': { alavanca: 'A equipa técnica trabalha em excelente sintonia. O desafio é evitar a sobrecarga dos quadros de excelência.', gargalo: 'Os departamentos da Secretaria não conversam entre si (silos). A formação deve quebrar estas barreiras.' },
+            'gedu_c5': { alavanca: 'A rede tem grande capacidade de atrair parceiros. Utilize este prestígio para focar nas escolas mais vulneráveis.', gargalo: 'A Secretaria atua de forma fechada. Precisa ser orientada a buscar ativamente consórcios e apoios externos.' },
+            'gedu_c6': { alavanca: 'As políticas desenhadas refletem de forma fiel as necessidades locais. Focar agora na qualidade da entrega final.', gargalo: 'Há uma ruptura entre as políticas desenhadas e o que as escolas conseguem absorver.' },
+            'gedu_c7': { alavanca: 'O plano de formação da rede é robusto. A estratégia deve focar agora em avaliar o impacto no aprendizado do aluno.', gargalo: 'Os professores não recebem suporte formativo adequado. A criação de um calendário coerente com as dores da rede é inadiável.' },
+            'gedu_c8': { alavanca: 'A transparência e alocação de fundos são eficientes. O próximo nível é a busca por editais de fomento à educação.', gargalo: 'Dificuldades crônicas na gestão do orçamento, merenda ou infraestrutura.' }
+        };
+
         const pageTitles = {
             'page-visao': 'Visão Executiva (Control Tower)',
             'page-regua': 'Régua de Maturidade e Gaps',
@@ -918,15 +945,20 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             
             ['mob', 'gesc', 'gedu'].forEach(f => {
                 const btn = document.getElementById('tab-' + f);
-                if (f === frente) btn.classList.add('active');
-                else btn.classList.remove('active');
+                if (f === frente) {
+                    btn.classList.add('border-pve-green', 'text-pve-green');
+                    btn.classList.remove('border-transparent', 'text-slate-500', 'hover:text-pve-green');
+                } else {
+                    btn.classList.add('border-transparent', 'text-slate-500', 'hover:text-pve-green');
+                    btn.classList.remove('border-pve-green', 'text-pve-green');
+                }
             });
 
             const nomesFrente = { 'mob': 'Mobilização Social', 'gesc': 'Gestão Escolar', 'gedu': 'Gestão Educacional'};
             document.getElementById('radarTitleBadge').innerText = 'Frente Atual: ' + nomesFrente[frente];
 
             const theadTr = document.getElementById('heatmapHeadRow');
-            let thHtml = `<th class="py-4 px-6 text-left font-bold tracking-widest text-xs">MUNICÍPIO (UF)</th>`;
+            let thHtml = `<th class="py-4 px-6 text-left font-bold tracking-widest text-xs border-r border-white/20">MUNICÍPIO (UF)</th>`;
             const numCols = currentViewFrente === 'mob' ? 5 : 8;
             
             for(let i=1; i<=numCols; i++) {
@@ -946,8 +978,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
         }
 
         function loadData() {
-            // CORREÇÃO: Converter tabulações em vírgulas antes de passar para o PapaParse
-            // Isso evita que os dados não sejam lidos e que os gráficos fiquem em branco na primeira carga
+            // Converter tabulações em vírgulas antes de passar para o PapaParse
             let cleanedCSV = RAW_CSV_DATA.replace(/\t/g, ',');
             cleanedCSV = cleanedCSV.replace(/"/g, ''); 
 
@@ -1044,15 +1075,13 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             dbData = cities;
             currentData = [...dbData];
 
-            renderMultiSelects(); // Cria os checkboxes HTML marcados e o UI
-            initCharts();         // Cria os gráficos vazios
+            renderMultiSelects(); 
+            initCharts();         
             
-            // Forçamos a seleção inicial e ativamos os cálculos todos
             currentViewFrente = 'mob';
             document.getElementById('radarTitleBadge').innerText = 'Frente Atual: Mobilização Social';
             applyFilters();
             
-            // Garantir que a Visão Executiva está selecionada para evitar gráficos "presos" no tamanho zero
             switchPage('page-visao');
         }
 
@@ -1622,30 +1651,6 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                             align: function(context) { return context.datasetIndex === 0 ? 'end' : 'start'; },
                             anchor: function(context) { return context.datasetIndex === 0 ? 'end' : 'start'; },
                             padding: 4, backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: 4
-                        }
-                    }
-                }
-            });
-
-            chartInstances.metasDoughnut = new Chart(document.getElementById('chartMetasDoughnut'), {
-                type: 'doughnut',
-                data: {
-                    labels: ['Alta Intensidade (7 a 10 comps.)', 'Refinamento (Manter ou 4 a 6)'],
-                    datasets: [{
-                        data: [0, 0],
-                        backgroundColor: ['#E85D04', '#008B45'],
-                        borderWidth: 2,
-                        borderColor: '#ffffff'
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    cutout: '70%',
-                    plugins: {
-                        legend: { position: 'bottom', labels: { font: {family: 'Inter', size: 11} } },
-                        datalabels: {
-                            color: '#fff', font: {weight: 'bold', size: 16},
-                            formatter: (value) => value > 0 ? value : ''
                         }
                     }
                 }
