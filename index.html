@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PVE Gestão | Sincroniza Educação</title>
+    <title>PVE Gestão | Simulação IDV</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -20,6 +20,28 @@
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Configuração de Cores Personalizadas Tailwind (IDV PVE) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pve: {
+                            green: '#008B45',
+                            greenDark: '#006834',
+                            greenLight: '#E6F4EA',
+                            orange: '#E85D04',
+                            red: '#C8102E',
+                            blueDark: '#1E3A8A',
+                            blueDarker: '#172554',
+                            yellow: '#FBBF24'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 
     <style>
         :root {
@@ -68,9 +90,9 @@
             border-bottom-width: 0px;
             margin-bottom: 12px; 
             background: #eff6ff;
-            border: 1px solid #60a5fa;
+            border: 1px solid #008B45; /* PVE Green */
             box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1);
-            color: #1d4ed8;
+            color: #008B45; /* PVE Green */
         }
 
         /* Custom Dropdown Multi-select */
@@ -96,7 +118,7 @@
         .checkbox-label:hover { background-color: #f1f5f9; }
         .checkbox-input {
             width: 1.1rem; height: 1.1rem; margin-right: 0.5rem; border-radius: 0.25rem;
-            border: 1px solid #cbd5e1; cursor: pointer; accent-color: #2563eb;
+            border: 1px solid #cbd5e1; cursor: pointer; accent-color: #008B45; /* PVE Green */
         }
 
         .heatmap-cell { position: relative; z-index: 1; }
@@ -125,47 +147,47 @@
 </head>
 <body class="flex h-screen bg-slate-50">
 
-    <!-- SIDEBAR -->
-    <aside class="w-64 bg-slate-900 text-slate-300 flex flex-col flex-shrink-0 z-20 shadow-xl relative">
-        <div class="h-16 flex items-center px-6 border-b border-slate-800 bg-slate-950">
-            <i class="ph-fill ph-chart-polar text-blue-500 text-2xl mr-2"></i>
+    <!-- SIDEBAR (Com fundo Azul Escuro PVE) -->
+    <aside class="w-64 bg-pve-blueDark text-slate-300 flex flex-col flex-shrink-0 z-20 shadow-xl relative">
+        <div class="h-16 flex items-center px-6 border-b border-white/10 bg-pve-blueDarker">
+            <i class="ph-fill ph-chart-polar text-pve-yellow text-2xl mr-2"></i>
             <span class="text-white font-bold text-lg tracking-wide">PVE Gestão</span>
         </div>
         
         <div class="p-4 flex-1">
-            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4 mt-2 px-2">Painéis Analíticos</p>
+            <p class="text-xs font-semibold text-blue-200 uppercase tracking-wider mb-4 mt-2 px-2 opacity-70">Painéis Analíticos</p>
             <nav class="space-y-2">
-                <button id="nav-page-visao" onclick="switchPage('page-visao')" class="nav-link w-full flex items-center px-4 py-3 bg-blue-600 text-white rounded-lg group transition-colors shadow-sm">
+                <button id="nav-page-visao" onclick="switchPage('page-visao')" class="nav-link w-full flex items-center px-4 py-3 bg-pve-green text-white rounded-lg group transition-colors shadow-sm">
                     <i class="ph ph-squares-four text-xl mr-3"></i>
                     <span class="font-medium text-sm">Visão Executiva</span>
                 </button>
-                <button id="nav-page-mapa" onclick="switchPage('page-mapa')" class="nav-link w-full flex items-center px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
-                    <i class="ph ph-table text-xl mr-3 group-hover:text-blue-400 transition-colors"></i>
+                <button id="nav-page-mapa" onclick="switchPage('page-mapa')" class="nav-link w-full flex items-center px-4 py-3 text-slate-300 hover:bg-white/10 hover:text-white rounded-lg group transition-colors">
+                    <i class="ph ph-table text-xl mr-3 group-hover:text-pve-green transition-colors"></i>
                     <span class="font-medium text-sm">Mapa & Raio-X</span>
                 </button>
-                <button id="nav-page-regua" onclick="switchPage('page-regua')" class="nav-link w-full flex items-center px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
-                    <i class="ph ph-ruler text-xl mr-3 group-hover:text-blue-400 transition-colors"></i>
+                <button id="nav-page-regua" onclick="switchPage('page-regua')" class="nav-link w-full flex items-center px-4 py-3 text-slate-300 hover:bg-white/10 hover:text-white rounded-lg group transition-colors">
+                    <i class="ph ph-ruler text-xl mr-3 group-hover:text-pve-green transition-colors"></i>
                     <span class="font-medium text-sm">Régua de Maturidade</span>
                 </button>
-                <button id="nav-page-cluster" onclick="switchPage('page-cluster')" class="nav-link w-full flex items-center px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
-                    <i class="ph ph-graph text-xl mr-3 group-hover:text-blue-400 transition-colors"></i>
+                <button id="nav-page-cluster" onclick="switchPage('page-cluster')" class="nav-link w-full flex items-center px-4 py-3 text-slate-300 hover:bg-white/10 hover:text-white rounded-lg group transition-colors">
+                    <i class="ph ph-graph text-xl mr-3 group-hover:text-pve-green transition-colors"></i>
                     <span class="font-medium text-sm">Trilhas & Clusters</span>
                 </button>
-                <button id="nav-page-metas" onclick="switchPage('page-metas')" class="nav-link w-full flex items-center px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-lg group transition-colors">
-                    <i class="ph ph-target text-xl mr-3 group-hover:text-blue-400 transition-colors"></i>
+                <button id="nav-page-metas" onclick="switchPage('page-metas')" class="nav-link w-full flex items-center px-4 py-3 text-slate-300 hover:bg-white/10 hover:text-white rounded-lg group transition-colors">
+                    <i class="ph ph-target text-xl mr-3 group-hover:text-pve-green transition-colors"></i>
                     <span class="font-medium text-sm">Projeção de Metas</span>
                 </button>
             </nav>
         </div>
 
-        <div class="p-4 border-t border-slate-800">
+        <div class="p-4 border-t border-white/10">
             <div class="flex items-center space-x-2 px-2">
-                <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                <span class="text-xs font-medium text-slate-400">Status: Conectado</span>
+                <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+                <span class="text-xs font-medium text-blue-100">Status: Conectado</span>
             </div>
             <div class="px-2 mt-2">
-                <p class="text-[10px] text-slate-500">Suporte técnico:</p>
-                <a href="mailto:robson@sincronizaeducacao.com.br" class="text-[10px] text-blue-400 hover:underline">robson@sincronizaeducacao.com.br</a>
+                <p class="text-[10px] text-blue-200 opacity-60">Suporte técnico:</p>
+                <a href="mailto:robson@sincronizaeducacao.com.br" class="text-[10px] text-pve-yellow hover:underline">robson@sincronizaeducacao.com.br</a>
             </div>
         </div>
     </aside>
@@ -219,19 +241,19 @@
             <!-- PÁGINA 1: VISÃO EXECUTIVA -->
             <div id="page-visao" class="page-section space-y-6 fade-update block">
                 
-                <div class="border-l-4 border-blue-600 pl-4 mb-4">
+                <div class="border-l-4 border-pve-green pl-4 mb-4">
                     <h2 class="text-2xl font-bold text-slate-900">Resultados e Maturidade Geral</h2>
                     <p class="mt-1 text-slate-600">Acompanhamento do impacto, esforço da rede e atingimento de metas do PVE.</p>
                 </div>
 
                 <!-- Linha 1 - Operação e Impacto -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Impacto: IDEB -->
-                    <div class="bg-gradient-to-br from-indigo-700 to-blue-900 rounded-xl shadow-md p-6 text-white flex flex-col justify-center relative overflow-hidden">
+                    <!-- Impacto: IDEB (Com Gradiente Laranja/Vermelho PVE) -->
+                    <div class="bg-gradient-to-br from-pve-orange to-pve-red rounded-xl shadow-md p-6 text-white flex flex-col justify-center relative overflow-hidden">
                         <i class="ph-fill ph-student absolute -right-4 -top-4 text-7xl text-white opacity-10"></i>
-                        <span class="text-blue-200 text-xs font-bold uppercase tracking-wider">Métrica de Impacto Final</span>
+                        <span class="text-orange-200 text-xs font-bold uppercase tracking-wider">Métrica de Impacto Final</span>
                         <span class="text-4xl font-black mt-2 mb-2">Ideb +</span>
-                        <p class="text-xs text-blue-100 mb-3 max-w-sm leading-relaxed">
+                        <p class="text-xs text-orange-100 mb-3 max-w-sm leading-relaxed">
                             A elevação dos índices de aprendizagem e da qualidade do ensino é o objetivo central de todas as ações de gestão e mobilização do programa.
                         </p>
                         <span class="text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider bg-white/20 border border-white/30 inline-block w-max">Foco na Aprendizagem</span>
@@ -240,7 +262,7 @@
                     <!-- Operação: Municípios -->
                     <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-center">
                         <span class="text-slate-400 text-xs font-bold uppercase tracking-widest flex items-center">
-                            <i class="ph-fill ph-map-pin mr-2 text-blue-500 text-lg"></i> Municípios Analisados
+                            <i class="ph-fill ph-map-pin mr-2 text-pve-orange text-lg"></i> Municípios Analisados
                         </span>
                         <span id="kpiOpMun" class="text-5xl font-bold text-slate-800 mt-2">-</span>
                         <p class="text-xs text-slate-500 mt-3 border-t border-slate-100 pt-3">
@@ -253,7 +275,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col items-center justify-center hover:shadow-md transition">
                         <span class="text-slate-400 text-[11px] font-bold uppercase tracking-widest">Média Global PVE</span>
-                        <span id="kpiGlobal" class="text-5xl font-black text-blue-600 mt-2">-</span>
+                        <span id="kpiGlobal" class="text-5xl font-black text-pve-green mt-2">-</span>
                         <span class="text-slate-500 text-[10px] font-medium mt-2 uppercase tracking-wide bg-slate-50 px-2 py-1 rounded border border-slate-200">Consolidado 2025</span>
                     </div>
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col items-center justify-center hover:shadow-md transition relative">
@@ -296,17 +318,17 @@
                     </div>
                 </div>
 
-                <!-- Top Rankings Rápidos -->
+                <!-- Top Rankings Rápidos com Descrições -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-white rounded-xl shadow-sm p-6 border border-emerald-100 border-t-4 border-t-emerald-500">
-                        <h3 class="font-bold text-slate-800 mb-2 flex items-center"><i class="ph-fill ph-trophy mr-2 text-emerald-500 text-xl"></i> Top 3: Destaques da Seleção</h3>
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-emerald-100 border-t-4 border-t-pve-green">
+                        <h3 class="font-bold text-slate-800 mb-2 flex items-center"><i class="ph-fill ph-trophy mr-2 text-pve-green text-xl"></i> Top 3: Destaques da Seleção</h3>
                         <p class="text-[11px] text-slate-500 mb-4 leading-relaxed">Municípios com as <strong>maiores médias gerais</strong>. Podem atuar como referências de boas práticas e inovação para o restante da rede.</p>
                         <ul id="listTopDestaques" class="space-y-1">
                             <!-- Preenchido via JS -->
                         </ul>
                     </div>
-                    <div class="bg-white rounded-xl shadow-sm p-6 border border-rose-100 border-t-4 border-t-rose-500">
-                        <h3 class="font-bold text-slate-800 mb-2 flex items-center"><i class="ph-fill ph-warning-octagon mr-2 text-rose-500 text-xl"></i> Top 3: Atenção Crítica</h3>
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-rose-100 border-t-4 border-t-pve-red">
+                        <h3 class="font-bold text-slate-800 mb-2 flex items-center"><i class="ph-fill ph-warning-octagon mr-2 text-pve-red text-xl"></i> Top 3: Atenção Crítica</h3>
                         <p class="text-[11px] text-slate-500 mb-4 leading-relaxed">Municípios com as <strong>menores médias gerais</strong>. Exigem acompanhamento prioritário e suporte intensivo por parte da coordenação.</p>
                         <ul id="listTopCriticos" class="space-y-1">
                             <!-- Preenchido via JS -->
@@ -319,7 +341,7 @@
             <!-- PÁGINA 2: MAPA E RAIO-X -->
             <div id="page-mapa" class="page-section space-y-8 hidden fade-update">
                 
-                <div class="border-l-4 border-amber-500 pl-4 mb-4">
+                <div class="border-l-4 border-pve-yellow pl-4 mb-4">
                     <h2 class="text-2xl font-bold text-slate-900">Mapa de Competências & Raio-X</h2>
                     <p class="mt-1 text-slate-600">Diagnóstico aprofundado com visualização completa de todas as competências avaliadas.</p>
                 </div>
@@ -367,7 +389,7 @@
                     <div class="overflow-x-auto max-h-[500px]">
                         <table class="min-w-full text-sm">
                             <thead class="sticky top-0 z-10 shadow-md">
-                                <tr id="heatmapHeadRow" class="bg-slate-800 text-white uppercase leading-normal border-b border-slate-700">
+                                <tr id="heatmapHeadRow" class="bg-pve-blueDark text-white uppercase leading-normal border-b border-pve-blueDarker">
                                     <!-- Dynamic -->
                                 </tr>
                             </thead>
@@ -382,7 +404,7 @@
                 <div class="bg-white rounded-xl shadow-lg border border-slate-200 mt-8 overflow-hidden">
                     <div class="p-6 border-b border-slate-100 bg-slate-50 flex flex-wrap justify-between items-center gap-4">
                         <h3 class="text-xl font-bold text-slate-800">Raio-X: Perfil da Seleção vs Média Nacional</h3>
-                        <span id="radarTitleBadge" class="bg-blue-100 text-blue-800 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider border border-blue-200">
+                        <span id="radarTitleBadge" class="bg-pve-greenLight text-pve-greenDark text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider border border-pve-green">
                             Frente: Mobilização Social
                         </span>
                     </div>
@@ -412,7 +434,7 @@
             <!-- PÁGINA 3: RÉGUA DE MATURIDADE DETALHADA -->
             <div id="page-regua" class="page-section space-y-8 hidden fade-update">
                 
-                <div class="border-l-4 border-emerald-500 pl-4 mb-4">
+                <div class="border-l-4 border-pve-green pl-4 mb-4">
                     <h2 class="text-2xl font-bold text-slate-900">Régua de Maturidade (Microavanços)</h2>
                     <p class="mt-1 text-slate-600">Acompanhamento detalhado das 11 faixas de maturidade para direcionar metas específicas.</p>
                 </div>
@@ -443,11 +465,11 @@
                     </div>
                     
                     <!-- Régua Visual Explicativa -->
-                    <div class="bg-slate-800 p-4 flex flex-col md:flex-row text-center text-[10px] font-bold text-white uppercase tracking-wider">
-                        <div class="flex-1 border-r border-slate-600 p-2"><span class="block text-red-400 mb-1">Nível 1 (Frágil)</span> 1- (1.0) | 1 (1.5) | 1+ (2.0)</div>
-                        <div class="flex-1 border-r border-slate-600 p-2"><span class="block text-amber-400 mb-1">Nível 2 (Em Consolidação)</span> 2- (2.5) | 2 (2.75) | 2+ (3.0)</div>
-                        <div class="flex-1 border-r border-slate-600 p-2"><span class="block text-emerald-400 mb-1">Nível 3 (Consolidado)</span> 3- (3.25) | 3 (3.4) | 3+ (3.55)</div>
-                        <div class="flex-1 p-2"><span class="block text-blue-400 mb-1">Nível 4 (Robusto)</span> 4- (3.7) | 4 (3.8 a 4.0)</div>
+                    <div class="bg-pve-blueDark p-4 flex flex-col md:flex-row text-center text-[10px] font-bold text-white uppercase tracking-wider">
+                        <div class="flex-1 border-r border-white/20 p-2"><span class="block text-red-400 mb-1">Nível 1 (Frágil)</span> 1- (1.0) | 1 (1.5) | 1+ (2.0)</div>
+                        <div class="flex-1 border-r border-white/20 p-2"><span class="block text-pve-yellow mb-1">Nível 2 (Em Consolidação)</span> 2- (2.5) | 2 (2.75) | 2+ (3.0)</div>
+                        <div class="flex-1 border-r border-white/20 p-2"><span class="block text-emerald-400 mb-1">Nível 3 (Consolidado)</span> 3- (3.25) | 3 (3.4) | 3+ (3.55)</div>
+                        <div class="flex-1 p-2"><span class="block text-blue-300 mb-1">Nível 4 (Robusto)</span> 4- (3.7) | 4 (3.8 a 4.0)</div>
                     </div>
                 </div>
 
@@ -480,14 +502,14 @@
 
             <!-- PÁGINA 4: CLUSTERIZAÇÃO & TRILHAS -->
             <div id="page-cluster" class="page-section space-y-8 hidden fade-update">
-                <div class="border-l-4 border-indigo-500 pl-4 mb-4">
+                <div class="border-l-4 border-pve-blueDark pl-4 mb-4">
                     <h2 class="text-2xl font-bold text-slate-900">Inteligência de Trilhas e Clusters</h2>
                     <p class="mt-1 text-slate-600">Cruze quaisquer competências e descubra exatamente o que exige ação imediata.</p>
                 </div>
 
                 <!-- Bloco de Contexto Estratégico (Trilhas & Clusters) -->
-                <div class="bg-indigo-50 border border-indigo-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
-                    <h4 class="text-sm font-bold text-indigo-800 mb-2 flex items-center">
+                <div class="bg-blue-50 border border-blue-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
+                    <h4 class="text-sm font-bold text-blue-800 mb-2 flex items-center">
                         <i class="ph-fill ph-info mr-2 text-lg"></i> Entenda a Inteligência de Trilhas e Clusters
                     </h4>
                     <p class="text-xs text-slate-700 leading-relaxed mb-2">
@@ -509,8 +531,8 @@
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-xs font-bold text-blue-600 mb-1">Eixo Horizontal (X)</label>
-                                    <select id="selEixoX" class="w-full text-xs border border-slate-300 rounded-lg px-2 py-2 focus:ring-blue-500 bg-white font-medium shadow-sm" onchange="updateClusters()">
+                                    <label class="block text-xs font-bold text-pve-green mb-1">Eixo Horizontal (X)</label>
+                                    <select id="selEixoX" class="w-full text-xs border border-slate-300 rounded-lg px-2 py-2 focus:ring-pve-green focus:border-pve-green bg-white font-medium shadow-sm" onchange="updateClusters()">
                                         <optgroup label="Médias Gerais"><option value="gesc">Média Gestão Escolar (GESC)</option><option value="gedu">Média Gestão Educ. (GEDU)</option><option value="mob" selected>Média Mobilização (MOB)</option></optgroup>
                                         <optgroup label="Gestão Escolar (GESC)"><option value="gesc_c1">C1 - Processos de gestão</option><option value="gesc_c2">C2 - Registro e doc.</option><option value="gesc_c3">C3 - Acompanhamento aprend.</option><option value="gesc_c4">C4 - Equipe colaborativa</option><option value="gesc_c5">C5 - Parcerias/Mobilização</option><option value="gesc_c6">C6 - Articulação de redes</option><option value="gesc_c7">C7 - Formação continuada</option><option value="gesc_c8">C8 - Gestão de recursos</option></optgroup>
                                         <optgroup label="Gestão Educacional (GEDU)"><option value="gedu_c1">C1 - Processos de gestão</option><option value="gedu_c2">C2 - Registro e doc.</option><option value="gedu_c3">C3 - Acompanhamento aprend.</option><option value="gedu_c4">C4 - Equipe colaborativa</option><option value="gedu_c5">C5 - Parcerias/Mobilização</option><option value="gedu_c6">C6 - Articulação de redes</option><option value="gedu_c7">C7 - Formação continuada</option><option value="gedu_c8">C8 - Gestão de recursos</option></optgroup>
@@ -518,8 +540,8 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-bold text-blue-600 mb-1">Eixo Vertical (Y)</label>
-                                    <select id="selEixoY" class="w-full text-xs border border-slate-300 rounded-lg px-2 py-2 focus:ring-blue-500 bg-white font-medium shadow-sm" onchange="updateClusters()">
+                                    <label class="block text-xs font-bold text-pve-green mb-1">Eixo Vertical (Y)</label>
+                                    <select id="selEixoY" class="w-full text-xs border border-slate-300 rounded-lg px-2 py-2 focus:ring-pve-green focus:border-pve-green bg-white font-medium shadow-sm" onchange="updateClusters()">
                                         <optgroup label="Médias Gerais"><option value="gedu">Média Gestão Educ. (GEDU)</option><option value="gesc" selected>Média Gestão Escolar (GESC)</option><option value="mob">Média Mobilização (MOB)</option></optgroup>
                                         <optgroup label="Gestão Escolar (GESC)"><option value="gesc_c1">C1 - Processos de gestão</option><option value="gesc_c2">C2 - Registro e doc.</option><option value="gesc_c3">C3 - Acompanhamento aprend.</option><option value="gesc_c4">C4 - Equipe colaborativa</option><option value="gesc_c5">C5 - Parcerias/Mobilização</option><option value="gesc_c6">C6 - Articulação de redes</option><option value="gesc_c7">C7 - Formação continuada</option><option value="gesc_c8">C8 - Gestão de recursos</option></optgroup>
                                         <optgroup label="Gestão Educacional (GEDU)"><option value="gedu_c1">C1 - Processos de gestão</option><option value="gedu_c2">C2 - Registro e doc.</option><option value="gedu_c3">C3 - Acompanhamento aprend.</option><option value="gedu_c4">C4 - Equipe colaborativa</option><option value="gedu_c5">C5 - Parcerias/Mobilização</option><option value="gedu_c6">C6 - Articulação de redes</option><option value="gedu_c7">C7 - Formação continuada</option><option value="gedu_c8">C8 - Gestão de recursos</option></optgroup>
@@ -535,10 +557,10 @@
                             <div class="mt-4 border-t border-slate-100 pt-4">
                                 <h4 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 text-center">Entenda os Níveis da Matriz</h4>
                                 <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 text-[10px] leading-tight">
-                                    <div class="bg-red-50 border-l-2 border-red-500 p-2 rounded shadow-sm"><span class="font-bold text-red-700 block mb-1">Nível 1: Frágil (< 2.5)</span><span class="text-slate-600">Conhecimento inicial. Sem práticas estabelecidas.</span></div>
-                                    <div class="bg-amber-50 border-l-2 border-amber-500 p-2 rounded shadow-sm"><span class="font-bold text-amber-700 block mb-1">Nível 2: Consolidação (2.5-2.9)</span><span class="text-slate-600">Conhecimento em progresso. Rotinas em construção.</span></div>
-                                    <div class="bg-emerald-50 border-l-2 border-emerald-500 p-2 rounded shadow-sm"><span class="font-bold text-emerald-700 block mb-1">Nível 3: Consolidado (3.0-3.4)</span><span class="text-slate-600">Conhecimento pleno. Práticas rotineiras e estabelecidas.</span></div>
-                                    <div class="bg-blue-50 border-l-2 border-blue-500 p-2 rounded shadow-sm"><span class="font-bold text-blue-700 block mb-1">Nível 4: Robusto (≥ 3.5)</span><span class="text-slate-600">Conhecimento avançado. Rotinas formalizadas e consistentes.</span></div>
+                                    <div class="bg-red-50 border-l-2 border-pve-red p-2 rounded shadow-sm"><span class="font-bold text-red-700 block mb-1">Nível 1: Frágil (< 2.5)</span><span class="text-slate-600">Conhecimento inicial. Sem práticas estabelecidas.</span></div>
+                                    <div class="bg-amber-50 border-l-2 border-pve-yellow p-2 rounded shadow-sm"><span class="font-bold text-amber-700 block mb-1">Nível 2: Consolidação (2.5-2.9)</span><span class="text-slate-600">Conhecimento em progresso. Rotinas em construção.</span></div>
+                                    <div class="bg-emerald-50 border-l-2 border-pve-green p-2 rounded shadow-sm"><span class="font-bold text-emerald-700 block mb-1">Nível 3: Consolidado (3.0-3.4)</span><span class="text-slate-600">Conhecimento pleno. Práticas rotineiras e estabelecidas.</span></div>
+                                    <div class="bg-blue-50 border-l-2 border-pve-blueDark p-2 rounded shadow-sm"><span class="font-bold text-blue-700 block mb-1">Nível 4: Robusto (≥ 3.5)</span><span class="text-slate-600">Conhecimento avançado. Rotinas formalizadas e consistentes.</span></div>
                                 </div>
                                 <p class="text-[9px] text-slate-400 mt-3 text-center uppercase tracking-widest font-bold">O tamanho da bolha reflete a média da frente correspondente ao Eixo X.</p>
                             </div>
@@ -547,10 +569,10 @@
 
                     <!-- Engine de Priorização & GERADOR DE PROMPT -->
                     <div class="bg-white rounded-xl shadow-lg border border-slate-200 flex flex-col overflow-hidden">
-                        <div class="p-6 bg-slate-800 text-white border-b border-slate-700 flex justify-between items-center">
+                        <div class="p-6 bg-pve-blueDark text-white border-b border-pve-blueDarker flex justify-between items-center">
                             <div>
-                                <h3 class="font-bold text-xl flex items-center"><i class="ph-fill ph-crosshair text-blue-400 mr-3 text-2xl"></i> Motor de Priorização</h3>
-                                <p class="text-xs text-slate-300 mt-1 opacity-80">Análise focada nas frentes selecionadas no gráfico ao lado.</p>
+                                <h3 class="font-bold text-xl flex items-center"><i class="ph-fill ph-crosshair text-pve-yellow mr-3 text-2xl"></i> Motor de Priorização</h3>
+                                <p class="text-xs text-blue-200 mt-1 opacity-80">Análise focada nas frentes selecionadas no gráfico ao lado.</p>
                             </div>
                         </div>
                         <div class="p-6 flex-1 bg-slate-50 overflow-y-auto">
@@ -576,20 +598,20 @@
                                     <p class="leading-relaxed"><strong>Nota:</strong> Este prompt é uma <strong>sugestão inicial</strong>. Revise e adapte o conteúdo e as diretrizes à realidade específica do seu território antes de usá-lo em ferramentas como ChatGPT ou Gemini.</p>
                                 </div>
                             </div>
-                            <button onclick="generatePrompt()" class="w-full bg-blue-600 text-white px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-wide hover:bg-blue-700 transition-colors shadow-md flex justify-center items-center">
+                            <button onclick="generatePrompt()" class="w-full bg-pve-green text-white px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-wide hover:bg-pve-greenDark transition-colors shadow-md flex justify-center items-center">
                                 <i class="ph-bold ph-magic-wand mr-2"></i> Gerar Comando para IA (Prompt)
                             </button>
                         </div>
                         
-                        <div id="promptContainer" class="hidden p-5 bg-blue-50 border-t border-blue-100 flex flex-col">
+                        <div id="promptContainer" class="hidden p-5 bg-pve-greenLight border-t border-green-200 flex flex-col">
                             <div class="flex justify-between items-center mb-3">
-                                <label class="text-[11px] font-bold text-blue-800 uppercase tracking-widest flex items-center">
+                                <label class="text-[11px] font-bold text-pve-greenDark uppercase tracking-widest flex items-center">
                                     <i class="ph-fill ph-robot mr-1 text-lg"></i> Copie o texto abaixo e cole no seu ChatGPT/Gemini:
                                 </label>
                                 <button onclick="document.getElementById('promptContainer').classList.add('hidden')" class="text-slate-400 hover:text-slate-600"><i class="ph-bold ph-x"></i></button>
                             </div>
-                            <textarea id="promptTextArea" class="w-full h-64 p-4 text-xs font-mono text-slate-700 border border-blue-200 rounded-lg focus:ring-blue-500 focus:border-blue-500 mb-3 bg-white shadow-inner resize-none leading-relaxed" readonly></textarea>
-                            <button onclick="copyPrompt()" id="btnCopyPrompt" class="w-full bg-slate-800 text-white px-4 py-2.5 rounded-lg text-sm font-bold hover:bg-slate-700 transition-colors flex justify-center items-center shadow-md">
+                            <textarea id="promptTextArea" class="w-full h-64 p-4 text-xs font-mono text-slate-700 border border-green-300 rounded-lg focus:ring-pve-green focus:border-pve-green mb-3 bg-white shadow-inner resize-none leading-relaxed" readonly></textarea>
+                            <button onclick="copyPrompt()" id="btnCopyPrompt" class="w-full bg-pve-blueDark text-white px-4 py-2.5 rounded-lg text-sm font-bold hover:bg-pve-blueDarker transition-colors flex justify-center items-center shadow-md">
                                 <i class="ph-bold ph-copy mr-2"></i> Copiar Texto
                             </button>
                         </div>
@@ -603,14 +625,14 @@
             <!-- ========================================== -->
             <div id="page-metas" class="page-section space-y-8 hidden fade-update">
                 
-                <div class="border-l-4 border-violet-600 pl-4 mb-4">
+                <div class="border-l-4 border-pve-blueDark pl-4 mb-4">
                     <h2 class="text-2xl font-bold text-slate-900">Projeção de Metas 2026</h2>
                     <p class="mt-1 text-slate-600">Direcionamento estratégico e expectativa de avanço (Metas 100, 300, 500) por município.</p>
                 </div>
                 
                 <!-- Bloco de Contexto Estratégico -->
-                <div class="bg-violet-50 border border-violet-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
-                    <h4 class="text-sm font-bold text-violet-800 mb-2 flex items-center">
+                <div class="bg-blue-50 border border-blue-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
+                    <h4 class="text-sm font-bold text-pve-blueDark mb-2 flex items-center">
                         <i class="ph-fill ph-info mr-2 text-lg"></i> Entenda a Projeção de Metas
                     </h4>
                     <p class="text-xs text-slate-700 leading-relaxed mb-2">
@@ -628,14 +650,14 @@
                         <span id="metaTotalMun" class="text-4xl font-bold text-slate-800 mt-2">-</span>
                         <p class="text-xs text-slate-500 mt-2">No recorte de filtros atual.</p>
                     </div>
-                    <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-amber-500 flex flex-col justify-center">
-                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-arrow-circle-up text-amber-500 mr-2"></i> Alta Intensidade (Nível 2)</h4>
-                        <span id="metaAltaIntensidade" class="text-4xl font-bold text-amber-600 mt-2">-</span>
+                    <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-pve-yellow flex flex-col justify-center">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-arrow-circle-up text-pve-orange mr-2"></i> Alta Intensidade (Nível 2)</h4>
+                        <span id="metaAltaIntensidade" class="text-4xl font-bold text-pve-orange mt-2">-</span>
                         <p class="text-xs text-slate-500 mt-2">Precisam avançar entre 7 e 10 competências (Meta 100 a 500).</p>
                     </div>
-                    <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-emerald-500 flex flex-col justify-center">
-                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-check-circle text-emerald-500 mr-2"></i> Refinamento (Nível 3 e 4)</h4>
-                        <span id="metaRefinamento" class="text-4xl font-bold text-emerald-600 mt-2">-</span>
+                    <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-pve-green flex flex-col justify-center">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-check-circle text-pve-green mr-2"></i> Refinamento (Nível 3 e 4)</h4>
+                        <span id="metaRefinamento" class="text-4xl font-bold text-pve-greenDark mt-2">-</span>
                         <p class="text-xs text-slate-500 mt-2">Foco em manutenção e saltos curtos (1 a 6 competências).</p>
                     </div>
                 </div>
@@ -661,12 +683,12 @@
                         <div class="overflow-x-auto max-h-[400px]">
                             <table class="min-w-full text-sm">
                                 <thead class="sticky top-0 z-10 shadow-sm">
-                                    <tr class="bg-slate-800 text-white uppercase text-[10px] font-bold tracking-wider leading-normal">
-                                        <th class="py-3 px-6 text-left">MUNICÍPIO (UF)</th>
-                                        <th class="py-3 px-4 text-center">NÍVEL ATUAL (2025)</th>
-                                        <th class="py-3 px-4 text-center bg-violet-600">META 100</th>
-                                        <th class="py-3 px-4 text-center bg-violet-700">META 300</th>
-                                        <th class="py-3 px-4 text-center bg-violet-800">META 500</th>
+                                    <tr class="bg-pve-blueDark text-white uppercase text-[10px] font-bold tracking-wider leading-normal">
+                                        <th class="py-3 px-6 text-left border-r border-white/20">MUNICÍPIO (UF)</th>
+                                        <th class="py-3 px-4 text-center border-r border-white/20">NÍVEL ATUAL (2025)</th>
+                                        <th class="py-3 px-4 text-center bg-[#172554] border-r border-white/20">META 100</th>
+                                        <th class="py-3 px-4 text-center bg-[#172554] border-r border-white/20">META 300</th>
+                                        <th class="py-3 px-4 text-center bg-[#172554]">META 500</th>
                                     </tr>
                                 </thead>
                                 <tbody id="metasBody" class="text-slate-700 font-medium">
@@ -778,12 +800,12 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             document.getElementById(pageId).classList.add('block');
 
             document.querySelectorAll('.nav-link').forEach(btn => {
-                btn.classList.remove('bg-blue-600', 'text-white', 'shadow-sm');
-                btn.classList.add('text-slate-400', 'hover:bg-slate-800', 'hover:text-white');
+                btn.classList.remove('bg-pve-green', 'text-white', 'shadow-sm');
+                btn.classList.add('text-slate-300', 'hover:bg-white/10', 'hover:text-white');
             });
             const activeBtn = document.getElementById('nav-' + pageId);
-            activeBtn.classList.remove('text-slate-400', 'hover:bg-slate-800', 'hover:text-white');
-            activeBtn.classList.add('bg-blue-600', 'text-white', 'shadow-sm');
+            activeBtn.classList.remove('text-slate-300', 'hover:bg-white/10', 'hover:text-white');
+            activeBtn.classList.add('bg-pve-green', 'text-white', 'shadow-sm');
 
             document.getElementById('mainContainer').scrollTop = 0;
 
@@ -812,6 +834,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             }
         });
 
+        // NOVAS FUNÇÕES DOS FILTROS (Visual Checked por Padrão)
         function renderMultiSelects() {
             const listEst = document.getElementById('listEstados');
             listEst.innerHTML = '';
@@ -908,12 +931,12 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             
             for(let i=1; i<=numCols; i++) {
                 thHtml += `
-                <th class="py-3 px-3 text-center border-b-2 border-slate-700" title="Competência ${i}">
-                    <span class="block text-[10px] text-slate-400 font-semibold uppercase tracking-widest">Competência</span>
+                <th class="py-3 px-3 text-center border-b-2 border-white/20" title="Competência ${i}">
+                    <span class="block text-[10px] text-blue-200 font-semibold uppercase tracking-widest">Competência</span>
                     <span class="block text-lg font-black text-white mt-0.5">0${i}</span>
                 </th>`;
             }
-            thHtml += `<th class="py-4 px-4 text-center font-bold bg-blue-900 text-white tracking-widest text-xs border-l border-slate-700">MÉDIA<br>${currentViewFrente.toUpperCase()}</th>`;
+            thHtml += `<th class="py-4 px-4 text-center font-bold bg-[#172554] text-white tracking-widest text-xs border-l border-white/20">MÉDIA<br>${currentViewFrente.toUpperCase()}</th>`;
             theadTr.innerHTML = thHtml;
 
             if (currentData.length > 0) {
@@ -923,6 +946,8 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
         }
 
         function loadData() {
+            // CORREÇÃO: Converter tabulações em vírgulas antes de passar para o PapaParse
+            // Isso evita que os dados não sejam lidos e que os gráficos fiquem em branco na primeira carga
             let cleanedCSV = RAW_CSV_DATA.replace(/\t/g, ',');
             cleanedCSV = cleanedCSV.replace(/"/g, ''); 
 
@@ -1019,13 +1044,15 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             dbData = cities;
             currentData = [...dbData];
 
-            renderMultiSelects(); 
-            initCharts();         
+            renderMultiSelects(); // Cria os checkboxes HTML marcados e o UI
+            initCharts();         // Cria os gráficos vazios
             
+            // Forçamos a seleção inicial e ativamos os cálculos todos
             currentViewFrente = 'mob';
             document.getElementById('radarTitleBadge').innerText = 'Frente Atual: Mobilização Social';
             applyFilters();
             
+            // Garantir que a Visão Executiva está selecionada para evitar gráficos "presos" no tamanho zero
             switchPage('page-visao');
         }
 
@@ -1069,7 +1096,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             // Top 3
             sortedByGeral.slice(0, 3).forEach((item, idx) => {
                 let li = `<li class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
-                    <span class="text-sm font-bold text-slate-700"><span class="text-emerald-500 mr-1">${idx+1}º</span> ${item.municipio} (${item.uf})</span>
+                    <span class="text-sm font-bold text-slate-700"><span class="text-pve-green mr-1">${idx+1}º</span> ${item.municipio} (${item.uf})</span>
                     <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-0.5 rounded font-bold">${item.geral.toFixed(2)}</span>
                 </li>`;
                 listTop.innerHTML += li;
@@ -1078,7 +1105,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             // Bottom 3
             [...sortedByGeral].reverse().slice(0, 3).forEach((item, idx) => {
                 let li = `<li class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
-                    <span class="text-sm font-bold text-slate-700"><span class="text-rose-500 mr-1">▼</span> ${item.municipio} (${item.uf})</span>
+                    <span class="text-sm font-bold text-slate-700"><span class="text-pve-red mr-1">▼</span> ${item.municipio} (${item.uf})</span>
                     <span class="bg-rose-100 text-rose-800 text-xs px-2 py-0.5 rounded font-bold">${item.geral.toFixed(2)}</span>
                 </li>`;
                 listBottom.innerHTML += li;
@@ -1279,7 +1306,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             if (criticos.length > 0) prompt += `\n🔴 PRIORIDADE CRÍTICA (Nível Frágil - Notas < 2.5 - Foco principal da intervenção):\n- ${criticos.join('\n- ')}\n`;
             if (atencao.length > 0) prompt += `\n🟡 PONTOS DE ATENÇÃO (Em Consolidação - Notas 2.5 a 2.9 - Necessitam reforço contínuo):\n- ${atencao.join('\n- ')}\n`;
             
-            prompt += `\nCom base nestas evidências, por favor, construa uma proposta detalhada contendo:\n\n`;
+            prompt += `\nCom base nestes evidências, por favor, construa uma proposta detalhada contendo:\n\n`;
             prompt += `1. OBJETIVO DA FORMAÇÃO: Um parágrafo inspirador e diretamente alinhado com a resolução das fragilidades apontadas.\n`;
             prompt += `2. PAUTA FORMATIVA (4 HORAS): Uma agenda estruturada em blocos de tempo (ex: Acolhimento, Sensibilização, Mão na Massa, Encerramento/Pactuação), detalhando o que o formador deve abordar em cada momento.\n`;
             prompt += `3. DINÂMICAS PRÁTICAS: Descreva passo a passo duas dinâmicas interativas ou ferramentas de gestão que devem ser aplicadas durante o encontro para atacar as "Prioridades Críticas" listadas acima.\n`;
@@ -1300,13 +1327,13 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             const btn = document.getElementById("btnCopyPrompt");
             const originalText = btn.innerHTML;
             btn.innerHTML = `<i class="ph-bold ph-check mr-2"></i> Texto Copiado com Sucesso!`;
-            btn.classList.replace('bg-slate-800', 'bg-emerald-600');
-            btn.classList.replace('hover:bg-slate-700', 'hover:bg-emerald-700');
+            btn.classList.replace('bg-pve-blueDark', 'bg-pve-green');
+            btn.classList.replace('hover:bg-pve-blueDarker', 'hover:bg-pve-greenDark');
             
             setTimeout(() => {
                 btn.innerHTML = originalText;
-                btn.classList.replace('bg-emerald-600', 'bg-slate-800');
-                btn.classList.replace('hover:bg-emerald-700', 'hover:bg-slate-700');
+                btn.classList.replace('bg-pve-green', 'bg-pve-blueDark');
+                btn.classList.replace('hover:bg-pve-greenDark', 'hover:bg-pve-blueDarker');
             }, 3000);
         }
 
@@ -1441,6 +1468,27 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             }
         }
 
+        function processLabels(labels) {
+            return labels.map(label => {
+                if (label.length > 15) {
+                    const words = label.split(' ');
+                    const lines = [];
+                    let currentLine = words[0];
+                    for (let i = 1; i < words.length; i++) {
+                        if (currentLine.length + 1 + words[i].length <= 15) {
+                            currentLine += ' ' + words[i];
+                        } else {
+                            lines.push(currentLine);
+                            currentLine = words[i];
+                        }
+                    }
+                    lines.push(currentLine);
+                    return lines;
+                }
+                return label;
+            });
+        }
+
         function initCharts() {
             Chart.defaults.font.family = "'Inter', sans-serif";
             Chart.defaults.color = '#475569';
@@ -1467,7 +1515,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                     labels: ['Alta Intensidade (Avançar 7+)', 'Refinamento (Avançar 1 a 6)'],
                     datasets: [{
                         data: [0, 0],
-                        backgroundColor: ['#F59E0B', '#10B981'],
+                        backgroundColor: ['#E85D04', '#008B45'], /* PVE Orange and Green */
                         borderWidth: 2,
                         borderColor: '#ffffff'
                     }]
@@ -1568,7 +1616,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                         legend: { position: 'bottom', labels: { usePointStyle: true, font: {weight: 'bold', size: 13}, padding: 20 } },
                         tooltip: { backgroundColor: 'rgba(30, 41, 59, 0.9)', titleFont: {size: 13}, padding: 12 },
                         datalabels: {
-                            color: function(context) { return context.datasetIndex === 0 ? '#1D4ED8' : '#475569'; },
+                            color: function(context) { return context.datasetIndex === 0 ? '#008B45' : '#475569'; },
                             font: { weight: 'bold', size: 11, family: 'Inter' },
                             formatter: function(value) { return value > 0 ? value.toFixed(2) : ''; },
                             align: function(context) { return context.datasetIndex === 0 ? 'end' : 'start'; },
@@ -1585,7 +1633,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                     labels: ['Alta Intensidade (7 a 10 comps.)', 'Refinamento (Manter ou 4 a 6)'],
                     datasets: [{
                         data: [0, 0],
-                        backgroundColor: ['#F59E0B', '#10B981'],
+                        backgroundColor: ['#E85D04', '#008B45'],
                         borderWidth: 2,
                         borderColor: '#ffffff'
                     }]
@@ -1720,8 +1768,8 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                 {
                     label: labelSelection,
                     data: avgSelection,
-                    fill: true, backgroundColor: 'rgba(37, 99, 235, 0.25)', borderColor: '#2563EB',
-                    pointBackgroundColor: '#2563EB', pointBorderColor: '#fff', borderWidth: 3, order: 1,
+                    fill: true, backgroundColor: 'rgba(0, 139, 69, 0.25)', borderColor: '#008B45', /* PVE Green */
+                    pointBackgroundColor: '#008B45', pointBorderColor: '#fff', borderWidth: 3, order: 1,
                     datalabels: { display: true } 
                 },
                 {
