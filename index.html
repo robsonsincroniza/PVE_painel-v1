@@ -251,7 +251,7 @@
 
                 <!-- Linha 1 - Operação e Impacto -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Impacto: IDEB -->
+                    <!-- Impacto: IDEB (Com Gradiente Laranja/Vermelho PVE) -->
                     <div class="bg-gradient-to-br from-pve-orange to-pve-red rounded-xl shadow-md p-6 text-white flex flex-col justify-center relative overflow-hidden">
                         <i class="ph-fill ph-student absolute -right-4 -top-4 text-7xl text-white opacity-10"></i>
                         <span class="text-orange-200 text-xs font-bold uppercase tracking-wider">Métrica de Impacto Final</span>
@@ -321,18 +321,31 @@
                     </div>
                 </div>
 
-                <!-- Top Rankings Rápidos -->
+                <!-- Top Rankings Rápidos com Filtro Integrado -->
+                <div class="col-span-1 md:col-span-2 flex flex-col sm:flex-row justify-between items-start sm:items-end border-b border-slate-200 pb-3 mt-8 mb-2 gap-4">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800">Rankings de Desempenho</h3>
+                        <p class="text-xs text-slate-500 mt-1">Selecione a frente para visualizar os destaques e pontos de atenção específicos.</p>
+                    </div>
+                    <select id="rankingFrenteSelect" onchange="updateExecutiveView()" class="text-sm border border-slate-300 rounded-md px-3 py-2 bg-white focus:ring-pve-green font-medium text-slate-700 shadow-sm cursor-pointer outline-none">
+                        <option value="geral">Média Geral</option>
+                        <option value="gesc">Gestão Escolar (GESC)</option>
+                        <option value="gedu">Gestão Educacional (GEDU)</option>
+                        <option value="mob">Mobilização Social (MOB)</option>
+                    </select>
+                </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-emerald-100 border-t-4 border-t-pve-green">
                         <h3 class="font-bold text-slate-800 mb-2 flex items-center"><i class="ph-fill ph-trophy mr-2 text-pve-green text-xl"></i> Top 3: Destaques da Seleção</h3>
-                        <p class="text-[11px] text-slate-500 mb-4 leading-relaxed">Municípios com as <strong>maiores médias gerais</strong>. Podem atuar como referências de boas práticas e inovação para o restante da rede.</p>
+                        <p id="topDescText" class="text-[11px] text-slate-500 mb-4 leading-relaxed">Municípios com as <strong>maiores médias gerais</strong>. Podem atuar como referências de boas práticas.</p>
                         <ul id="listTopDestaques" class="space-y-1">
                             <!-- Preenchido via JS -->
                         </ul>
                     </div>
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-rose-100 border-t-4 border-t-pve-red">
                         <h3 class="font-bold text-slate-800 mb-2 flex items-center"><i class="ph-fill ph-warning-octagon mr-2 text-pve-red text-xl"></i> Top 3: Atenção Crítica</h3>
-                        <p class="text-[11px] text-slate-500 mb-4 leading-relaxed">Municípios com as <strong>menores médias gerais</strong>. Exigem acompanhamento prioritário e suporte intensivo por parte da coordenação.</p>
+                        <p id="bottomDescText" class="text-[11px] text-slate-500 mb-4 leading-relaxed">Municípios com as <strong>menores médias gerais</strong>. Exigem acompanhamento prioritário e suporte intensivo.</p>
                         <ul id="listTopCriticos" class="space-y-1">
                             <!-- Preenchido via JS -->
                         </ul>
@@ -861,7 +874,6 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             }
         });
 
-        // NOVAS FUNÇÕES DOS FILTROS (Visual Checked por Padrão)
         function renderMultiSelects() {
             const listEst = document.getElementById('listEstados');
             listEst.innerHTML = '';
@@ -946,11 +958,9 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             ['mob', 'gesc', 'gedu'].forEach(f => {
                 const btn = document.getElementById('tab-' + f);
                 if (f === frente) {
-                    btn.classList.add('border-pve-green', 'text-pve-green');
-                    btn.classList.remove('border-transparent', 'text-slate-500', 'hover:text-pve-green');
+                    btn.classList.add('active');
                 } else {
-                    btn.classList.add('border-transparent', 'text-slate-500', 'hover:text-pve-green');
-                    btn.classList.remove('border-pve-green', 'text-pve-green');
+                    btn.classList.remove('active');
                 }
             });
 
@@ -978,7 +988,6 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
         }
 
         function loadData() {
-            // Converter tabulações em vírgulas antes de passar para o PapaParse
             let cleanedCSV = RAW_CSV_DATA.replace(/\t/g, ',');
             cleanedCSV = cleanedCSV.replace(/"/g, ''); 
 
@@ -1116,33 +1125,53 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             const numMun = currentData.length;
             document.getElementById('kpiOpMun').innerText = numMun;
 
-            let sortedByGeral = [...currentData].sort((a, b) => b.geral - a.geral);
+            // Verifica qual métrica está selecionada no dropdown
+            const rankMetricSelect = document.getElementById('rankingFrenteSelect');
+            const rankMetric = rankMetricSelect ? rankMetricSelect.value : 'geral';
+
+            // Ordena usando a métrica escolhida, ignorando zeros (sem dados)
+            let sortedData = [...currentData].filter(d => d[rankMetric] > 0).sort((a, b) => b[rankMetric] - a[rankMetric]);
+            
             const listTop = document.getElementById('listTopDestaques');
             const listBottom = document.getElementById('listTopCriticos');
             listTop.innerHTML = '';
             listBottom.innerHTML = '';
 
             // Top 3
-            sortedByGeral.slice(0, 3).forEach((item, idx) => {
+            sortedData.slice(0, 3).forEach((item, idx) => {
                 let li = `<li class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
                     <span class="text-sm font-bold text-slate-700"><span class="text-pve-green mr-1">${idx+1}º</span> ${item.municipio} (${item.uf})</span>
-                    <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-0.5 rounded font-bold">${item.geral.toFixed(2)}</span>
+                    <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-0.5 rounded font-bold">${item[rankMetric].toFixed(2)}</span>
                 </li>`;
                 listTop.innerHTML += li;
             });
 
             // Bottom 3
-            [...sortedByGeral].reverse().slice(0, 3).forEach((item, idx) => {
+            [...sortedData].reverse().slice(0, 3).forEach((item, idx) => {
                 let li = `<li class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
                     <span class="text-sm font-bold text-slate-700"><span class="text-pve-red mr-1">▼</span> ${item.municipio} (${item.uf})</span>
-                    <span class="bg-rose-100 text-rose-800 text-xs px-2 py-0.5 rounded font-bold">${item.geral.toFixed(2)}</span>
+                    <span class="bg-rose-100 text-rose-800 text-xs px-2 py-0.5 rounded font-bold">${item[rankMetric].toFixed(2)}</span>
                 </li>`;
                 listBottom.innerHTML += li;
             });
             
-            if(currentData.length === 0) {
+            if(sortedData.length === 0) {
                listTop.innerHTML = '<li class="text-xs text-slate-400">Sem dados</li>';
                listBottom.innerHTML = '<li class="text-xs text-slate-400">Sem dados</li>';
+            }
+
+            // Atualiza os textos explicativos dependendo da frente
+            const topDesc = document.getElementById('topDescText');
+            const bottomDesc = document.getElementById('bottomDescText');
+            if (topDesc && bottomDesc) {
+                const metricNames = {
+                    'geral': 'médias gerais',
+                    'gesc': 'médias em Gestão Escolar',
+                    'gedu': 'médias em Gestão Educacional',
+                    'mob': 'médias em Mobilização Social'
+                };
+                topDesc.innerHTML = `Municípios com as <strong>maiores ${metricNames[rankMetric]}</strong>. Podem atuar como referências de boas práticas.`;
+                bottomDesc.innerHTML = `Municípios com as <strong>menores ${metricNames[rankMetric]}</strong>. Exigem acompanhamento prioritário.`;
             }
         }
 
@@ -1794,5 +1823,3 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
     </script>
 </body>
 </html>
-
-
