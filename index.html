@@ -475,7 +475,8 @@
                         <p class="text-xs text-slate-500 mt-1">Onde os municípios da seleção atual estão alocados com base na Média Geral.</p>
                     </div>
                     <div class="p-6">
-                        <div class="chart-container h-[550px]">
+                        <!-- Ajuste de Altura para evitar sobreposição -->
+                        <div class="chart-container h-[800px]">
                             <canvas id="chartRegua"></canvas>
                         </div>
                     </div>
@@ -667,14 +668,14 @@
                         <p class="text-xs text-slate-500 mt-2">No recorte de filtros atual.</p>
                     </div>
                     <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-pve-yellow flex flex-col justify-center">
-                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-arrow-circle-up text-pve-orange mr-2"></i> Alta Intensidade (Nível 2)</h4>
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-arrow-circle-up text-pve-orange mr-2"></i> Alta Intensidade (Nível 1 e 2)</h4>
                         <span id="metaAltaIntensidade" class="text-4xl font-bold text-pve-orange mt-2">-</span>
-                        <p class="text-xs text-slate-500 mt-2">Precisam avançar entre 7 e 10 competências (Meta 100 a 500).</p>
+                        <p class="text-xs text-slate-500 mt-2">Precisam de intervenção mais profunda no ciclo.</p>
                     </div>
                     <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-pve-green flex flex-col justify-center">
                         <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-check-circle text-pve-green mr-2"></i> Refinamento (Nível 3 e 4)</h4>
                         <span id="metaRefinamento" class="text-4xl font-bold text-pve-greenDark mt-2">-</span>
-                        <p class="text-xs text-slate-500 mt-2">Foco em manutenção e saltos curtos (1 a 6 competências).</p>
+                        <p class="text-xs text-slate-500 mt-2">Foco em manutenção e saltos curtos.</p>
                     </div>
                 </div>
 
@@ -683,8 +684,11 @@
                     <div class="xl:col-span-1 bg-white rounded-xl shadow-lg border border-slate-200 p-6 flex flex-col">
                         <h3 class="font-bold text-lg text-slate-800 mb-1">Perfil de Esforço da Rede</h3>
                         <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold mb-6">Distribuição com base na Meta 100</p>
-                        <div class="chart-container flex-1 min-h-[250px]">
+                        <div class="chart-container flex-1 min-h-[250px] relative">
                             <canvas id="chartMetasDoughnut"></canvas>
+                        </div>
+                        <div id="metasDoughnutSummary" class="mt-4 text-center text-sm font-medium text-slate-600 bg-slate-50 p-3 rounded border border-slate-100">
+                            <!-- Preenchido via JS -->
                         </div>
                     </div>
 
@@ -693,7 +697,7 @@
                         <div class="p-6 border-b border-slate-100 bg-slate-50 flex justify-between items-center flex-wrap gap-4">
                             <div>
                                 <h3 class="font-bold text-slate-800 text-lg">Painel de Metas por Município</h3>
-                                <p class="text-xs text-slate-500 mt-1">Cálculo gerado automaticamente segundo a tabela oficial do PVE IV BNDES.</p>
+                                <p class="text-xs text-slate-500 mt-1">Cálculo gerado automaticamente segundo a tabela oficial do PVE IV BNDES. <br><strong>Dica:</strong> Passe o rato por cima das metas para ver as competências mais fracas sugeridas para foco.</p>
                             </div>
                         </div>
                         <div class="overflow-x-auto max-h-[400px]">
@@ -874,6 +878,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             }
         });
 
+        // NOVAS FUNÇÕES DOS FILTROS (Visual Checked por Padrão)
         function renderMultiSelects() {
             const listEst = document.getElementById('listEstados');
             listEst.innerHTML = '';
@@ -1395,6 +1400,22 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             }, 3000);
         }
 
+        // ==========================================
+        // GERAÇÃO DE TOOLTIPS INTELIGENTES (NOVIDADE)
+        // ==========================================
+        function generateTooltip(mText, cityComps) {
+            if (mText.includes('Manter')) return "Foco sugerido: Manutenção das práticas consolidadas e compartilhamento de experiências.";
+            
+            const n = parseInt(mText.match(/\d+/)?.[0]) || 0;
+            if (n === 0) return "Consulte o detalhamento no mapa de calor.";
+            
+            let text = `🎯 Sugestão de Foco para avançar ${n} competências:\n\nPriorize as competências mais frágeis atualmente:\n`;
+            for(let i=0; i<n && i<cityComps.length; i++) {
+                text += `• ${cityComps[i].name} (Nota atual: ${cityComps[i].val.toFixed(2)})\n`;
+            }
+            return text;
+        }
+
         function updateHeatmap() {
             const tbody = document.getElementById('heatmapBody');
             tbody.innerHTML = '';
@@ -1490,39 +1511,70 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                 
                 const subInfo = getSubLevelInfo(row.geral);
 
+                // Lógica de contagem baseada na média geral (Nível 1 e 2 = Alta Intensidade)
                 let effortColor = 'bg-slate-50 text-slate-600';
-                if (subInfo.m100.includes('8') || subInfo.m100.includes('7') || subInfo.m100.includes('Avançar 5')) {
+                if (row.geral > 0 && row.geral < 3.25) {
                     effortColor = 'bg-amber-50 text-amber-700 font-bold'; 
                     countAltaIntensidade++;
-                } else if (subInfo.m100.includes('Manter') || subInfo.m100.includes('4')) {
+                } else if (row.geral >= 3.25) {
                     effortColor = 'bg-emerald-50 text-emerald-700 font-bold'; 
                     countRefinamento++;
                 }
+
+                // Criação do Array de Competências do Município para o Tooltip Inteligente
+                const cityComps = [];
+                for(let i=1; i<=8; i++) {
+                    if(row[`gesc_c${i}`] > 0) cityComps.push({name: `GESC C${i}`, val: row[`gesc_c${i}`]});
+                    if(row[`gedu_c${i}`] > 0) cityComps.push({name: `GEDU C${i}`, val: row[`gedu_c${i}`]});
+                }
+                for(let i=1; i<=5; i++) {
+                    if(row[`mob_c${i}`] > 0) cityComps.push({name: `MOB C${i}`, val: row[`mob_c${i}`]});
+                }
+                cityComps.sort((a,b) => a.val - b.val); // Ordena das piores para as melhores notas
+
+                const tooltip100 = generateTooltip(subInfo.m100, cityComps);
+                const tooltip300 = generateTooltip(subInfo.m300, cityComps);
+                const tooltip500 = generateTooltip(subInfo.m500, cityComps);
 
                 tr.innerHTML = `
                     <td class="py-4 px-6 text-left whitespace-nowrap font-bold text-slate-800">${local}</td>
                     <td class="py-4 px-4 text-center">
                         <span class="px-3 py-1 rounded text-[11px] font-bold shadow-sm ${subInfo.class}">${subInfo.label}</span>
                     </td>
-                    <td class="py-4 px-4 text-center ${effortColor} border-l border-white">${subInfo.m100}</td>
-                    <td class="py-4 px-4 text-center text-slate-500 bg-slate-50 border-l border-white">${subInfo.m300}</td>
-                    <td class="py-4 px-4 text-center text-slate-500 bg-slate-50 border-l border-white">${subInfo.m500}</td>
+                    <td class="py-4 px-4 text-center ${effortColor} border-l border-white cursor-help group" title="${tooltip100}">
+                        <span class="border-b border-dashed border-slate-400 group-hover:text-blue-600">${subInfo.m100}</span>
+                    </td>
+                    <td class="py-4 px-4 text-center text-slate-500 bg-slate-50 border-l border-white cursor-help group" title="${tooltip300}">
+                        <span class="border-b border-dashed border-slate-300 group-hover:text-blue-600">${subInfo.m300}</span>
+                    </td>
+                    <td class="py-4 px-4 text-center text-slate-500 bg-slate-50 border-l border-white cursor-help group" title="${tooltip500}">
+                        <span class="border-b border-dashed border-slate-300 group-hover:text-blue-600">${subInfo.m500}</span>
+                    </td>
                 `;
                 tbody.appendChild(tr);
             });
 
+            // Atualização dos Indicadores de Topo
             document.getElementById('metaTotalMun').innerText = currentData.length;
             document.getElementById('metaAltaIntensidade').innerText = countAltaIntensidade;
             document.getElementById('metaRefinamento').innerText = countRefinamento;
 
+            // Atualização do Gráfico Doughnut e Texto de Resumo
             if (chartInstances.metasDoughnut) {
                 chartInstances.metasDoughnut.data.datasets[0].data = [countAltaIntensidade, countRefinamento];
                 chartInstances.metasDoughnut.update();
             }
-            
-            if (chartInstances.miniMetas) {
-                chartInstances.miniMetas.data.datasets[0].data = [countAltaIntensidade, countRefinamento];
-                chartInstances.miniMetas.update();
+
+            const doughnutSummary = document.getElementById('metasDoughnutSummary');
+            if (doughnutSummary) {
+                if (countAltaIntensidade === 0 && countRefinamento === 0) {
+                    doughnutSummary.innerHTML = "Sem dados de esforço disponíveis.";
+                } else {
+                    doughnutSummary.innerHTML = `
+                        <span class="text-pve-orange font-bold text-lg">${countAltaIntensidade}</span> Alta Intensidade &nbsp;|&nbsp; 
+                        <span class="text-pve-green font-bold text-lg">${countRefinamento}</span> Refinamento
+                    `;
+                }
             }
         }
 
@@ -1613,7 +1665,8 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                                 let currentLine = "";
                                 for(let i=0; i<names.length; i++){
                                     let sep = (i === names.length -1) ? "" : ", ";
-                                    if((currentLine + names[i] + sep).length > 45) {
+                                    // Aumentado o limite de caracteres para evitar muitas quebras de linha
+                                    if((currentLine + names[i] + sep).length > 65) {
                                         lines.push(currentLine.trim());
                                         currentLine = names[i] + sep;
                                     } else {
@@ -1621,7 +1674,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                                     }
                                 }
                                 if(currentLine) lines.push(currentLine.replace(/,\s*$/, ""));
-                                lines.unshift(`[ Total: ${val} ]`);
+                                lines.unshift(`[ Total: ${val} Municípios ]`);
                                 return lines;
                             }
                         } 
@@ -1680,6 +1733,30 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                             align: function(context) { return context.datasetIndex === 0 ? 'end' : 'start'; },
                             anchor: function(context) { return context.datasetIndex === 0 ? 'end' : 'start'; },
                             padding: 4, backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: 4
+                        }
+                    }
+                }
+            });
+
+            chartInstances.metasDoughnut = new Chart(document.getElementById('chartMetasDoughnut'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Alta Intensidade (Nível 1 e 2)', 'Refinamento (Nível 3 e 4)'],
+                    datasets: [{
+                        data: [0, 0],
+                        backgroundColor: ['#E85D04', '#008B45'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: {family: 'Inter', size: 11} } },
+                        datalabels: {
+                            color: '#fff', font: {weight: 'bold', size: 16},
+                            formatter: (value) => value > 0 ? value : ''
                         }
                     }
                 }
