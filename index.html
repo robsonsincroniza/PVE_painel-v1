@@ -188,6 +188,12 @@
                     <i class="ph ph-book-open-text text-xl mr-3 group-hover:text-pve-yellow transition-colors"></i>
                     <span class="font-medium text-sm">Legendas da Matriz</span>
                 </button>
+
+                <!-- NOVO BOTÃO COMO USAR O PAINEL -->
+                <button id="nav-page-tutorial" onclick="switchPage('page-tutorial')" class="nav-link w-full flex items-center px-4 py-3 text-slate-300 hover:bg-white/10 hover:text-white rounded-lg group transition-colors">
+                    <i class="ph ph-info text-xl mr-3 group-hover:text-blue-400 transition-colors"></i>
+                    <span class="font-medium text-sm">Como usar o painel</span>
+                </button>
             </nav>
         </div>
 
@@ -206,10 +212,9 @@
     <!-- ÁREA PRINCIPAL -->
     <div class="flex-1 flex flex-col h-screen overflow-hidden">
         
-        <!-- HEADER COM LOGO E TÍTULO (Novo Design Topo) -->
+        <!-- HEADER COM LOGO E TÍTULO (Topo) -->
         <div class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between z-30 flex-shrink-0 shadow-sm relative">
             <div class="flex items-center h-12">
-                <!-- A imagem irá carregar perfeitamente se estiver no GitHub Raw -->
                 <img src="https://raw.githubusercontent.com/robsonsincroniza/PVE_painel-v1/main/image%20(31).png" alt="Logo PVE" class="max-h-full object-contain" onerror="this.style.display='none'; document.getElementById('logo-fallback-top').classList.remove('hidden');">
                 <span id="logo-fallback-top" class="hidden text-pve-blueDark font-bold text-2xl tracking-widest flex items-center">
                     <i class="ph-fill ph-graduation-cap mr-2 text-3xl text-pve-green"></i> PVE
@@ -328,11 +333,9 @@
                             <h3 class="text-lg font-bold text-slate-800">Termômetro de Metas 2026</h3>
                             <p class="text-xs text-slate-500 leading-relaxed mt-1">Proporção de municípios categorizados pelo esforço exigido para atingir a Meta 100.</p>
                         </div>
-                        <!-- Container com altura forçada para garantir renderização do Doughnut -->
                         <div class="chart-container relative w-full flex-1" style="height: 250px; min-height: 250px;">
                             <canvas id="chartMiniMetas"></canvas>
                         </div>
-                        <!-- Resumo Textual como Backup para o Doughnut na Visão Executiva -->
                         <div id="miniMetasSummary" class="mt-4 text-center text-sm font-medium text-slate-600 bg-slate-50 p-3 rounded border border-slate-100">
                             <!-- Preenchido via JS -->
                         </div>
@@ -493,7 +496,6 @@
                         <p class="text-xs text-slate-500 mt-1">Onde os municípios da seleção atual estão alocados com base na Média Geral.</p>
                     </div>
                     <div class="p-6">
-                        <!-- Ajuste Significativo de Altura para caber os rótulos longos sem cortar -->
                         <div class="chart-container h-[800px]">
                             <canvas id="chartRegua"></canvas>
                         </div>
@@ -551,7 +553,7 @@
                         <strong>Objetivo desta página:</strong> Cruzar dados de diferentes frentes para identificar padrões de comportamento (clusters) entre os municípios. O gráfico de dispersão ajuda a visualizar rapidamente quem precisa de apoio integrado em áreas específicas.
                     </p>
                     <p class="text-xs text-slate-700 leading-relaxed">
-                        <strong>Motor de Priorização e IA:</strong> Com base nos eixos selecionados no gráfico, o motor analisa as competências com as menores notas e as consolida. O botão "Gerar Comando para IA" cria uma instrução rica e detalhada para colar no seu ChatGPT ou Gemini, gerando uma sugestão de agenda prática e dinâmicas adequadas de forma segura.
+                        <strong>Motor de Priorização e IA:</strong> Com base nos eixos selecionados no gráfico, o motor analisa as competências com as menores notas e as consolida. O botão "Gerar Comando para IA" cria uma instrução rica e detalhada para colar no Gemini, gerando uma sugestão de agenda prática e dinâmicas adequadas de forma segura.
                     </p>
                 </div>
 
@@ -642,7 +644,7 @@
                         <div id="promptContainer" class="hidden p-5 bg-pve-greenLight border-t border-green-200 flex flex-col">
                             <div class="flex justify-between items-center mb-3">
                                 <label class="text-[11px] font-bold text-pve-greenDark uppercase tracking-widest flex items-center">
-                                    <i class="ph-fill ph-robot mr-1 text-lg"></i> Copie o texto abaixo e cole no seu ChatGPT/Gemini:
+                                    <i class="ph-fill ph-robot mr-1 text-lg"></i> Copie o texto abaixo e cole no Gemini:
                                 </label>
                                 <button onclick="document.getElementById('promptContainer').classList.add('hidden')" class="text-slate-400 hover:text-slate-600"><i class="ph-bold ph-x"></i></button>
                             </div>
@@ -743,7 +745,7 @@
             </div>
 
             <!-- ========================================== -->
-            <!-- PÁGINA 6: LEGENDAS E GLOSSÁRIO (NOVA) -->
+            <!-- PÁGINA 6: LEGENDAS E GLOSSÁRIO -->
             <!-- ========================================== -->
             <div id="page-legendas" class="page-section space-y-8 hidden fade-update">
                 
@@ -819,7 +821,7 @@
                         <div class="p-6">
                             <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Níveis de Maturidade</h4>
                             
-                            <!-- Nova estrutura visual dos Níveis de Maturidade -->
+                            <!-- Estrutura visual dos Níveis de Maturidade -->
                             <div class="grid grid-cols-1 gap-3 mb-6">
                                 <div class="p-3 bg-white border border-red-200 rounded-lg shadow-sm border-l-4 border-l-red-500">
                                     <div class="flex items-center mb-1">
@@ -869,6 +871,110 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ========================================== -->
+            <!-- PÁGINA 7: TUTORIAL / COMO USAR (ONBOARDING) -->
+            <!-- ========================================== -->
+            <div id="page-tutorial" class="page-section space-y-8 hidden fade-update">
+                
+                <div class="border-l-4 border-blue-400 pl-4 mb-6">
+                    <h2 class="text-2xl font-bold text-slate-900">Como usar o Painel PVE</h2>
+                    <p class="mt-1 text-slate-600">Um guia rápido e visual para extrair o máximo de inteligência da sua plataforma.</p>
+                </div>
+
+                <!-- Filtros Globais Destaque -->
+                <div class="bg-gradient-to-r from-slate-800 to-slate-700 rounded-xl shadow-lg p-6 md:p-8 text-white mb-8 relative overflow-hidden">
+                    <i class="ph-fill ph-funnel absolute -right-6 -bottom-6 text-9xl text-white opacity-10"></i>
+                    <div class="relative z-10">
+                        <div class="inline-flex items-center px-3 py-1 rounded-full bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-bold uppercase tracking-wider mb-4">
+                            <i class="ph-bold ph-star mr-2"></i> Ponto de Partida
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Filtros Globais de Navegação</h3>
+                        <p class="text-slate-300 max-w-2xl leading-relaxed">
+                            O painel é <strong>100% dinâmico</strong>. No topo da página, você encontra os filtros de <em>Estado</em> e <em>Município</em>. Ao selecionar qualquer opção, absolutamente todos os gráficos, cálculos e textos do painel são atualizados instantaneamente para refletir apenas a realidade daquele recorte.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Grid de Tutoriais das Páginas -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Card 1 -->
+                    <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
+                        <div class="w-12 h-12 rounded-lg bg-pve-greenLight text-pve-greenDark flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="ph-fill ph-squares-four"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-lg mb-2">1. Visão Executiva</h4>
+                        <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">O termômetro do projeto. Mostra de imediato a saúde da rede selecionada e os níveis médios de maturidade.</p>
+                        <div class="bg-slate-50 p-3 rounded border border-slate-100 text-xs text-slate-700">
+                            <strong>Destaque:</strong> Explore os <em>Rankings Dinâmicos</em> para descobrir rapidamente os Top 3 municípios que são referência ou precisam de atenção urgente.
+                        </div>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
+                        <div class="w-12 h-12 rounded-lg bg-pve-greenLight text-pve-greenDark flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="ph-fill ph-table"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-lg mb-2">2. Mapa & Raio-X</h4>
+                        <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">A ferramenta de diagnóstico profundo. Desça do nível "macro" (Frentes) para o "micro" (Competências).</p>
+                        <div class="bg-slate-50 p-3 rounded border border-slate-100 text-xs text-slate-700">
+                            <strong>Destaque:</strong> Leia a <em>Interpretação de Resultados</em> automática. O sistema diz-lhe em texto claro qual a grande fortaleza e o pior gargalo da região selecionada.
+                        </div>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
+                        <div class="w-12 h-12 rounded-lg bg-pve-greenLight text-pve-greenDark flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="ph-fill ph-ruler"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-lg mb-2">3. Régua de Maturidade</h4>
+                        <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">Valorize o esforço invisível. Um município pode manter a mesma cor "Frágil", mas ter subido décimos importantes.</p>
+                        <div class="bg-slate-50 p-3 rounded border border-slate-100 text-xs text-slate-700">
+                            <strong>Destaque:</strong> Utilize a tabela inferior para ver o <em>Gap Matemático</em> exato. Use isto para encorajar municípios que estão a poucos décimos de bater a meta.
+                        </div>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
+                        <div class="w-12 h-12 rounded-lg bg-pve-greenLight text-pve-greenDark flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="ph-fill ph-graph"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-lg mb-2">4. Trilhas & Clusters</h4>
+                        <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">Área de planejamento de formações. Cruze indicadores para encontrar padrões de comportamento nas redes.</p>
+                        <div class="bg-amber-50 p-3 rounded border border-amber-200 text-xs text-amber-800 shadow-sm relative overflow-hidden">
+                            <div class="absolute -right-2 -top-2 w-8 h-8 bg-amber-200 rounded-full opacity-50"></div>
+                            <strong><i class="ph-fill ph-magic-wand mr-1"></i> Dica:</strong> Use o botão "Gerar Comando para IA". O painel redige sozinho um texto profissional para você colar no Gemini para ele criar sua pauta de formação!
+                        </div>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
+                        <div class="w-12 h-12 rounded-lg bg-pve-greenLight text-pve-greenDark flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="ph-fill ph-target"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-lg mb-2">5. Projeção de Metas</h4>
+                        <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">O tradutor oficial das regras do BNDES para o próximo ciclo (Alta Intensidade vs Refinamento).</p>
+                        <div class="bg-amber-50 p-3 rounded border border-amber-200 text-xs text-amber-800 shadow-sm relative overflow-hidden">
+                            <div class="absolute -right-2 -top-2 w-8 h-8 bg-amber-200 rounded-full opacity-50"></div>
+                            <strong><i class="ph-fill ph-lightbulb mr-1"></i> Dica:</strong> Na tabela, passe o mouse sobre os textos das Metas (ex: "Avançar 5 Comp."). Uma caixa abrirá listando os focos exatos para aquele local!
+                        </div>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
+                        <div class="w-12 h-12 rounded-lg bg-pve-yellow/20 text-yellow-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+                            <i class="ph-fill ph-book-open-text"></i>
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-lg mb-2">6. Legendas da Matriz</h4>
+                        <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">Biblioteca de consulta rápida em caso de dúvida sobre conceitos do programa PVE.</p>
+                        <div class="bg-slate-50 p-3 rounded border border-slate-100 text-xs text-slate-700">
+                            <strong>Destaque:</strong> Contém os significados práticos de todas as 21 competências e as explicações formais sobre os níveis de maturidade.
                         </div>
                     </div>
 
@@ -960,7 +1066,8 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             'page-mapa': 'Diagnóstico & Raio-X',
             'page-cluster': 'Trilhas & Clusters',
             'page-metas': 'Projeção de Metas 2026',
-            'page-legendas': 'Glossário e Legendas'
+            'page-legendas': 'Glossário e Legendas',
+            'page-tutorial': 'Como usar o painel'
         };
 
         function getLevelInfo(score) {
