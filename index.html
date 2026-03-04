@@ -93,9 +93,9 @@
             border-bottom-width: 0px;
             margin-bottom: 12px; 
             background: #eff6ff;
-            border: 1px solid #008B45;
+            border: 1px solid #008B45; /* PVE Green */
             box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1);
-            color: #008B45; 
+            color: #008B45; /* PVE Green */
         }
 
         /* Custom Dropdown Multi-select */
@@ -121,7 +121,7 @@
         .checkbox-label:hover { background-color: #f1f5f9; }
         .checkbox-input {
             width: 1.1rem; height: 1.1rem; margin-right: 0.5rem; border-radius: 0.25rem;
-            border: 1px solid #cbd5e1; cursor: pointer; accent-color: #008B45;
+            border: 1px solid #cbd5e1; cursor: pointer; accent-color: #008B45; /* PVE Green */
         }
 
         .heatmap-cell { position: relative; z-index: 1; }
@@ -150,7 +150,7 @@
 </head>
 <body class="flex h-screen bg-slate-50">
 
-    <!-- SIDEBAR -->
+    <!-- SIDEBAR (Com fundo Azul Escuro PVE) -->
     <aside class="w-64 bg-pve-blueDark text-slate-300 flex flex-col flex-shrink-0 z-20 shadow-xl relative overflow-y-auto">
         <div class="h-16 flex items-center px-6 border-b border-white/10 bg-pve-blueDarker shrink-0">
             <i class="ph-fill ph-chart-polar text-pve-yellow text-2xl mr-2"></i>
@@ -181,13 +181,15 @@
                     <span class="font-medium text-sm">Projeção de Metas</span>
                 </button>
 
-                <div class="h-px bg-white/10 my-4 mx-2"></div>
+                <div class="h-px bg-white/10 my-4 mx-2"></div> <!-- Linha Separadora -->
 
+                <!-- BOTÃO LEGENDAS -->
                 <button id="nav-page-legendas" onclick="switchPage('page-legendas')" class="nav-link w-full flex items-center px-4 py-3 text-slate-300 hover:bg-white/10 hover:text-white rounded-lg group transition-colors">
                     <i class="ph ph-book-open-text text-xl mr-3 group-hover:text-pve-yellow transition-colors"></i>
                     <span class="font-medium text-sm">Legendas da Matriz</span>
                 </button>
 
+                <!-- NOVO BOTÃO COMO USAR O PAINEL -->
                 <button id="nav-page-tutorial" onclick="switchPage('page-tutorial')" class="nav-link w-full flex items-center px-4 py-3 text-slate-300 hover:bg-white/10 hover:text-white rounded-lg group transition-colors">
                     <i class="ph ph-info text-xl mr-3 group-hover:text-blue-400 transition-colors"></i>
                     <span class="font-medium text-sm">Como usar o painel</span>
@@ -210,7 +212,7 @@
     <!-- ÁREA PRINCIPAL -->
     <div class="flex-1 flex flex-col h-screen overflow-hidden">
         
-        <!-- HEADER COM LOGO E TÍTULO -->
+        <!-- HEADER COM LOGO E TÍTULO (Topo) -->
         <div class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between z-30 flex-shrink-0 shadow-sm relative">
             <div class="flex items-center h-12">
                 <img src="https://raw.githubusercontent.com/robsonsincroniza/PVE_painel-v1/main/image%20(31).png" alt="Logo PVE" class="max-h-full object-contain" onerror="this.style.display='none'; document.getElementById('logo-fallback-top').classList.remove('hidden');">
@@ -225,6 +227,7 @@
         <header class="bg-slate-50 border-b border-slate-200 px-6 py-3 flex flex-wrap items-center gap-4 z-20 flex-shrink-0 relative">
             <span class="text-sm font-semibold text-slate-600 flex items-center"><i class="ph ph-funnel mr-2 text-lg"></i> Filtros Ativos:</span>
             
+            <!-- Dropdown Estado -->
             <div class="custom-select-wrapper" id="wrapperEstado">
                 <div class="custom-select-button" onclick="toggleDropdown('dropdownEstado')">
                     <span id="labelEstado" class="truncate">Estado: Todos</span>
@@ -238,6 +241,7 @@
                 </div>
             </div>
 
+            <!-- Dropdown Municipio -->
             <div class="custom-select-wrapper" id="wrapperMunicipio">
                 <div class="custom-select-button" onclick="toggleDropdown('dropdownMunicipio')">
                     <span id="labelMunicipio" class="truncate">Município: Todos</span>
@@ -263,7 +267,9 @@
                     <p class="mt-1 text-slate-600">Acompanhamento do impacto, esforço da rede e atingimento de metas do PVE.</p>
                 </div>
 
+                <!-- Linha 1 - Operação e Impacto -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Impacto: IDEB -->
                     <div class="bg-gradient-to-br from-pve-orange to-pve-red rounded-xl shadow-md p-6 text-white flex flex-col justify-center relative overflow-hidden">
                         <i class="ph-fill ph-student absolute -right-4 -top-4 text-7xl text-white opacity-10"></i>
                         <span class="text-orange-200 text-xs font-bold uppercase tracking-wider">Métrica de Impacto Final</span>
@@ -274,6 +280,7 @@
                         <span class="text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider bg-white/20 border border-white/30 inline-block w-max">Foco na Aprendizagem</span>
                     </div>
                     
+                    <!-- Operação: Municípios -->
                     <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-center">
                         <span class="text-slate-400 text-xs font-bold uppercase tracking-widest flex items-center">
                             <i class="ph-fill ph-map-pin mr-2 text-pve-orange text-lg"></i> Municípios Analisados
@@ -285,6 +292,7 @@
                     </div>
                 </div>
 
+                <!-- CARDS (Médias da Matriz) -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col items-center justify-center hover:shadow-md transition">
                         <span class="text-slate-400 text-[11px] font-bold uppercase tracking-widest">Média Global PVE</span>
@@ -308,6 +316,7 @@
                     </div>
                 </div>
 
+                <!-- Gráfico de Distribuição & Mini Metas -->
                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
                     <div class="xl:col-span-2 bg-white rounded-xl shadow-sm p-6 md:p-8 border border-slate-200 flex flex-col">
                         <div class="mb-4 border-b border-slate-100 pb-4">
@@ -333,6 +342,7 @@
                     </div>
                 </div>
 
+                <!-- Top Rankings Rápidos com Filtro Integrado -->
                 <div class="col-span-1 md:col-span-2 flex flex-col sm:flex-row justify-between items-start sm:items-end border-b border-slate-200 pb-3 mt-8 mb-2 gap-4">
                     <div>
                         <h3 class="text-xl font-bold text-slate-800">Rankings de Desempenho</h3>
@@ -373,6 +383,7 @@
                     <p class="mt-1 text-slate-600">Diagnóstico aprofundado com visualização completa de todas as competências avaliadas.</p>
                 </div>
 
+                <!-- Bloco de Contexto Estratégico (Mapa & Raio-X) -->
                 <div class="bg-amber-50 border border-amber-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
                     <h4 class="text-sm font-bold text-amber-800 mb-2 flex items-center">
                         <i class="ph-fill ph-info mr-2 text-lg"></i> Entenda o Mapa de Calor e o Raio-X
@@ -385,6 +396,7 @@
                     </p>
                 </div>
 
+                <!-- Tabela Heatmap -->
                 <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden pb-4">
                     <div class="p-6 border-b border-slate-100 bg-slate-50 flex flex-col gap-6">
                         
@@ -425,6 +437,7 @@
                     </div>
                 </div>
 
+                <!-- Gráfico de Radar + Painel de Diagnóstico Descritivo -->
                 <div class="bg-white rounded-xl shadow-lg border border-slate-200 mt-8 overflow-hidden">
                     <div class="p-6 border-b border-slate-100 bg-slate-50 flex flex-wrap justify-between items-center gap-4">
                         <h3 class="text-xl font-bold text-slate-800">Raio-X: Perfil da Seleção vs Média Nacional</h3>
@@ -434,12 +447,14 @@
                     </div>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-0">
+                        <!-- Chart Area -->
                         <div class="lg:col-span-2 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-slate-200">
                             <div class="chart-container h-[350px] md:h-[450px]">
                                 <canvas id="chartRadar"></canvas>
                             </div>
                         </div>
                         
+                        <!-- Insights de Texto Dinâmicos & Interpretativos -->
                         <div class="lg:col-span-1 bg-white p-6 md:p-8 flex flex-col">
                             <h4 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1">Interpretação de Resultados</h4>
                             <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">O que significa este recorte selecionado?</p>
@@ -461,6 +476,7 @@
                     <p class="mt-1 text-slate-600">Acompanhamento detalhado das faixas de maturidade para direcionar metas específicas.</p>
                 </div>
 
+                <!-- Bloco de Contexto Estratégico (Régua de Maturidade) -->
                 <div class="bg-emerald-50 border border-emerald-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
                     <h4 class="text-sm font-bold text-emerald-800 mb-2 flex items-center">
                         <i class="ph-fill ph-info mr-2 text-lg"></i> Entenda a Régua de Maturidade e os Microavanços
@@ -473,6 +489,7 @@
                     </p>
                 </div>
 
+                <!-- Gráfico Detalhado de Distribuição -->
                 <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
                     <div class="p-6 border-b border-slate-100 bg-slate-50">
                         <h3 class="font-bold text-slate-800 text-lg">Distribuição Detalhada (Subníveis)</h3>
@@ -484,6 +501,7 @@
                         </div>
                     </div>
                     
+                    <!-- Régua Visual Explicativa -->
                     <div class="bg-pve-blueDark p-4 flex flex-col md:flex-row text-center text-[10px] font-bold text-white uppercase tracking-wider">
                         <div class="flex-1 border-r border-white/20 p-2"><span class="block text-red-400 mb-1">Nível 1 (Frágil)</span> 1- (≤1.5) | 1 (≤2.0) | 1+ (≤2.5)</div>
                         <div class="flex-1 border-r border-white/20 p-2"><span class="block text-pve-yellow mb-1">Nível 2 (Em Consolidação)</span> 2- (≤2.75) | 2 (≤3.0) | 2+ (≤3.25)</div>
@@ -492,6 +510,7 @@
                     </div>
                 </div>
 
+                <!-- Tabela de Acompanhamento e Gaps -->
                 <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden mt-8">
                     <div class="p-6 border-b border-slate-100 bg-slate-50">
                         <h3 class="font-bold text-slate-800 text-lg">Acompanhamento e Distância para Próxima Meta</h3>
@@ -507,7 +526,7 @@
                                     <th class="py-3 px-4 text-center">MOB</th>
                                     <th class="py-3 px-4 text-center bg-slate-200">MÉDIA GERAL</th>
                                     <th class="py-3 px-4 text-center bg-slate-200 border-l border-white">SUBNÍVEL ATUAL</th>
-                                    <th class="py-3 px-4 text-center bg-slate-200">GAP para próximo subnível </th>
+                                    <th class="py-3 px-4 text-center bg-slate-200">GAP P/ PRÓX. NÍVEL</th>
                                 </tr>
                             </thead>
                             <tbody id="reguaBody" class="text-slate-700 font-medium">
@@ -525,6 +544,7 @@
                     <p class="mt-1 text-slate-600">Cruze quaisquer competências e descubra exatamente o que exige ação imediata.</p>
                 </div>
 
+                <!-- Bloco de Contexto Estratégico (Trilhas & Clusters) -->
                 <div class="bg-blue-50 border border-blue-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
                     <h4 class="text-sm font-bold text-blue-800 mb-2 flex items-center">
                         <i class="ph-fill ph-info mr-2 text-lg"></i> Entenda a Inteligência de Trilhas e Clusters
@@ -539,6 +559,7 @@
 
                 <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
                     
+                    <!-- Bubble Chart -->
                     <div class="bg-white rounded-xl shadow-lg border border-slate-200 flex flex-col">
                         <div class="p-5 border-b border-slate-100 bg-slate-50">
                             <div class="mb-4">
@@ -567,6 +588,7 @@
                             </div>
                         </div>
                         <div class="p-6 flex-1 flex flex-col">
+                            <!-- Chart height forced to display correctly -->
                             <div class="chart-container h-72 md:h-80 flex-1">
                                 <canvas id="chartClustering"></canvas>
                             </div>
@@ -583,6 +605,7 @@
                         </div>
                     </div>
 
+                    <!-- Engine de Priorização & GERADOR DE PROMPT -->
                     <div class="bg-white rounded-xl shadow-lg border border-slate-200 flex flex-col overflow-hidden">
                         <div class="p-6 bg-pve-blueDark text-white border-b border-pve-blueDarker flex justify-between items-center">
                             <div>
@@ -601,6 +624,7 @@
                             </div>
                         </div>
                         
+                        <!-- GERAÇÃO DE PROMPT -->
                         <div class="p-5 bg-white border-t border-slate-200 flex flex-col items-center">
                             <div class="mb-4 w-full">
                                 <p class="text-sm font-bold text-slate-800 mb-1 text-center">Assistente Pedagógico</p>
@@ -644,6 +668,7 @@
                     <p class="mt-1 text-slate-600">Direcionamento estratégico e expectativa de avanço (Metas 100, 300, 500) por município.</p>
                 </div>
                 
+                <!-- Bloco de Contexto Estratégico -->
                 <div class="bg-blue-50 border border-blue-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
                     <h4 class="text-sm font-bold text-pve-blueDark mb-2 flex items-center">
                         <i class="ph-fill ph-info mr-2 text-lg"></i> Entenda a Projeção de Metas
@@ -656,6 +681,7 @@
                     </p>
                 </div>
 
+                <!-- Resumo Executivo das Metas -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div class="bg-white rounded-xl shadow-md p-6 border border-slate-100 flex flex-col justify-center">
                         <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-target text-slate-500 mr-2"></i> Municípios Analisados</h4>
@@ -675,24 +701,30 @@
                 </div>
 
                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                    <!-- Gráfico de Distribuição do Esforço -->
                     <div class="xl:col-span-1 bg-white rounded-xl shadow-lg border border-slate-200 p-6 flex flex-col">
                         <h3 class="font-bold text-lg text-slate-800 mb-1">Perfil de Esforço da Rede</h3>
                         <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold mb-6">Distribuição com base na Meta 100</p>
+                        <!-- Altura forçada fixa para o gráfico renderizar sempre -->
                         <div class="chart-container relative w-full" style="height: 250px; min-height: 250px;">
                             <canvas id="chartMetasDoughnut"></canvas>
                         </div>
+                        <!-- Resumo Textual como Backup para falhas de renderização de telas curtas -->
                         <div id="metasDoughnutSummary" class="mt-4 text-center text-sm font-medium text-slate-600 bg-slate-50 p-3 rounded border border-slate-100">
+                            <!-- Preenchido via JS -->
                         </div>
                     </div>
 
+                    <!-- Tabela de Metas -->
                     <div class="xl:col-span-2 bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden flex flex-col">
                         <div class="p-6 border-b border-slate-100 bg-slate-50 flex justify-between items-center flex-wrap gap-4">
                             <div>
                                 <h3 class="font-bold text-slate-800 text-lg">Painel de Metas por Município</h3>
-                                <p class="text-xs text-slate-500 mt-1">Cálculo gerado automaticamente segundo a tabela oficial do PVE IV BNDES. <br><strong class="text-amber-600">Dica: Passe o rato por cima das metas para ver as competências sugeridas para foco.</strong></p>
+                                <p class="text-xs text-slate-500 mt-1">Cálculo gerado automaticamente segundo a tabela oficial do PVE IV BNDES. <br><strong class="text-amber-600">Dica: Passe o mouse por cima das metas para ver as competências sugeridas para foco.</strong></p>
                             </div>
                         </div>
                         <div class="overflow-x-auto max-h-[400px] pb-32"> 
+                            <!-- Z-index relative prevents clipping of tooltips on normal usage, but native title is even better -->
                             <table class="min-w-full text-sm relative z-10">
                                 <thead class="sticky top-0 z-20 shadow-sm">
                                     <tr class="bg-pve-blueDark text-white uppercase text-[10px] font-bold tracking-wider leading-normal">
@@ -723,8 +755,132 @@
                     <p class="mt-1 text-slate-600">Entenda o significado de cada competência avaliada e os critérios de projeção de metas do PVE.</p>
                 </div>
 
+                <!-- Bloco METAS E NÍVEIS MOVIDO PARA O TOPO E DETALHADO -->
+                <div class="bg-white rounded-xl shadow-md border border-emerald-100 overflow-hidden border-t-4 border-t-pve-green mb-8">
+                    <div class="bg-slate-50 border-b border-slate-200 p-4">
+                        <h3 class="font-bold text-lg text-slate-800">Projeção de Metas & Maturidade Detalhada</h3>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Níveis e Subníveis de Maturidade</h4>
+                        
+                        <!-- Estrutura visual dos Níveis de Maturidade COM OS 11 SUBNÍVEIS -->
+                        <div class="grid grid-cols-1 gap-4 mb-6">
+                            
+                            <!-- MACRO NÍVEL 1 -->
+                            <div class="p-4 bg-white border border-red-200 rounded-lg shadow-sm border-l-4 border-l-red-500">
+                                <div class="flex items-center mb-2">
+                                    <span class="font-bold text-red-700 text-sm uppercase tracking-wider">Nível 1 (Frágil)</span>
+                                    <span class="ml-2 text-[10px] bg-red-100 text-red-800 px-2 py-0.5 rounded font-semibold">Até 2.50</span>
+                                </div>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-3">Reflete conhecimento inicial, sem práticas estabelecidas.</p>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div class="bg-red-50 border border-red-100 p-2 rounded text-center">
+                                        <span class="block text-[10px] font-bold text-red-800">Nível 1-</span>
+                                        <span class="block text-[9px] text-red-600">1.00 a 1.50</span>
+                                    </div>
+                                    <div class="bg-red-50 border border-red-100 p-2 rounded text-center">
+                                        <span class="block text-[10px] font-bold text-red-800">Nível 1</span>
+                                        <span class="block text-[9px] text-red-600">1.51 a 2.00</span>
+                                    </div>
+                                    <div class="bg-red-50 border border-red-100 p-2 rounded text-center">
+                                        <span class="block text-[10px] font-bold text-red-800">Nível 1+</span>
+                                        <span class="block text-[9px] text-red-600">2.01 a 2.50</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- MACRO NÍVEL 2 -->
+                            <div class="p-4 bg-white border border-amber-200 rounded-lg shadow-sm border-l-4 border-l-amber-500">
+                                <div class="flex items-center mb-2">
+                                    <span class="font-bold text-amber-700 text-sm uppercase tracking-wider">Nível 2 (Em Consolidação)</span>
+                                    <span class="ml-2 text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">2.51 a 3.25</span>
+                                </div>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-3">Indica conhecimento em progresso e rotinas ainda em construção.</p>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div class="bg-amber-50 border border-amber-100 p-2 rounded text-center">
+                                        <span class="block text-[10px] font-bold text-amber-800">Nível 2-</span>
+                                        <span class="block text-[9px] text-amber-600">2.51 a 2.75</span>
+                                    </div>
+                                    <div class="bg-amber-50 border border-amber-100 p-2 rounded text-center">
+                                        <span class="block text-[10px] font-bold text-amber-800">Nível 2</span>
+                                        <span class="block text-[9px] text-amber-600">2.76 a 3.00</span>
+                                    </div>
+                                    <div class="bg-amber-50 border border-amber-100 p-2 rounded text-center">
+                                        <span class="block text-[10px] font-bold text-amber-800">Nível 2+</span>
+                                        <span class="block text-[9px] text-amber-600">3.01 a 3.25</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- MACRO NÍVEL 3 -->
+                            <div class="p-4 bg-white border border-emerald-200 rounded-lg shadow-sm border-l-4 border-l-emerald-500">
+                                <div class="flex items-center mb-2">
+                                    <span class="font-bold text-emerald-700 text-sm uppercase tracking-wider">Nível 3 (Consolidado)</span>
+                                    <span class="ml-2 text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-semibold">3.26 a 3.70</span>
+                                </div>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-3">Reflete conhecimento pleno e práticas rotineiras estabelecidas.</p>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div class="bg-emerald-50 border border-emerald-100 p-2 rounded text-center">
+                                        <span class="block text-[10px] font-bold text-emerald-800">Nível 3-</span>
+                                        <span class="block text-[9px] text-emerald-600">3.26 a 3.40</span>
+                                    </div>
+                                    <div class="bg-emerald-50 border border-emerald-100 p-2 rounded text-center">
+                                        <span class="block text-[10px] font-bold text-emerald-800">Nível 3</span>
+                                        <span class="block text-[9px] text-emerald-600">3.41 a 3.55</span>
+                                    </div>
+                                    <div class="bg-emerald-50 border border-emerald-100 p-2 rounded text-center">
+                                        <span class="block text-[10px] font-bold text-emerald-800">Nível 3+</span>
+                                        <span class="block text-[9px] text-emerald-600">3.56 a 3.70</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- MACRO NÍVEL 4 -->
+                            <div class="p-4 bg-white border border-blue-200 rounded-lg shadow-sm border-l-4 border-l-blue-500">
+                                <div class="flex items-center mb-2">
+                                    <span class="font-bold text-blue-700 text-sm uppercase tracking-wider">Nível 4 (Robusto)</span>
+                                    <span class="ml-2 text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-semibold">Acima de 3.70</span>
+                                </div>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-3">Práticas avançadas, formalizadas e consistentes.</p>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div class="bg-blue-50 border border-blue-100 p-2 rounded text-center">
+                                        <span class="block text-[10px] font-bold text-blue-800">Nível 4-</span>
+                                        <span class="block text-[9px] text-blue-600">3.71 a 3.80</span>
+                                    </div>
+                                    <div class="bg-blue-50 border border-blue-100 p-2 rounded text-center">
+                                        <span class="block text-[10px] font-bold text-blue-800">Nível 4</span>
+                                        <span class="block text-[9px] text-blue-600">3.81 a 4.00</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 border-t border-slate-100 pt-4">As Metas Contratuais (100, 300 e 500)</h4>
+                        <div class="space-y-3 text-sm text-slate-700">
+                            <p class="mb-2">O ciclo PVE é medido através de três marcos de evolução, variando conforme a nota inicial do município:</p>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+                                <div class="p-3 bg-blue-50 border border-blue-200 rounded-md">
+                                    <strong class="text-blue-800 block mb-1">Meta 100 (Curto Prazo)</strong>
+                                    O primeiro marco de avanço esperado no ciclo. Foca em garantir que o município saia da inércia e conquiste as primeiras competências estruturantes.
+                                </div>
+                                <div class="p-3 bg-indigo-50 border border-indigo-200 rounded-md">
+                                    <strong class="text-indigo-800 block mb-1">Meta 300 (Médio Prazo)</strong>
+                                    O marco intermediário. Exige que as práticas implementadas na Meta 100 comecem a consolidar-se e a expandir para novas áreas da gestão e mobilização.
+                                </div>
+                                <div class="p-3 bg-violet-50 border border-violet-200 rounded-md">
+                                    <strong class="text-violet-800 block mb-1">Meta 500 (Atingimento Final)</strong>
+                                    O objetivo de excelência do ciclo. O município deve atingir o número máximo de competências acordadas no contrato BNDES para o seu perfil.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BLOCOS GESC, GEDU, MOB -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     
+                    <!-- Bloco GESC -->
                     <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
                         <div class="bg-pve-blueDark text-white p-4 flex items-center">
                             <i class="ph-fill ph-buildings text-2xl text-pve-yellow mr-3"></i>
@@ -744,6 +900,7 @@
                         </div>
                     </div>
 
+                    <!-- Bloco GEDU -->
                     <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
                         <div class="bg-pve-blueDark text-white p-4 flex items-center">
                             <i class="ph-fill ph-books text-2xl text-pve-yellow mr-3"></i>
@@ -763,78 +920,20 @@
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+                    <!-- Bloco MOB -->
+                    <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden lg:col-span-2">
                         <div class="bg-pve-blueDark text-white p-4 flex items-center">
                             <i class="ph-fill ph-users-three text-2xl text-pve-yellow mr-3"></i>
                             <h3 class="font-bold text-lg tracking-wide">Mobilização Social (MOB)</h3>
                         </div>
                         <div class="p-6">
-                            <ul class="space-y-4 text-sm text-slate-700">
-                                <li><strong class="text-pve-blueDark">C1. Conhecimento:</strong> Nível de mapeamento e compreensão sobre o território, suas vulnerabilidades e potencialidades.</li>
-                                <li><strong class="text-pve-blueDark">C2. Atitude:</strong> Postura proativa, escuta ativa e grau de engajamento voluntário da comunidade na educação.</li>
-                                <li><strong class="text-pve-blueDark">C3. Estrutura:</strong> Existência de rotinas formais, espaços de governança e ferramentas de comunicação estabelecidas.</li>
-                                <li><strong class="text-pve-blueDark">C4. Vitalidade:</strong> Frequência das reuniões, ritmo das ações e capacidade de manter a motivação do grupo ao longo do tempo.</li>
-                                <li><strong class="text-pve-blueDark">C5. Cobertura (Abrangência):</strong> Alcance prático das ações de mobilização (quantidade de públicos, bairros e escolas impactadas).</li>
+                            <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-700">
+                                <li><strong class="text-pve-blueDark block">C1. Conhecimento:</strong> Nível de mapeamento e compreensão sobre o território, suas vulnerabilidades e potencialidades.</li>
+                                <li><strong class="text-pve-blueDark block">C2. Atitude:</strong> Postura proativa, escuta ativa e grau de engajamento voluntário da comunidade na educação.</li>
+                                <li><strong class="text-pve-blueDark block">C3. Estrutura:</strong> Existência de rotinas formais, espaços de governança e ferramentas de comunicação estabelecidas.</li>
+                                <li><strong class="text-pve-blueDark block">C4. Vitalidade:</strong> Frequência das reuniões, ritmo das ações e capacidade de manter a motivação do grupo ao longo do tempo.</li>
+                                <li><strong class="text-pve-blueDark block">C5. Cobertura (Abrangência):</strong> Alcance prático das ações de mobilização (quantidade de públicos, bairros e escolas impactadas).</li>
                             </ul>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-md border border-emerald-100 overflow-hidden border-t-4 border-t-pve-green">
-                        <div class="bg-slate-50 border-b border-slate-200 p-4">
-                            <h3 class="font-bold text-lg text-slate-800">Projeção de Metas & Maturidade</h3>
-                        </div>
-                        <div class="p-6">
-                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Níveis de Maturidade</h4>
-                            
-                            <div class="grid grid-cols-1 gap-3 mb-6">
-                                <div class="p-3 bg-white border border-red-200 rounded-lg shadow-sm border-l-4 border-l-red-500">
-                                    <div class="flex items-center mb-1">
-                                        <span class="font-bold text-red-700 text-sm">Nível 1 (Frágil)</span>
-                                        <span class="ml-2 text-[10px] bg-red-100 text-red-800 px-2 py-0.5 rounded font-semibold">Notas ≤ 2.50</span>
-                                    </div>
-                                    <p class="text-xs text-slate-600 leading-relaxed">Reflete conhecimento inicial, sem práticas estabelecidas.</p>
-                                </div>
-                                <div class="p-3 bg-white border border-amber-200 rounded-lg shadow-sm border-l-4 border-l-amber-500">
-                                    <div class="flex items-center mb-1">
-                                        <span class="font-bold text-amber-700 text-sm">Nível 2 (Em Consolidação)</span>
-                                        <span class="ml-2 text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">Notas 2.51 a 3.25</span>
-                                    </div>
-                                    <p class="text-xs text-slate-600 leading-relaxed">Indica conhecimento em progresso e rotinas ainda em construção.</p>
-                                </div>
-                                <div class="p-3 bg-white border border-emerald-200 rounded-lg shadow-sm border-l-4 border-l-emerald-500">
-                                    <div class="flex items-center mb-1">
-                                        <span class="font-bold text-emerald-700 text-sm">Nível 3 (Consolidado)</span>
-                                        <span class="ml-2 text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-semibold">Notas 3.26 a 3.70</span>
-                                    </div>
-                                    <p class="text-xs text-slate-600 leading-relaxed">Reflete conhecimento pleno e práticas rotineiras estabelecidas.</p>
-                                </div>
-                                <div class="p-3 bg-white border border-blue-200 rounded-lg shadow-sm border-l-4 border-l-blue-500">
-                                    <div class="flex items-center mb-1">
-                                        <span class="font-bold text-blue-700 text-sm">Nível 4 (Robusto)</span>
-                                        <span class="ml-2 text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-semibold">Notas > 3.70</span>
-                                    </div>
-                                    <p class="text-xs text-slate-600 leading-relaxed">Práticas avançadas, formalizadas e consistentes.</p>
-                                </div>
-                            </div>
-
-                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 border-t border-slate-100 pt-4">As Metas Contratuais (100, 300 e 500)</h4>
-                            <div class="space-y-3 text-sm text-slate-700">
-                                <p class="mb-2">O ciclo PVE é medido através de três marcos de evolução, variando conforme a nota inicial do município:</p>
-                                <div class="grid grid-cols-1 gap-4 mt-2">
-                                    <div class="p-3 bg-blue-50 border border-blue-200 rounded-md">
-                                        <strong class="text-blue-800 block mb-1">Meta 100 (Curto Prazo)</strong>
-                                        O primeiro marco de avanço esperado no ciclo. Foca em garantir que o município saia da inércia e conquiste as primeiras competências estruturantes.
-                                    </div>
-                                    <div class="p-3 bg-indigo-50 border border-indigo-200 rounded-md">
-                                        <strong class="text-indigo-800 block mb-1">Meta 300 (Médio Prazo)</strong>
-                                        O marco intermediário. Exige que as práticas implementadas na Meta 100 comecem a consolidar-se e a expandir para novas áreas da gestão e mobilização.
-                                    </div>
-                                    <div class="p-3 bg-violet-50 border border-violet-200 rounded-md">
-                                        <strong class="text-violet-800 block mb-1">Meta 500 (Atingimento Final)</strong>
-                                        O objetivo de excelência do ciclo. O município deve atingir o número máximo de competências acordadas no contrato BNDES para o seu perfil (Alta Intensidade ou Refinamento).
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
@@ -851,6 +950,7 @@
                     <p class="mt-1 text-slate-600">Um guia rápido e visual para extrair o máximo de inteligência da sua plataforma.</p>
                 </div>
 
+                <!-- Filtros Globais Destaque -->
                 <div class="bg-gradient-to-r from-slate-800 to-slate-700 rounded-xl shadow-lg p-6 md:p-8 text-white mb-8 relative overflow-hidden">
                     <i class="ph-fill ph-funnel absolute -right-6 -bottom-6 text-9xl text-white opacity-10"></i>
                     <div class="relative z-10">
@@ -864,8 +964,10 @@
                     </div>
                 </div>
 
+                <!-- Grid de Tutoriais das Páginas -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     
+                    <!-- Card 1 -->
                     <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
                         <div class="w-12 h-12 rounded-lg bg-pve-greenLight text-pve-greenDark flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                             <i class="ph-fill ph-squares-four"></i>
@@ -877,6 +979,7 @@
                         </div>
                     </div>
 
+                    <!-- Card 2 -->
                     <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
                         <div class="w-12 h-12 rounded-lg bg-pve-greenLight text-pve-greenDark flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                             <i class="ph-fill ph-table"></i>
@@ -888,6 +991,7 @@
                         </div>
                     </div>
 
+                    <!-- Card 3 -->
                     <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
                         <div class="w-12 h-12 rounded-lg bg-pve-greenLight text-pve-greenDark flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                             <i class="ph-fill ph-ruler"></i>
@@ -899,6 +1003,7 @@
                         </div>
                     </div>
 
+                    <!-- Card 4 -->
                     <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
                         <div class="w-12 h-12 rounded-lg bg-pve-greenLight text-pve-greenDark flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                             <i class="ph-fill ph-graph"></i>
@@ -911,6 +1016,7 @@
                         </div>
                     </div>
 
+                    <!-- Card 5 -->
                     <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
                         <div class="w-12 h-12 rounded-lg bg-pve-greenLight text-pve-greenDark flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                             <i class="ph-fill ph-target"></i>
@@ -923,6 +1029,7 @@
                         </div>
                     </div>
 
+                    <!-- Card 6 -->
                     <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
                         <div class="w-12 h-12 rounded-lg bg-pve-yellow/20 text-yellow-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                             <i class="ph-fill ph-book-open-text"></i>
@@ -1026,11 +1133,10 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             'page-tutorial': 'Como usar o painel'
         };
 
-        // PARÂMETROS ATUALIZADOS SEGUNDO REGRA BNDES
         function getLevelInfo(score) {
-            if(score <= 2.5) return { label: 'Frágil', color: '#EF4444', bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-200', textClass: 'text-red-600' };
+            if(score <= 2.50) return { label: 'Frágil', color: '#EF4444', bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-200', textClass: 'text-red-600' };
             if(score <= 3.25) return { label: 'Em Consolidação', color: '#F59E0B', bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200', textClass: 'text-amber-500' };
-            if(score <= 3.7) return { label: 'Consolidado', color: '#10B981', bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', textClass: 'text-emerald-500' };
+            if(score <= 3.70) return { label: 'Consolidado', color: '#10B981', bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', textClass: 'text-emerald-500' };
             return { label: 'Robusto', color: '#3B82F6', bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200', textClass: 'text-blue-600' };
         }
 
@@ -1039,7 +1145,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             
             if(score <= 1.5) return { label: 'Nível 1-', class: 'sub-l1-minus', gap: (1.500001 - score), nextTarget: 1.5, m100: 'Avançar 5 Comp.', m300: 'Avançar 6 Comp.', m500: 'Avançar 7 Comp.' };
             if(score <= 2.0) return { label: 'Nível 1', class: 'sub-l1', gap: (2.000001 - score), nextTarget: 2.0, m100: 'Avançar 5 Comp.', m300: 'Avançar 6 Comp.', m500: 'Avançar 7 Comp.' };
-            if(score <= 2.5) return { label: 'Nível 1+', class: 'sub-l1-plus', gap: (2.500001 - score), nextTarget: 2.5, m100: 'Avançar 5 Comp.', m300: 'Avançar 6 Comp.', m500: 'Avançar 7 Comp.' };
+            if(score <= 2.50) return { label: 'Nível 1+', class: 'sub-l1-plus', gap: (2.500001 - score), nextTarget: 2.5, m100: 'Avançar 5 Comp.', m300: 'Avançar 6 Comp.', m500: 'Avançar 7 Comp.' };
             
             if(score <= 2.75) return { label: 'Nível 2-', class: 'sub-l2-minus', gap: (2.750001 - score), nextTarget: 2.75, m100: 'Avançar 8 Comp.', m300: 'Avançar 9 Comp.', m500: 'Avançar 10 Comp.' };
             if(score <= 3.0) return { label: 'Nível 2', class: 'sub-l2', gap: (3.000001 - score), nextTarget: 3.0, m100: 'Avançar 8 Comp.', m300: 'Avançar 9 Comp.', m500: 'Avançar 10 Comp.' };
@@ -1047,7 +1153,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             
             if(score <= 3.4) return { label: 'Nível 3-', class: 'sub-l3-minus', gap: (3.400001 - score), nextTarget: 3.4, m100: 'Avançar 4 Comp.', m300: 'Avançar 5 Comp.', m500: 'Avançar 6 Comp.' };
             if(score <= 3.55) return { label: 'Nível 3', class: 'sub-l3', gap: (3.5500001 - score), nextTarget: 3.55, m100: 'Avançar 4 Comp.', m300: 'Avançar 5 Comp.', m500: 'Avançar 6 Comp.' };
-            if(score <= 3.7) return { label: 'Nível 3+', class: 'sub-l3-plus', gap: (3.700001 - score), nextTarget: 3.7, m100: 'Manter Nível 3', m300: 'Avançar 1 Comp.', m500: 'Avançar 2 Comp.' };
+            if(score <= 3.70) return { label: 'Nível 3+', class: 'sub-l3-plus', gap: (3.700001 - score), nextTarget: 3.7, m100: 'Manter Nível 3', m300: 'Avançar 1 Comp.', m500: 'Avançar 2 Comp.' };
             
             if(score <= 3.8) return { label: 'Nível 4-', class: 'sub-l4-minus', gap: (3.800001 - score), nextTarget: 3.8, m100: 'Manter Nível 4', m300: 'Avançar 1 Comp.', m500: 'Avançar 2 Comp.' };
             return { label: 'Nível 4', class: 'sub-l4', gap: 0, nextTarget: 4.0, m100: 'Manter Nível 4', m300: 'Avançar 1 Comp.', m500: 'Avançar 2 Comp.' };
@@ -1492,9 +1598,9 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             if (lowestComp !== '' && lowestCompIndex !== -1) {
                 let compId = `${currentViewFrente}_c${lowestCompIndex + 1}`;
                 let textoGargalo = insightsPedagogicos[compId] ? insightsPedagogicos[compId].gargalo : 'Foco principal das próximas formações.';
-                let statusColor = lowestVal <= 2.5 ? 'red' : 'amber';
-                let icon = lowestVal <= 2.5 ? 'ph-warning-octagon' : 'ph-warning';
-                let alertText = lowestVal <= 2.5 ? 'Prioridade Crítica de Ação' : 'Ponto de Atenção';
+                let statusColor = lowestVal <= 2.50 ? 'red' : 'amber';
+                let icon = lowestVal <= 2.50 ? 'ph-warning-octagon' : 'ph-warning';
+                let alertText = lowestVal <= 2.50 ? 'Prioridade Crítica de Ação' : 'Ponto de Atenção';
 
                 html += `
                 <div class="bg-${statusColor}-50 border-l-4 border-${statusColor}-500 p-3 rounded-r-lg shadow-sm">
@@ -1539,10 +1645,10 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             let hasCritico = false; let hasAtencao = false;
 
             allScores.forEach(item => {
-                if (item.nota <= 2.5) {
+                if (item.nota <= 2.50) {
                     ulCritico.innerHTML += `<li class="flex justify-between items-center bg-white p-2 rounded border border-red-100 shadow-sm"><span class="text-xs font-bold text-slate-700">${item.nome}</span> <span class="bg-red-100 text-red-700 text-xs font-bold px-2 py-0.5 rounded">${item.nota.toFixed(2)}</span></li>`;
                     hasCritico = true;
-                } else if (item.nota > 2.5 && item.nota <= 3.25) {
+                } else if (item.nota > 2.50 && item.nota <= 3.25) {
                     ulAtencao.innerHTML += `<li class="flex justify-between items-center bg-white p-2 rounded border border-amber-100 shadow-sm"><span class="text-xs font-bold text-slate-700">${item.nome}</span> <span class="bg-amber-100 text-amber-700 text-xs font-bold px-2 py-0.5 rounded">${item.nota.toFixed(2)}</span></li>`;
                     hasAtencao = true;
                 }
@@ -1583,7 +1689,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             prompt += `O meu objetivo é desenhar uma estratégia de intervenção e uma pauta formativa de alto impacto para ${munText}.\n\n`;
             prompt += `Através da nossa ferramenta de diagnóstico e do Mapa de Competências, identificámos as seguintes lacunas de maturidade que exigem ação imediata na próxima formação:\n`;
             
-            if (criticos.length > 0) prompt += `\n🔴 PRIORIDADE CRÍTICA (Nível Frágil - Notas <= 2.5 - Foco principal da intervenção):\n- ${criticos.join('\n- ')}\n`;
+            if (criticos.length > 0) prompt += `\n🔴 PRIORIDADE CRÍTICA (Nível Frágil - Notas <= 2.50 - Foco principal da intervenção):\n- ${criticos.join('\n- ')}\n`;
             if (atencao.length > 0) prompt += `\n🟡 PONTOS DE ATENÇÃO (Em Consolidação - Notas 2.51 a 3.25 - Necessitam reforço contínuo):\n- ${atencao.join('\n- ')}\n`;
             
             prompt += `\nCom base nestes evidências, por favor, construa uma proposta detalhada contendo:\n\n`;
@@ -2142,3 +2248,4 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
     </script>
 </body>
 </html>
+```
