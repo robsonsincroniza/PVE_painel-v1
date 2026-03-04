@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PVE Gestão | Sincroniza Educação</title>
+    <title>PVE Gestão | Painel Principal</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -93,9 +93,9 @@
             border-bottom-width: 0px;
             margin-bottom: 12px; 
             background: #eff6ff;
-            border: 1px solid #008B45; /* PVE Green */
+            border: 1px solid #008B45;
             box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1);
-            color: #008B45; /* PVE Green */
+            color: #008B45; 
         }
 
         /* Custom Dropdown Multi-select */
@@ -121,7 +121,7 @@
         .checkbox-label:hover { background-color: #f1f5f9; }
         .checkbox-input {
             width: 1.1rem; height: 1.1rem; margin-right: 0.5rem; border-radius: 0.25rem;
-            border: 1px solid #cbd5e1; cursor: pointer; accent-color: #008B45; /* PVE Green */
+            border: 1px solid #cbd5e1; cursor: pointer; accent-color: #008B45;
         }
 
         .heatmap-cell { position: relative; z-index: 1; }
@@ -150,7 +150,7 @@
 </head>
 <body class="flex h-screen bg-slate-50">
 
-    <!-- SIDEBAR (Com fundo Azul Escuro PVE) -->
+    <!-- SIDEBAR -->
     <aside class="w-64 bg-pve-blueDark text-slate-300 flex flex-col flex-shrink-0 z-20 shadow-xl relative overflow-y-auto">
         <div class="h-16 flex items-center px-6 border-b border-white/10 bg-pve-blueDarker shrink-0">
             <i class="ph-fill ph-chart-polar text-pve-yellow text-2xl mr-2"></i>
@@ -181,15 +181,13 @@
                     <span class="font-medium text-sm">Projeção de Metas</span>
                 </button>
 
-                <div class="h-px bg-white/10 my-4 mx-2"></div> <!-- Linha Separadora -->
+                <div class="h-px bg-white/10 my-4 mx-2"></div>
 
-                <!-- BOTÃO LEGENDAS -->
                 <button id="nav-page-legendas" onclick="switchPage('page-legendas')" class="nav-link w-full flex items-center px-4 py-3 text-slate-300 hover:bg-white/10 hover:text-white rounded-lg group transition-colors">
                     <i class="ph ph-book-open-text text-xl mr-3 group-hover:text-pve-yellow transition-colors"></i>
                     <span class="font-medium text-sm">Legendas da Matriz</span>
                 </button>
 
-                <!-- NOVO BOTÃO COMO USAR O PAINEL -->
                 <button id="nav-page-tutorial" onclick="switchPage('page-tutorial')" class="nav-link w-full flex items-center px-4 py-3 text-slate-300 hover:bg-white/10 hover:text-white rounded-lg group transition-colors">
                     <i class="ph ph-info text-xl mr-3 group-hover:text-blue-400 transition-colors"></i>
                     <span class="font-medium text-sm">Como usar o painel</span>
@@ -212,7 +210,7 @@
     <!-- ÁREA PRINCIPAL -->
     <div class="flex-1 flex flex-col h-screen overflow-hidden">
         
-        <!-- HEADER COM LOGO E TÍTULO (Topo) -->
+        <!-- HEADER COM LOGO E TÍTULO -->
         <div class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between z-30 flex-shrink-0 shadow-sm relative">
             <div class="flex items-center h-12">
                 <img src="https://raw.githubusercontent.com/robsonsincroniza/PVE_painel-v1/main/image%20(31).png" alt="Logo PVE" class="max-h-full object-contain" onerror="this.style.display='none'; document.getElementById('logo-fallback-top').classList.remove('hidden');">
@@ -220,14 +218,13 @@
                     <i class="ph-fill ph-graduation-cap mr-2 text-3xl text-pve-green"></i> PVE
                 </span>
             </div>
-            <h1 id="pageTitle" class="text-xl font-bold text-slate-800 hidden sm:block">Visão Executiva PVE</h1>
+            <h1 id="pageTitle" class="text-xl font-bold text-slate-800 hidden sm:block">Visão Executiva</h1>
         </div>
         
         <!-- BARRA DE FILTROS -->
         <header class="bg-slate-50 border-b border-slate-200 px-6 py-3 flex flex-wrap items-center gap-4 z-20 flex-shrink-0 relative">
             <span class="text-sm font-semibold text-slate-600 flex items-center"><i class="ph ph-funnel mr-2 text-lg"></i> Filtros Ativos:</span>
             
-            <!-- Dropdown Estado -->
             <div class="custom-select-wrapper" id="wrapperEstado">
                 <div class="custom-select-button" onclick="toggleDropdown('dropdownEstado')">
                     <span id="labelEstado" class="truncate">Estado: Todos</span>
@@ -241,7 +238,6 @@
                 </div>
             </div>
 
-            <!-- Dropdown Municipio -->
             <div class="custom-select-wrapper" id="wrapperMunicipio">
                 <div class="custom-select-button" onclick="toggleDropdown('dropdownMunicipio')">
                     <span id="labelMunicipio" class="truncate">Município: Todos</span>
@@ -267,9 +263,7 @@
                     <p class="mt-1 text-slate-600">Acompanhamento do impacto, esforço da rede e atingimento de metas do PVE.</p>
                 </div>
 
-                <!-- Linha 1 - Operação e Impacto -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Impacto: IDEB -->
                     <div class="bg-gradient-to-br from-pve-orange to-pve-red rounded-xl shadow-md p-6 text-white flex flex-col justify-center relative overflow-hidden">
                         <i class="ph-fill ph-student absolute -right-4 -top-4 text-7xl text-white opacity-10"></i>
                         <span class="text-orange-200 text-xs font-bold uppercase tracking-wider">Métrica de Impacto Final</span>
@@ -280,7 +274,6 @@
                         <span class="text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider bg-white/20 border border-white/30 inline-block w-max">Foco na Aprendizagem</span>
                     </div>
                     
-                    <!-- Operação: Municípios -->
                     <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-center">
                         <span class="text-slate-400 text-xs font-bold uppercase tracking-widest flex items-center">
                             <i class="ph-fill ph-map-pin mr-2 text-pve-orange text-lg"></i> Municípios Analisados
@@ -292,7 +285,6 @@
                     </div>
                 </div>
 
-                <!-- CARDS (Médias da Matriz) -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col items-center justify-center hover:shadow-md transition">
                         <span class="text-slate-400 text-[11px] font-bold uppercase tracking-widest">Média Global PVE</span>
@@ -316,7 +308,6 @@
                     </div>
                 </div>
 
-                <!-- Gráfico de Distribuição & Mini Metas -->
                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
                     <div class="xl:col-span-2 bg-white rounded-xl shadow-sm p-6 md:p-8 border border-slate-200 flex flex-col">
                         <div class="mb-4 border-b border-slate-100 pb-4">
@@ -342,7 +333,6 @@
                     </div>
                 </div>
 
-                <!-- Top Rankings Rápidos com Filtro Integrado -->
                 <div class="col-span-1 md:col-span-2 flex flex-col sm:flex-row justify-between items-start sm:items-end border-b border-slate-200 pb-3 mt-8 mb-2 gap-4">
                     <div>
                         <h3 class="text-xl font-bold text-slate-800">Rankings de Desempenho</h3>
@@ -383,7 +373,6 @@
                     <p class="mt-1 text-slate-600">Diagnóstico aprofundado com visualização completa de todas as competências avaliadas.</p>
                 </div>
 
-                <!-- Bloco de Contexto Estratégico (Mapa & Raio-X) -->
                 <div class="bg-amber-50 border border-amber-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
                     <h4 class="text-sm font-bold text-amber-800 mb-2 flex items-center">
                         <i class="ph-fill ph-info mr-2 text-lg"></i> Entenda o Mapa de Calor e o Raio-X
@@ -396,17 +385,16 @@
                     </p>
                 </div>
 
-                <!-- Tabela Heatmap -->
                 <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden pb-4">
                     <div class="p-6 border-b border-slate-100 bg-slate-50 flex flex-col gap-6">
                         
                         <div class="flex justify-between items-center w-full flex-wrap gap-4">
                             <h3 class="font-bold text-slate-800 text-lg">Visão Detalhada por Frente</h3>
                             <div class="flex space-x-2 text-[11px] font-bold tracking-wide uppercase">
-                                <span class="px-2 py-1 bg-red-50 text-red-700 rounded border border-red-200 shadow-sm">Frágil (< 2.5)</span>
-                                <span class="px-2 py-1 bg-amber-50 text-amber-700 rounded border border-amber-200 shadow-sm">Consolidação (2.5 - 2.9)</span>
-                                <span class="px-2 py-1 bg-emerald-50 text-emerald-700 rounded border border-emerald-200 shadow-sm">Consolidado (3.0 - 3.4)</span>
-                                <span class="px-2 py-1 bg-blue-50 text-blue-700 rounded border border-blue-200 shadow-sm">Robusto (≥ 3.5)</span>
+                                <span class="px-2 py-1 bg-red-50 text-red-700 rounded border border-red-200 shadow-sm">Frágil (≤ 2.50)</span>
+                                <span class="px-2 py-1 bg-amber-50 text-amber-700 rounded border border-amber-200 shadow-sm">Consolidação (2.51 - 3.25)</span>
+                                <span class="px-2 py-1 bg-emerald-50 text-emerald-700 rounded border border-emerald-200 shadow-sm">Consolidado (3.26 - 3.70)</span>
+                                <span class="px-2 py-1 bg-blue-50 text-blue-700 rounded border border-blue-200 shadow-sm">Robusto (> 3.70)</span>
                             </div>
                         </div>
                         
@@ -437,7 +425,6 @@
                     </div>
                 </div>
 
-                <!-- Gráfico de Radar + Painel de Diagnóstico Descritivo -->
                 <div class="bg-white rounded-xl shadow-lg border border-slate-200 mt-8 overflow-hidden">
                     <div class="p-6 border-b border-slate-100 bg-slate-50 flex flex-wrap justify-between items-center gap-4">
                         <h3 class="text-xl font-bold text-slate-800">Raio-X: Perfil da Seleção vs Média Nacional</h3>
@@ -447,14 +434,12 @@
                     </div>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-0">
-                        <!-- Chart Area -->
                         <div class="lg:col-span-2 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-slate-200">
                             <div class="chart-container h-[350px] md:h-[450px]">
                                 <canvas id="chartRadar"></canvas>
                             </div>
                         </div>
                         
-                        <!-- Insights de Texto Dinâmicos & Interpretativos -->
                         <div class="lg:col-span-1 bg-white p-6 md:p-8 flex flex-col">
                             <h4 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1">Interpretação de Resultados</h4>
                             <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">O que significa este recorte selecionado?</p>
@@ -473,23 +458,21 @@
                 
                 <div class="border-l-4 border-pve-green pl-4 mb-4">
                     <h2 class="text-2xl font-bold text-slate-900">Régua de Maturidade (Microavanços)</h2>
-                    <p class="mt-1 text-slate-600">Acompanhamento detalhado das 11 faixas de maturidade para direcionar metas específicas.</p>
+                    <p class="mt-1 text-slate-600">Acompanhamento detalhado das faixas de maturidade para direcionar metas específicas.</p>
                 </div>
 
-                <!-- Bloco de Contexto Estratégico (Régua de Maturidade) -->
                 <div class="bg-emerald-50 border border-emerald-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
                     <h4 class="text-sm font-bold text-emerald-800 mb-2 flex items-center">
                         <i class="ph-fill ph-info mr-2 text-lg"></i> Entenda a Régua de Maturidade e os Microavanços
                     </h4>
                     <p class="text-xs text-slate-700 leading-relaxed mb-2">
-                        <strong>Objetivo desta página:</strong> Dar visibilidade ao esforço real do município através dos "microavanços". Muitas vezes, um território evolui consideravelmente na sua pontuação, mas mantém-se na mesma cor macro (Nível 1, 2, 3 ou 4). Esta régua de 11 faixas revela essa evolução e esforço oculto.
+                        <strong>Objetivo desta página:</strong> Dar visibilidade ao esforço real do município através dos "microavanços". Muitas vezes, um território evolui consideravelmente na sua pontuação, mas mantém-se na mesma cor macro (Nível 1, 2, 3 ou 4). Esta régua revela essa evolução e esforço oculto.
                     </p>
                     <p class="text-xs text-slate-700 leading-relaxed">
                         <strong>Como utilizar:</strong> O gráfico lista o posicionamento exato de todos os municípios da seleção. A tabela abaixo calcula o "Gap" matemático para o próximo subnível. Gestores podem usar esta visão para encorajar municípios que estão a poucos décimos de bater a meta.
                     </p>
                 </div>
 
-                <!-- Gráfico Detalhado de Distribuição -->
                 <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
                     <div class="p-6 border-b border-slate-100 bg-slate-50">
                         <h3 class="font-bold text-slate-800 text-lg">Distribuição Detalhada (Subníveis)</h3>
@@ -501,16 +484,14 @@
                         </div>
                     </div>
                     
-                    <!-- Régua Visual Explicativa -->
                     <div class="bg-pve-blueDark p-4 flex flex-col md:flex-row text-center text-[10px] font-bold text-white uppercase tracking-wider">
-                        <div class="flex-1 border-r border-white/20 p-2"><span class="block text-red-400 mb-1">Nível 1 (Frágil)</span> 1- (1.0) | 1 (1.5) | 1+ (2.0)</div>
-                        <div class="flex-1 border-r border-white/20 p-2"><span class="block text-pve-yellow mb-1">Nível 2 (Em Consolidação)</span> 2- (2.5) | 2 (2.75) | 2+ (3.0)</div>
-                        <div class="flex-1 border-r border-white/20 p-2"><span class="block text-emerald-400 mb-1">Nível 3 (Consolidado)</span> 3- (3.25) | 3 (3.4) | 3+ (3.55)</div>
-                        <div class="flex-1 p-2"><span class="block text-blue-300 mb-1">Nível 4 (Robusto)</span> 4- (3.7) | 4 (3.8 a 4.0)</div>
+                        <div class="flex-1 border-r border-white/20 p-2"><span class="block text-red-400 mb-1">Nível 1 (Frágil)</span> 1- (≤1.5) | 1 (≤2.0) | 1+ (≤2.5)</div>
+                        <div class="flex-1 border-r border-white/20 p-2"><span class="block text-pve-yellow mb-1">Nível 2 (Em Consolidação)</span> 2- (≤2.75) | 2 (≤3.0) | 2+ (≤3.25)</div>
+                        <div class="flex-1 border-r border-white/20 p-2"><span class="block text-emerald-400 mb-1">Nível 3 (Consolidado)</span> 3- (≤3.4) | 3 (≤3.55) | 3+ (≤3.7)</div>
+                        <div class="flex-1 p-2"><span class="block text-blue-300 mb-1">Nível 4 (Robusto)</span> 4- (≤3.8) | 4 (>3.8)</div>
                     </div>
                 </div>
 
-                <!-- Tabela de Acompanhamento e Gaps -->
                 <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden mt-8">
                     <div class="p-6 border-b border-slate-100 bg-slate-50">
                         <h3 class="font-bold text-slate-800 text-lg">Acompanhamento e Distância para Próxima Meta</h3>
@@ -544,7 +525,6 @@
                     <p class="mt-1 text-slate-600">Cruze quaisquer competências e descubra exatamente o que exige ação imediata.</p>
                 </div>
 
-                <!-- Bloco de Contexto Estratégico (Trilhas & Clusters) -->
                 <div class="bg-blue-50 border border-blue-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
                     <h4 class="text-sm font-bold text-blue-800 mb-2 flex items-center">
                         <i class="ph-fill ph-info mr-2 text-lg"></i> Entenda a Inteligência de Trilhas e Clusters
@@ -559,7 +539,6 @@
 
                 <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
                     
-                    <!-- Bubble Chart -->
                     <div class="bg-white rounded-xl shadow-lg border border-slate-200 flex flex-col">
                         <div class="p-5 border-b border-slate-100 bg-slate-50">
                             <div class="mb-4">
@@ -594,17 +573,16 @@
                             <div class="mt-4 border-t border-slate-100 pt-4">
                                 <h4 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 text-center">Entenda os Níveis da Matriz</h4>
                                 <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 text-[10px] leading-tight">
-                                    <div class="bg-red-50 border-l-2 border-pve-red p-2 rounded shadow-sm"><span class="font-bold text-red-700 block mb-1">Nível 1: Frágil (< 2.5)</span><span class="text-slate-600">Conhecimento inicial. Sem práticas estabelecidas.</span></div>
-                                    <div class="bg-amber-50 border-l-2 border-pve-yellow p-2 rounded shadow-sm"><span class="font-bold text-amber-700 block mb-1">Nível 2: Consolidação (2.5-2.9)</span><span class="text-slate-600">Conhecimento em progresso. Rotinas em construção.</span></div>
-                                    <div class="bg-emerald-50 border-l-2 border-pve-green p-2 rounded shadow-sm"><span class="font-bold text-emerald-700 block mb-1">Nível 3: Consolidado (3.0-3.4)</span><span class="text-slate-600">Conhecimento pleno. Práticas rotineiras e estabelecidas.</span></div>
-                                    <div class="bg-blue-50 border-l-2 border-pve-blueDark p-2 rounded shadow-sm"><span class="font-bold text-blue-700 block mb-1">Nível 4: Robusto (≥ 3.5)</span><span class="text-slate-600">Conhecimento avançado. Rotinas formalizadas e consistentes.</span></div>
+                                    <div class="bg-red-50 border-l-2 border-pve-red p-2 rounded shadow-sm"><span class="font-bold text-red-700 block mb-1">Nível 1: Frágil (≤ 2.50)</span><span class="text-slate-600">Conhecimento inicial. Sem práticas estabelecidas.</span></div>
+                                    <div class="bg-amber-50 border-l-2 border-pve-yellow p-2 rounded shadow-sm"><span class="font-bold text-amber-700 block mb-1">Nível 2: Consolidação (2.51-3.25)</span><span class="text-slate-600">Conhecimento em progresso. Rotinas em construção.</span></div>
+                                    <div class="bg-emerald-50 border-l-2 border-pve-green p-2 rounded shadow-sm"><span class="font-bold text-emerald-700 block mb-1">Nível 3: Consolidado (3.26-3.70)</span><span class="text-slate-600">Conhecimento pleno. Práticas rotineiras e estabelecidas.</span></div>
+                                    <div class="bg-blue-50 border-l-2 border-pve-blueDark p-2 rounded shadow-sm"><span class="font-bold text-blue-700 block mb-1">Nível 4: Robusto (> 3.70)</span><span class="text-slate-600">Conhecimento avançado. Rotinas formalizadas e consistentes.</span></div>
                                 </div>
                                 <p class="text-[9px] text-slate-400 mt-3 text-center uppercase tracking-widest font-bold">O tamanho da bolha reflete a média da frente correspondente ao Eixo X.</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Engine de Priorização & GERADOR DE PROMPT -->
                     <div class="bg-white rounded-xl shadow-lg border border-slate-200 flex flex-col overflow-hidden">
                         <div class="p-6 bg-pve-blueDark text-white border-b border-pve-blueDarker flex justify-between items-center">
                             <div>
@@ -614,16 +592,15 @@
                         </div>
                         <div class="p-6 flex-1 bg-slate-50 overflow-y-auto">
                             <div class="mb-6">
-                                <h4 class="text-sm font-bold text-red-700 uppercase tracking-widest border-b border-red-200 pb-2 mb-3 flex items-center"><i class="ph-fill ph-warning-octagon mr-2 text-lg"></i> Prioridade Crítica (< 2.5)</h4>
+                                <h4 class="text-sm font-bold text-red-700 uppercase tracking-widest border-b border-red-200 pb-2 mb-3 flex items-center"><i class="ph-fill ph-warning-octagon mr-2 text-lg"></i> Prioridade Crítica (≤ 2.50)</h4>
                                 <ul id="listCritico" class="space-y-2"><li class="text-sm text-slate-500 italic">A processar dados...</li></ul>
                             </div>
                             <div>
-                                <h4 class="text-sm font-bold text-amber-700 uppercase tracking-widest border-b border-amber-200 pb-2 mb-3 flex items-center"><i class="ph-fill ph-warning mr-2 text-lg"></i> Em Atenção (2.5 - 2.9)</h4>
+                                <h4 class="text-sm font-bold text-amber-700 uppercase tracking-widest border-b border-amber-200 pb-2 mb-3 flex items-center"><i class="ph-fill ph-warning mr-2 text-lg"></i> Em Atenção (2.51 - 3.25)</h4>
                                 <ul id="listAtencao" class="space-y-2"><li class="text-sm text-slate-500 italic">A processar dados...</li></ul>
                             </div>
                         </div>
                         
-                        <!-- GERAÇÃO DE PROMPT -->
                         <div class="p-5 bg-white border-t border-slate-200 flex flex-col items-center">
                             <div class="mb-4 w-full">
                                 <p class="text-sm font-bold text-slate-800 mb-1 text-center">Assistente Pedagógico</p>
@@ -667,7 +644,6 @@
                     <p class="mt-1 text-slate-600">Direcionamento estratégico e expectativa de avanço (Metas 100, 300, 500) por município.</p>
                 </div>
                 
-                <!-- Bloco de Contexto Estratégico -->
                 <div class="bg-blue-50 border border-blue-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
                     <h4 class="text-sm font-bold text-pve-blueDark mb-2 flex items-center">
                         <i class="ph-fill ph-info mr-2 text-lg"></i> Entenda a Projeção de Metas
@@ -680,7 +656,6 @@
                     </p>
                 </div>
 
-                <!-- Resumo Executivo das Metas -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div class="bg-white rounded-xl shadow-md p-6 border border-slate-100 flex flex-col justify-center">
                         <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-target text-slate-500 mr-2"></i> Municípios Analisados</h4>
@@ -700,30 +675,24 @@
                 </div>
 
                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
-                    <!-- Gráfico de Distribuição do Esforço -->
                     <div class="xl:col-span-1 bg-white rounded-xl shadow-lg border border-slate-200 p-6 flex flex-col">
                         <h3 class="font-bold text-lg text-slate-800 mb-1">Perfil de Esforço da Rede</h3>
                         <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold mb-6">Distribuição com base na Meta 100</p>
-                        <!-- Altura forçada fixa para o gráfico renderizar sempre -->
                         <div class="chart-container relative w-full" style="height: 250px; min-height: 250px;">
                             <canvas id="chartMetasDoughnut"></canvas>
                         </div>
-                        <!-- Resumo Textual como Backup para falhas de renderização de telas curtas -->
                         <div id="metasDoughnutSummary" class="mt-4 text-center text-sm font-medium text-slate-600 bg-slate-50 p-3 rounded border border-slate-100">
-                            <!-- Preenchido via JS -->
                         </div>
                     </div>
 
-                    <!-- Tabela de Metas -->
                     <div class="xl:col-span-2 bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden flex flex-col">
                         <div class="p-6 border-b border-slate-100 bg-slate-50 flex justify-between items-center flex-wrap gap-4">
                             <div>
                                 <h3 class="font-bold text-slate-800 text-lg">Painel de Metas por Município</h3>
-                                <p class="text-xs text-slate-500 mt-1">Cálculo gerado automaticamente segundo a tabela oficial do PVE IV BNDES. <br><strong class="text-amber-600">Dica: Passe o mouse por cima das metas para ver as competências sugeridas para foco.</strong></p>
+                                <p class="text-xs text-slate-500 mt-1">Cálculo gerado automaticamente segundo a tabela oficial do PVE IV BNDES. <br><strong class="text-amber-600">Dica: Passe o rato por cima das metas para ver as competências sugeridas para foco.</strong></p>
                             </div>
                         </div>
-                        <div class="overflow-x-auto max-h-[400px]"> 
-                            <!-- Z-index relative prevents clipping of tooltips on normal usage, but native title is even better -->
+                        <div class="overflow-x-auto max-h-[400px] pb-32"> 
                             <table class="min-w-full text-sm relative z-10">
                                 <thead class="sticky top-0 z-20 shadow-sm">
                                     <tr class="bg-pve-blueDark text-white uppercase text-[10px] font-bold tracking-wider leading-normal">
@@ -756,7 +725,6 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     
-                    <!-- Bloco GESC -->
                     <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
                         <div class="bg-pve-blueDark text-white p-4 flex items-center">
                             <i class="ph-fill ph-buildings text-2xl text-pve-yellow mr-3"></i>
@@ -776,7 +744,6 @@
                         </div>
                     </div>
 
-                    <!-- Bloco GEDU -->
                     <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
                         <div class="bg-pve-blueDark text-white p-4 flex items-center">
                             <i class="ph-fill ph-books text-2xl text-pve-yellow mr-3"></i>
@@ -796,7 +763,6 @@
                         </div>
                     </div>
 
-                    <!-- Bloco MOB -->
                     <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
                         <div class="bg-pve-blueDark text-white p-4 flex items-center">
                             <i class="ph-fill ph-users-three text-2xl text-pve-yellow mr-3"></i>
@@ -813,7 +779,6 @@
                         </div>
                     </div>
 
-                    <!-- Bloco METAS E NÍVEIS -->
                     <div class="bg-white rounded-xl shadow-md border border-emerald-100 overflow-hidden border-t-4 border-t-pve-green">
                         <div class="bg-slate-50 border-b border-slate-200 p-4">
                             <h3 class="font-bold text-lg text-slate-800">Projeção de Metas & Maturidade</h3>
@@ -821,33 +786,32 @@
                         <div class="p-6">
                             <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Níveis de Maturidade</h4>
                             
-                            <!-- Estrutura visual dos Níveis de Maturidade -->
                             <div class="grid grid-cols-1 gap-3 mb-6">
                                 <div class="p-3 bg-white border border-red-200 rounded-lg shadow-sm border-l-4 border-l-red-500">
                                     <div class="flex items-center mb-1">
                                         <span class="font-bold text-red-700 text-sm">Nível 1 (Frágil)</span>
-                                        <span class="ml-2 text-[10px] bg-red-100 text-red-800 px-2 py-0.5 rounded font-semibold">Notas < 2.5</span>
+                                        <span class="ml-2 text-[10px] bg-red-100 text-red-800 px-2 py-0.5 rounded font-semibold">Notas ≤ 2.50</span>
                                     </div>
                                     <p class="text-xs text-slate-600 leading-relaxed">Reflete conhecimento inicial, sem práticas estabelecidas.</p>
                                 </div>
                                 <div class="p-3 bg-white border border-amber-200 rounded-lg shadow-sm border-l-4 border-l-amber-500">
                                     <div class="flex items-center mb-1">
                                         <span class="font-bold text-amber-700 text-sm">Nível 2 (Em Consolidação)</span>
-                                        <span class="ml-2 text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">Notas 2.5 a 2.9</span>
+                                        <span class="ml-2 text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">Notas 2.51 a 3.25</span>
                                     </div>
                                     <p class="text-xs text-slate-600 leading-relaxed">Indica conhecimento em progresso e rotinas ainda em construção.</p>
                                 </div>
                                 <div class="p-3 bg-white border border-emerald-200 rounded-lg shadow-sm border-l-4 border-l-emerald-500">
                                     <div class="flex items-center mb-1">
                                         <span class="font-bold text-emerald-700 text-sm">Nível 3 (Consolidado)</span>
-                                        <span class="ml-2 text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-semibold">Notas 3.0 a 3.4</span>
+                                        <span class="ml-2 text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-semibold">Notas 3.26 a 3.70</span>
                                     </div>
                                     <p class="text-xs text-slate-600 leading-relaxed">Reflete conhecimento pleno e práticas rotineiras estabelecidas.</p>
                                 </div>
                                 <div class="p-3 bg-white border border-blue-200 rounded-lg shadow-sm border-l-4 border-l-blue-500">
                                     <div class="flex items-center mb-1">
                                         <span class="font-bold text-blue-700 text-sm">Nível 4 (Robusto)</span>
-                                        <span class="ml-2 text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-semibold">Notas ≥ 3.5</span>
+                                        <span class="ml-2 text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-semibold">Notas > 3.70</span>
                                     </div>
                                     <p class="text-xs text-slate-600 leading-relaxed">Práticas avançadas, formalizadas e consistentes.</p>
                                 </div>
@@ -887,7 +851,6 @@
                     <p class="mt-1 text-slate-600">Um guia rápido e visual para extrair o máximo de inteligência da sua plataforma.</p>
                 </div>
 
-                <!-- Filtros Globais Destaque -->
                 <div class="bg-gradient-to-r from-slate-800 to-slate-700 rounded-xl shadow-lg p-6 md:p-8 text-white mb-8 relative overflow-hidden">
                     <i class="ph-fill ph-funnel absolute -right-6 -bottom-6 text-9xl text-white opacity-10"></i>
                     <div class="relative z-10">
@@ -901,10 +864,8 @@
                     </div>
                 </div>
 
-                <!-- Grid de Tutoriais das Páginas -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     
-                    <!-- Card 1 -->
                     <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
                         <div class="w-12 h-12 rounded-lg bg-pve-greenLight text-pve-greenDark flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                             <i class="ph-fill ph-squares-four"></i>
@@ -916,7 +877,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 2 -->
                     <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
                         <div class="w-12 h-12 rounded-lg bg-pve-greenLight text-pve-greenDark flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                             <i class="ph-fill ph-table"></i>
@@ -928,7 +888,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 3 -->
                     <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
                         <div class="w-12 h-12 rounded-lg bg-pve-greenLight text-pve-greenDark flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                             <i class="ph-fill ph-ruler"></i>
@@ -940,7 +899,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 4 -->
                     <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
                         <div class="w-12 h-12 rounded-lg bg-pve-greenLight text-pve-greenDark flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                             <i class="ph-fill ph-graph"></i>
@@ -953,7 +911,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 5 -->
                     <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
                         <div class="w-12 h-12 rounded-lg bg-pve-greenLight text-pve-greenDark flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                             <i class="ph-fill ph-target"></i>
@@ -966,7 +923,6 @@
                         </div>
                     </div>
 
-                    <!-- Card 6 -->
                     <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
                         <div class="w-12 h-12 rounded-lg bg-pve-yellow/20 text-yellow-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                             <i class="ph-fill ph-book-open-text"></i>
@@ -1061,37 +1017,39 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
         };
 
         const pageTitles = {
-            'page-visao': 'Visão Executiva PVE',
+            'page-visao': 'Visão Executiva',
             'page-regua': 'Régua de Maturidade e Gaps',
             'page-mapa': 'Diagnóstico & Raio-X',
             'page-cluster': 'Trilhas & Clusters',
             'page-metas': 'Projeção de Metas 2026',
-            'page-legendas': 'Glossário e Legendas'
+            'page-legendas': 'Glossário e Legendas',
+            'page-tutorial': 'Como usar o painel'
         };
 
+        // PARÂMETROS ATUALIZADOS SEGUNDO REGRA BNDES
         function getLevelInfo(score) {
-            if(score < 2.5) return { label: 'Frágil', color: '#EF4444', bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-200', textClass: 'text-red-600' };
-            if(score < 3.0) return { label: 'Em Consolidação', color: '#F59E0B', bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200', textClass: 'text-amber-500' };
-            if(score < 3.5) return { label: 'Consolidado', color: '#10B981', bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', textClass: 'text-emerald-500' };
+            if(score <= 2.5) return { label: 'Frágil', color: '#EF4444', bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-200', textClass: 'text-red-600' };
+            if(score <= 3.25) return { label: 'Em Consolidação', color: '#F59E0B', bg: 'bg-amber-50', text: 'text-amber-700', border: 'border-amber-200', textClass: 'text-amber-500' };
+            if(score <= 3.7) return { label: 'Consolidado', color: '#10B981', bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', textClass: 'text-emerald-500' };
             return { label: 'Robusto', color: '#3B82F6', bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200', textClass: 'text-blue-600' };
         }
 
         function getSubLevelInfo(score) {
             if(!score || score === 0) return { label: '-', class: 'bg-slate-100 text-slate-400 font-normal', gap: 0, nextTarget: 0, m100: '-', m300: '-', m500: '-' };
             
-            if(score <= 1.5) return { label: 'Nível 1-', class: 'sub-l1-minus', gap: (1.500001 - score), nextTarget: 1.500001, m100: 'Avançar 5 Comp.', m300: 'Avançar 6 Comp.', m500: 'Avançar 7 Comp.' };
-            if(score <= 2.0) return { label: 'Nível 1', class: 'sub-l1', gap: (2.000001 - score), nextTarget: 2.000001, m100: 'Avançar 5 Comp.', m300: 'Avançar 6 Comp.', m500: 'Avançar 7 Comp.' };
-            if(score <= 2.5) return { label: 'Nível 1+', class: 'sub-l1-plus', gap: (2.500001 - score), nextTarget: 2.500001, m100: 'Avançar 5 Comp.', m300: 'Avançar 6 Comp.', m500: 'Avançar 7 Comp.' };
+            if(score <= 1.5) return { label: 'Nível 1-', class: 'sub-l1-minus', gap: (1.500001 - score), nextTarget: 1.5, m100: 'Avançar 5 Comp.', m300: 'Avançar 6 Comp.', m500: 'Avançar 7 Comp.' };
+            if(score <= 2.0) return { label: 'Nível 1', class: 'sub-l1', gap: (2.000001 - score), nextTarget: 2.0, m100: 'Avançar 5 Comp.', m300: 'Avançar 6 Comp.', m500: 'Avançar 7 Comp.' };
+            if(score <= 2.5) return { label: 'Nível 1+', class: 'sub-l1-plus', gap: (2.500001 - score), nextTarget: 2.5, m100: 'Avançar 5 Comp.', m300: 'Avançar 6 Comp.', m500: 'Avançar 7 Comp.' };
             
-            if(score <= 2.75) return { label: 'Nível 2-', class: 'sub-l2-minus', gap: (2.750001 - score), nextTarget: 2.750001, m100: 'Avançar 8 Comp.', m300: 'Avançar 9 Comp.', m500: 'Avançar 10 Comp.' };
-            if(score <= 3.0) return { label: 'Nível 2', class: 'sub-l2', gap: (3.000001 - score), nextTarget: 3.000001, m100: 'Avançar 8 Comp.', m300: 'Avançar 9 Comp.', m500: 'Avançar 10 Comp.' };
-            if(score <= 3.25) return { label: 'Nível 2+', class: 'sub-l2-plus', gap: (3.2500001 - score), nextTarget: 3.2500001, m100: 'Avançar 7 Comp.', m300: 'Avançar 8 Comp.', m500: 'Avançar 9 Comp.' };
+            if(score <= 2.75) return { label: 'Nível 2-', class: 'sub-l2-minus', gap: (2.750001 - score), nextTarget: 2.75, m100: 'Avançar 8 Comp.', m300: 'Avançar 9 Comp.', m500: 'Avançar 10 Comp.' };
+            if(score <= 3.0) return { label: 'Nível 2', class: 'sub-l2', gap: (3.000001 - score), nextTarget: 3.0, m100: 'Avançar 8 Comp.', m300: 'Avançar 9 Comp.', m500: 'Avançar 10 Comp.' };
+            if(score <= 3.25) return { label: 'Nível 2+', class: 'sub-l2-plus', gap: (3.2500001 - score), nextTarget: 3.25, m100: 'Avançar 7 Comp.', m300: 'Avançar 8 Comp.', m500: 'Avançar 9 Comp.' };
             
-            if(score <= 3.4) return { label: 'Nível 3-', class: 'sub-l3-minus', gap: (3.400001 - score), nextTarget: 3.400001, m100: 'Avançar 4 Comp.', m300: 'Avançar 5 Comp.', m500: 'Avançar 6 Comp.' };
-            if(score <= 3.55) return { label: 'Nível 3', class: 'sub-l3', gap: (3.5500001 - score), nextTarget: 3.5500001, m100: 'Avançar 4 Comp.', m300: 'Avançar 5 Comp.', m500: 'Avançar 6 Comp.' };
-            if(score <= 3.7) return { label: 'Nível 3+', class: 'sub-l3-plus', gap: (3.700001 - score), nextTarget: 3.700001, m100: 'Manter Nível 3', m300: 'Avançar 1 Comp.', m500: 'Avançar 2 Comp.' };
+            if(score <= 3.4) return { label: 'Nível 3-', class: 'sub-l3-minus', gap: (3.400001 - score), nextTarget: 3.4, m100: 'Avançar 4 Comp.', m300: 'Avançar 5 Comp.', m500: 'Avançar 6 Comp.' };
+            if(score <= 3.55) return { label: 'Nível 3', class: 'sub-l3', gap: (3.5500001 - score), nextTarget: 3.55, m100: 'Avançar 4 Comp.', m300: 'Avançar 5 Comp.', m500: 'Avançar 6 Comp.' };
+            if(score <= 3.7) return { label: 'Nível 3+', class: 'sub-l3-plus', gap: (3.700001 - score), nextTarget: 3.7, m100: 'Manter Nível 3', m300: 'Avançar 1 Comp.', m500: 'Avançar 2 Comp.' };
             
-            if(score <= 3.8) return { label: 'Nível 4-', class: 'sub-l4-minus', gap: (3.800001 - score), nextTarget: 3.800001, m100: 'Manter Nível 4', m300: 'Avançar 1 Comp.', m500: 'Avançar 2 Comp.' };
+            if(score <= 3.8) return { label: 'Nível 4-', class: 'sub-l4-minus', gap: (3.800001 - score), nextTarget: 3.8, m100: 'Manter Nível 4', m300: 'Avançar 1 Comp.', m500: 'Avançar 2 Comp.' };
             return { label: 'Nível 4', class: 'sub-l4', gap: 0, nextTarget: 4.0, m100: 'Manter Nível 4', m300: 'Avançar 1 Comp.', m500: 'Avançar 2 Comp.' };
         }
 
@@ -1114,17 +1072,23 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
 
             document.getElementById('mainContainer').scrollTop = 0;
 
-            // setTimeout ensures the display:block has rendered before chart JS tries to calculate widths
             setTimeout(() => {
-                if (pageId === 'page-visao' && chartInstances.dist) {
-                    chartInstances.dist.resize(); chartInstances.dist.update();
-                    if(chartInstances.miniMetas) { chartInstances.miniMetas.resize(); chartInstances.miniMetas.update(); }
+                try {
+                    if (pageId === 'page-visao' && chartInstances.dist) {
+                        chartInstances.dist.resize(); chartInstances.dist.update();
+                        if(chartInstances.miniMetas) { chartInstances.miniMetas.resize(); chartInstances.miniMetas.update(); }
+                    }
+                    if (pageId === 'page-regua' && chartInstances.regua) { chartInstances.regua.resize(); chartInstances.regua.update(); }
+                    if (pageId === 'page-mapa' && chartInstances.radar) { chartInstances.radar.resize(); chartInstances.radar.update(); }
+                    if (pageId === 'page-cluster' && chartInstances.cluster) { 
+                        chartInstances.cluster.resize(); 
+                        updateClusters(); 
+                    }
+                    if (pageId === 'page-metas' && chartInstances.metasDoughnut) { chartInstances.metasDoughnut.resize(); chartInstances.metasDoughnut.update(); }
+                } catch(e) {
+                    console.error("Erro no redimensionamento de gráficos:", e);
                 }
-                if (pageId === 'page-regua' && chartInstances.regua) { chartInstances.regua.resize(); chartInstances.regua.update(); }
-                if (pageId === 'page-mapa' && chartInstances.radar) { chartInstances.radar.resize(); chartInstances.radar.update(); }
-                if (pageId === 'page-cluster' && chartInstances.cluster) { chartInstances.cluster.resize(); chartInstances.cluster.update(); }
-                if (pageId === 'page-metas' && chartInstances.metasDoughnut) { chartInstances.metasDoughnut.resize(); chartInstances.metasDoughnut.update(); }
-            }, 50);
+            }, 100);
         }
 
         function toggleDropdown(id) {
@@ -1140,7 +1104,6 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             }
         });
 
-        // NOVAS FUNÇÕES DOS FILTROS (Visual Checked por Padrão)
         function renderMultiSelects() {
             const listEst = document.getElementById('listEstados');
             listEst.innerHTML = '';
@@ -1255,8 +1218,6 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
         }
 
         function loadData() {
-            // Converter tabulações em vírgulas antes de passar para o PapaParse
-            // Previne falhas se o texto vier com tabs
             let cleanedCSV = RAW_CSV_DATA.replace(/\t/g, ',');
             cleanedCSV = cleanedCSV.replace(/"/g, ''); 
 
@@ -1291,8 +1252,6 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
 
             let actualGroup = 'mob';
             rawData.forEach(row => {
-                // CORREÇÃO 1: Lemos estritamente a 1ª coluna para definir a mudança de bloco (GESC, GEDU, MOB).
-                // Isso evita que a palavra "Mobilização" dentro da C5 de GESC mude o grupo acidentalmente.
                 let firstCol = (row[0] || '').toString().toUpperCase().trim();
                 
                 if (firstCol.includes('GESTÃO EDUCACIONAL') || firstCol.includes('GESTAO EDUCACIONAL') || firstCol.includes('GEDU')) actualGroup = 'gedu';
@@ -1300,11 +1259,9 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                 else if (firstCol.includes('MOBILIZAÇÃO SOCIAL') || firstCol.includes('MOBILIZACAO SOCIAL') || firstCol.includes('MOB -')) actualGroup = 'mob';
 
                 let colStr = row.slice(0, 4).join(' ').toUpperCase();
-                let normStr = colStr.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Remove acentos (ex: COMPETÊNCIA -> COMPETENCIA)
+                let normStr = colStr.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
                 let metric = null;
-                // CORREÇÃO 2: Validação Dupla e Ignorar Linhas de Média. 
-                // Procura tanto pela sigla "C1" quanto pelo texto "COMPETENCIA 1" no novo formato.
                 if (colStr.match(/\bC1\b/) || normStr.includes('COMPETENCIA 1')) metric = actualGroup + '_c1';
                 else if (colStr.match(/\bC2\b/) || normStr.includes('COMPETENCIA 2')) metric = actualGroup + '_c2';
                 else if (colStr.match(/\bC3\b/) || normStr.includes('COMPETENCIA 3')) metric = actualGroup + '_c3';
@@ -1339,7 +1296,6 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             cities.forEach(city => {
                 city.uf = ufMap[city.municipio] || 'Outro';
                 
-                // Cálculo Matemático Rigoroso da Média a partir das competências puras
                 let sumGedu = 0, countGedu = 0;
                 for(let i=1; i<=8; i++) { if(city['gedu_c'+i] > 0) { sumGedu += city['gedu_c'+i]; countGedu++; } }
                 city.gedu = countGedu > 0 ? sumGedu / countGedu : 0;
@@ -1368,17 +1324,14 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             currentViewFrente = 'mob';
             document.getElementById('radarTitleBadge').innerText = 'Frente Atual: Mobilização Social';
             
-            // Força a aplicação de filtros e atualização de toda a UI de imediato no boot
             applyFilters();
             
-            // Ativa e desenha a primeira aba de forma robusta
             switchPage('page-visao');
             setTimeout(() => {
                 updateExecutiveView();
             }, 100);
         }
 
-        // LÓGICA REATIVA 
         function applyFilters() {
             let ufs = Array.from(document.querySelectorAll('.chk-estado')).filter(cb => cb.checked).map(cb => cb.value);
             let muns = Array.from(document.querySelectorAll('.chk-municipio')).filter(cb => cb.checked).map(cb => cb.value);
@@ -1392,13 +1345,11 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                 return matchUf && matchMun;
             });
 
-            // Refresh UI Core elements
             updateKPIs();
             updateExecutiveView(); 
             updateReguaTable(); 
             updateMetasTab();
             
-            // Header e renderização das tabelas/gráficos
             changeViewFrente(currentViewFrente);
             
             updateRecommendationEngine();
@@ -1409,11 +1360,9 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             const numMun = currentData.length;
             document.getElementById('kpiOpMun').innerText = numMun;
 
-            // Verifica qual métrica está selecionada no dropdown
             const rankMetricSelect = document.getElementById('rankingFrenteSelect');
             const rankMetric = rankMetricSelect ? rankMetricSelect.value : 'geral';
 
-            // Ordena usando a métrica escolhida, ignorando zeros (sem dados)
             let sortedData = [...currentData].filter(d => d[rankMetric] > 0).sort((a, b) => b[rankMetric] - a[rankMetric]);
             
             const listTop = document.getElementById('listTopDestaques');
@@ -1421,7 +1370,6 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             listTop.innerHTML = '';
             listBottom.innerHTML = '';
 
-            // Top 3
             sortedData.slice(0, 3).forEach((item, idx) => {
                 let li = `<li class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
                     <span class="text-sm font-bold text-slate-700"><span class="text-pve-green mr-1">${idx+1}º</span> ${item.municipio} (${item.uf})</span>
@@ -1430,7 +1378,6 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                 listTop.innerHTML += li;
             });
 
-            // Bottom 3
             [...sortedData].reverse().slice(0, 3).forEach((item, idx) => {
                 let li = `<li class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
                     <span class="text-sm font-bold text-slate-700"><span class="text-pve-red mr-1">▼</span> ${item.municipio} (${item.uf})</span>
@@ -1444,7 +1391,6 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                listBottom.innerHTML = '<li class="text-xs text-slate-400">Sem dados</li>';
             }
 
-            // Atualiza os textos explicativos dependendo da frente
             const topDesc = document.getElementById('topDescText');
             const bottomDesc = document.getElementById('bottomDescText');
             if (topDesc && bottomDesc) {
@@ -1546,9 +1492,9 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             if (lowestComp !== '' && lowestCompIndex !== -1) {
                 let compId = `${currentViewFrente}_c${lowestCompIndex + 1}`;
                 let textoGargalo = insightsPedagogicos[compId] ? insightsPedagogicos[compId].gargalo : 'Foco principal das próximas formações.';
-                let statusColor = lowestVal < 2.5 ? 'red' : 'amber';
-                let icon = lowestVal < 2.5 ? 'ph-warning-octagon' : 'ph-warning';
-                let alertText = lowestVal < 2.5 ? 'Prioridade Crítica de Ação' : 'Ponto de Atenção';
+                let statusColor = lowestVal <= 2.5 ? 'red' : 'amber';
+                let icon = lowestVal <= 2.5 ? 'ph-warning-octagon' : 'ph-warning';
+                let alertText = lowestVal <= 2.5 ? 'Prioridade Crítica de Ação' : 'Ponto de Atenção';
 
                 html += `
                 <div class="bg-${statusColor}-50 border-l-4 border-${statusColor}-500 p-3 rounded-r-lg shadow-sm">
@@ -1593,10 +1539,10 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             let hasCritico = false; let hasAtencao = false;
 
             allScores.forEach(item => {
-                if (item.nota < 2.5) {
+                if (item.nota <= 2.5) {
                     ulCritico.innerHTML += `<li class="flex justify-between items-center bg-white p-2 rounded border border-red-100 shadow-sm"><span class="text-xs font-bold text-slate-700">${item.nome}</span> <span class="bg-red-100 text-red-700 text-xs font-bold px-2 py-0.5 rounded">${item.nota.toFixed(2)}</span></li>`;
                     hasCritico = true;
-                } else if (item.nota >= 2.5 && item.nota < 3.0) {
+                } else if (item.nota > 2.5 && item.nota <= 3.25) {
                     ulAtencao.innerHTML += `<li class="flex justify-between items-center bg-white p-2 rounded border border-amber-100 shadow-sm"><span class="text-xs font-bold text-slate-700">${item.nome}</span> <span class="bg-amber-100 text-amber-700 text-xs font-bold px-2 py-0.5 rounded">${item.nota.toFixed(2)}</span></li>`;
                     hasAtencao = true;
                 }
@@ -1606,9 +1552,6 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             if (!hasAtencao) ulAtencao.innerHTML = '<li class="text-sm text-slate-400 italic py-1">Nenhuma competência em atenção nesta seleção.</li>';
         }
 
-        // ==========================================
-        // GERAÇÃO DE PROMPT PROFISSIONAL
-        // ==========================================
         function generatePrompt() {
             const promptContainer = document.getElementById('promptContainer');
 
@@ -1640,8 +1583,8 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             prompt += `O meu objetivo é desenhar uma estratégia de intervenção e uma pauta formativa de alto impacto para ${munText}.\n\n`;
             prompt += `Através da nossa ferramenta de diagnóstico e do Mapa de Competências, identificámos as seguintes lacunas de maturidade que exigem ação imediata na próxima formação:\n`;
             
-            if (criticos.length > 0) prompt += `\n🔴 PRIORIDADE CRÍTICA (Nível Frágil - Notas < 2.5 - Foco principal da intervenção):\n- ${criticos.join('\n- ')}\n`;
-            if (atencao.length > 0) prompt += `\n🟡 PONTOS DE ATENÇÃO (Em Consolidação - Notas 2.5 a 2.9 - Necessitam reforço contínuo):\n- ${atencao.join('\n- ')}\n`;
+            if (criticos.length > 0) prompt += `\n🔴 PRIORIDADE CRÍTICA (Nível Frágil - Notas <= 2.5 - Foco principal da intervenção):\n- ${criticos.join('\n- ')}\n`;
+            if (atencao.length > 0) prompt += `\n🟡 PONTOS DE ATENÇÃO (Em Consolidação - Notas 2.51 a 3.25 - Necessitam reforço contínuo):\n- ${atencao.join('\n- ')}\n`;
             
             prompt += `\nCom base nestes evidências, por favor, construa uma proposta detalhada contendo:\n\n`;
             prompt += `1. OBJETIVO DA FORMAÇÃO: Um parágrafo inspirador e diretamente alinhado com a resolução das fragilidades apontadas.\n`;
@@ -1674,10 +1617,6 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             }, 3000);
         }
 
-        // ==========================================
-        // GERAÇÃO DE TOOLTIPS INTELIGENTES 
-        // Agora usamos NATIVE TITLE para evitar cortes de interface overflow-x
-        // ==========================================
         function generateTooltip(mText, cityComps) {
             if (mText.includes('Manter')) return "Foco sugerido:\nManutenção das práticas consolidadas e compartilhamento de experiências.";
             
@@ -1786,17 +1725,15 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                 
                 const subInfo = getSubLevelInfo(row.geral);
 
-                // Lógica de contagem baseada na média geral (Nível 1 e 2 = Alta Intensidade)
                 let effortColor = 'bg-slate-50 text-slate-600';
-                if (row.geral > 0 && row.geral < 3.25) {
+                if (row.geral > 0 && row.geral <= 3.25) {
                     effortColor = 'bg-amber-50 text-amber-700 font-bold'; 
                     countAltaIntensidade++;
-                } else if (row.geral >= 3.25) {
+                } else if (row.geral > 3.25) {
                     effortColor = 'bg-emerald-50 text-emerald-700 font-bold'; 
                     countRefinamento++;
                 }
 
-                // Criação do Array de Competências do Município para o Tooltip Inteligente
                 const cityComps = [];
                 for(let i=1; i<=8; i++) {
                     if(row[`gesc_c${i}`] > 0) cityComps.push({name: `GESC C${i}`, val: row[`gesc_c${i}`]});
@@ -1805,9 +1742,8 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                 for(let i=1; i<=5; i++) {
                     if(row[`mob_c${i}`] > 0) cityComps.push({name: `MOB C${i}`, val: row[`mob_c${i}`]});
                 }
-                cityComps.sort((a,b) => a.val - b.val); // Ordena das piores para as melhores
+                cityComps.sort((a,b) => a.val - b.val);
 
-                // Utilização do Título Nativo para evitar problemas de limite de área HTML
                 const tooltip100 = generateTooltip(subInfo.m100, cityComps);
                 const tooltip300 = generateTooltip(subInfo.m300, cityComps);
                 const tooltip500 = generateTooltip(subInfo.m500, cityComps);
@@ -1830,12 +1766,10 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                 tbody.appendChild(tr);
             });
 
-            // Atualização dos Indicadores de Topo
             document.getElementById('metaTotalMun').innerText = currentData.length;
             document.getElementById('metaAltaIntensidade').innerText = countAltaIntensidade;
             document.getElementById('metaRefinamento').innerText = countRefinamento;
 
-            // Atualização do Gráfico Doughnut e Texto de Resumo com Try/Catch
             try {
                 if (chartInstances.metasDoughnut) {
                     chartInstances.metasDoughnut.data.datasets[0].data = [countAltaIntensidade, countRefinamento];
@@ -1884,7 +1818,6 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
         function initCharts() {
             Chart.defaults.font.family = "'Inter', sans-serif";
             Chart.defaults.color = '#475569';
-            // Configurar DataLabels globalmente (evita erros em outros gráficos)
             if(Chart.defaults.plugins.datalabels) {
                 Chart.defaults.plugins.datalabels.display = false; 
             }
@@ -1934,7 +1867,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                 options: {
                     responsive: true, maintainAspectRatio: false,
                     indexAxis: 'y',
-                    layout: { padding: { right: 350, top: 10, bottom: 10 } }, // Margem extra grande para não cortar os rótulos de texto
+                    layout: { padding: { right: 350, top: 10, bottom: 10 } },
                     scales: { 
                         x: { beginAtZero: true, grid: {borderDash: [4,4]}, title: {display: true, text: 'Nº Municípios'}, ticks: { precision: 0 } }, 
                         y: { grid: {display: false}, ticks: {font: {weight: 'bold', size: 12}} } 
@@ -1968,7 +1901,6 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                                 let currentLine = "";
                                 for(let i=0; i<names.length; i++){
                                     let sep = (i === names.length -1) ? "" : ", ";
-                                    // Aumentado para 55 caracteres por linha para evitar cortes agressivos
                                     if((currentLine + names[i] + sep).length > 55) {
                                         lines.push(currentLine.trim());
                                         currentLine = names[i] + sep;
@@ -2079,10 +2011,10 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             chartInstances.cluster.options.scales.y.title.text = selectY.options[selectY.selectedIndex].text;
 
             const clusters = {
-                fragil: { label: 'Nível 1: Frágil (< 2.5)', color: 'rgba(239, 68, 68, 0.7)', border: '#B91C1C', data: [] },
-                cons: { label: 'Nível 2: Em Consolidação (2.5 - 2.9)', color: 'rgba(245, 158, 11, 0.7)', border: '#B45309', data: [] },
-                consolidado: { label: 'Nível 3: Consolidado (3.0 - 3.4)', color: 'rgba(16, 185, 129, 0.7)', border: '#047857', data: [] },
-                robusto: { label: 'Nível 4: Robusto (≥ 3.5)', color: 'rgba(59, 130, 246, 0.7)', border: '#1D4ED8', data: [] }
+                fragil: { label: 'Nível 1: Frágil (≤ 2.50)', color: 'rgba(239, 68, 68, 0.7)', border: '#B91C1C', data: [] },
+                cons: { label: 'Nível 2: Em Consolidação (2.51 - 3.25)', color: 'rgba(245, 158, 11, 0.7)', border: '#B45309', data: [] },
+                consolidado: { label: 'Nível 3: Consolidado (3.26 - 3.70)', color: 'rgba(16, 185, 129, 0.7)', border: '#047857', data: [] },
+                robusto: { label: 'Nível 4: Robusto (> 3.70)', color: 'rgba(59, 130, 246, 0.7)', border: '#1D4ED8', data: [] }
             };
 
             currentData.forEach(row => {
@@ -2092,9 +2024,9 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                     let bubbleBase = valX.includes('mob') ? parseFloat(row.mob) : (valX.includes('gesc') ? parseFloat(row.gesc) : parseFloat(row.gedu));
                     const point = { x: x, y: y, r: Math.max(5, bubbleBase * 4), municipio: row.municipio };
                     
-                    if(bubbleBase < 2.5) clusters.fragil.data.push(point);
-                    else if(bubbleBase < 3.0) clusters.cons.data.push(point);
-                    else if(bubbleBase < 3.5) clusters.consolidado.data.push(point);
+                    if(bubbleBase <= 2.5) clusters.fragil.data.push(point);
+                    else if(bubbleBase <= 3.25) clusters.cons.data.push(point);
+                    else if(bubbleBase <= 3.7) clusters.consolidado.data.push(point);
                     else clusters.robusto.data.push(point);
                 }
             });
@@ -2120,9 +2052,9 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                     ['gedu', 'gesc', 'mob'].forEach((frente, idx) => {
                         const score = row[frente];
                         if(score > 0) {
-                            if(score < 2.5) levels.fragil.data[idx]++;
-                            else if(score < 3.0) levels.cons.data[idx]++;
-                            else if(score < 3.5) levels.consolidado.data[idx]++;
+                            if(score <= 2.5) levels.fragil.data[idx]++;
+                            else if(score <= 3.25) levels.cons.data[idx]++;
+                            else if(score <= 3.7) levels.consolidado.data[idx]++;
                             else levels.robusto.data[idx]++;
                         }
                     });
@@ -2190,7 +2122,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
                     {
                         label: labelSelection,
                         data: avgSelection,
-                        fill: true, backgroundColor: 'rgba(0, 139, 69, 0.15)', borderColor: '#008B45', /* PVE Green */
+                        fill: true, backgroundColor: 'rgba(0, 139, 69, 0.15)', borderColor: '#008B45',
                         pointBackgroundColor: '#008B45', pointBorderColor: '#fff', borderWidth: 3, order: 1
                     },
                     {
