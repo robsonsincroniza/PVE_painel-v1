@@ -526,7 +526,7 @@
                                     <th class="py-3 px-4 text-center">MOB</th>
                                     <th class="py-3 px-4 text-center bg-slate-200">MÉDIA GERAL</th>
                                     <th class="py-3 px-4 text-center bg-slate-200 border-l border-white">SUBNÍVEL ATUAL</th>
-                                    <th class="py-3 px-4 text-center bg-slate-200">GAP para próximo subnível</th>
+                                    <th class="py-3 px-4 text-center bg-slate-200">GAP para próximo subnível </th>
                                 </tr>
                             </thead>
                             <tbody id="reguaBody" class="text-slate-700 font-medium">
@@ -553,7 +553,7 @@
                         <strong>Objetivo desta página:</strong> Cruzar dados de diferentes frentes para identificar padrões de comportamento (clusters) entre os municípios. O gráfico de dispersão ajuda a visualizar rapidamente quem precisa de apoio integrado em áreas específicas.
                     </p>
                     <p class="text-xs text-slate-700 leading-relaxed">
-                        <strong>Motor de Priorização e IA:</strong> Com base nos eixos selecionados no gráfico, o motor analisa as competências com as menores notas e as consolida. O botão "Gerar Comando para IA" cria uma instrução rica e detalhada para colar no Gemini, gerando uma sugestão de agenda prática e dinâmicas adequadas de forma segura.
+                        <strong>Motor de Priorização e IA:</strong> Com base nos eixos selecionados no gráfico, o motor analisa as competências com as menores notas e as consolida. O botão "Gerar Comando para IA" cria uma instrução rica e detalhada para colar no seu ChatGPT ou Gemini, gerando uma sugestão de agenda prática e dinâmicas adequadas de forma segura.
                     </p>
                 </div>
 
@@ -588,8 +588,7 @@
                             </div>
                         </div>
                         <div class="p-6 flex-1 flex flex-col">
-                            <!-- Chart height forced to display correctly -->
-                            <div class="chart-container relative w-full flex-1" style="height: 350px; min-height: 350px;">
+                            <div class="chart-container h-72 md:h-80 flex-1">
                                 <canvas id="chartClustering"></canvas>
                             </div>
                             <div class="mt-4 border-t border-slate-100 pt-4">
@@ -644,7 +643,7 @@
                         <div id="promptContainer" class="hidden p-5 bg-pve-greenLight border-t border-green-200 flex flex-col">
                             <div class="flex justify-between items-center mb-3">
                                 <label class="text-[11px] font-bold text-pve-greenDark uppercase tracking-widest flex items-center">
-                                    <i class="ph-fill ph-robot mr-1 text-lg"></i> Copie o texto abaixo e cole no Gemini:
+                                    <i class="ph-fill ph-robot mr-1 text-lg"></i> Copie o texto abaixo e cole no seu ChatGPT/Gemini:
                                 </label>
                                 <button onclick="document.getElementById('promptContainer').classList.add('hidden')" class="text-slate-400 hover:text-slate-600"><i class="ph-bold ph-x"></i></button>
                             </div>
@@ -723,7 +722,8 @@
                                 <p class="text-xs text-slate-500 mt-1">Cálculo gerado automaticamente segundo a tabela oficial do PVE IV BNDES. <br><strong class="text-amber-600">Dica: Passe o mouse por cima das metas para ver as competências sugeridas para foco.</strong></p>
                             </div>
                         </div>
-                        <div class="overflow-x-auto max-h-[400px] pb-32"> <!-- Padding bottom extra para tooltips da ultima linha -->
+                        <div class="overflow-x-auto max-h-[400px]"> 
+                            <!-- Z-index relative prevents clipping of tooltips on normal usage, but native title is even better -->
                             <table class="min-w-full text-sm relative z-10">
                                 <thead class="sticky top-0 z-20 shadow-sm">
                                     <tr class="bg-pve-blueDark text-white uppercase text-[10px] font-bold tracking-wider leading-normal">
@@ -884,7 +884,7 @@
                 
                 <div class="border-l-4 border-blue-400 pl-4 mb-6">
                     <h2 class="text-2xl font-bold text-slate-900">Como usar o Painel PVE</h2>
-                    <p class="mt-1 text-slate-600">Um guia rápido e visual para extrair o máximo do Painel.</p>
+                    <p class="mt-1 text-slate-600">Um guia rápido e visual para extrair o máximo de inteligência da sua plataforma.</p>
                 </div>
 
                 <!-- Filtros Globais Destaque -->
@@ -949,7 +949,7 @@
                         <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">Área de planejamento de formações. Cruze indicadores para encontrar padrões de comportamento nas redes.</p>
                         <div class="bg-amber-50 p-3 rounded border border-amber-200 text-xs text-amber-800 shadow-sm relative overflow-hidden">
                             <div class="absolute -right-2 -top-2 w-8 h-8 bg-amber-200 rounded-full opacity-50"></div>
-                            <strong><i class="ph-fill ph-magic-wand mr-1"></i> Dica:</strong> Use o botão "Gerar Comando para IA". O painel redige sozinho um texto profissional para você colar no Gemini para ele criar a pauta de formação!(Importante analisar e validar o prompt sugerido e adequar para o contexto)
+                            <strong><i class="ph-fill ph-magic-wand mr-1"></i> Dica de Ouro:</strong> Use o botão "Gerar Comando para IA". O painel redige sozinho um texto profissional para você colar no ChatGPT e criar sua pauta de formação!
                         </div>
                     </div>
 
@@ -962,7 +962,7 @@
                         <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">O tradutor oficial das regras do BNDES para o próximo ciclo (Alta Intensidade vs Refinamento).</p>
                         <div class="bg-amber-50 p-3 rounded border border-amber-200 text-xs text-amber-800 shadow-sm relative overflow-hidden">
                             <div class="absolute -right-2 -top-2 w-8 h-8 bg-amber-200 rounded-full opacity-50"></div>
-                            <strong><i class="ph-fill ph-lightbulb mr-1"></i> Dica:</strong> Na tabela, passe o mouse sobre os textos das Metas (ex: "Avançar 5 Comp."). Uma caixa abrirá listando os focos exatos para aquele local!
+                            <strong><i class="ph-fill ph-lightbulb mr-1"></i> Dica de Ouro:</strong> Na tabela, passe o mouse sobre os textos das Metas (ex: "Avançar 5 Comp."). Uma caixa abrirá listando os focos exatos para aquele local!
                         </div>
                     </div>
 
@@ -972,7 +972,7 @@
                             <i class="ph-fill ph-book-open-text"></i>
                         </div>
                         <h4 class="font-bold text-slate-800 text-lg mb-2">6. Legendas da Matriz</h4>
-                        <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">Biblioteca de consulta rápida em caso de dúvida sobre conceitos do programa PVE.</p>
+                        <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">A sua biblioteca de consulta rápida em caso de dúvida sobre conceitos do programa PVE.</p>
                         <div class="bg-slate-50 p-3 rounded border border-slate-100 text-xs text-slate-700">
                             <strong>Destaque:</strong> Contém os significados práticos de todas as 21 competências e as explicações formais sobre os níveis de maturidade.
                         </div>
@@ -1066,8 +1066,7 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
             'page-mapa': 'Diagnóstico & Raio-X',
             'page-cluster': 'Trilhas & Clusters',
             'page-metas': 'Projeção de Metas 2026',
-            'page-legendas': 'Glossário e Legendas',
-            'page-tutorial': 'Como usar o painel'
+            'page-legendas': 'Glossário e Legendas'
         };
 
         function getLevelInfo(score) {
@@ -1117,22 +1116,15 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
 
             // setTimeout ensures the display:block has rendered before chart JS tries to calculate widths
             setTimeout(() => {
-                try {
-                    if (pageId === 'page-visao' && chartInstances.dist) {
-                        chartInstances.dist.resize(); chartInstances.dist.update();
-                        if(chartInstances.miniMetas) { chartInstances.miniMetas.resize(); chartInstances.miniMetas.update(); }
-                    }
-                    if (pageId === 'page-regua' && chartInstances.regua) { chartInstances.regua.resize(); chartInstances.regua.update(); }
-                    if (pageId === 'page-mapa' && chartInstances.radar) { chartInstances.radar.resize(); chartInstances.radar.update(); }
-                    if (pageId === 'page-cluster' && chartInstances.cluster) { 
-                        chartInstances.cluster.resize(); 
-                        updateClusters(); // Força o redesenho específico das bolhas ao entrar
-                    }
-                    if (pageId === 'page-metas' && chartInstances.metasDoughnut) { chartInstances.metasDoughnut.resize(); chartInstances.metasDoughnut.update(); }
-                } catch(e) {
-                    console.error("Erro no redimensionamento de gráficos:", e);
+                if (pageId === 'page-visao' && chartInstances.dist) {
+                    chartInstances.dist.resize(); chartInstances.dist.update();
+                    if(chartInstances.miniMetas) { chartInstances.miniMetas.resize(); chartInstances.miniMetas.update(); }
                 }
-            }, 100);
+                if (pageId === 'page-regua' && chartInstances.regua) { chartInstances.regua.resize(); chartInstances.regua.update(); }
+                if (pageId === 'page-mapa' && chartInstances.radar) { chartInstances.radar.resize(); chartInstances.radar.update(); }
+                if (pageId === 'page-cluster' && chartInstances.cluster) { chartInstances.cluster.resize(); chartInstances.cluster.update(); }
+                if (pageId === 'page-metas' && chartInstances.metasDoughnut) { chartInstances.metasDoughnut.resize(); chartInstances.metasDoughnut.update(); }
+            }, 50);
         }
 
         function toggleDropdown(id) {
@@ -1299,35 +1291,34 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
 
             let actualGroup = 'mob';
             rawData.forEach(row => {
-                let r0 = (row[0] || '').toString().toUpperCase().trim();
-                if (r0 === 'GESTÃO EDUCACIONAL' || r0.includes('GEDU -')) actualGroup = 'gedu';
-                else if (r0 === 'GESTÃO ESCOLAR' || r0.includes('GESC -')) actualGroup = 'gesc';
-                else if (r0 === 'MOBILIZAÇÃO SOCIAL' || r0.includes('MOB -')) actualGroup = 'mob';
+                // CORREÇÃO 1: Lemos estritamente a 1ª coluna para definir a mudança de bloco (GESC, GEDU, MOB).
+                // Isso evita que a palavra "Mobilização" dentro da C5 de GESC mude o grupo acidentalmente.
+                let firstCol = (row[0] || '').toString().toUpperCase().trim();
+                
+                if (firstCol.includes('GESTÃO EDUCACIONAL') || firstCol.includes('GESTAO EDUCACIONAL') || firstCol.includes('GEDU')) actualGroup = 'gedu';
+                else if (firstCol.includes('GESTÃO ESCOLAR') || firstCol.includes('GESTAO ESCOLAR') || firstCol.includes('GESC')) actualGroup = 'gesc';
+                else if (firstCol.includes('MOBILIZAÇÃO SOCIAL') || firstCol.includes('MOBILIZACAO SOCIAL') || firstCol.includes('MOB -')) actualGroup = 'mob';
 
                 let colStr = row.slice(0, 4).join(' ').toUpperCase();
+                let normStr = colStr.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Remove acentos (ex: COMPETÊNCIA -> COMPETENCIA)
+
                 let metric = null;
-                
-                if (row[0] === 'Gestão educacional' && (!row[1] || row[1]==='')) metric = 'gedu';
-                else if (row[0] === 'Gestão escolar' && (!row[1] || row[1]==='')) metric = 'gesc';
-                else if (row[0] === 'Mobilização social' && (!row[1] || row[1]==='')) metric = 'mob';
-                else if (colStr.includes('GEDU - MÉDIA')) metric = 'gedu';
-                else if (colStr.includes('GESC - MÉDIA')) metric = 'gesc';
-                else if (colStr.includes('MOB - MÉDIA')) metric = 'mob';
-                else if (colStr.includes('GERAL')) metric = 'geral'; 
-                else {
-                    for(let c=0; c<=5; c++) {
-                        let cell = (row[c] || '').toString().toUpperCase().trim();
-                        let match = cell.match(/^C([1-8])$/);
-                        if (match) { metric = actualGroup + '_c' + match[1]; break; }
-                    }
-                }
+                // CORREÇÃO 2: Validação Dupla e Ignorar Linhas de Média. 
+                // Procura tanto pela sigla "C1" quanto pelo texto "COMPETENCIA 1" no novo formato.
+                if (colStr.match(/\bC1\b/) || normStr.includes('COMPETENCIA 1')) metric = actualGroup + '_c1';
+                else if (colStr.match(/\bC2\b/) || normStr.includes('COMPETENCIA 2')) metric = actualGroup + '_c2';
+                else if (colStr.match(/\bC3\b/) || normStr.includes('COMPETENCIA 3')) metric = actualGroup + '_c3';
+                else if (colStr.match(/\bC4\b/) || normStr.includes('COMPETENCIA 4')) metric = actualGroup + '_c4';
+                else if (colStr.match(/\bC5\b/) || normStr.includes('COMPETENCIA 5')) metric = actualGroup + '_c5';
+                else if (colStr.match(/\bC6\b/) || normStr.includes('COMPETENCIA 6')) metric = actualGroup + '_c6';
+                else if (colStr.match(/\bC7\b/) || normStr.includes('COMPETENCIA 7')) metric = actualGroup + '_c7';
+                else if (colStr.match(/\bC8\b/) || normStr.includes('COMPETENCIA 8')) metric = actualGroup + '_c8';
 
                 if (metric) {
                     cities.forEach(city => {
                         let val = row[city.index];
                         if (val !== undefined && val !== null && val !== '') {
-                            if (typeof val === 'string') val = val.replace(',', '.');
-                            let num = parseFloat(val);
+                            let num = parseFloat(val.toString().replace(',', '.'));
                             if (!isNaN(num)) city[metric] = num;
                         }
                     });
@@ -1347,15 +1338,25 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
 
             cities.forEach(city => {
                 city.uf = ufMap[city.municipio] || 'Outro';
-                if (city.mob === 0 && city.mob_c1 > 0) city.mob = (city.mob_c1 + city.mob_c2 + city.mob_c3 + city.mob_c4 + city.mob_c5) / 5;
                 
-                if(city.geral === 0 && city.gedu > 0) {
-                    let sum = 0, count = 0;
-                    if(city.gedu > 0) { sum+=city.gedu; count++; }
-                    if(city.gesc > 0) { sum+=city.gesc; count++; }
-                    if(city.mob > 0) { sum+=city.mob; count++; }
-                    city.geral = count > 0 ? sum / count : 0;
-                }
+                // Cálculo Matemático Rigoroso da Média a partir das competências puras
+                let sumGedu = 0, countGedu = 0;
+                for(let i=1; i<=8; i++) { if(city['gedu_c'+i] > 0) { sumGedu += city['gedu_c'+i]; countGedu++; } }
+                city.gedu = countGedu > 0 ? sumGedu / countGedu : 0;
+
+                let sumGesc = 0, countGesc = 0;
+                for(let i=1; i<=8; i++) { if(city['gesc_c'+i] > 0) { sumGesc += city['gesc_c'+i]; countGesc++; } }
+                city.gesc = countGesc > 0 ? sumGesc / countGesc : 0;
+
+                let sumMob = 0, countMob = 0;
+                for(let i=1; i<=5; i++) { if(city['mob_c'+i] > 0) { sumMob += city['mob_c'+i]; countMob++; } }
+                city.mob = countMob > 0 ? sumMob / countMob : 0;
+
+                let sumGeral = 0, countGeral = 0;
+                if(city.gedu > 0) { sumGeral += city.gedu; countGeral++; }
+                if(city.gesc > 0) { sumGeral += city.gesc; countGeral++; }
+                if(city.mob > 0) { sumGeral += city.mob; countGeral++; }
+                city.geral = countGeral > 0 ? sumGeral / countGeral : 0;
             });
 
             dbData = cities;
@@ -2209,5 +2210,3 @@ Mobilização social,Competência 1 - Conhecimento,C1,,2.50,2.51,3.31,3.13,3.11,
     </script>
 </body>
 </html>
-
-
