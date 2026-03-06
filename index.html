@@ -18,13 +18,13 @@
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
-    <!-- Marked.js (Para converter o Markdown da IA em HTML visível) -->
+    <!-- Marked.js -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Configuração de Cores Personalizadas Tailwind (IDV PVE) -->
+    <!-- Configuração de Cores Personalizadas Tailwind -->
     <script>
         tailwind.config = {
             theme: {
@@ -93,9 +93,9 @@
             border-bottom-width: 0px;
             margin-bottom: 12px; 
             background: #eff6ff;
-            border: 1px solid #008B45; /* PVE Green */
+            border: 1px solid #008B45; 
             box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1);
-            color: #008B45; /* PVE Green */
+            color: #008B45; 
         }
 
         /* Custom Dropdown Multi-select */
@@ -121,7 +121,7 @@
         .checkbox-label:hover { background-color: #f1f5f9; }
         .checkbox-input {
             width: 1.1rem; height: 1.1rem; margin-right: 0.5rem; border-radius: 0.25rem;
-            border: 1px solid #cbd5e1; cursor: pointer; accent-color: #008B45; /* PVE Green */
+            border: 1px solid #cbd5e1; cursor: pointer; accent-color: #008B45; 
         }
 
         .heatmap-cell { position: relative; z-index: 1; }
@@ -150,8 +150,8 @@
 </head>
 <body class="flex h-screen bg-slate-50">
 
-    <!-- SIDEBAR (Com fundo Azul Escuro PVE) -->
-    <aside class="w-64 bg-pve-blueDark text-slate-300 flex flex-col flex-shrink-0 z-20 shadow-xl relative overflow-y-auto">
+    <!-- SIDEBAR -->
+    <aside class="w-64 bg-slate-900 text-slate-300 flex flex-col flex-shrink-0 z-20 shadow-xl relative overflow-y-auto">
         <div class="h-16 flex items-center px-6 border-b border-white/10 bg-pve-blueDarker shrink-0">
             <i class="ph-fill ph-chart-polar text-pve-yellow text-2xl mr-2"></i>
             <span class="text-white font-bold text-lg tracking-wide">PVE Gestão</span>
@@ -181,15 +181,13 @@
                     <span class="font-medium text-sm">Projeção de Metas</span>
                 </button>
 
-                <div class="h-px bg-white/10 my-4 mx-2"></div> <!-- Linha Separadora -->
+                <div class="h-px bg-white/10 my-4 mx-2"></div>
 
-                <!-- BOTÃO LEGENDAS -->
                 <button id="nav-page-legendas" onclick="switchPage('page-legendas')" class="nav-link w-full flex items-center px-4 py-3 text-slate-300 hover:bg-white/10 hover:text-white rounded-lg group transition-colors">
                     <i class="ph ph-book-open-text text-xl mr-3 group-hover:text-pve-yellow transition-colors"></i>
                     <span class="font-medium text-sm">Legendas da Matriz</span>
                 </button>
 
-                <!-- NOVO BOTÃO COMO USAR O PAINEL -->
                 <button id="nav-page-tutorial" onclick="switchPage('page-tutorial')" class="nav-link w-full flex items-center px-4 py-3 text-slate-300 hover:bg-white/10 hover:text-white rounded-lg group transition-colors">
                     <i class="ph ph-info text-xl mr-3 group-hover:text-blue-400 transition-colors"></i>
                     <span class="font-medium text-sm">Como usar o painel</span>
@@ -212,7 +210,6 @@
     <!-- ÁREA PRINCIPAL -->
     <div class="flex-1 flex flex-col h-screen overflow-hidden">
         
-        <!-- HEADER COM LOGO E TÍTULO (Topo) -->
         <div class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between z-30 flex-shrink-0 shadow-sm relative">
             <div class="flex items-center h-12">
                 <img src="https://raw.githubusercontent.com/robsonsincroniza/PVE_painel-v1/main/image%20(31).png" alt="Logo PVE" class="max-h-full object-contain" onerror="this.style.display='none'; document.getElementById('logo-fallback-top').classList.remove('hidden');">
@@ -223,11 +220,9 @@
             <h1 id="pageTitle" class="text-xl font-bold text-slate-800 hidden sm:block">Visão Executiva</h1>
         </div>
         
-        <!-- BARRA DE FILTROS -->
         <header class="bg-slate-50 border-b border-slate-200 px-6 py-3 flex flex-wrap items-center gap-4 z-20 flex-shrink-0 relative">
             <span class="text-sm font-semibold text-slate-600 flex items-center"><i class="ph ph-funnel mr-2 text-lg"></i> Filtros Ativos:</span>
             
-            <!-- Dropdown Estado -->
             <div class="custom-select-wrapper" id="wrapperEstado">
                 <div class="custom-select-button" onclick="toggleDropdown('dropdownEstado')">
                     <span id="labelEstado" class="truncate">Estado: Todos</span>
@@ -241,7 +236,6 @@
                 </div>
             </div>
 
-            <!-- Dropdown Municipio -->
             <div class="custom-select-wrapper" id="wrapperMunicipio">
                 <div class="custom-select-button" onclick="toggleDropdown('dropdownMunicipio')">
                     <span id="labelMunicipio" class="truncate">Município: Todos</span>
@@ -267,9 +261,7 @@
                     <p class="mt-1 text-slate-600">Acompanhamento do impacto, esforço da rede e atingimento de metas do PVE.</p>
                 </div>
 
-                <!-- Linha 1 - Operação e Impacto -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Impacto: IDEB -->
                     <div class="bg-gradient-to-br from-pve-orange to-pve-red rounded-xl shadow-md p-6 text-white flex flex-col justify-center relative overflow-hidden">
                         <i class="ph-fill ph-student absolute -right-4 -top-4 text-7xl text-white opacity-10"></i>
                         <span class="text-orange-200 text-xs font-bold uppercase tracking-wider">Métrica de Impacto Final</span>
@@ -280,7 +272,6 @@
                         <span class="text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider bg-white/20 border border-white/30 inline-block w-max">Foco na Aprendizagem</span>
                     </div>
                     
-                    <!-- Operação: Municípios -->
                     <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-center">
                         <span class="text-slate-400 text-xs font-bold uppercase tracking-widest flex items-center">
                             <i class="ph-fill ph-map-pin mr-2 text-pve-orange text-lg"></i> Municípios Analisados
@@ -292,7 +283,6 @@
                     </div>
                 </div>
 
-                <!-- CARDS (Médias da Matriz) -->
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col items-center justify-center hover:shadow-md transition">
                         <span class="text-slate-400 text-[11px] font-bold uppercase tracking-widest">Média Global PVE</span>
@@ -316,7 +306,6 @@
                     </div>
                 </div>
 
-                <!-- Gráfico de Distribuição & Mini Metas -->
                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
                     <div class="xl:col-span-2 bg-white rounded-xl shadow-sm p-6 md:p-8 border border-slate-200 flex flex-col">
                         <div class="mb-4 border-b border-slate-100 pb-4">
@@ -331,18 +320,16 @@
                     <div class="xl:col-span-1 bg-white rounded-xl shadow-sm p-6 md:p-8 border border-slate-200 flex flex-col">
                         <div class="mb-4 border-b border-slate-100 pb-4">
                             <h3 class="text-lg font-bold text-slate-800">Termômetro de Metas 2026</h3>
-                            <p class="text-xs text-slate-500 leading-relaxed mt-1">Proporção de municípios categorizados pelo esforço exigido para atingir a Meta 100.</p>
+                            <p class="text-xs text-slate-500 leading-relaxed mt-1">Proporção de municípios categorizados pelo esforço exigido para atingir a Meta 500.</p>
                         </div>
                         <div class="chart-container relative w-full flex-1" style="height: 250px; min-height: 250px;">
                             <canvas id="chartMiniMetas"></canvas>
                         </div>
                         <div id="miniMetasSummary" class="mt-4 text-center text-sm font-medium text-slate-600 bg-slate-50 p-3 rounded border border-slate-100">
-                            <!-- Preenchido via JS -->
                         </div>
                     </div>
                 </div>
 
-                <!-- Top Rankings Rápidos com Filtro Integrado -->
                 <div class="col-span-1 md:col-span-2 flex flex-col sm:flex-row justify-between items-start sm:items-end border-b border-slate-200 pb-3 mt-8 mb-2 gap-4">
                     <div>
                         <h3 class="text-xl font-bold text-slate-800">Rankings de Desempenho</h3>
@@ -359,17 +346,13 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-emerald-100 border-t-4 border-t-pve-green">
                         <h3 class="font-bold text-slate-800 mb-2 flex items-center"><i class="ph-fill ph-trophy mr-2 text-pve-green text-xl"></i> Top 3: Destaques da Seleção</h3>
-                        <p id="topDescText" class="text-[11px] text-slate-500 mb-4 leading-relaxed">Municípios com as <strong>maiores médias gerais</strong>. Podem atuar como referências de boas práticas.</p>
-                        <ul id="listTopDestaques" class="space-y-1">
-                            <!-- Preenchido via JS -->
-                        </ul>
+                        <p id="topDescText" class="text-[11px] text-slate-500 mb-4 leading-relaxed">Municípios com as maiores médias.</p>
+                        <ul id="listTopDestaques" class="space-y-1"></ul>
                     </div>
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-rose-100 border-t-4 border-t-pve-red">
                         <h3 class="font-bold text-slate-800 mb-2 flex items-center"><i class="ph-fill ph-warning-octagon mr-2 text-pve-red text-xl"></i> Top 3: Atenção Crítica</h3>
-                        <p id="bottomDescText" class="text-[11px] text-slate-500 mb-4 leading-relaxed">Municípios com as <strong>menores médias gerais</strong>. Exigem acompanhamento prioritário e suporte intensivo.</p>
-                        <ul id="listTopCriticos" class="space-y-1">
-                            <!-- Preenchido via JS -->
-                        </ul>
+                        <p id="bottomDescText" class="text-[11px] text-slate-500 mb-4 leading-relaxed">Municípios com as menores médias.</p>
+                        <ul id="listTopCriticos" class="space-y-1"></ul>
                     </div>
                 </div>
 
@@ -383,7 +366,6 @@
                     <p class="mt-1 text-slate-600">Diagnóstico aprofundado com visualização completa de todas as competências avaliadas.</p>
                 </div>
 
-                <!-- Bloco de Contexto Estratégico (Mapa & Raio-X) -->
                 <div class="bg-amber-50 border border-amber-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
                     <h4 class="text-sm font-bold text-amber-800 mb-2 flex items-center">
                         <i class="ph-fill ph-info mr-2 text-lg"></i> Entenda o Mapa de Calor e o Raio-X
@@ -396,7 +378,6 @@
                     </p>
                 </div>
 
-                <!-- Tabela Heatmap -->
                 <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden pb-4">
                     <div class="p-6 border-b border-slate-100 bg-slate-50 flex flex-col gap-6">
                         
@@ -437,7 +418,6 @@
                     </div>
                 </div>
 
-                <!-- Gráfico de Radar + Painel de Diagnóstico Descritivo -->
                 <div class="bg-white rounded-xl shadow-lg border border-slate-200 mt-8 overflow-hidden">
                     <div class="p-6 border-b border-slate-100 bg-slate-50 flex flex-wrap justify-between items-center gap-4">
                         <h3 class="text-xl font-bold text-slate-800">Raio-X: Perfil da Seleção vs Média Nacional</h3>
@@ -447,19 +427,17 @@
                     </div>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-0">
-                        <!-- Chart Area -->
                         <div class="lg:col-span-2 p-6 md:p-8 border-b lg:border-b-0 lg:border-r border-slate-200">
                             <div class="chart-container h-[350px] md:h-[450px]">
                                 <canvas id="chartRadar"></canvas>
                             </div>
                         </div>
                         
-                        <!-- Insights de Texto Dinâmicos & Interpretativos -->
                         <div class="lg:col-span-1 bg-white p-6 md:p-8 flex flex-col">
                             <h4 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1">Interpretação de Resultados</h4>
                             <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">O que significa este recorte selecionado?</p>
                             
-                            <div id="radarInsightContent" class="space-y-4 flex-1">
+                            <div id="radarInsightContent" class="space-y-4 flex-1 mt-4">
                                 <!-- Preenchido via JS -->
                             </div>
                         </div>
@@ -476,42 +454,20 @@
                     <p class="mt-1 text-slate-600">Acompanhamento detalhado das faixas de maturidade para direcionar metas específicas.</p>
                 </div>
 
-                <!-- Bloco de Contexto Estratégico (Régua de Maturidade) -->
                 <div class="bg-emerald-50 border border-emerald-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
                     <h4 class="text-sm font-bold text-emerald-800 mb-2 flex items-center">
                         <i class="ph-fill ph-info mr-2 text-lg"></i> Entenda a Régua de Maturidade e os Microavanços
                     </h4>
                     <p class="text-xs text-slate-700 leading-relaxed mb-2">
-                        <strong>Objetivo desta página:</strong> Dar visibilidade ao esforço real do município através dos "microavanços". Muitas vezes, um território evolui consideravelmente na sua pontuação, mas mantém-se na mesma cor macro (Nível 1, 2, 3 ou 4). Esta régua revela essa evolução e esforço oculto.
+                        <strong>Objetivo desta página:</strong> Dar visibilidade ao esforço real do município através dos "microavanços". Muitas vezes, um território evolui consideravelmente na sua pontuação, mas mantém-se na mesma cor macro (Nível 1, 2, 3 ou 4). Esta régua de 11 faixas revela essa evolução e esforço oculto.
                     </p>
                     <p class="text-xs text-slate-700 leading-relaxed">
-                        <strong>Como utilizar:</strong> O gráfico lista o posicionamento exato de todos os municípios da seleção. A tabela abaixo calcula o "Gap" matemático para o próximo subnível. Gestores podem usar esta visão para encorajar municípios que estão a poucos décimos de bater a meta.
+                        <strong>Como utilizar:</strong> A tabela abaixo calcula o "Gap" exato (a distância em pontos numéricos) para o próximo subnível. Gestores podem e devem usar esta visão para encorajar municípios que estão a poucos décimos de bater a meta e desenhar intervenções mais agressivas e acompanhamento próximo para aqueles que estão estagnados.
                     </p>
                 </div>
 
-                <!-- Gráfico Detalhado de Distribuição -->
-                <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
-                    <div class="p-6 border-b border-slate-100 bg-slate-50">
-                        <h3 class="font-bold text-slate-800 text-lg">Distribuição Detalhada (Subníveis)</h3>
-                        <p class="text-xs text-slate-500 mt-1">Onde os municípios da seleção atual estão alocados com base na Média Geral.</p>
-                    </div>
-                    <div class="p-6">
-                        <div class="chart-container h-[800px]">
-                            <canvas id="chartRegua"></canvas>
-                        </div>
-                    </div>
-                    
-                    <!-- Régua Visual Explicativa -->
-                    <div class="bg-pve-blueDark p-4 flex flex-col md:flex-row text-center text-[10px] font-bold text-white uppercase tracking-wider">
-                        <div class="flex-1 border-r border-white/20 p-2"><span class="block text-red-400 mb-1">Nível 1 (Frágil)</span> 1- (≤1.5) | 1 (≤2.0) | 1+ (≤2.5)</div>
-                        <div class="flex-1 border-r border-white/20 p-2"><span class="block text-pve-yellow mb-1">Nível 2 (Em Consolidação)</span> 2- (≤2.75) | 2 (≤3.0) | 2+ (≤3.25)</div>
-                        <div class="flex-1 border-r border-white/20 p-2"><span class="block text-emerald-400 mb-1">Nível 3 (Consolidado)</span> 3- (≤3.4) | 3 (≤3.55) | 3+ (≤3.7)</div>
-                        <div class="flex-1 p-2"><span class="block text-blue-300 mb-1">Nível 4 (Robusto)</span> 4- (≤3.8) | 4 (>3.8)</div>
-                    </div>
-                </div>
-
-                <!-- Tabela de Acompanhamento e Gaps -->
-                <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden mt-8">
+                <!-- Tabela ACIMA do Gráfico -->
+                <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden mb-8">
                     <div class="p-6 border-b border-slate-100 bg-slate-50">
                         <h3 class="font-bold text-slate-800 text-lg">Acompanhamento e Distância para Próxima Meta</h3>
                         <p class="text-xs text-slate-500 mt-1">Verifique a pontuação exata de cada município e quanto falta para saltar para o próximo subnível.</p>
@@ -535,6 +491,26 @@
                         </table>
                     </div>
                 </div>
+
+                <!-- Gráfico ABAIXO da Tabela -->
+                <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
+                    <div class="p-6 border-b border-slate-100 bg-slate-50">
+                        <h3 class="font-bold text-slate-800 text-lg">Distribuição Detalhada (Subníveis)</h3>
+                        <p class="text-xs text-slate-500 mt-1">Onde os municípios da seleção atual estão alocados com base na Média Geral.</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="chart-container h-[550px]">
+                            <canvas id="chartRegua"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-pve-blueDark p-4 flex flex-col md:flex-row text-center text-[10px] font-bold text-white uppercase tracking-wider">
+                        <div class="flex-1 border-r border-white/20 p-2"><span class="block text-red-400 mb-1">Nível 1 (Frágil)</span> 1- (1.0) | 1 (1.5) | 1+ (2.0)</div>
+                        <div class="flex-1 border-r border-white/20 p-2"><span class="block text-pve-yellow mb-1">Nível 2 (Em Consolidação)</span> 2- (2.5) | 2 (2.75) | 2+ (3.0)</div>
+                        <div class="flex-1 border-r border-white/20 p-2"><span class="block text-emerald-400 mb-1">Nível 3 (Consolidado)</span> 3- (3.25) | 3 (3.4) | 3+ (3.55)</div>
+                        <div class="flex-1 p-2"><span class="block text-blue-300 mb-1">Nível 4 (Robusto)</span> 4- (3.7) | 4 (3.8 a 4.0)</div>
+                    </div>
+                </div>
             </div>
 
             <!-- PÁGINA 4: CLUSTERIZAÇÃO & TRILHAS -->
@@ -544,22 +520,17 @@
                     <p class="mt-1 text-slate-600">Cruze quaisquer competências e descubra exatamente o que exige ação imediata.</p>
                 </div>
 
-                <!-- Bloco de Contexto Estratégico (Trilhas & Clusters) -->
                 <div class="bg-blue-50 border border-blue-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
                     <h4 class="text-sm font-bold text-blue-800 mb-2 flex items-center">
                         <i class="ph-fill ph-info mr-2 text-lg"></i> Entenda a Inteligência de Trilhas e Clusters
                     </h4>
                     <p class="text-xs text-slate-700 leading-relaxed mb-2">
-                        <strong>Objetivo desta página:</strong> Cruzar dados de diferentes frentes para identificar padrões de comportamento (clusters) entre os municípios. O gráfico de dispersão ajuda a visualizar rapidamente quem precisa de apoio integrado em áreas específicas.
-                    </p>
-                    <p class="text-xs text-slate-700 leading-relaxed">
-                        <strong>Motor de Priorização e IA:</strong> Com base nos eixos selecionados no gráfico, o motor analisa as competências com as menores notas e as consolida. O botão "Gerar Comando para IA" cria uma instrução rica e detalhada para colar no seu ChatGPT ou Gemini, gerando uma sugestão de agenda prática e dinâmicas adequadas de forma segura.
+                        <strong>Motor de Priorização e IA:</strong> Com base nos eixos selecionados no gráfico, o motor analisa as competências com as menores notas e as consolida. O botão "Gerar Comando para IA" cria uma instrução rica e detalhada para colar no seu ChatGPT ou Gemini.
                     </p>
                 </div>
 
                 <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
                     
-                    <!-- Bubble Chart -->
                     <div class="bg-white rounded-xl shadow-lg border border-slate-200 flex flex-col">
                         <div class="p-5 border-b border-slate-100 bg-slate-50">
                             <div class="mb-4">
@@ -572,7 +543,7 @@
                                     <select id="selEixoX" class="w-full text-xs border border-slate-300 rounded-lg px-2 py-2 focus:ring-pve-green focus:border-pve-green bg-white font-medium shadow-sm" onchange="updateClusters()">
                                         <optgroup label="Médias Gerais"><option value="gesc">Média Gestão Escolar (GESC)</option><option value="gedu">Média Gestão Educ. (GEDU)</option><option value="mob" selected>Média Mobilização (MOB)</option></optgroup>
                                         <optgroup label="Gestão Escolar (GESC)"><option value="gesc_c1">C1 - Processos de gestão</option><option value="gesc_c2">C2 - Registro e doc.</option><option value="gesc_c3">C3 - Acompanhamento aprend.</option><option value="gesc_c4">C4 - Equipe colaborativa</option><option value="gesc_c5">C5 - Parcerias/Mobilização</option><option value="gesc_c6">C6 - Articulação de redes</option><option value="gesc_c7">C7 - Formação continuada</option><option value="gesc_c8">C8 - Gestão de recursos</option></optgroup>
-                                        <optgroup label="Gestão Educacional (GEDU)"><option value="gedu_c1">C1 - Processos de gestão</option><option value="gedu_c2">C2 - Registro e doc.</option><option value="gedu_c3">C3 - Acompanhamento aprend.</option><option value="gedu_c4">C4 - Equipe colaborativa</option><option value="gedu_c5">C5 - Parcerias/Mobilização</option><option value="gedu_c6">C6 - Articulação de redes</option><option value="gedu_c7">C7 - Formação continuada</option><option value="gedu_c8">C8 - Gestão de recursos</option></optgroup>
+                                        <optgroup label="Gestão Educacional (GEDU)"><option value="gedu_c1">C1 - Processos de gestão</option><option value="gedu_c2">C2 - Registro e doc.</option><option value="gedu_c3">C3 - Acompanhamento aprend.</option><option value="gedu_c4">C4 - Equipe colaborativa</option><option value="gedu_c5">C5 - Parcerias/Mobilização</option><option value="gesc_c6">C6 - Articulação de redes</option><option value="gedu_c7">C7 - Formação continuada</option><option value="gedu_c8">C8 - Gestão de recursos</option></optgroup>
                                         <optgroup label="Mobilização Social (MOB)"><option value="mob_c1">C1 - Conhecimento</option><option value="mob_c2">C2 - Atitude</option><option value="mob_c3">C3 - Estrutura</option><option value="mob_c4">C4 - Vitalidade</option><option value="mob_c5">C5 - Cobertura</option></optgroup>
                                     </select>
                                 </div>
@@ -581,14 +552,13 @@
                                     <select id="selEixoY" class="w-full text-xs border border-slate-300 rounded-lg px-2 py-2 focus:ring-pve-green focus:border-pve-green bg-white font-medium shadow-sm" onchange="updateClusters()">
                                         <optgroup label="Médias Gerais"><option value="gedu">Média Gestão Educ. (GEDU)</option><option value="gesc" selected>Média Gestão Escolar (GESC)</option><option value="mob">Média Mobilização (MOB)</option></optgroup>
                                         <optgroup label="Gestão Escolar (GESC)"><option value="gesc_c1">C1 - Processos de gestão</option><option value="gesc_c2">C2 - Registro e doc.</option><option value="gesc_c3">C3 - Acompanhamento aprend.</option><option value="gesc_c4">C4 - Equipe colaborativa</option><option value="gesc_c5">C5 - Parcerias/Mobilização</option><option value="gesc_c6">C6 - Articulação de redes</option><option value="gesc_c7">C7 - Formação continuada</option><option value="gesc_c8">C8 - Gestão de recursos</option></optgroup>
-                                        <optgroup label="Gestão Educacional (GEDU)"><option value="gedu_c1">C1 - Processos de gestão</option><option value="gedu_c2">C2 - Registro e doc.</option><option value="gedu_c3">C3 - Acompanhamento aprend.</option><option value="gedu_c4">C4 - Equipe colaborativa</option><option value="gedu_c5">C5 - Parcerias/Mobilização</option><option value="gedu_c6">C6 - Articulação de redes</option><option value="gedu_c7">C7 - Formação continuada</option><option value="gedu_c8">C8 - Gestão de recursos</option></optgroup>
+                                        <optgroup label="Gestão Educacional (GEDU)"><option value="gedu_c1">C1 - Processos de gestão</option><option value="gedu_c2">C2 - Registro e doc.</option><option value="gedu_c3">C3 - Acompanhamento aprend.</option><option value="gedu_c4">C4 - Equipe colaborativa</option><option value="gedu_c5">C5 - Parcerias/Mobilização</option><option value="gesc_c6">C6 - Articulação de redes</option><option value="gedu_c7">C7 - Formação continuada</option><option value="gedu_c8">C8 - Gestão de recursos</option></optgroup>
                                         <optgroup label="Mobilização Social (MOB)"><option value="mob_c1">C1 - Conhecimento</option><option value="mob_c2">C2 - Atitude</option><option value="mob_c3">C3 - Estrutura</option><option value="mob_c4">C4 - Vitalidade</option><option value="mob_c5">C5 - Cobertura</option></optgroup>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="p-6 flex-1 flex flex-col">
-                            <!-- Chart height forced to display correctly -->
                             <div class="chart-container h-72 md:h-80 flex-1">
                                 <canvas id="chartClustering"></canvas>
                             </div>
@@ -624,18 +594,7 @@
                             </div>
                         </div>
                         
-                        <!-- GERAÇÃO DE PROMPT -->
                         <div class="p-5 bg-white border-t border-slate-200 flex flex-col items-center">
-                            <div class="mb-4 w-full">
-                                <p class="text-sm font-bold text-slate-800 mb-1 text-center">Assistente Pedagógico</p>
-                                <p class="text-xs text-slate-500 text-center leading-relaxed mb-3">
-                                    Gere automaticamente um comando (prompt) estruturado com base nos gargalos críticos identificados acima.
-                                </p>
-                                <div class="bg-amber-50 border border-amber-200 text-amber-800 text-[11px] p-3 rounded-lg text-left flex items-start shadow-sm">
-                                    <i class="ph-fill ph-warning-circle text-amber-500 text-base mr-2 shrink-0"></i>
-                                    <p class="leading-relaxed"><strong>Nota:</strong> Este prompt é uma <strong>sugestão inicial</strong>. Revise e adapte o conteúdo e as diretrizes à realidade específica do seu território antes de usá-lo em ferramentas como ChatGPT ou Gemini.</p>
-                                </div>
-                            </div>
                             <button onclick="generatePrompt()" class="w-full bg-pve-green text-white px-4 py-3 rounded-lg text-sm font-bold uppercase tracking-wide hover:bg-pve-greenDark transition-colors shadow-md flex justify-center items-center">
                                 <i class="ph-bold ph-magic-wand mr-2"></i> Gerar Comando para IA (Prompt)
                             </button>
@@ -658,299 +617,211 @@
                 </div>
             </div>
 
-            <!-- ========================================== -->
             <!-- PÁGINA 5: METAS DE AVANÇO 2026 -->
-            <!-- ========================================== -->
             <div id="page-metas" class="page-section space-y-8 hidden fade-update">
-                
                 <div class="border-l-4 border-pve-blueDark pl-4 mb-4">
-                    <h2 class="text-2xl font-bold text-slate-900">Projeção de Metas 2026</h2>
-                    <p class="mt-1 text-slate-600">Direcionamento estratégico e expectativa de avanço (Metas 100, 300, 500) por município.</p>
+                    <h2 class="text-2xl font-bold text-slate-900">Projeção de Metas 2026 (Foco: Meta 500)</h2>
+                    <p class="mt-1 text-slate-600">Direcionamento estratégico e expectativa de avanço global. <strong>O esforço é focado no número total de competências que devem mudar de nível oficial nas três frentes.</strong></p>
                 </div>
                 
-                <!-- Bloco de Contexto Estratégico -->
                 <div class="bg-blue-50 border border-blue-100 p-4 md:p-5 rounded-lg mb-6 shadow-sm">
                     <h4 class="text-sm font-bold text-pve-blueDark mb-2 flex items-center">
                         <i class="ph-fill ph-info mr-2 text-lg"></i> Entenda a Projeção de Metas
                     </h4>
                     <p class="text-xs text-slate-700 leading-relaxed mb-2">
-                        <strong>Objetivo desta página:</strong> Traduzir o diagnóstico do ciclo anterior em um norte claro para a equipe formativa. Sabendo exatamente quantas competências cada município precisa avançar, o formador pode calibrar a intensidade do seu acompanhamento e do plano de ação.
+                        <strong>Objetivo desta página:</strong> Traduzir o diagnóstico do ciclo anterior em um norte claro para a equipe formativa, focando na <strong>Meta 500</strong> (parcela variável do contrato).
                     </p>
                     <p class="text-xs text-slate-700 leading-relaxed">
-                        <strong>Referência oficial:</strong> O cálculo segue as diretrizes metodológicas do <em>PVE IV BNDES</em>. A regra estabelece que municípios com maturidade menor (ex: Nível 2) possuem metas de <span class="text-amber-700 font-bold">alta intensidade</span> (avançar de 7 a 10 competências). Já os municípios mais consolidados (Níveis 3 e 4) possuem metas de <span class="text-emerald-700 font-bold">refinamento</span> (avançar poucas competências ou apenas focar na manutenção da excelência).
+                        <strong>Regra de Evolução:</strong> O avanço só é contabilizado quando uma competência muda de Nível Oficial (ex: de Nível 1 para 2, ultrapassando os 2.50). Por isso, as sugestões no quadro abaixo indicam não só as competências com piores notas, mas sim <strong>aquelas que estão mais próximas de atravessar a fronteira matemática do próximo nível</strong>.
                     </p>
                 </div>
 
-                <!-- Resumo Executivo das Metas -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div class="bg-white rounded-xl shadow-md p-6 border border-slate-100 flex flex-col justify-center">
                         <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-target text-slate-500 mr-2"></i> Municípios Analisados</h4>
                         <span id="metaTotalMun" class="text-4xl font-bold text-slate-800 mt-2">-</span>
-                        <p class="text-xs text-slate-500 mt-2">No recorte de filtros atual.</p>
                     </div>
-                    <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-pve-yellow flex flex-col justify-center">
-                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-arrow-circle-up text-pve-orange mr-2"></i> Alta Intensidade (Nível 1 e 2)</h4>
+                    <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-pve-orange flex flex-col justify-center">
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-arrow-circle-up text-pve-orange mr-2"></i> Alta Intensidade</h4>
                         <span id="metaAltaIntensidade" class="text-4xl font-bold text-pve-orange mt-2">-</span>
-                        <p class="text-xs text-slate-500 mt-2">Precisam de intervenção mais profunda no ciclo.</p>
+                        <p class="text-xs text-slate-500 mt-1">Precisam avançar entre 7 e 10 competências para atingir a Meta 500.</p>
                     </div>
                     <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-pve-green flex flex-col justify-center">
-                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-check-circle text-pve-green mr-2"></i> Refinamento (Nível 3 e 4)</h4>
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-check-circle text-pve-green mr-2"></i> Refinamento</h4>
                         <span id="metaRefinamento" class="text-4xl font-bold text-pve-greenDark mt-2">-</span>
-                        <p class="text-xs text-slate-500 mt-2">Foco em manutenção e saltos curtos.</p>
+                        <p class="text-xs text-slate-500 mt-1">Foco na manutenção ou avanços curtos (1 a 6 competências).</p>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
-                    <!-- Gráfico de Distribuição do Esforço -->
                     <div class="xl:col-span-1 bg-white rounded-xl shadow-lg border border-slate-200 p-6 flex flex-col">
                         <h3 class="font-bold text-lg text-slate-800 mb-1">Perfil de Esforço da Rede</h3>
-                        <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold mb-6">Distribuição com base na Meta 100</p>
-                        <!-- Altura forçada fixa para o gráfico renderizar sempre -->
+                        <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold mb-6">Distribuição com base na Meta 500</p>
                         <div class="chart-container relative w-full" style="height: 250px; min-height: 250px;">
                             <canvas id="chartMetasDoughnut"></canvas>
                         </div>
-                        <!-- Resumo Textual como Backup para falhas de renderização de telas curtas -->
-                        <div id="metasDoughnutSummary" class="mt-4 text-center text-sm font-medium text-slate-600 bg-slate-50 p-3 rounded border border-slate-100">
-                            <!-- Preenchido via JS -->
-                        </div>
+                        <div id="metasDoughnutSummary" class="mt-4 text-center text-sm font-medium text-slate-600 bg-slate-50 p-3 rounded border border-slate-100"></div>
                     </div>
 
-                    <!-- Tabela de Metas -->
                     <div class="xl:col-span-2 bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden flex flex-col">
                         <div class="p-6 border-b border-slate-100 bg-slate-50 flex justify-between items-center flex-wrap gap-4">
                             <div>
-                                <h3 class="font-bold text-slate-800 text-lg">Painel de Metas por Município</h3>
-                                <p class="text-xs text-slate-500 mt-1">Cálculo gerado automaticamente segundo a tabela oficial do PVE IV BNDES. <br><strong class="text-amber-600">Dica: Passe o mouse por cima das metas para ver as competências sugeridas para foco.</strong></p>
+                                <h3 class="font-bold text-slate-800 text-lg">Detalhamento de Metas por Município</h3>
+                                <p class="text-xs text-slate-500 mt-1"><strong class="text-pve-green">Passe o cursor sobre as metas</strong> para ver quais as competências mais fáceis de evoluir de nível e garantir a meta.</p>
                             </div>
                         </div>
                         <div class="overflow-x-auto max-h-[400px] pb-32"> 
-                            <!-- Z-index relative prevents clipping of tooltips on normal usage, but native title is even better -->
                             <table class="min-w-full text-sm relative z-10">
                                 <thead class="sticky top-0 z-20 shadow-sm">
                                     <tr class="bg-pve-blueDark text-white uppercase text-[10px] font-bold tracking-wider leading-normal">
                                         <th class="py-3 px-6 text-left border-r border-white/20">MUNICÍPIO (UF)</th>
-                                        <th class="py-3 px-4 text-center border-r border-white/20">NÍVEL ATUAL (2025)</th>
-                                        <th class="py-3 px-4 text-center bg-[#172554] border-r border-white/20">META 100</th>
-                                        <th class="py-3 px-4 text-center bg-[#172554] border-r border-white/20">META 300</th>
-                                        <th class="py-3 px-4 text-center bg-[#172554]">META 500</th>
+                                        <th class="py-3 px-4 text-center border-r border-white/20">NÍVEL ATUAL</th>
+                                        <th class="py-3 px-4 text-center bg-slate-100 text-slate-400 border-r border-white/20 font-medium">META 100</th>
+                                        <th class="py-3 px-4 text-center bg-slate-100 text-slate-400 border-r border-white/20 font-medium">META 300</th>
+                                        <th class="py-3 px-4 text-center bg-pve-green text-white font-black shadow-md text-xs border-b-4 border-pve-greenDark">META 500 🎯</th>
                                     </tr>
                                 </thead>
-                                <tbody id="metasBody" class="text-slate-700 font-medium">
-                                    <!-- Dynamic -->
-                                </tbody>
+                                <tbody id="metasBody" class="text-slate-700 font-medium"></tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-
             </div>
 
-            <!-- ========================================== -->
-            <!-- PÁGINA 6: LEGENDAS E GLOSSÁRIO -->
-            <!-- ========================================== -->
+            <!-- PÁGINA 6: LEGENDAS -->
             <div id="page-legendas" class="page-section space-y-8 hidden fade-update">
-                
                 <div class="border-l-4 border-pve-yellow pl-4 mb-4">
                     <h2 class="text-2xl font-bold text-slate-900">Glossário e Legendas da Matriz</h2>
                     <p class="mt-1 text-slate-600">Entenda o significado de cada competência avaliada e os critérios de projeção de metas do PVE.</p>
                 </div>
-
-                <!-- Bloco METAS E NÍVEIS MOVIDO PARA O TOPO E DETALHADO -->
+                
                 <div class="bg-white rounded-xl shadow-md border border-emerald-100 overflow-hidden border-t-4 border-t-pve-green mb-8">
                     <div class="bg-slate-50 border-b border-slate-200 p-4">
                         <h3 class="font-bold text-lg text-slate-800">Projeção de Metas & Maturidade Detalhada</h3>
                     </div>
                     <div class="p-6">
                         <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Níveis e Subníveis de Maturidade</h4>
-                        
-                        <!-- Estrutura visual dos Níveis de Maturidade COM OS 11 SUBNÍVEIS -->
                         <div class="grid grid-cols-1 gap-4 mb-6">
-                            
-                            <!-- MACRO NÍVEL 1 -->
                             <div class="p-4 bg-white border border-red-200 rounded-lg shadow-sm border-l-4 border-l-red-500">
                                 <div class="flex items-center mb-2">
                                     <span class="font-bold text-red-700 text-sm uppercase tracking-wider">Nível 1 (Frágil)</span>
                                     <span class="ml-2 text-[10px] bg-red-100 text-red-800 px-2 py-0.5 rounded font-semibold">Até 2.50</span>
                                 </div>
-                                <p class="text-xs text-slate-600 leading-relaxed mb-3">Reflete conhecimento inicial, sem práticas estabelecidas.</p>
                                 <div class="grid grid-cols-3 gap-2">
-                                    <div class="bg-red-50 border border-red-100 p-2 rounded text-center">
-                                        <span class="block text-[10px] font-bold text-red-800">Nível 1-</span>
-                                        <span class="block text-[9px] text-red-600">1.00 a 1.50</span>
-                                    </div>
-                                    <div class="bg-red-50 border border-red-100 p-2 rounded text-center">
-                                        <span class="block text-[10px] font-bold text-red-800">Nível 1</span>
-                                        <span class="block text-[9px] text-red-600">1.51 a 2.00</span>
-                                    </div>
-                                    <div class="bg-red-50 border border-red-100 p-2 rounded text-center">
-                                        <span class="block text-[10px] font-bold text-red-800">Nível 1+</span>
-                                        <span class="block text-[9px] text-red-600">2.01 a 2.50</span>
-                                    </div>
+                                    <div class="bg-red-50 border border-red-100 p-2 rounded text-center"><span class="block text-[10px] font-bold text-red-800">Nível 1-</span><span class="block text-[9px] text-red-600">1.00 a 1.50</span></div>
+                                    <div class="bg-red-50 border border-red-100 p-2 rounded text-center"><span class="block text-[10px] font-bold text-red-800">Nível 1</span><span class="block text-[9px] text-red-600">1.51 a 2.00</span></div>
+                                    <div class="bg-red-50 border border-red-100 p-2 rounded text-center"><span class="block text-[10px] font-bold text-red-800">Nível 1+</span><span class="block text-[9px] text-red-600">2.01 a 2.50</span></div>
                                 </div>
                             </div>
-
-                            <!-- MACRO NÍVEL 2 -->
                             <div class="p-4 bg-white border border-amber-200 rounded-lg shadow-sm border-l-4 border-l-amber-500">
                                 <div class="flex items-center mb-2">
                                     <span class="font-bold text-amber-700 text-sm uppercase tracking-wider">Nível 2 (Em Consolidação)</span>
                                     <span class="ml-2 text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">2.51 a 3.25</span>
                                 </div>
-                                <p class="text-xs text-slate-600 leading-relaxed mb-3">Indica conhecimento em progresso e rotinas ainda em construção.</p>
                                 <div class="grid grid-cols-3 gap-2">
-                                    <div class="bg-amber-50 border border-amber-100 p-2 rounded text-center">
-                                        <span class="block text-[10px] font-bold text-amber-800">Nível 2-</span>
-                                        <span class="block text-[9px] text-amber-600">2.51 a 2.75</span>
-                                    </div>
-                                    <div class="bg-amber-50 border border-amber-100 p-2 rounded text-center">
-                                        <span class="block text-[10px] font-bold text-amber-800">Nível 2</span>
-                                        <span class="block text-[9px] text-amber-600">2.76 a 3.00</span>
-                                    </div>
-                                    <div class="bg-amber-50 border border-amber-100 p-2 rounded text-center">
-                                        <span class="block text-[10px] font-bold text-amber-800">Nível 2+</span>
-                                        <span class="block text-[9px] text-amber-600">3.01 a 3.25</span>
-                                    </div>
+                                    <div class="bg-amber-50 border border-amber-100 p-2 rounded text-center"><span class="block text-[10px] font-bold text-amber-800">Nível 2-</span><span class="block text-[9px] text-amber-600">2.51 a 2.75</span></div>
+                                    <div class="bg-amber-50 border border-amber-100 p-2 rounded text-center"><span class="block text-[10px] font-bold text-amber-800">Nível 2</span><span class="block text-[9px] text-amber-600">2.76 a 3.00</span></div>
+                                    <div class="bg-amber-50 border border-amber-100 p-2 rounded text-center"><span class="block text-[10px] font-bold text-amber-800">Nível 2+</span><span class="block text-[9px] text-amber-600">3.01 a 3.25</span></div>
                                 </div>
                             </div>
-
-                            <!-- MACRO NÍVEL 3 -->
                             <div class="p-4 bg-white border border-emerald-200 rounded-lg shadow-sm border-l-4 border-l-emerald-500">
                                 <div class="flex items-center mb-2">
                                     <span class="font-bold text-emerald-700 text-sm uppercase tracking-wider">Nível 3 (Consolidado)</span>
                                     <span class="ml-2 text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-semibold">3.26 a 3.70</span>
                                 </div>
-                                <p class="text-xs text-slate-600 leading-relaxed mb-3">Reflete conhecimento pleno e práticas rotineiras estabelecidas.</p>
                                 <div class="grid grid-cols-3 gap-2">
-                                    <div class="bg-emerald-50 border border-emerald-100 p-2 rounded text-center">
-                                        <span class="block text-[10px] font-bold text-emerald-800">Nível 3-</span>
-                                        <span class="block text-[9px] text-emerald-600">3.26 a 3.40</span>
-                                    </div>
-                                    <div class="bg-emerald-50 border border-emerald-100 p-2 rounded text-center">
-                                        <span class="block text-[10px] font-bold text-emerald-800">Nível 3</span>
-                                        <span class="block text-[9px] text-emerald-600">3.41 a 3.55</span>
-                                    </div>
-                                    <div class="bg-emerald-50 border border-emerald-100 p-2 rounded text-center">
-                                        <span class="block text-[10px] font-bold text-emerald-800">Nível 3+</span>
-                                        <span class="block text-[9px] text-emerald-600">3.56 a 3.70</span>
-                                    </div>
+                                    <div class="bg-emerald-50 border border-emerald-100 p-2 rounded text-center"><span class="block text-[10px] font-bold text-emerald-800">Nível 3-</span><span class="block text-[9px] text-emerald-600">3.26 a 3.40</span></div>
+                                    <div class="bg-emerald-50 border border-emerald-100 p-2 rounded text-center"><span class="block text-[10px] font-bold text-emerald-800">Nível 3</span><span class="block text-[9px] text-emerald-600">3.41 a 3.55</span></div>
+                                    <div class="bg-emerald-50 border border-emerald-100 p-2 rounded text-center"><span class="block text-[10px] font-bold text-emerald-800">Nível 3+</span><span class="block text-[9px] text-emerald-600">3.56 a 3.70</span></div>
                                 </div>
                             </div>
-
-                            <!-- MACRO NÍVEL 4 -->
                             <div class="p-4 bg-white border border-blue-200 rounded-lg shadow-sm border-l-4 border-l-blue-500">
                                 <div class="flex items-center mb-2">
                                     <span class="font-bold text-blue-700 text-sm uppercase tracking-wider">Nível 4 (Robusto)</span>
                                     <span class="ml-2 text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-semibold">Acima de 3.70</span>
                                 </div>
-                                <p class="text-xs text-slate-600 leading-relaxed mb-3">Práticas avançadas, formalizadas e consistentes.</p>
                                 <div class="grid grid-cols-2 gap-2">
-                                    <div class="bg-blue-50 border border-blue-100 p-2 rounded text-center">
-                                        <span class="block text-[10px] font-bold text-blue-800">Nível 4-</span>
-                                        <span class="block text-[9px] text-blue-600">3.71 a 3.80</span>
-                                    </div>
-                                    <div class="bg-blue-50 border border-blue-100 p-2 rounded text-center">
-                                        <span class="block text-[10px] font-bold text-blue-800">Nível 4</span>
-                                        <span class="block text-[9px] text-blue-600">3.81 a 4.00</span>
-                                    </div>
+                                    <div class="bg-blue-50 border border-blue-100 p-2 rounded text-center"><span class="block text-[10px] font-bold text-blue-800">Nível 4-</span><span class="block text-[9px] text-blue-600">3.71 a 3.80</span></div>
+                                    <div class="bg-blue-50 border border-blue-100 p-2 rounded text-center"><span class="block text-[10px] font-bold text-blue-800">Nível 4</span><span class="block text-[9px] text-blue-600">3.81 a 4.00</span></div>
                                 </div>
                             </div>
-
                         </div>
 
-                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 border-t border-slate-100 pt-4">As Metas Contratuais (100, 300 e 500)</h4>
-                        <div class="space-y-3 text-sm text-slate-700">
-                            <p class="mb-2">O ciclo PVE é medido através de três marcos de evolução, variando conforme a nota inicial do município:</p>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
-                                <div class="p-3 bg-blue-50 border border-blue-200 rounded-md">
-                                    <strong class="text-blue-800 block mb-1">Meta 100 (Curto Prazo)</strong>
-                                    O primeiro marco de avanço esperado no ciclo. Foca em garantir que o município saia da inércia e conquiste as primeiras competências estruturantes.
-                                </div>
-                                <div class="p-3 bg-indigo-50 border border-indigo-200 rounded-md">
-                                    <strong class="text-indigo-800 block mb-1">Meta 300 (Médio Prazo)</strong>
-                                    O marco intermediário. Exige que as práticas implementadas na Meta 100 comecem a consolidar-se e a expandir para novas áreas da gestão e mobilização.
-                                </div>
-                                <div class="p-3 bg-violet-50 border border-violet-200 rounded-md">
-                                    <strong class="text-violet-800 block mb-1">Meta 500 (Atingimento Final)</strong>
-                                    O objetivo de excelência do ciclo. O município deve atingir o número máximo de competências acordadas no contrato BNDES para o seu perfil.
-                                </div>
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 border-t border-slate-100 pt-4">As Metas Contratuais</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2 text-sm">
+                            <div class="p-3 bg-blue-50 border border-blue-200 rounded-md">
+                                <strong class="text-blue-800 block mb-1">Meta 100</strong> Foca em garantir que o município saia da inércia e conquiste as primeiras competências estruturantes.
+                            </div>
+                            <div class="p-3 bg-indigo-50 border border-indigo-200 rounded-md">
+                                <strong class="text-indigo-800 block mb-1">Meta 300</strong> O marco intermediário para expandir para novas áreas da gestão e mobilização.
+                            </div>
+                            <div class="p-3 bg-violet-50 border border-violet-200 rounded-md">
+                                <strong class="text-violet-800 block mb-1">Meta 500</strong> O objetivo de excelência do ciclo (número máximo de competências acordadas).
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- BLOCOS GESC, GEDU, MOB -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    
-                    <!-- Bloco GESC -->
                     <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
                         <div class="bg-pve-blueDark text-white p-4 flex items-center">
-                            <i class="ph-fill ph-buildings text-2xl text-pve-yellow mr-3"></i>
-                            <h3 class="font-bold text-lg tracking-wide">Gestão Escolar (GESC)</h3>
+                            <i class="ph-fill ph-buildings text-2xl text-pve-yellow mr-3"></i><h3 class="font-bold text-lg tracking-wide">Gestão Escolar (GESC)</h3>
                         </div>
                         <div class="p-6">
                             <ul class="space-y-4 text-sm text-slate-700">
-                                <li><strong class="text-pve-blueDark">C1. Processos de Gestão:</strong> Qualidade do planejamento escolar e construção do Projeto Político Pedagógico (PPP).</li>
-                                <li><strong class="text-pve-blueDark">C2. Registro e Documentação:</strong> Sistematização das ações e estabelecimento de uma cultura baseada em evidências.</li>
-                                <li><strong class="text-pve-blueDark">C3. Acompanhamento das Aprendizagens:</strong> Monitoramento contínuo dos alunos e personalização de estratégias de ensino.</li>
-                                <li><strong class="text-pve-blueDark">C4. Equipe Colaborativa:</strong> Nível de delegação de tarefas, clima escolar e gestão democrática participativa.</li>
-                                <li><strong class="text-pve-blueDark">C5. Parcerias e Mobilização:</strong> Articulação da escola com atores do entorno (famílias, comércio, instituições).</li>
-                                <li><strong class="text-pve-blueDark">C6. Articulação de Redes:</strong> Alinhamento efetivo das ações da escola com as diretrizes da Secretaria de Educação.</li>
-                                <li><strong class="text-pve-blueDark">C7. Formação Continuada:</strong> Eficácia das Horas de Trabalho Pedagógico (HTPC) e suporte ao professor.</li>
-                                <li><strong class="text-pve-blueDark">C8. Gestão de Recursos:</strong> Otimização e transparência no uso de verbas, tempo, infraestrutura e materiais.</li>
+                                <li><strong class="text-pve-blueDark">C1. Processos de Gestão:</strong> Planejamento escolar (PPP).</li>
+                                <li><strong class="text-pve-blueDark">C2. Registro e Documentação:</strong> Sistematização e cultura de evidências.</li>
+                                <li><strong class="text-pve-blueDark">C3. Acompanhamento das Aprendizagens:</strong> Monitoramento contínuo dos alunos.</li>
+                                <li><strong class="text-pve-blueDark">C4. Equipe Colaborativa:</strong> Delegação, clima escolar e gestão democrática.</li>
+                                <li><strong class="text-pve-blueDark">C5. Parcerias e Mobilização:</strong> Articulação com atores do entorno.</li>
+                                <li><strong class="text-pve-blueDark">C6. Articulação de Redes:</strong> Alinhamento com a Secretaria de Educação.</li>
+                                <li><strong class="text-pve-blueDark">C7. Formação Continuada:</strong> HTPC e suporte ao professor.</li>
+                                <li><strong class="text-pve-blueDark">C8. Gestão de Recursos:</strong> Tempo, infraestrutura e materiais.</li>
                             </ul>
                         </div>
                     </div>
 
-                    <!-- Bloco GEDU -->
                     <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
                         <div class="bg-pve-blueDark text-white p-4 flex items-center">
-                            <i class="ph-fill ph-books text-2xl text-pve-yellow mr-3"></i>
-                            <h3 class="font-bold text-lg tracking-wide">Gestão Educacional (GEDU)</h3>
+                            <i class="ph-fill ph-books text-2xl text-pve-yellow mr-3"></i><h3 class="font-bold text-lg tracking-wide">Gestão Educacional (GEDU)</h3>
                         </div>
                         <div class="p-6">
                             <ul class="space-y-4 text-sm text-slate-700">
-                                <li><strong class="text-pve-blueDark">C1. Processos de Gestão:</strong> Planejamento estratégico e definição de metas de longo prazo da rede municipal.</li>
-                                <li><strong class="text-pve-blueDark">C2. Registro e Documentação:</strong> Preservação do histórico, formalização de normativas e automação de processos.</li>
-                                <li><strong class="text-pve-blueDark">C3. Acompanhamento das Aprendizagens:</strong> Existência e uso de avaliações diagnósticas em escala de rede.</li>
-                                <li><strong class="text-pve-blueDark">C4. Equipe Colaborativa:</strong> Sinergia e comunicação entre os diversos departamentos da Secretaria (quebra de silos).</li>
-                                <li><strong class="text-pve-blueDark">C5. Parcerias e Mobilização:</strong> Capacidade da rede em atrair apoios externos, financiamentos e consórcios.</li>
-                                <li><strong class="text-pve-blueDark">C6. Articulação de Redes:</strong> Capacidade de traduzir e implementar as políticas desenhadas na realidade das escolas.</li>
-                                <li><strong class="text-pve-blueDark">C7. Formação Continuada:</strong> Estruturação de um calendário formativo robusto e coerente com as necessidades docentes.</li>
-                                <li><strong class="text-pve-blueDark">C8. Gestão de Recursos:</strong> Eficiência técnica no gerenciamento do orçamento público, merenda escolar, frota e compras.</li>
+                                <li><strong class="text-pve-blueDark">C1. Processos de Gestão:</strong> Planejamento estratégico de longo prazo.</li>
+                                <li><strong class="text-pve-blueDark">C2. Registro e Documentação:</strong> Memória institucional e normativas.</li>
+                                <li><strong class="text-pve-blueDark">C3. Acompanhamento das Aprendizagens:</strong> Avaliações em escala de rede.</li>
+                                <li><strong class="text-pve-blueDark">C4. Equipe Colaborativa:</strong> Sinergia entre departamentos da Secretaria.</li>
+                                <li><strong class="text-pve-blueDark">C5. Parcerias e Mobilização:</strong> Captação de recursos e consórcios.</li>
+                                <li><strong class="text-pve-blueDark">C6. Articulação de Redes:</strong> Implementação das políticas nas escolas.</li>
+                                <li><strong class="text-pve-blueDark">C7. Formação Continuada:</strong> Calendário formativo docente.</li>
+                                <li><strong class="text-pve-blueDark">C8. Gestão de Recursos:</strong> Orçamento, merenda, transporte.</li>
                             </ul>
                         </div>
                     </div>
 
-                    <!-- Bloco MOB -->
                     <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden lg:col-span-2">
                         <div class="bg-pve-blueDark text-white p-4 flex items-center">
-                            <i class="ph-fill ph-users-three text-2xl text-pve-yellow mr-3"></i>
-                            <h3 class="font-bold text-lg tracking-wide">Mobilização Social (MOB)</h3>
+                            <i class="ph-fill ph-users-three text-2xl text-pve-yellow mr-3"></i><h3 class="font-bold text-lg tracking-wide">Mobilização Social (MOB)</h3>
                         </div>
                         <div class="p-6">
                             <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-700">
-                                <li><strong class="text-pve-blueDark block">C1. Conhecimento:</strong> Nível de mapeamento e compreensão sobre o território, suas vulnerabilidades e potencialidades.</li>
-                                <li><strong class="text-pve-blueDark block">C2. Atitude:</strong> Postura proativa, escuta ativa e grau de engajamento voluntário da comunidade na educação.</li>
-                                <li><strong class="text-pve-blueDark block">C3. Estrutura:</strong> Existência de rotinas formais, espaços de governança e ferramentas de comunicação estabelecidas.</li>
-                                <li><strong class="text-pve-blueDark block">C4. Vitalidade:</strong> Frequência das reuniões, ritmo das ações e capacidade de manter a motivação do grupo ao longo do tempo.</li>
-                                <li><strong class="text-pve-blueDark block">C5. Cobertura (Abrangência):</strong> Alcance prático das ações de mobilização (quantidade de públicos, bairros e escolas impactadas).</li>
+                                <li><strong class="text-pve-blueDark block">C1. Conhecimento:</strong> Mapeamento do território.</li>
+                                <li><strong class="text-pve-blueDark block">C2. Atitude:</strong> Proatividade e escuta ativa da comunidade.</li>
+                                <li><strong class="text-pve-blueDark block">C3. Estrutura:</strong> Rotinas formais e governança.</li>
+                                <li><strong class="text-pve-blueDark block">C4. Vitalidade:</strong> Frequência e ritmo de ações.</li>
+                                <li><strong class="text-pve-blueDark block">C5. Cobertura:</strong> Alcance prático e impacto social.</li>
                             </ul>
                         </div>
                     </div>
-
                 </div>
             </div>
 
-            <!-- ========================================== -->
-            <!-- PÁGINA 7: TUTORIAL / COMO USAR (ONBOARDING) -->
-            <!-- ========================================== -->
+            <!-- PÁGINA 7: TUTORIAL -->
             <div id="page-tutorial" class="page-section space-y-8 hidden fade-update">
-                
                 <div class="border-l-4 border-blue-400 pl-4 mb-6">
                     <h2 class="text-2xl font-bold text-slate-900">Como usar o Painel PVE</h2>
-                    <p class="mt-1 text-slate-600">Um guia rápido e visual para extrair o máximo de inteligência da sua plataforma.</p>
                 </div>
-
-                <!-- Filtros Globais Destaque -->
+                
                 <div class="bg-gradient-to-r from-slate-800 to-slate-700 rounded-xl shadow-lg p-6 md:p-8 text-white mb-8 relative overflow-hidden">
                     <i class="ph-fill ph-funnel absolute -right-6 -bottom-6 text-9xl text-white opacity-10"></i>
                     <div class="relative z-10">
@@ -958,102 +829,71 @@
                             <i class="ph-bold ph-star mr-2"></i> Ponto de Partida
                         </div>
                         <h3 class="text-2xl font-bold mb-2">Filtros Globais de Navegação</h3>
-                        <p class="text-slate-300 max-w-2xl leading-relaxed">
-                            O painel é <strong>100% dinâmico</strong>. No topo da página, você encontra os filtros de <em>Estado</em> e <em>Município</em>. Ao selecionar qualquer opção, absolutamente todos os gráficos, cálculos e textos do painel são atualizados instantaneamente para refletir apenas a realidade daquele recorte.
-                        </p>
+                        <p class="text-slate-300 max-w-2xl leading-relaxed">O painel é 100% dinâmico através dos filtros no topo. Ele calculará automaticamente os indicadores e os dados específicos com base na sua seleção.</p>
                     </div>
                 </div>
 
-                <!-- Grid de Tutoriais das Páginas -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    
-                    <!-- Card 1 -->
                     <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
                         <div class="w-12 h-12 rounded-lg bg-pve-greenLight text-pve-greenDark flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                             <i class="ph-fill ph-squares-four"></i>
                         </div>
                         <h4 class="font-bold text-slate-800 text-lg mb-2">1. Visão Executiva</h4>
-                        <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">O termômetro do projeto. Mostra de imediato a saúde da rede selecionada e os níveis médios de maturidade.</p>
-                        <div class="bg-slate-50 p-3 rounded border border-slate-100 text-xs text-slate-700">
-                            <strong>Destaque:</strong> Explore os <em>Rankings Dinâmicos</em> para descobrir rapidamente os Top 3 municípios que são referência ou precisam de atenção urgente.
-                        </div>
+                        <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">O termômetro do projeto. Mostra a saúde da rede selecionada e os níveis médios de maturidade.</p>
                     </div>
 
-                    <!-- Card 2 -->
                     <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
                         <div class="w-12 h-12 rounded-lg bg-pve-greenLight text-pve-greenDark flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                             <i class="ph-fill ph-table"></i>
                         </div>
                         <h4 class="font-bold text-slate-800 text-lg mb-2">2. Mapa & Raio-X</h4>
-                        <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">A ferramenta de diagnóstico profundo. Desça do nível "macro" (Frentes) para o "micro" (Competências).</p>
-                        <div class="bg-slate-50 p-3 rounded border border-slate-100 text-xs text-slate-700">
-                            <strong>Destaque:</strong> Leia a <em>Interpretação de Resultados</em> automática. O sistema diz-lhe em texto claro qual a grande fortaleza e o pior gargalo da região selecionada.
-                        </div>
+                        <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">Diagnóstico profundo. Desça do nível "macro" para o "micro". Use a Inteligência para interpretar gargalos.</p>
                     </div>
 
-                    <!-- Card 3 -->
                     <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
                         <div class="w-12 h-12 rounded-lg bg-pve-greenLight text-pve-greenDark flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                             <i class="ph-fill ph-ruler"></i>
                         </div>
                         <h4 class="font-bold text-slate-800 text-lg mb-2">3. Régua de Maturidade</h4>
-                        <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">Valorize o esforço invisível. Um município pode manter a mesma cor "Frágil", mas ter subido décimos importantes.</p>
-                        <div class="bg-slate-50 p-3 rounded border border-slate-100 text-xs text-slate-700">
-                            <strong>Destaque:</strong> Utilize a tabela inferior para ver o <em>Gap Matemático</em> exato. Use isto para encorajar municípios que estão a poucos décimos de bater a meta.
-                        </div>
+                        <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">Valorize o esforço invisível com Gaps exatos para identificar quanto falta para o salto de nível.</p>
                     </div>
 
-                    <!-- Card 4 -->
                     <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
                         <div class="w-12 h-12 rounded-lg bg-pve-greenLight text-pve-greenDark flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                             <i class="ph-fill ph-graph"></i>
                         </div>
                         <h4 class="font-bold text-slate-800 text-lg mb-2">4. Trilhas & Clusters</h4>
-                        <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">Área de planejamento de formações. Cruze indicadores para encontrar padrões de comportamento nas redes.</p>
-                        <div class="bg-amber-50 p-3 rounded border border-amber-200 text-xs text-amber-800 shadow-sm relative overflow-hidden">
-                            <div class="absolute -right-2 -top-2 w-8 h-8 bg-amber-200 rounded-full opacity-50"></div>
-                            <strong><i class="ph-fill ph-magic-wand mr-1"></i> Dica de Ouro:</strong> Use o botão "Gerar Comando para IA". O painel redige sozinho um texto profissional para você colar no ChatGPT e criar sua pauta de formação!
-                        </div>
+                        <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">Cruze indicadores para encontrar padrões e use a Inteligência Artificial para gerar pautas de formação.</p>
                     </div>
 
-                    <!-- Card 5 -->
                     <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
                         <div class="w-12 h-12 rounded-lg bg-pve-greenLight text-pve-greenDark flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                             <i class="ph-fill ph-target"></i>
                         </div>
                         <h4 class="font-bold text-slate-800 text-lg mb-2">5. Projeção de Metas</h4>
-                        <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">O tradutor oficial das regras do BNDES para o próximo ciclo (Alta Intensidade vs Refinamento).</p>
-                        <div class="bg-amber-50 p-3 rounded border border-amber-200 text-xs text-amber-800 shadow-sm relative overflow-hidden">
-                            <div class="absolute -right-2 -top-2 w-8 h-8 bg-amber-200 rounded-full opacity-50"></div>
-                            <strong><i class="ph-fill ph-lightbulb mr-1"></i> Dica de Ouro:</strong> Na tabela, passe o mouse sobre os textos das Metas (ex: "Avançar 5 Comp."). Uma caixa abrirá listando os focos exatos para aquele local!
-                        </div>
+                        <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">Visualização focada no avanço oficial do ciclo, com a nova regra de evolução por Níveis.</p>
                     </div>
 
-                    <!-- Card 6 -->
                     <div class="bg-white rounded-xl shadow border border-slate-200 p-6 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group">
                         <div class="w-12 h-12 rounded-lg bg-pve-yellow/20 text-yellow-600 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
                             <i class="ph-fill ph-book-open-text"></i>
                         </div>
                         <h4 class="font-bold text-slate-800 text-lg mb-2">6. Legendas da Matriz</h4>
-                        <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">A sua biblioteca de consulta rápida em caso de dúvida sobre conceitos do programa PVE.</p>
-                        <div class="bg-slate-50 p-3 rounded border border-slate-100 text-xs text-slate-700">
-                            <strong>Destaque:</strong> Contém os significados práticos de todas as 21 competências e as explicações formais sobre os níveis de maturidade.
-                        </div>
+                        <p class="text-sm text-slate-600 mb-4 h-16 line-clamp-3">A sua biblioteca de consulta rápida sobre conceitos, competências e documentação oficial.</p>
                     </div>
-
                 </div>
             </div>
 
         </main>
     </div>
 
-    <!-- SCRIPT DE LÓGICA -->
+    <!-- SCRIPT DE LÓGICA DO PAINEL -->
     <script>
         Chart.register(ChartDataLabels);
 
-        // ==========================================
-        // DADOS (Base de Dados Embutida Oficial Formatada Seguro/Commas)
-        // ==========================================
+        // ==============================================================================
+        // RAW_CSV_DATA: COLE AQUI O SEU ARQUIVO "new 1.txt"
+        // ==============================================================================
         const RAW_CSV_DATA = `,,,,Acaraú,Armação de Búzios,Bela Cruz,Cidreira,Cordeiros,Cortês,Encruzilhada do Sul,Epitaciolândia,Extremoz,Formoso do Araguaia,Goiatins,Ilha de Itamaracá,Itapororoca,Jardim do Mulato,Laranjal do Jari,Monte Azul Paulista,Monte Mor,Nova Timboteua,Ocara,Palmeira,Paraíso do Tocantins,Pau D'Arco,Pitanga,Porto Nacional,Porto Walter,Rio Tinto,Salto de Pirapora,Santo Antônio da Platina,São Francisco de Paula,São Caitano,Videira,Wanderlândia,Vale Verde
 Gestão educacional,Competência 1 - Processos de gestão,Planejar,1.1,3.14,3.28,3.57,3.07,3.43,3.5,,3.7,2.91,3.75,2.86,2.75,3.82,3.75,3.43,3.75,3.83,2.89,3.31,3.17,3.37,2.95,3.34,3.48,3.34,3.15,2.71,2.8,3.88,3.24,2.44,2.8,3
 ,,Executar,1.2,3.7,3.08,3.78,3.55,3.85,3.54,3.47,3.33,3.38,3.62,3.31,3.34,3.49,3.69,3.16,3.22,3.71,3.27,3.58,2.78,3.6,3.42,3.46,3.45,3.43,3.51,3.33,3.34,3.64,3.5,3.19,3.46,3.13
@@ -1181,8 +1021,7 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
 ,,C4- MOB,,2.6,2.51,3.08,1.92,3.02,2.87,1.5,3.25,2.83,3.17,2.83,2.56,3.24,3.25,3.24,2.78,2.51,3.17,2.5,2.48,3.24,2.33,3.08,2.58,2.5,2.81,2.6,2.08,2.5,2.67,3.25,3,2
 ,Competência 5 - Cobertura,Desenvolver ações que atinjam/impactem diversos públicos,5.1,2.57,2.84,2.92,2,3.14,3.3,1.75,3.47,1.89,3.19,2.92,2.38,2.01,3.24,3.24,2.57,2.68,3,2.42,2.32,2.76,1.67,3.39,2.67,2.62,2.58,2.48,1.67,2.26,2.78,2.67,3.22,1.83
 ,,Realizar ações que contemplem grande parte do território,5.2,2.5,2.17,3,2.5,2.71,3.19,3,3.04,2.33,3.43,2.75,2,3.01,3.25,3.25,3.33,2.32,3,2.59,1.67,2.86,,3.27,2.75,2.39,3.14,2.57,1.75,2.75,3.33,2.4,2.67,2
-,,C5- MOB,,2.54,2.5,2.96,2.25,2.93,3.25,2.38,3.26,2.11,3.31,2.83,2.19,2.51,3.24,3.24,2.95,2.5,3,2.51,1.99,2.81,1.67,3.33,2.71,2.5,2.86,2.52,1.71,2.5,3.06,2.53,2.94,1.92
-`;
+,,C5- MOB,,2.54,2.5,2.96,2.25,2.93,3.25,2.38,3.26,2.11,3.31,2.83,2.19,2.51,3.24,3.24,2.95,2.5,3,2.51,1.99,2.81,1.67,3.33,2.71,2.5,2.86,2.52,1.71,2.5,3.06,2.53,2.94,1.92`;
 
         let dbData = [];
         let currentData = [];
@@ -1191,8 +1030,8 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
 
         const radarLabels = {
             'mob': ['C1. Conhecimento', 'C2. Atitude', 'C3. Estrutura', 'C4. Vitalidade', 'C5. Cobertura'],
-            'gesc': ['C1. Gestão', 'C2. Registro', 'C3. Acomp.', 'C4. Equipe', 'C5. Parcerias', 'C6. Artic.', 'C7. Formação', 'C8. Recurso'],
-            'gedu': ['C1. Gestão', 'C2. Registro', 'C3. Acomp.', 'C4. Equipe', 'C5. Parcerias', 'C6. Artic.', 'C7. Formação', 'C8. Recurso']
+            'gesc': ['C1. Proc. de Gestão', 'C2. Registro/Doc.', 'C3. Acompanhamento', 'C4. Equipe Colab.', 'C5. Parcerias', 'C6. Articulação', 'C7. Formação', 'C8. Recursos'],
+            'gedu': ['C1. Proc. de Gestão', 'C2. Registro/Doc.', 'C3. Acompanhamento', 'C4. Equipe Colab.', 'C5. Parcerias', 'C6. Articulação', 'C7. Formação', 'C8. Recursos']
         };
 
         const dictNomesComp = {
@@ -1226,7 +1065,7 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
         };
 
         const pageTitles = {
-            'page-visao': 'Visão Executiva',
+            'page-visao': 'Visão Executiva PVE',
             'page-regua': 'Régua de Maturidade e Gaps',
             'page-mapa': 'Diagnóstico & Raio-X',
             'page-cluster': 'Trilhas & Clusters',
@@ -1425,11 +1264,21 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
             }
         }
 
+        // =========================================================================================
+        // MOTOR DE LEITURA BLINDADO (TRAVAMENTO DE COLUNAS)
+        // =========================================================================================
         function loadData() {
-            let cleanedCSV = RAW_CSV_DATA.replace(/\t/g, ',');
-            cleanedCSV = cleanedCSV.replace(/"/g, ''); 
+            let rawStr = RAW_CSV_DATA.trim();
+            if(!rawStr) {
+                console.error("Sem dados para carregar.");
+                return;
+            }
 
-            Papa.parse(cleanedCSV, {
+            // Identifica se o arquivo colado é separado por tabulação ou vírgula
+            let delimiter = rawStr.includes('\t') ? '\t' : ',';
+
+            Papa.parse(rawStr, {
+                delimiter: delimiter,
                 header: false,
                 skipEmptyLines: true,
                 complete: function(results) {
@@ -1440,51 +1289,106 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
 
         function processTransposedData(rawData) {
             let cities = [];
-            let startColIndex = -1;
-
             let headerRow = rawData[0];
+            
+            // Descobre onde começam as cidades no cabeçalho (usando Acaraú como âncora)
+            let dataStartIndex = -1;
             for (let i = 0; i < headerRow.length; i++) {
+                let cell = (headerRow[i] || '').trim().toUpperCase();
+                if (cell === 'ACARAÚ' || cell === 'ACARAU') {
+                    dataStartIndex = i; break;
+                }
+            }
+            
+            // Fallback genérico caso Acaraú não seja a primeira cidade
+            if (dataStartIndex === -1) {
+                for (let i = 2; i < headerRow.length; i++) {
+                    let cell = (headerRow[i] || '').trim();
+                    if (cell !== '' && !cell.toLowerCase().includes('geral') && !cell.toLowerCase().includes('meta')) {
+                        dataStartIndex = i; break;
+                    }
+                }
+            }
+
+            if (dataStartIndex === -1) return; // Segurança
+
+            // Criação dos objetos dos municípios travando a coluna correta
+            for (let i = dataStartIndex; i < headerRow.length; i++) {
                 let cell = (headerRow[i] || '').trim();
-                if (i >= 2 && cell !== '' && cell.toLowerCase() !== 'meta 2025' && !cell.toLowerCase().includes('instituto')) {
-                    if (startColIndex === -1) startColIndex = i;
+                if (cell !== '') {
                     let cityName = cell.replace(/ Pós Conselho/ig, '').trim();
                     cities.push({
-                        index: i, municipio: cityName, uf: 'N/A', 
+                        index: i, 
+                        municipio: cityName, uf: 'N/A', 
                         gedu: 0, gesc: 0, mob: 0, geral: 0,
                         mob_c1: 0, mob_c2: 0, mob_c3: 0, mob_c4: 0, mob_c5: 0,
                         gesc_c1: 0, gesc_c2: 0, gesc_c3: 0, gesc_c4: 0, gesc_c5: 0, gesc_c6: 0, gesc_c7: 0, gesc_c8: 0,
-                        gedu_c1: 0, gedu_c2: 0, gedu_c3: 0, gedu_c4: 0, gedu_c5: 0, gedu_c6: 0, gedu_c7: 0, gedu_c8: 0
+                        gedu_c1: 0, gedu_c2: 0, gedu_c3: 0, gedu_c4: 0, gedu_c5: 0, gedu_c6: 0, gedu_c7: 0, gedu_c8: 0,
+                        tempScores: {} 
                     });
                 }
             }
 
-            let actualGroup = 'mob';
-            rawData.forEach(row => {
-                let firstCol = (row[0] || '').toString().toUpperCase().trim();
-                
-                if (firstCol.includes('GESTÃO EDUCACIONAL') || firstCol.includes('GESTAO EDUCACIONAL') || firstCol.includes('GEDU')) actualGroup = 'gedu';
-                else if (firstCol.includes('GESTÃO ESCOLAR') || firstCol.includes('GESTAO ESCOLAR') || firstCol.includes('GESC')) actualGroup = 'gesc';
-                else if (firstCol.includes('MOBILIZAÇÃO SOCIAL') || firstCol.includes('MOBILIZACAO SOCIAL') || firstCol.includes('MOB -')) actualGroup = 'mob';
+            let currentFrente = '';
 
-                let colStr = row.slice(0, 4).join(' ').toUpperCase();
-                let normStr = colStr.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            rawData.forEach((row, rowIndex) => {
+                if(rowIndex < 1) return;
 
-                let metric = null;
-                if (colStr.match(/\bC1\b/) || normStr.includes('COMPETENCIA 1')) metric = actualGroup + '_c1';
-                else if (colStr.match(/\bC2\b/) || normStr.includes('COMPETENCIA 2')) metric = actualGroup + '_c2';
-                else if (colStr.match(/\bC3\b/) || normStr.includes('COMPETENCIA 3')) metric = actualGroup + '_c3';
-                else if (colStr.match(/\bC4\b/) || normStr.includes('COMPETENCIA 4')) metric = actualGroup + '_c4';
-                else if (colStr.match(/\bC5\b/) || normStr.includes('COMPETENCIA 5')) metric = actualGroup + '_c5';
-                else if (colStr.match(/\bC6\b/) || normStr.includes('COMPETENCIA 6')) metric = actualGroup + '_c6';
-                else if (colStr.match(/\bC7\b/) || normStr.includes('COMPETENCIA 7')) metric = actualGroup + '_c7';
-                else if (colStr.match(/\bC8\b/) || normStr.includes('COMPETENCIA 8')) metric = actualGroup + '_c8';
+                // Captura a frente da linha
+                let strRow = row.slice(0, dataStartIndex).join(' ').toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-                if (metric) {
+                if (strRow.match(/\b(EDUCACIONAL|GEDU)\b/)) currentFrente = 'gedu';
+                else if (strRow.match(/\b(ESCOLAR|GESC)\b/)) currentFrente = 'gesc';
+                else if (strRow.match(/\b(MOBILIZACAO SOCIAL|MOB -|MOB\b)\b/)) currentFrente = 'mob';
+
+                if (!currentFrente) return; // Proteção
+
+                let explicitC = null;
+                let subC = null;
+
+                // Lê as primeiras colunas à procura da marcação da competência
+                for (let c = 0; c < dataStartIndex; c++) {
+                    let cellText = (row[c] || '').toString().trim().toUpperCase();
+                    
+                    let matchFull = cellText.match(/^C([1-8])\s*-?\s*(GEDU|GESC|MOB)/);
+                    if (matchFull) {
+                        explicitC = parseInt(matchFull[1]);
+                        currentFrente = matchFull[2].toLowerCase(); 
+                        break;
+                    }
+                    
+                    let matchFallback = cellText.match(/^C([1-8])$/);
+                    if (matchFallback && currentFrente) {
+                        explicitC = parseInt(matchFallback[1]);
+                        break;
+                    }
+
+                    let matchSub = cellText.match(/^([1-8])\.\d+$/);
+                    if (matchSub && currentFrente) {
+                        subC = parseInt(matchSub[1]);
+                        break;
+                    }
+                }
+
+                // Insere os dados buscando a nota EXATAMENTE na coluna do município
+                if (explicitC && currentFrente) {
+                    let metric = currentFrente + '_c' + explicitC;
                     cities.forEach(city => {
-                        let val = row[city.index];
-                        if (val !== undefined && val !== null && val !== '') {
-                            let num = parseFloat(val.toString().replace(',', '.'));
-                            if (!isNaN(num)) city[metric] = num;
+                        let valStr = (row[city.index] || '').toString();
+                        let val = parseFloat(valStr.replace(',', '.')); // Conversão blindada para formato Europeu
+                        if (!isNaN(val)) {
+                            city[metric] = val;
+                            city.tempScores[metric + '_explicit'] = true; 
+                        }
+                    });
+                } else if (subC && currentFrente) {
+                    let metric = currentFrente + '_c' + subC;
+                    cities.forEach(city => {
+                        let valStr = (row[city.index] || '').toString();
+                        let val = parseFloat(valStr.replace(',', '.'));
+                        if (!isNaN(val)) {
+                            if (!city.tempScores[metric]) city.tempScores[metric] = [];
+                            city.tempScores[metric].push(val);
                         }
                     });
                 }
@@ -1498,29 +1402,45 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
                 'Nova Timboteua': 'PA', 'Ocara': 'CE', 'Palmeira': 'PR', 'Paraíso do Tocantins': 'TO',
                 'Pau D\'Arco': 'PA', 'Pitanga': 'PR', 'Porto Nacional': 'TO', 'Porto Walter': 'AC',
                 'Rio Tinto': 'PB', 'Salto de Pirapora': 'SP', 'Santo Antônio da Platina': 'PR',
-                'São Caitano': 'PE', 'Videira': 'SC', 'Wanderlândia': 'TO'
+                'São Caitano': 'PE', 'Videira': 'SC', 'Wanderlândia': 'TO', 'São Francisco de Paula': 'RS', 'Vale Verde': 'RS'
             };
 
             cities.forEach(city => {
                 city.uf = ufMap[city.municipio] || 'Outro';
                 
-                let sumGedu = 0, countGedu = 0;
-                for(let i=1; i<=8; i++) { if(city['gedu_c'+i] > 0) { sumGedu += city['gedu_c'+i]; countGedu++; } }
-                city.gedu = countGedu > 0 ? sumGedu / countGedu : 0;
+                ['gedu', 'gesc', 'mob'].forEach(g => {
+                    let maxC = (g === 'mob') ? 5 : 8;
+                    for(let i=1; i<=maxC; i++) {
+                        let m = g + '_c' + i;
+                        if (!city.tempScores[m + '_explicit'] && city.tempScores[m] && city.tempScores[m].length > 0) {
+                            let sum = city.tempScores[m].reduce((a,b)=>a+b, 0);
+                            city[m] = sum / city.tempScores[m].length;
+                        }
+                    }
+                });
 
-                let sumGesc = 0, countGesc = 0;
-                for(let i=1; i<=8; i++) { if(city['gesc_c'+i] > 0) { sumGesc += city['gesc_c'+i]; countGesc++; } }
-                city.gesc = countGesc > 0 ? sumGesc / countGesc : 0;
-
-                let sumMob = 0, countMob = 0;
-                for(let i=1; i<=5; i++) { if(city['mob_c'+i] > 0) { sumMob += city['mob_c'+i]; countMob++; } }
-                city.mob = countMob > 0 ? sumMob / countMob : 0;
-
-                let sumGeral = 0, countGeral = 0;
-                if(city.gedu > 0) { sumGeral += city.gedu; countGeral++; }
-                if(city.gesc > 0) { sumGeral += city.gesc; countGeral++; }
-                if(city.mob > 0) { sumGeral += city.mob; countGeral++; }
-                city.geral = countGeral > 0 ? sumGeral / countGeral : 0;
+                if (!city.gedu || city.gedu === 0) {
+                    let sum = 0, count = 0;
+                    for(let i=1; i<=8; i++) { if(city['gedu_c'+i] > 0) { sum += city['gedu_c'+i]; count++; } }
+                    city.gedu = count > 0 ? sum / count : 0;
+                }
+                if (!city.gesc || city.gesc === 0) {
+                    let sum = 0, count = 0;
+                    for(let i=1; i<=8; i++) { if(city['gesc_c'+i] > 0) { sum += city['gesc_c'+i]; count++; } }
+                    city.gesc = count > 0 ? sum / count : 0;
+                }
+                if (!city.mob || city.mob === 0) {
+                    let sum = 0, count = 0;
+                    for(let i=1; i<=5; i++) { if(city['mob_c'+i] > 0) { sum += city['mob_c'+i]; count++; } }
+                    city.mob = count > 0 ? sum / count : 0;
+                }
+                if (!city.geral || city.geral === 0) {
+                    let sum = 0, count = 0;
+                    if(city.gedu > 0) { sum += city.gedu; count++; }
+                    if(city.gesc > 0) { sum += city.gesc; count++; }
+                    if(city.mob > 0) { sum += city.mob; count++; }
+                    city.geral = count > 0 ? sum / count : 0;
+                }
             });
 
             dbData = cities;
@@ -1535,9 +1455,7 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
             applyFilters();
             
             switchPage('page-visao');
-            setTimeout(() => {
-                updateExecutiveView();
-            }, 100);
+            setTimeout(() => { updateExecutiveView(); }, 100);
         }
 
         function applyFilters() {
@@ -1553,13 +1471,8 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
                 return matchUf && matchMun;
             });
 
-            updateKPIs();
-            updateExecutiveView(); 
-            updateReguaTable(); 
-            updateMetasTab();
-            
+            updateKPIs(); updateExecutiveView(); updateReguaTable(); updateMetasTab();
             changeViewFrente(currentViewFrente);
-            
             updateRecommendationEngine();
             document.getElementById('promptContainer').classList.add('hidden');
         }
@@ -1567,50 +1480,23 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
         function updateExecutiveView() {
             const numMun = currentData.length;
             document.getElementById('kpiOpMun').innerText = numMun;
-
             const rankMetricSelect = document.getElementById('rankingFrenteSelect');
             const rankMetric = rankMetricSelect ? rankMetricSelect.value : 'geral';
 
             let sortedData = [...currentData].filter(d => d[rankMetric] > 0).sort((a, b) => b[rankMetric] - a[rankMetric]);
-            
             const listTop = document.getElementById('listTopDestaques');
             const listBottom = document.getElementById('listTopCriticos');
-            listTop.innerHTML = '';
-            listBottom.innerHTML = '';
+            listTop.innerHTML = ''; listBottom.innerHTML = '';
 
             sortedData.slice(0, 3).forEach((item, idx) => {
-                let li = `<li class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
-                    <span class="text-sm font-bold text-slate-700"><span class="text-pve-green mr-1">${idx+1}º</span> ${item.municipio} (${item.uf})</span>
-                    <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-0.5 rounded font-bold">${item[rankMetric].toFixed(2)}</span>
-                </li>`;
-                listTop.innerHTML += li;
+                listTop.innerHTML += `<li class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0"><span class="text-sm font-bold text-slate-700"><span class="text-pve-green mr-1">${idx+1}º</span> ${item.municipio} (${item.uf})</span><span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-0.5 rounded font-bold">${item[rankMetric].toFixed(2)}</span></li>`;
             });
 
             [...sortedData].reverse().slice(0, 3).forEach((item, idx) => {
-                let li = `<li class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0">
-                    <span class="text-sm font-bold text-slate-700"><span class="text-pve-red mr-1">▼</span> ${item.municipio} (${item.uf})</span>
-                    <span class="bg-rose-100 text-rose-800 text-xs px-2 py-0.5 rounded font-bold">${item[rankMetric].toFixed(2)}</span>
-                </li>`;
-                listBottom.innerHTML += li;
+                listBottom.innerHTML += `<li class="flex justify-between items-center py-2 border-b border-slate-50 last:border-0"><span class="text-sm font-bold text-slate-700"><span class="text-pve-red mr-1">▼</span> ${item.municipio} (${item.uf})</span><span class="bg-rose-100 text-rose-800 text-xs px-2 py-0.5 rounded font-bold">${item[rankMetric].toFixed(2)}</span></li>`;
             });
             
-            if(sortedData.length === 0) {
-               listTop.innerHTML = '<li class="text-xs text-slate-400">Sem dados</li>';
-               listBottom.innerHTML = '<li class="text-xs text-slate-400">Sem dados</li>';
-            }
-
-            const topDesc = document.getElementById('topDescText');
-            const bottomDesc = document.getElementById('bottomDescText');
-            if (topDesc && bottomDesc) {
-                const metricNames = {
-                    'geral': 'médias gerais',
-                    'gesc': 'médias em Gestão Escolar',
-                    'gedu': 'médias em Gestão Educacional',
-                    'mob': 'médias em Mobilização Social'
-                };
-                topDesc.innerHTML = `Municípios com as <strong>maiores ${metricNames[rankMetric]}</strong>. Podem atuar como referências de boas práticas.`;
-                bottomDesc.innerHTML = `Municípios com as <strong>menores ${metricNames[rankMetric]}</strong>. Exigem acompanhamento prioritário.`;
-            }
+            if(sortedData.length === 0) { listTop.innerHTML = '<li class="text-xs text-slate-400">Sem dados</li>'; listBottom.innerHTML = '<li class="text-xs text-slate-400">Sem dados</li>'; }
         }
 
         function getAvg(array, key) {
@@ -1621,10 +1507,7 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
         }
 
         function updateKPIs() {
-            const avgGedu = getAvg(currentData, 'gedu');
-            const avgGesc = getAvg(currentData, 'gesc');
-            const avgMob = getAvg(currentData, 'mob');
-            
+            const avgGedu = getAvg(currentData, 'gedu'); const avgGesc = getAvg(currentData, 'gesc'); const avgMob = getAvg(currentData, 'mob');
             let frontsCount = 0; let sumGlobal = 0;
             if(avgGedu > 0) { sumGlobal += avgGedu; frontsCount++; }
             if(avgGesc > 0) { sumGlobal += avgGesc; frontsCount++; }
@@ -1634,10 +1517,8 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
             const setKpiUI = (idPrefix, score, isGlobal = false) => {
                 const elKpi = document.getElementById(`kpi${idPrefix}`);
                 if(!elKpi) return;
-
                 const info = getLevelInfo(score);
                 elKpi.textContent = score > 0 ? score.toFixed(2) : '-';
-                
                 if(!isGlobal) {
                     elKpi.className = `text-4xl font-bold mt-2 ${score > 0 ? info.textClass : 'text-slate-300'}`;
                     const label = document.getElementById(`label${idPrefix}`);
@@ -1645,11 +1526,7 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
                     label.className = score > 0 ? `text-[10px] font-bold mt-2 px-2 py-1 rounded border uppercase tracking-wider ${info.bg.replace('-status', '')} ${info.text} ${info.border}` : 'text-xs mt-1 text-slate-300';
                 }
             };
-
-            setKpiUI('Global', avgGlobal, true);
-            setKpiUI('Gedu', avgGedu);
-            setKpiUI('Gesc', avgGesc);
-            setKpiUI('Mob', avgMob);
+            setKpiUI('Global', avgGlobal, true); setKpiUI('Gedu', avgGedu); setKpiUI('Gesc', avgGesc); setKpiUI('Mob', avgMob);
         }
 
         function updateRadarInsights(avgSelection, avgGlobal) {
@@ -1662,13 +1539,11 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
 
             let highestVal = 0; let highestCompIndex = -1; let highestComp = '';
             let lowestVal = 999; let lowestCompIndex = -1; let lowestComp = '';
-            
             let sumSel = 0; let sumGlob = 0;
             
             for(let i=0; i<numCols; i++) {
                 if(avgSelection[i] > 0) {
-                    sumSel += avgSelection[i];
-                    sumGlob += avgGlobal[i];
+                    sumSel += avgSelection[i]; sumGlob += avgGlobal[i];
                     if(avgSelection[i] > highestVal) { highestVal = avgSelection[i]; highestComp = labels[i]; highestCompIndex = i; }
                     if(avgSelection[i] < lowestVal) { lowestVal = avgSelection[i]; lowestComp = labels[i]; lowestCompIndex = i; }
                 }
@@ -1676,26 +1551,23 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
             
             const avgTotal = sumSel / numCols;
             const avgGlobalTotal = sumGlob / numCols;
-            const statusGeral = getLevelInfo(avgTotal);
 
+            if (isNaN(avgTotal) || avgTotal === 0) {
+                insightBox.innerHTML = '<p class="text-sm text-slate-500 italic">Sem dados suficientes para gerar a interpretação.</p>';
+                return;
+            }
+
+            const statusGeral = getLevelInfo(avgTotal);
             const isTodosMun = document.getElementById('chkMunTodos').checked;
             const selectionText = (currentData.length === 1) ? `o município de <strong>${currentData[0].municipio}</strong>` : (isTodosMun ? 'a <strong>Média Global do PVE</strong>' : `a seleção de <strong>${currentData.length} municípios</strong>`);
 
             let analiseContexto = "";
             let diffTotal = Math.abs(avgTotal - avgGlobalTotal).toFixed(2);
-            if (avgTotal > avgGlobalTotal + 0.05) {
-                analiseContexto = `Isto significa que a seleção está <strong>${diffTotal} pontos acima da média nacional</strong>. Práticas adotadas aqui podem servir de modelo.`;
-            } else if (avgTotal < avgGlobalTotal - 0.05) {
-                analiseContexto = `Isto significa que a seleção está <strong>${diffTotal} pontos abaixo da média nacional</strong>, exigindo suporte e olhar mais cuidadoso.`;
-            } else {
-                analiseContexto = `Isto significa que a seleção acompanha o comportamento da <strong>média nacional</strong>.`;
-            }
+            if (avgTotal > avgGlobalTotal + 0.05) analiseContexto = `A seleção está <strong>${diffTotal} pontos acima da média nacional</strong>.`;
+            else if (avgTotal < avgGlobalTotal - 0.05) analiseContexto = `A seleção está <strong>${diffTotal} pontos abaixo da média nacional</strong>.`;
+            else analiseContexto = `A seleção acompanha o comportamento da <strong>média nacional</strong>.`;
 
-            let html = `
-                <div class="space-y-4">
-                    <p class="text-sm text-slate-700 leading-relaxed">Analisando a matriz de ${nomeFrente}, ${selectionText} apresenta nível de maturidade <strong class="${statusGeral.textClass} uppercase">${statusGeral.label}</strong> (Média ${avgTotal.toFixed(2)}).</p>
-                    <p class="text-sm text-slate-700 leading-relaxed mb-4">${analiseContexto}</p>
-            `;
+            let html = `<div class="space-y-4"><p class="text-sm text-slate-700 leading-relaxed">Analisando a matriz de ${nomeFrente}, ${selectionText} apresenta nível de maturidade <strong class="${statusGeral.textClass} uppercase">${statusGeral.label}</strong> (Média ${avgTotal.toFixed(2)}).</p><p class="text-sm text-slate-700 leading-relaxed mb-4">${analiseContexto}</p>`;
 
             if (lowestComp !== '' && lowestCompIndex !== -1) {
                 let compId = `${currentViewFrente}_c${lowestCompIndex + 1}`;
@@ -1704,21 +1576,13 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
                 let icon = lowestVal <= 2.50 ? 'ph-warning-octagon' : 'ph-warning';
                 let alertText = lowestVal <= 2.50 ? 'Prioridade Crítica de Ação' : 'Ponto de Atenção';
 
-                html += `
-                <div class="bg-${statusColor}-50 border-l-4 border-${statusColor}-500 p-3 rounded-r-lg shadow-sm">
-                    <h5 class="text-[11px] font-bold text-${statusColor}-800 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ${icon} mr-1 text-${statusColor}-600 text-sm"></i> ${alertText}</h5>
-                    <p class="text-sm text-slate-700">A competência a focar neste eixo é <strong>${lowestComp}</strong> (Nota <strong>${lowestVal.toFixed(2)}</strong>). ${textoGargalo}</p>
-                </div>`;
+                html += `<div class="bg-${statusColor}-50 border-l-4 border-${statusColor}-500 p-3 rounded-r-lg shadow-sm"><h5 class="text-[11px] font-bold text-${statusColor}-800 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ${icon} mr-1 text-${statusColor}-600 text-sm"></i> ${alertText}</h5><p class="text-sm text-slate-700">A competência a focar neste eixo é <strong>${lowestComp}</strong> (Nota <strong>${lowestVal.toFixed(2)}</strong>). ${textoGargalo}</p></div>`;
             }
             
             if (highestComp !== '' && highestCompIndex !== -1) {
                 let compId = `${currentViewFrente}_c${highestCompIndex + 1}`;
                 let textoAlavanca = insightsPedagogicos[compId] ? insightsPedagogicos[compId].alavanca : 'Reconheça este esforço como ponte.';
-                html += `
-                <div class="bg-emerald-50 border-l-4 border-emerald-500 p-3 rounded-r-lg shadow-sm mt-4">
-                    <h5 class="text-[11px] font-bold text-emerald-800 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-trend-up mr-1 text-emerald-600 text-sm"></i> Alavanca Positiva</h5>
-                    <p class="text-sm text-slate-700">O destaque é <strong>${highestComp}</strong> (Nota <strong>${highestVal.toFixed(2)}</strong>). ${textoAlavanca}</p>
-                </div>`;
+                html += `<div class="bg-emerald-50 border-l-4 border-emerald-500 p-3 rounded-r-lg shadow-sm mt-4"><h5 class="text-[11px] font-bold text-emerald-800 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-trend-up mr-1 text-emerald-600 text-sm"></i> Alavanca Positiva</h5><p class="text-sm text-slate-700">O destaque é <strong>${highestComp}</strong> (Nota <strong>${highestVal.toFixed(2)}</strong>). ${textoAlavanca}</p></div>`;
             }
             
             html += `</div>`;
@@ -1825,15 +1689,33 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
             }, 3000);
         }
 
-        function generateTooltip(mText, cityComps) {
-            if (mText.includes('Manter')) return "Foco sugerido:\nManutenção das práticas consolidadas e compartilhamento de experiências.";
+        function buildTooltipText(targetName, targetCount, cityComps) {
+            if (targetCount === 0 || targetName.includes('Manter')) {
+                return `🎯 ${targetName}: Foco na manutenção da excelência e nas práticas consolidadas.`;
+            }
+
+            let validComps = cityComps.filter(c => c.dist < 999);
+            let focos = validComps.slice(0, targetCount);
+            let outras = validComps.slice(targetCount);
             
-            const n = parseInt(mText.match(/\d+/)?.[0]) || 0;
-            if (n === 0) return "Consulte o detalhamento no mapa de calor.";
+            let text = `🎯 FOCO DA ${targetName} (${targetCount} comp. mais próximas de subir de nível):\n\n`;
             
-            let text = `🎯 Foco sugerido nas piores notas (${n} comp.):\n`;
-            for(let i=0; i<n && i<cityComps.length; i++) {
-                text += `• ${cityComps[i].name} (Nota: ${cityComps[i].val.toFixed(2)})\n`;
+            if (focos.length === 0) {
+                return text + "Todas as competências já se encontram no Nível Máximo (Robusto).";
+            }
+            
+            focos.forEach(c => {
+                text += `• ${c.name} (Nota: ${c.val.toFixed(2)} | Faltam ${(c.dist).toFixed(2)} pts p/ Nível ${c.levelTarget})\n`;
+            });
+            
+            if (outras.length > 0) {
+                text += `\n📌 DEMAIS COMPETÊNCIAS NA FILA:\n`;
+                outras.slice(0, 5).forEach(c => {
+                    text += `• ${c.name} (Faltam ${(c.dist).toFixed(2)} pts)\n`;
+                });
+                if (outras.length > 5) {
+                    text += `... e mais ${outras.length - 5} competências.\n`;
+                }
             }
             return text;
         }
@@ -1934,14 +1816,17 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
                 const subInfo = getSubLevelInfo(row.geral);
 
                 let effortColor = 'bg-slate-50 text-slate-600';
-                if (row.geral > 0 && row.geral <= 3.25) {
-                    effortColor = 'bg-amber-50 text-amber-700 font-bold'; 
+                let targetText = subInfo.m500;
+                
+                if (targetText.includes('7') || targetText.includes('8') || targetText.includes('9') || targetText.includes('10')) {
+                    effortColor = 'bg-orange-50 text-orange-700 font-bold'; 
                     countAltaIntensidade++;
-                } else if (row.geral > 3.25) {
+                } else {
                     effortColor = 'bg-emerald-50 text-emerald-700 font-bold'; 
                     countRefinamento++;
                 }
 
+                // Cálculo das competências mais fáceis de evoluir de nível
                 const cityComps = [];
                 for(let i=1; i<=8; i++) {
                     if(row[`gesc_c${i}`] > 0) cityComps.push({name: `GESC C${i}`, val: row[`gesc_c${i}`]});
@@ -1950,25 +1835,41 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
                 for(let i=1; i<=5; i++) {
                     if(row[`mob_c${i}`] > 0) cityComps.push({name: `MOB C${i}`, val: row[`mob_c${i}`]});
                 }
-                cityComps.sort((a,b) => a.val - b.val);
+                
+                cityComps.forEach(c => {
+                    if (c.val <= 2.50) { c.nextLevel = 2.51; c.dist = 2.51 - c.val; c.levelTarget = 2; }
+                    else if (c.val <= 3.25) { c.nextLevel = 3.26; c.dist = 3.26 - c.val; c.levelTarget = 3; }
+                    else if (c.val <= 3.70) { c.nextLevel = 3.71; c.dist = 3.71 - c.val; c.levelTarget = 4; }
+                    else { c.nextLevel = 4.0; c.dist = 999; c.levelTarget = 4; }
+                });
+                
+                cityComps.sort((a,b) => a.dist - b.dist);
 
-                const tooltip100 = generateTooltip(subInfo.m100, cityComps);
-                const tooltip300 = generateTooltip(subInfo.m300, cityComps);
-                const tooltip500 = generateTooltip(subInfo.m500, cityComps);
+                // Geração do Tooltip Múltiplo para as Metas 100, 300 e 500
+                let match100 = subInfo.m100.match(/\d+/); let n100 = match100 ? parseInt(match100[0]) : 0;
+                let match300 = subInfo.m300.match(/\d+/); let n300 = match300 ? parseInt(match300[0]) : 0;
+                let match500 = subInfo.m500.match(/\d+/); let n500 = match500 ? parseInt(match500[0]) : 0;
+
+                const tooltip100 = buildTooltipText('META 100', n100, cityComps);
+                const tooltip300 = buildTooltipText('META 300', n300, cityComps);
+                const tooltip500 = buildTooltipText('META 500', n500, cityComps);
 
                 tr.innerHTML = `
                     <td class="py-4 px-6 text-left whitespace-nowrap font-bold text-slate-800 border-r border-slate-100">${local}</td>
                     <td class="py-4 px-4 text-center border-r border-slate-100">
                         <span class="px-3 py-1 rounded text-[11px] font-bold shadow-sm ${subInfo.class}">${subInfo.label}</span>
                     </td>
-                    <td class="py-4 px-4 text-center ${effortColor} border-r border-slate-100 cursor-help" title="${tooltip100}">
-                        <span class="border-b border-dashed border-current hover:opacity-70 transition-opacity">${subInfo.m100}</span>
+                    <td class="py-4 px-4 text-center text-slate-400 bg-slate-50 border-r border-slate-200 opacity-70 text-xs cursor-help" title="${tooltip100}">
+                        <span class="border-b border-dashed border-current transition-opacity">${subInfo.m100}</span>
                     </td>
-                    <td class="py-4 px-4 text-center text-slate-500 bg-slate-50 border-r border-slate-100 cursor-help" title="${tooltip300}">
-                        <span class="border-b border-dashed border-current hover:opacity-70 transition-opacity">${subInfo.m300}</span>
+                    <td class="py-4 px-4 text-center text-slate-400 bg-slate-50 border-r border-slate-200 opacity-70 text-xs cursor-help" title="${tooltip300}">
+                        <span class="border-b border-dashed border-current transition-opacity">${subInfo.m300}</span>
                     </td>
-                    <td class="py-4 px-4 text-center text-slate-500 bg-slate-50 cursor-help" title="${tooltip500}">
-                        <span class="border-b border-dashed border-current hover:opacity-70 transition-opacity">${subInfo.m500}</span>
+                    <td class="py-4 px-4 text-center ${effortColor} border-l border-white cursor-help font-bold shadow-sm relative group" title="${tooltip500}">
+                        <div class="flex flex-col items-center justify-center">
+                            <span class="border-b-2 border-dashed border-current transition-opacity text-sm">${subInfo.m500}</span>
+                            <span class="text-[9px] font-normal uppercase tracking-widest mt-1 opacity-80 group-hover:opacity-100 transition-opacity">Ver Focos</span>
+                        </div>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -2049,7 +1950,7 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
             chartInstances.miniMetas = new Chart(document.getElementById('chartMiniMetas'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['Alta Intensidade (Nível 1 e 2)', 'Refinamento (Nível 3 e 4)'],
+                    labels: ['Alta Intensidade', 'Refinamento'],
                     datasets: [{
                         data: [0, 0],
                         backgroundColor: ['#E85D04', '#008B45'],
@@ -2219,10 +2120,10 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
             chartInstances.cluster.options.scales.y.title.text = selectY.options[selectY.selectedIndex].text;
 
             const clusters = {
-                fragil: { label: 'Nível 1: Frágil (≤ 2.50)', color: 'rgba(239, 68, 68, 0.7)', border: '#B91C1C', data: [] },
-                cons: { label: 'Nível 2: Em Consolidação (2.51 - 3.25)', color: 'rgba(245, 158, 11, 0.7)', border: '#B45309', data: [] },
-                consolidado: { label: 'Nível 3: Consolidado (3.26 - 3.70)', color: 'rgba(16, 185, 129, 0.7)', border: '#047857', data: [] },
-                robusto: { label: 'Nível 4: Robusto (> 3.70)', color: 'rgba(59, 130, 246, 0.7)', border: '#1D4ED8', data: [] }
+                fragil: { label: 'Nível 1: Frágil (< 2.50)', color: 'rgba(239, 68, 68, 0.7)', border: '#B91C1C', data: [] },
+                cons: { label: 'Nível 2: Em Consolidação (2.50 - 2.99)', color: 'rgba(245, 158, 11, 0.7)', border: '#B45309', data: [] },
+                consolidado: { label: 'Nível 3: Consolidado (3.0 - 3.49)', color: 'rgba(16, 185, 129, 0.7)', border: '#047857', data: [] },
+                robusto: { label: 'Nível 4: Robusto (≥ 3.50)', color: 'rgba(59, 130, 246, 0.7)', border: '#1D4ED8', data: [] }
             };
 
             currentData.forEach(row => {
@@ -2232,9 +2133,9 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
                     let bubbleBase = valX.includes('mob') ? parseFloat(row.mob) : (valX.includes('gesc') ? parseFloat(row.gesc) : parseFloat(row.gedu));
                     const point = { x: x, y: y, r: Math.max(5, bubbleBase * 4), municipio: row.municipio };
                     
-                    if(bubbleBase <= 2.5) clusters.fragil.data.push(point);
-                    else if(bubbleBase <= 3.25) clusters.cons.data.push(point);
-                    else if(bubbleBase <= 3.7) clusters.consolidado.data.push(point);
+                    if(bubbleBase < 2.5) clusters.fragil.data.push(point);
+                    else if(bubbleBase < 3.0) clusters.cons.data.push(point);
+                    else if(bubbleBase < 3.5) clusters.consolidado.data.push(point);
                     else clusters.robusto.data.push(point);
                 }
             });
@@ -2350,4 +2251,3 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
     </script>
 </body>
 </html>
-```
