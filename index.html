@@ -486,7 +486,7 @@
                                     <th class="py-3 px-4 text-center">GESC</th>
                                     <th class="py-3 px-4 text-center">MOB</th>
                                     <th class="py-3 px-4 text-center bg-slate-200">MÉDIA GERAL</th>
-                                    <th class="py-3 px-4 text-center bg-slate-200 border-l border-white">SUBNÍVEL ATUAL</th>
+                                    <th class="py-3 px-4 text-center bg-slate-200 border-l border-white">NÍVEL ATUAL</th>
                                     <th class="py-3 px-4 text-center bg-slate-200">GAP P/ PRÓX. NÍVEL</th>
                                 </tr>
                             </thead>
@@ -1075,27 +1075,32 @@
                 </ul>
             </li>
 
-            <!-- C5 -->
-            <li class="pb-4 border-b border-slate-100 md:col-span-2 md:border-0 md:pb-0">
-                <strong class="text-pve-blueDark block text-[15px] mb-1">C5. Cobertura (Abrangência)</strong>
-                <p class="text-xs text-slate-500 mb-3">Alcance prático das ações de mobilização (quantidade de públicos, bairros e escolas impactadas).</p>
-                <ul class="space-y-2">
-                    <li class="flex items-start text-xs">
-                        <span class="bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded font-bold mr-2 text-[10px] shrink-0 mt-px">5.1</span> 
-                        <span class="leading-tight">Desenvolver ações que atinjam/impactem diversos públicos</span>
-                    </li>
-                    <li class="flex items-start text-xs">
-                        <span class="bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded font-bold mr-2 text-[10px] shrink-0 mt-px">5.2</span> 
-                        <span class="leading-tight">Realizar ações que contemplem grande parte do território</span>
-                    </li>
-                </ul>
-            </li>
-            
-        </ul>
-    </div>
-</div>
+           <!-- C5 -->
+                                <li class="pb-4 border-b border-slate-100 md:col-span-2 md:border-0 md:pb-0">
+                                    <strong class="text-pve-blueDark block text-[15px] mb-1">C5. Cobertura (Abrangência)</strong>
+                                    <p class="text-xs text-slate-500 mb-3">Alcance prático das ações de mobilização (quantidade de públicos, bairros e escolas impactadas).</p>
+                                    <ul class="space-y-2">
+                                        <li class="flex items-start text-xs">
+                                            <span class="bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded font-bold mr-2 text-[10px] shrink-0 mt-px">5.1</span> 
+                                            <span class="leading-tight">Desenvolver ações que atinjam/impactem diversos públicos</span>
+                                        </li>
+                                        <li class="flex items-start text-xs">
+                                            <span class="bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded font-bold mr-2 text-[10px] shrink-0 mt-px">5.2</span> 
+                                            <span class="leading-tight">Realizar ações que contemplem grande parte do território</span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div> <!-- AQUI ESTAVA O ERRO: ESTA DIV FECHA O GRID DAS LEGENDAS -->
+            </div> <!-- AQUI ESTAVA O ERRO: ESTA DIV FECHA A PÁGINA DE LEGENDAS -->
 
+
+            <!-- ========================================== -->
             <!-- PÁGINA 7: TUTORIAL -->
+            <!-- ========================================== -->
             <div id="page-tutorial" class="page-section space-y-8 hidden fade-update">
                 <div class="border-l-4 border-blue-400 pl-4 mb-6">
                     <h2 class="text-2xl font-bold text-slate-900">Como usar o Painel PVE</h2>
@@ -1379,7 +1384,15 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
             return { label: 'Nível 4', class: 'sub-l4', gap: 0, nextTarget: 4.0, m100: 'Manter Nível 4', m300: 'Avançar 1 Comp.', m500: 'Avançar 2 Comp.' };
         }
 
-        function switchPage(pageId) {
+		function getMacroLevelGap(score) {
+            if (!score || score === 0) return { gap: 0, nextTarget: 0, targetName: '-' };
+            if (score <= 2.50) return { gap: (2.51 - score), nextTarget: 2.51, targetName: 'Nível 2' };
+            if (score <= 3.25) return { gap: (3.26 - score), nextTarget: 3.26, targetName: 'Nível 3' };
+            if (score <= 3.70) return { gap: (3.71 - score), nextTarget: 3.71, targetName: 'Nível 4' };
+            return { gap: 0, nextTarget: 4.0, targetName: 'Máximo' };
+        }
+
+	   function switchPage(pageId) {
             document.getElementById('pageTitle').innerText = pageTitles[pageId];
 
             document.querySelectorAll('.page-section').forEach(el => {
@@ -2035,11 +2048,30 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
             });
         }
 
+  function getMacroLevelGap(score) {
+            if (!score || score === 0) return { gap: 0, nextTarget: 0, targetName: '-' };
+            if (score <= 2.50) return { gap: (2.51 - score), nextTarget: 2.51, targetName: 'Nível 2' };
+            if (score <= 3.25) return { gap: (3.26 - score), nextTarget: 3.26, targetName: 'Nível 3' };
+            if (score <= 3.70) return { gap: (3.71 - score), nextTarget: 3.71, targetName: 'Nível 4' };
+            return { gap: 0, nextTarget: 4.0, targetName: 'Máximo' };
+        }
+
         function updateReguaTable() {
             const tbody = document.getElementById('reguaBody');
+            if(!tbody) return;
             tbody.innerHTML = '';
             
+            // Ordena do menor para o maior (foca em quem precisa de mais ajuda primeiro)
             let sortedData = [...currentData].sort((a, b) => a.geral - b.geral);
+
+            // Função auxiliar para criar a "etiqueta visual" com Nível 1, 2, 3 ou 4
+            const getBadgeNivelMacro = (score) => {
+                if (!score || score === 0) return `<span class="px-3 py-1 rounded text-xs font-bold shadow-sm bg-slate-100 text-slate-400">-</span>`;
+                if (score <= 2.50) return `<span class="px-3 py-1 rounded text-xs font-bold shadow-sm bg-red-100 text-red-800 border border-red-200">Nível 1</span>`;
+                if (score <= 3.25) return `<span class="px-3 py-1 rounded text-xs font-bold shadow-sm bg-amber-100 text-amber-800 border border-amber-200">Nível 2</span>`;
+                if (score <= 3.70) return `<span class="px-3 py-1 rounded text-xs font-bold shadow-sm bg-emerald-100 text-emerald-800 border border-emerald-200">Nível 3</span>`;
+                return `<span class="px-3 py-1 rounded text-xs font-bold shadow-sm bg-blue-100 text-blue-800 border border-blue-200">Nível 4</span>`;
+            };
 
             sortedData.forEach(row => {
                 const tr = document.createElement('tr');
@@ -2052,16 +2084,18 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
                 const mobVal = row.mob > 0 ? row.mob.toFixed(2) : '-';
                 const geralVal = row.geral > 0 ? row.geral.toFixed(2) : '-';
                 
-                const subInfo = getSubLevelInfo(row.geral);
+                const macroGap = getMacroLevelGap(row.geral);
                 
                 let gapHtml = '-';
                 if(row.geral > 0) {
-                    if (subInfo.gap > 0) {
-                        gapHtml = `<span class="text-xs font-bold text-slate-600">Faltam <span class="text-blue-600">${subInfo.gap.toFixed(2)} pts</span> para ${subInfo.nextTarget.toFixed(2)}</span>`;
+                    if (macroGap.gap > 0) {
+                        gapHtml = `<span class="text-xs font-bold text-slate-600">Faltam <span class="text-blue-600">${macroGap.gap.toFixed(2)} pts</span> para ${macroGap.targetName}</span>`;
                     } else {
-                        gapHtml = `<span class="text-xs font-bold text-emerald-600"><i class="ph-bold ph-check"></i> Meta Máxima</span>`;
+                        gapHtml = `<span class="text-xs font-bold text-emerald-600"><i class="ph-bold ph-check"></i> Nível Máximo Alcançado</span>`;
                     }
                 }
+
+                let badgeNivel = getBadgeNivelMacro(row.geral);
 
                 tr.innerHTML = `
                     <td class="py-3 px-6 text-left whitespace-nowrap font-bold text-slate-800">${local}</td>
@@ -2069,9 +2103,7 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
                     <td class="py-3 px-4 text-center text-slate-600">${gescVal}</td>
                     <td class="py-3 px-4 text-center text-slate-600">${mobVal}</td>
                     <td class="py-3 px-4 text-center font-bold text-slate-800 bg-slate-50">${geralVal}</td>
-                    <td class="py-3 px-4 text-center border-l border-white bg-slate-50">
-                        <span class="px-3 py-1 rounded text-xs font-bold shadow-sm ${subInfo.class}">${subInfo.label}</span>
-                    </td>
+                    <td class="py-3 px-4 text-center border-l border-white bg-slate-50">${badgeNivel}</td>
                     <td class="py-3 px-4 text-center bg-slate-50">${gapHtml}</td>
                 `;
                 tbody.appendChild(tr);
