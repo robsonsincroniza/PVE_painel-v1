@@ -151,6 +151,52 @@
 		/* Estilos base para o Accordion das Legendas */
         details > summary { list-style: none; outline: none; }
         details > summary::-webkit-details-marker { display: none; }
+		/* ========================================================================== */
+        /* ESTILOS DE IMPRESSÃO (PDF) INFALÍVEL PARA A TABELA UX                      */
+        /* ========================================================================== */
+        @media print {
+            /* 1. Esconde TUDO o que está na página original */
+            body.print-ux-only > * {
+                display: none !important;
+            }
+            
+            /* 2. Mostra APENAS o nosso container especial de impressão (o clone) */
+            body.print-ux-only > #print-container {
+                display: block !important;
+                background: white !important;
+                width: 100% !important;
+            }
+
+            /* Força a folha a ficar na horizontal (Paisagem) */
+            @page { size: landscape; margin: 10mm; }
+
+            /* 3. Limpa botões, filtros e barras de rolagem do clone impresso */
+            #print-container .col-acoes,
+            #print-container button,
+            #print-container #ux-filters-toolbar {
+                display: none !important;
+            }
+            
+            #print-container .overflow-x-auto, 
+            #print-container .max-h-[600px] {
+                overflow: visible !important;
+                max-height: none !important;
+            }
+
+            /* 4. Força todas as estratégias (linhas ocultas) a abrirem no papel */
+            #print-container tr.hidden { 
+                display: table-row !important; 
+            }
+            
+            #print-container tr { page-break-inside: avoid !important; }
+
+            /* Mantém as cores de fundo vivas no PDF */
+            #print-container * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+		
     </style>
 </head>
 <body class="flex h-screen bg-slate-50">
@@ -816,6 +862,50 @@
                     </div>
                 </div>
             </div>
+			
+			<!-- ========================================================================= -->
+                <!-- NOVA PROPOSTA DE UX: Tabela Interativa e Expansível (Acompanhamento)      -->
+                <!-- ========================================================================= -->
+                <div id="ux-report-section" class="mt-16 border-t-2 border-dashed border-slate-300 pt-8 pb-8">
+                    <div class="bg-gradient-to-r from-slate-800 to-slate-900 rounded-t-xl p-6 text-white flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h3 class="font-bold text-xl flex items-center"><i class="ph-bold ph-lightbulb mr-2 text-pve-yellow"></i> Proposta UX: Visão Expandida e Acompanhamento</h3>
+                            <p class="text-xs text-slate-300 mt-1">Alternativa com Quick-Filters, barras de esforço e detalhamento lado a lado (ideal para reuniões e prints).</p>
+                        </div>
+                        <!-- NOVO: Chamada da nossa função inteligente de impressão -->
+                        <button onclick="printUXReport()" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-2 rounded-lg text-xs font-bold transition-colors flex items-center shrink-0">
+                            <i class="ph-bold ph-printer mr-2"></i> Salvar PDF / Imprimir
+                        </button>
+                    </div>
+                    
+                    <div class="bg-white border-x border-b border-slate-200 rounded-b-xl shadow-lg flex flex-col overflow-hidden">
+                        <!-- Quick Filters Toolbar -->
+                        <div id="ux-filters-toolbar" class="p-4 border-b border-slate-100 bg-slate-50 flex gap-2 overflow-x-auto items-center">
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center mr-2 shrink-0"><i class="ph-bold ph-funnel mr-1"></i> Filtros Rápidos:</span>
+                            <button onclick="renderMetasUX('all')" id="btnFilterUX-all" class="px-4 py-2 rounded-full text-xs font-bold bg-slate-800 text-white transition-colors shadow-md shrink-0">Todos</button>
+                            <button onclick="renderMetasUX('alta')" id="btnFilterUX-alta" class="px-4 py-2 rounded-full text-xs font-bold bg-white border border-slate-300 text-slate-600 hover:bg-orange-50 hover:text-orange-700 transition-colors shrink-0">Alta Intensidade</button>
+                            <button onclick="renderMetasUX('refinamento')" id="btnFilterUX-refinamento" class="px-4 py-2 rounded-full text-xs font-bold bg-white border border-slate-300 text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition-colors shrink-0">Refinamento</button>
+                            <button onclick="renderMetasUX('perto')" id="btnFilterUX-perto" class="px-4 py-2 rounded-full text-xs font-bold bg-white border border-slate-300 text-slate-600 hover:bg-blue-50 hover:text-blue-700 transition-colors shrink-0"><i class="ph-fill ph-target mr-1"></i> A 1 ou 2 passos da Meta</button>
+                        </div>
+
+                        <!-- Tabela UX -->
+                        <div class="overflow-x-auto max-h-[600px]"> 
+                            <table class="min-w-full text-sm">
+                                <thead class="sticky top-0 z-20 shadow-sm bg-slate-100 border-b border-slate-200">
+                                    <tr class="text-slate-600 uppercase text-[10px] font-bold tracking-wider leading-normal">
+                                        <th class="py-4 px-6 text-left border-r border-slate-200 w-1/4">Município</th>
+                                        <th class="py-4 px-4 text-center border-r border-slate-200 w-32">Nível Atual</th>
+                                        <th class="py-4 px-6 text-left border-r border-slate-200">Progresso para Meta 500</th>
+                                        <!-- NOVO: Adicionada a classe col-acoes -->
+                                        <th class="py-4 px-4 text-center w-40 col-acoes">Ações (Estratégia)</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="metasBodyUX" class="text-slate-700 font-medium"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- ================== FIM NOVA PROPOSTA DE UX ============================== -->
 
             <!-- PÁGINA 6: LEGENDAS -->
             <div id="page-legendas" class="page-section space-y-8 hidden fade-update">
@@ -1903,7 +1993,7 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
                 return matchUf && matchMun;
             });
 
-            updateKPIs(); updateExecutiveView(); updateReguaTable(); updateMetasTab();
+            updateKPIs(); updateExecutiveView(); updateReguaTable(); updateMetasTab(); renderMetasUX();
             changeViewFrente(currentViewFrente);
             updateRecommendationEngine();
             document.getElementById('promptContainer').classList.add('hidden');
@@ -2414,6 +2504,170 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
 
             const miniSummary = document.getElementById('miniMetasSummary');
             if (miniSummary) miniSummary.innerHTML = summaryHtml;
+        }
+		
+		// =========================================================================
+        // MOTOR DA NOVA TABELA UX (METAS) E IMPRESSÃO
+        // =========================================================================
+        let currentUXFilter = 'all';
+
+        // 1. Função que ABRE e FECHA a Estratégia
+        function toggleRowUX(id, btnElement) {
+            const row = document.getElementById(id);
+            if (!row) return;
+            const isHidden = row.classList.contains('hidden');
+            
+            if(isHidden) {
+                row.classList.remove('hidden');
+                btnElement.innerHTML = '<i class="ph-bold ph-caret-up mr-1"></i> Fechar';
+                btnElement.classList.replace('bg-slate-100', 'bg-slate-800');
+                btnElement.classList.replace('text-slate-600', 'text-white');
+            } else {
+                row.classList.add('hidden');
+                btnElement.innerHTML = '<i class="ph-bold ph-caret-down mr-1"></i> Ver Estratégia';
+                btnElement.classList.replace('bg-slate-800', 'bg-slate-100');
+                btnElement.classList.replace('text-white', 'text-slate-600');
+            }
+        }
+
+        // 2. Cores das Badges da Tabela
+        function getBadgeNivelMacroUX(score) {
+            if (!score || score === 0) return `<span class="px-2 py-1 rounded text-[10px] font-bold shadow-sm bg-slate-100 text-slate-400">-</span>`;
+            if (score <= 2.50) return `<span class="px-2 py-1 rounded text-[10px] font-bold shadow-sm bg-red-100 text-red-800 border border-red-200">Nível 1</span>`;
+            if (score <= 3.25) return `<span class="px-2 py-1 rounded text-[10px] font-bold shadow-sm bg-amber-100 text-amber-800 border border-amber-200">Nível 2</span>`;
+            if (score <= 3.70) return `<span class="px-2 py-1 rounded text-[10px] font-bold shadow-sm bg-emerald-100 text-emerald-800 border border-emerald-200">Nível 3</span>`;
+            return `<span class="px-2 py-1 rounded text-[10px] font-bold shadow-sm bg-blue-100 text-blue-800 border border-blue-200">Nível 4</span>`;
+        }
+
+        // 3. O construtor da Tabela Interativa
+        function renderMetasUX(filterType = currentUXFilter) {
+            currentUXFilter = filterType;
+            
+            ['all', 'alta', 'refinamento', 'perto'].forEach(f => {
+                const btn = document.getElementById(`btnFilterUX-${f}`);
+                if(!btn) return;
+                if(f === filterType) {
+                    btn.className = "px-4 py-2 rounded-full text-xs font-bold bg-slate-800 text-white transition-colors shadow-md shrink-0";
+                } else {
+                    btn.className = "px-4 py-2 rounded-full text-xs font-bold bg-white border border-slate-300 text-slate-600 hover:bg-slate-50 transition-colors shrink-0";
+                }
+            });
+
+            const tbody = document.getElementById('metasBodyUX');
+            if(!tbody) return;
+            tbody.innerHTML = '';
+
+            let sortedData = [...currentData].sort((a, b) => a.geral - b.geral);
+
+            sortedData.forEach((row, idx) => {
+                const subInfo = getSubLevelInfo(row.geral);
+                let targetText = subInfo.m500 || ''; 
+                let isAltaIntensidade = targetText.includes('7') || targetText.includes('8') || targetText.includes('9') || targetText.includes('10');
+                let isPerto = targetText.includes('1 Comp') || targetText.includes('2 Comp');
+
+                if(filterType === 'alta' && !isAltaIntensidade) return;
+                if(filterType === 'refinamento' && isAltaIntensidade) return;
+                if(filterType === 'perto' && !isPerto) return;
+
+                const cityComps = [];
+                for(let i=1; i<=8; i++) {
+                    if(row[`gesc_c${i}`] > 0) cityComps.push({name: `GESC C${i}`, val: row[`gesc_c${i}`]});
+                    if(row[`gedu_c${i}`] > 0) cityComps.push({name: `GEDU C${i}`, val: row[`gedu_c${i}`]});
+                }
+                for(let i=1; i<=5; i++) {
+                    if(row[`mob_c${i}`] > 0) cityComps.push({name: `MOB C${i}`, val: row[`mob_c${i}`]});
+                }
+                
+                cityComps.forEach(c => {
+                    if (c.val <= 2.50) { c.nextLevel = 2.51; c.dist = 2.51 - c.val; c.levelTarget = 2; }
+                    else if (c.val <= 3.25) { c.nextLevel = 3.26; c.dist = 3.26 - c.val; c.levelTarget = 3; }
+                    else if (c.val <= 3.70) { c.nextLevel = 3.71; c.dist = 3.71 - c.val; c.levelTarget = 4; }
+                    else { c.nextLevel = 4.0; c.dist = 999; c.levelTarget = 4; }
+                });
+                
+                const cityCompsDist = [...cityComps].sort((a,b) => a.dist - b.dist);
+                const cityCompsVal = [...cityComps].sort((a,b) => a.val - b.val);
+
+                let match500 = targetText.match(/\d+/); 
+                let n500 = match500 ? parseInt(match500[0]) : 0;
+                
+                let validComps = cityCompsDist.filter(c => c.dist < 999);
+                let focos = validComps.slice(0, n500);
+                let criticas = cityCompsVal.slice(0, 3);
+
+                let progressPct = n500 === 0 ? 100 : Math.max(10, 100 - (n500 * 9)); 
+                let progressColor = isAltaIntensidade ? 'bg-orange-500' : 'bg-emerald-500';
+                if (n500 === 0) progressColor = 'bg-blue-500';
+
+                let effortBadge = isAltaIntensidade 
+                    ? `<span class="text-[10px] bg-orange-100 text-orange-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider ml-2">Alta Intensidade</span>`
+                    : `<span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider ml-2">Refinamento</span>`;
+
+                const rowId = `ux-details-${idx}`;
+
+                let htmlAvanço = focos.length > 0 
+                    ? focos.map(c => `<li class="flex items-center text-xs mb-2 text-slate-700 leading-tight"><i class="ph-bold ph-caret-double-right text-emerald-500 mr-2 text-sm shrink-0"></i> <span><strong>${c.name}</strong> <span class="text-slate-400 ml-1">(Faltam ${c.dist.toFixed(2)} pts)</span></span></li>`).join('')
+                    : `<li class="text-xs text-slate-500 italic">Todas as competências encontram-se no nível máximo (Robusto).</li>`;
+                    
+                let htmlCritico = criticas.length > 0
+                    ? criticas.map(c => `<li class="flex items-center text-xs mb-2 text-slate-700 leading-tight"><i class="ph-bold ph-warning-circle text-rose-500 mr-2 text-sm shrink-0"></i> <span><strong>${c.name}</strong> <span class="text-slate-400 ml-1">(Nota: ${c.val.toFixed(2)})</span></span></li>`).join('')
+                    : `<li class="text-xs text-slate-500 italic">-</li>`;
+
+                let badgeNivel = getBadgeNivelMacroUX(row.geral);
+
+                let tr = `
+                    <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                        <td class="py-4 px-6 text-left font-bold text-slate-800 border-r border-slate-100">${row.municipio} <br><span class="text-[10px] text-slate-400 font-normal uppercase tracking-widest">${row.uf}</span></td>
+                        <td class="py-4 px-4 text-center border-r border-slate-100">${badgeNivel}</td>
+                        <td class="py-4 px-6 text-left border-r border-slate-100">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs font-bold text-slate-700">${targetText}</span>
+                                ${n500 === 0 ? '<span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider ml-2">Meta Concluída</span>' : effortBadge}
+                            </div>
+                            <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden shadow-inner">
+                                <div class="h-full rounded-full ${progressColor} transition-all duration-500" style="width: ${progressPct}%"></div>
+                            </div>
+                        </td>
+                        <td class="py-4 px-4 text-center col-acoes">
+                            <button onclick="toggleRowUX('${rowId}', this)" class="bg-slate-100 border border-slate-200 shadow-sm text-slate-600 hover:bg-slate-200 px-3 py-2 rounded-lg text-xs font-bold transition-colors w-full flex items-center justify-center">
+                                <i class="ph-bold ph-caret-down mr-1"></i> Ver Estratégia
+                            </button>
+                        </td>
+                    </tr>
+                    <tr id="${rowId}" class="hidden bg-slate-50 border-b-2 border-slate-200 shadow-inner">
+                        <td colspan="4" class="p-0">
+                            <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6 border-l-4 border-slate-800">
+                                <div class="bg-white border border-emerald-100 p-5 rounded-lg shadow-sm">
+                                    <h4 class="text-xs font-bold text-emerald-800 uppercase tracking-widest mb-4 flex items-center border-b border-emerald-50 pb-2"><i class="ph-fill ph-trend-up mr-2 text-lg"></i> Avanço Rápido (Mais fáceis de bater a Meta)</h4>
+                                    <ul>${htmlAvanço}</ul>
+                                </div>
+                                <div class="bg-white border border-rose-100 p-5 rounded-lg shadow-sm">
+                                    <h4 class="text-xs font-bold text-rose-800 uppercase tracking-widest mb-4 flex items-center border-b border-rose-50 pb-2"><i class="ph-fill ph-warning-octagon mr-2 text-lg"></i> Foco Crítico (Menores notas absolutas)</h4>
+                                    <ul>${htmlCritico}</ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                tbody.innerHTML += tr;
+            });
+        }
+
+        // 4. Função de Geração de PDF (Garante o layout em Paisagem)
+        function printUXReport() {
+            const printContainer = document.createElement('div');
+            printContainer.id = 'print-container';
+            
+            const tableNode = document.getElementById('ux-report-section').cloneNode(true);
+            printContainer.appendChild(tableNode);
+            
+            document.body.appendChild(printContainer);
+            document.body.classList.add('print-ux-only');
+            
+            window.print();
+            
+            document.body.classList.remove('print-ux-only');
+            document.body.removeChild(printContainer);
         }
 
         function processLabels(labels) {
