@@ -790,24 +790,16 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
-                    <div class="xl:col-span-1 bg-white rounded-xl shadow-lg border border-slate-200 p-6 flex flex-col">
-                        <h3 class="font-bold text-lg text-slate-800 mb-1">Perfil de Esforço da Rede</h3>
-                        <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold mb-6">Distribuição com base na Meta 500</p>
-                        <div class="chart-container relative w-full" style="height: 250px; min-height: 250px;">
-                            <canvas id="chartMetasDoughnut"></canvas>
-                        </div>
-                        <div id="metasDoughnutSummary" class="mt-4 text-center text-sm font-medium text-slate-600 bg-slate-50 p-3 rounded border border-slate-100"></div>
-                    </div>
-
-                    <div class="xl:col-span-2 bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden flex flex-col">
+                <div class="grid grid-cols-1 gap-8">
+                    <!-- Tabela Expandida -->
+                    <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden flex flex-col">
                         <div class="p-6 border-b border-slate-100 bg-slate-50 flex justify-between items-center flex-wrap gap-4">
                             <div>
-                                <h3 class="font-bold text-slate-800 text-lg">Detalhamento de Metas por Município</h3>
-                                <p class="text-xs text-slate-500 mt-1"><strong class="text-pve-green">Passe o cursor sobre as metas</strong> para ver quais as competências mais fáceis de evoluir de nível e garantir a meta.</p>
+                                <h3 class="font-bold text-slate-800 text-lg">Detalhamento Estratégico por Município</h3>
+                                <p class="text-xs text-slate-500 mt-1"><strong class="text-pve-green">Passe o cursor sobre as metas</strong> para visualizar a estratégia equilibrada: o que é <strong>mais rápido de evoluir</strong> vs o que é <strong>mais crítico</strong> (menores notas).</p>
                             </div>
                         </div>
-                        <div class="overflow-x-auto max-h-[400px] pb-32"> 
+                        <div class="overflow-x-auto max-h-[500px] pb-32"> 
                             <table class="min-w-full text-sm relative z-10">
                                 <thead class="sticky top-0 z-20 shadow-sm">
                                     <tr class="bg-pve-blueDark text-white uppercase text-[10px] font-bold tracking-wider leading-normal">
@@ -2178,32 +2170,35 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
 
         function buildTooltipText(targetName, targetCount, cityComps) {
             if (targetCount === 0 || targetName.includes('Manter')) {
-                return `🎯 ${targetName}: Foco na manutenção da excelência e nas práticas consolidadas.`;
+                return `🎯 ESTRATÉGIA (${targetName}): Foco na manutenção da excelência e nas práticas consolidadas.`;
             }
 
-            let validComps = cityComps.filter(c => c.dist < 999);
+            // MÁGICA ACONTECE AQUI: O sistema duplica a lista e cria as duas visões automaticamente!
+            let cityCompsDist = [...cityComps].sort((a,b) => a.dist - b.dist); // Ordena pelos mais fáceis de bater a meta
+            let cityCompsVal = [...cityComps].sort((a,b) => a.val - b.val);   // Ordena pelos piores resultados (críticos)
+
+            let validComps = cityCompsDist.filter(c => c.dist < 999);
             let focos = validComps.slice(0, targetCount);
-            let outras = validComps.slice(targetCount);
             
-            let text = `🎯 FOCO DA ${targetName} (${targetCount} comp. mais próximas de subir de nível):\n\n`;
+            let text = `🎯 ESTRATÉGIA PARA ${targetName} (${targetCount} comp.):\n\n`;
             
             if (focos.length === 0) {
                 return text + "Todas as competências já se encontram no Nível Máximo (Robusto).";
             }
             
+            // Cenário 1: Avanços Rápidos
+            text += `📍 AVANÇO RÁPIDO (Mais próximas de subir):\n`;
             focos.forEach(c => {
                 text += `• ${c.name} (Nota: ${c.val.toFixed(2)} | Faltam ${(c.dist).toFixed(2)} pts p/ Nível ${c.levelTarget})\n`;
             });
             
-            if (outras.length > 0) {
-                text += `\n📌 DEMAIS COMPETÊNCIAS NA FILA:\n`;
-                outras.slice(0, 5).forEach(c => {
-                    text += `• ${c.name} (Faltam ${(c.dist).toFixed(2)} pts)\n`;
-                });
-                if (outras.length > 5) {
-                    text += `... e mais ${outras.length - 5} competências.\n`;
-                }
-            }
+            // Cenário 2: Focos Críticos
+            let criticas = cityCompsVal.slice(0, 3); // Pega as 3 piores notas daquele município
+            text += `\n🚨 FOCO CRÍTICO (Notas mais baixas absolutas):\n`;
+            criticas.forEach(c => {
+                text += `• ${c.name} (Nota: ${c.val.toFixed(2)})\n`;
+            });
+
             return text;
         }
 
@@ -2315,7 +2310,6 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
 
             let sortedData = [...currentData].sort((a, b) => a.geral - b.geral);
 
-            // FUNÇÃO AUXILIAR: Transforma a nota no crachá do Nível Macro (1, 2, 3, 4) com cores
             const getBadgeNivelMacro = (score) => {
                 if (!score || score === 0) return `<span class="px-3 py-1 rounded text-[11px] font-bold shadow-sm bg-slate-100 text-slate-400">-</span>`;
                 if (score <= 2.50) return `<span class="px-3 py-1 rounded text-[11px] font-bold shadow-sm bg-red-100 text-red-800 border border-red-200">Nível 1</span>`;
@@ -2342,7 +2336,6 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
                     countRefinamento++;
                 }
 
-                // Cálculo das competências mais fáceis de evoluir de nível
                 const cityComps = [];
                 for(let i=1; i<=8; i++) {
                     if(row[`gesc_c${i}`] > 0) cityComps.push({name: `GESC C${i}`, val: row[`gesc_c${i}`]});
@@ -2359,17 +2352,19 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
                     else { c.nextLevel = 4.0; c.dist = 999; c.levelTarget = 4; }
                 });
                 
-                cityComps.sort((a,b) => a.dist - b.dist);
+                // NOVO: Criação dos dois Arrays distintos (ordenados por Gap e ordenados por Nota Bruta)
+                const cityCompsDist = [...cityComps].sort((a,b) => a.dist - b.dist);
+                const cityCompsVal = [...cityComps].sort((a,b) => a.val - b.val);
 
                 let match100 = (subInfo.m100 || '').match(/\d+/); let n100 = match100 ? parseInt(match100[0]) : 0;
                 let match300 = (subInfo.m300 || '').match(/\d+/); let n300 = match300 ? parseInt(match300[0]) : 0;
                 let match500 = (subInfo.m500 || '').match(/\d+/); let n500 = match500 ? parseInt(match500[0]) : 0;
 
-                const tooltip100 = buildTooltipText('META 100', n100, cityComps);
-                const tooltip300 = buildTooltipText('META 300', n300, cityComps);
-                const tooltip500 = buildTooltipText('META 500', n500, cityComps);
+                // Passa ambos os arrays para a função do Tooltip
+                const tooltip100 = buildTooltipText('META 100', n100, cityCompsDist, cityCompsVal);
+                const tooltip300 = buildTooltipText('META 300', n300, cityCompsDist, cityCompsVal);
+                const tooltip500 = buildTooltipText('META 500', n500, cityCompsDist, cityCompsVal);
 
-                // AQUI: Aplica o crachá visual do Nível Macro (1, 2, 3 ou 4) na 2ª coluna
                 let badgeNivel = getBadgeNivelMacro(row.geral);
 
                 tr.innerHTML = `
@@ -2386,7 +2381,7 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
                     <td class="py-4 px-4 text-center ${effortColor} border-l border-white cursor-help font-bold shadow-sm relative group" title="${tooltip500}">
                         <div class="flex flex-col items-center justify-center">
                             <span class="border-b-2 border-dashed border-current transition-opacity text-sm">${subInfo.m500 || '-'}</span>
-                            <span class="text-[9px] font-normal uppercase tracking-widest mt-1 opacity-80 group-hover:opacity-100 transition-opacity">Ver Focos</span>
+                            <span class="text-[9px] font-normal uppercase tracking-widest mt-1 opacity-80 group-hover:opacity-100 transition-opacity">Ver Estratégia</span>
                         </div>
                     </td>
                 `;
@@ -2403,10 +2398,6 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
             if (elRef) elRef.innerText = countRefinamento;
 
             try {
-                if (chartInstances.metasDoughnut) {
-                    chartInstances.metasDoughnut.data.datasets[0].data = [countAltaIntensidade, countRefinamento];
-                    chartInstances.metasDoughnut.update();
-                }
                 if (chartInstances.miniMetas) {
                     chartInstances.miniMetas.data.datasets[0].data = [countAltaIntensidade, countRefinamento];
                     chartInstances.miniMetas.update();
