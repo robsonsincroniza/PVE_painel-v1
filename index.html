@@ -893,9 +893,12 @@
                                 <thead class="sticky top-0 z-20 shadow-sm">
                                     <tr class="bg-pve-blueDark text-white uppercase text-[10px] font-bold tracking-wider leading-normal">
                                         <th class="py-4 px-6 text-left border-r border-white/20 w-1/4">Município</th>
-                                        <th class="py-4 px-4 text-center border-r border-white/20 w-32">Nível Atual</th>
-                                        <th class="py-4 px-6 text-left border-r border-white/20">Progresso para Meta 500</th>
-                                        <th class="py-4 px-4 text-center w-40 col-acoes">Ações (Estratégia)</th>
+                                        <th class="py-4 px-4 text-center border-r border-white/20 w-28">Nível Atual</th>
+                                        <th class="py-4 px-2 text-center border-r border-white/20 w-24 text-blue-200">Meta 100</th>
+                                        <th class="py-4 px-2 text-center border-r border-white/20 w-24 text-blue-200">Meta 300</th>
+                                        <!-- COLUNA PRINCIPAL COM DESTAQUE VERDE -->
+                                        <th class="py-4 px-6 text-left border-r border-white/20 shadow-md" style="background-color: #008b45;">Progresso Meta 500 🎯</th>
+                                        <th class="py-4 px-4 text-center w-36 col-acoes">Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody id="metasBodyUX" class="text-slate-700 font-medium"></tbody>
@@ -2538,6 +2541,7 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
         }
 
         // 3. O construtor da Tabela Interativa
+        // 3. O construtor da Tabela Interativa
         function renderMetasUX(filterType = currentUXFilter) {
             currentUXFilter = filterType;
             
@@ -2586,16 +2590,19 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
                 const cityCompsDist = [...cityComps].sort((a,b) => a.dist - b.dist);
                 const cityCompsVal = [...cityComps].sort((a,b) => a.val - b.val);
 
-                let match500 = targetText.match(/\d+/); 
-                let n500 = match500 ? parseInt(match500[0]) : 0;
+                let match100 = (subInfo.m100 || '').match(/\d+/); let n100 = match100 ? parseInt(match100[0]) : 0;
+                let match300 = (subInfo.m300 || '').match(/\d+/); let n300 = match300 ? parseInt(match300[0]) : 0;
+                let match500 = (subInfo.m500 || '').match(/\d+/); let n500 = match500 ? parseInt(match500[0]) : 0;
                 
                 let validComps = cityCompsDist.filter(c => c.dist < 999);
-                let focos = validComps.slice(0, n500);
                 let criticas = cityCompsVal.slice(0, 3);
 
-                let progressPct = n500 === 0 ? 100 : Math.max(10, 100 - (n500 * 9)); 
-                let progressColor = isAltaIntensidade ? 'bg-orange-500' : 'bg-emerald-500';
-                if (n500 === 0) progressColor = 'bg-blue-500';
+                let pct100 = n100 === 0 ? 100 : Math.max(10, 100 - (n100 * 20));
+                let pct300 = n300 === 0 ? 100 : Math.max(10, 100 - (n300 * 15));
+                let pct500 = n500 === 0 ? 100 : Math.max(10, 100 - (n500 * 9)); 
+
+                let color500 = isAltaIntensidade ? 'bg-orange-500' : 'bg-emerald-500';
+                if (n500 === 0) color500 = 'bg-blue-500';
 
                 let effortBadge = isAltaIntensidade 
                     ? `<span class="text-[10px] bg-orange-100 text-orange-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider ml-2">Alta Intensidade</span>`
@@ -2603,9 +2610,33 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
 
                 const rowId = `ux-details-${idx}`;
 
-                let htmlAvanço = focos.length > 0 
-                    ? focos.map(c => `<li class="flex items-center text-xs mb-2 text-slate-700 leading-tight"><i class="ph-bold ph-caret-double-right text-emerald-500 mr-2 text-sm shrink-0"></i> <span><strong>${c.name}</strong> <span class="text-slate-400 ml-1">(Faltam ${c.dist.toFixed(2)} pts)</span></span></li>`).join('')
-                    : `<li class="text-xs text-slate-500 italic">Todas as competências encontram-se no nível máximo (Robusto).</li>`;
+                // MÁGICA DE UX: Inversão da ordem (500 primeiro, depois 300, depois 100)
+                let htmlAvanço = '';
+                if (n500 === 0) {
+                    htmlAvanço = `<li class="text-xs text-slate-500 italic">Todas as competências encontram-se no nível máximo (Robusto).</li>`;
+                } else {
+                    let f100 = validComps.slice(0, n100);
+                    let f300 = validComps.slice(n100, n300);
+                    let f500 = validComps.slice(n300, n500);
+
+                    // Imprime a Meta 500 no topo
+                    if (f500.length > 0) {
+                        htmlAvanço += `<div class="mb-2"><span class="text-[9px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded uppercase tracking-wider shadow-sm">Passo 3: Meta 500 🎯</span></div>`;
+                        f500.forEach(c => htmlAvanço += `<li class="flex items-center text-xs mb-2 text-slate-700 leading-tight pl-1"><i class="ph-bold ph-check-circle text-emerald-500 mr-2 text-sm shrink-0"></i> <span><strong>${c.name}</strong> <span class="text-slate-400 ml-1">(Faltam ${c.dist.toFixed(2)} pts)</span></span></li>`);
+                    }
+                    // Imprime a Meta 300 no meio
+                    if (f300.length > 0) {
+                        let margin = f500.length > 0 ? "mt-3" : ""; // Dá espaço se a 500 já estiver impressa
+                        htmlAvanço += `<div class="mb-2 ${margin}"><span class="text-[9px] font-bold bg-slate-200 text-slate-700 px-2 py-0.5 rounded uppercase tracking-wider">Passo 2: Meta 300</span></div>`;
+                        f300.forEach(c => htmlAvanço += `<li class="flex items-center text-xs mb-2 text-slate-700 leading-tight pl-1"><i class="ph-bold ph-caret-right text-emerald-400 mr-2 text-sm shrink-0"></i> <span><strong>${c.name}</strong> <span class="text-slate-400 ml-1">(Faltam ${c.dist.toFixed(2)} pts)</span></span></li>`);
+                    }
+                    // Imprime a Meta 100 no fim
+                    if (f100.length > 0) {
+                        let margin = (f500.length > 0 || f300.length > 0) ? "mt-3" : "";
+                        htmlAvanço += `<div class="mb-2 ${margin}"><span class="text-[9px] font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded uppercase tracking-wider">Passo 1: Meta 100</span></div>`;
+                        f100.forEach(c => htmlAvanço += `<li class="flex items-center text-xs mb-2 text-slate-700 leading-tight pl-1"><i class="ph-bold ph-caret-right text-slate-400 mr-2 text-sm shrink-0"></i> <span><strong>${c.name}</strong> <span class="text-slate-400 ml-1">(Faltam ${c.dist.toFixed(2)} pts)</span></span></li>`);
+                    }
+                }
                     
                 let htmlCritico = criticas.length > 0
                     ? criticas.map(c => `<li class="flex items-center text-xs mb-2 text-slate-700 leading-tight"><i class="ph-bold ph-warning-circle text-rose-500 mr-2 text-sm shrink-0"></i> <span><strong>${c.name}</strong> <span class="text-slate-400 ml-1">(Nota: ${c.val.toFixed(2)})</span></span></li>`).join('')
@@ -2617,26 +2648,44 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
                     <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
                         <td class="py-4 px-6 text-left font-bold text-slate-800 border-r border-slate-100">${row.municipio} <br><span class="text-[10px] text-slate-400 font-normal uppercase tracking-widest">${row.uf}</span></td>
                         <td class="py-4 px-4 text-center border-r border-slate-100">${badgeNivel}</td>
-                        <td class="py-4 px-6 text-left border-r border-slate-100">
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-xs font-bold text-slate-700">${targetText}</span>
-                                ${n500 === 0 ? '<span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider ml-2">Meta Concluída</span>' : effortBadge}
-                            </div>
-                            <div class="w-full bg-slate-200 rounded-full h-2 overflow-hidden shadow-inner">
-                                <div class="h-full rounded-full ${progressColor} transition-all duration-500" style="width: ${progressPct}%"></div>
+                        
+                        <td class="py-4 px-3 text-center border-r border-slate-100">
+                            <div class="text-[10px] font-bold ${n100===0 ? 'text-blue-500' : 'text-slate-400'} mb-1">${n100===0 ? 'Atingida' : subInfo.m100}</div>
+                            <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                                <div class="h-full rounded-full ${n100===0 ? 'bg-blue-400' : 'bg-slate-300'} transition-all duration-500" style="width: ${pct100}%"></div>
                             </div>
                         </td>
+
+                        <td class="py-4 px-3 text-center border-r border-slate-100">
+                            <div class="text-[10px] font-bold ${n300===0 ? 'text-blue-500' : 'text-slate-400'} mb-1">${n300===0 ? 'Atingida' : subInfo.m300}</div>
+                            <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                                <div class="h-full rounded-full ${n300===0 ? 'bg-blue-400' : 'bg-slate-400'} transition-all duration-500" style="width: ${pct300}%"></div>
+                            </div>
+                        </td>
+
+                        <!-- Barra Principal Meta 500 -->
+                        <td class="py-4 px-6 text-left border-r border-slate-100 bg-emerald-50/30">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs font-bold text-slate-800">${targetText}</span>
+                                ${n500 === 0 ? '<span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider ml-2">Meta Concluída</span>' : effortBadge}
+                            </div>
+                            <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden shadow-inner">
+                                <div class="h-full rounded-full ${color500} transition-all duration-500" style="width: ${pct500}%"></div>
+                            </div>
+                        </td>
+                        
                         <td class="py-4 px-4 text-center col-acoes">
                             <button onclick="toggleRowUX('${rowId}', this)" class="bg-slate-100 border border-slate-200 shadow-sm text-slate-600 hover:bg-slate-200 px-3 py-2 rounded-lg text-xs font-bold transition-colors w-full flex items-center justify-center">
                                 <i class="ph-bold ph-caret-down mr-1"></i> Ver Estratégia
                             </button>
                         </td>
                     </tr>
+                    
                     <tr id="${rowId}" class="hidden bg-slate-50 border-b-2 border-slate-200 shadow-inner">
-                        <td colspan="4" class="p-0">
+                        <td colspan="6" class="p-0">
                             <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6 border-l-4 border-slate-800">
                                 <div class="bg-white border border-emerald-100 p-5 rounded-lg shadow-sm">
-                                    <h4 class="text-xs font-bold text-emerald-800 uppercase tracking-widest mb-4 flex items-center border-b border-emerald-50 pb-2"><i class="ph-fill ph-trend-up mr-2 text-lg"></i> Avanço Rápido (Mais fáceis de bater a Meta)</h4>
+                                    <h4 class="text-xs font-bold text-emerald-800 uppercase tracking-widest mb-4 flex items-center border-b border-emerald-50 pb-2"><i class="ph-fill ph-trend-up mr-2 text-lg"></i> Jornada de Avanço (Passo a Passo)</h4>
                                     <ul>${htmlAvanço}</ul>
                                 </div>
                                 <div class="bg-white border border-rose-100 p-5 rounded-lg shadow-sm">
