@@ -344,9 +344,23 @@
                     <div class="xl:col-span-2 bg-white rounded-xl shadow-sm p-6 md:p-8 border border-slate-200 flex flex-col">
                         <div class="mb-4 border-b border-slate-100 pb-4">
                             <h3 class="text-lg font-bold text-slate-800">Distribuição de Maturidade (Visão Macro)</h3>
-                            <p class="text-xs text-slate-500">Contagem de municípios agrupados nos 4 níveis oficiais da Matriz.</p>
+                            <p class="text-xs text-slate-500 mt-1 mb-3">Contagem de municípios agrupados nos 4 níveis oficiais da Matriz.</p>
+                            
+                            <!-- Legenda Visual da Linha de Tendência -->
+<!-- Legenda Visual da Linha de Tendência -->
+                            <div class="inline-flex items-center bg-slate-50 border border-slate-200 rounded px-3 py-2">
+                                <div class="flex items-center mr-3" aria-hidden="true">
+                                    <div class="w-6 h-0.5 bg-slate-800 relative flex items-center justify-center">
+                                        <div class="w-2.5 h-2.5 bg-pve-yellow rounded-full border-2 border-slate-800 absolute"></div>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] text-slate-600 leading-tight">
+                                    <strong class="uppercase tracking-widest text-slate-800">Linha de Referência Global:</strong> 
+                                    Indica a Média Geral fixa dos 33 municípios do PVE. Use-a para comparar se a sua seleção está acima ou abaixo do projeto. <span class="text-pve-green font-bold">Lê-se a nota no eixo da direita.</span>
+                                </span>
+                            </div>
                         </div>
-                        <div class="chart-container relative w-full" style="height: 300px; min-height: 300px;">
+                        <div class="chart-container relative w-full flex-1" style="height: 250px; min-height: 250px;">
                             <canvas id="chartDistribution"></canvas>
                         </div>
                     </div>
@@ -359,10 +373,16 @@
                         <div class="chart-container relative w-full flex-1" style="height: 250px; min-height: 250px;">
                             <canvas id="chartMiniMetas"></canvas>
                         </div>
-                        <div id="miniMetasSummary" class="mt-4 text-center text-sm font-medium text-slate-600 bg-slate-50 p-3 rounded border border-slate-100">
+                        <div id="miniMetasSummary" class="mt-4 text-center text-sm font-medium text-slate-600 bg-slate-50 p-3 rounded border border-slate-100 mb-4">
+                        </div>
+                        
+                        <!-- NOVO: Legenda Explicativa Alta Intensidade x Refinamento -->
+                        <div class="bg-slate-50 border border-slate-100 p-3 rounded-lg text-xs text-slate-600 leading-relaxed mt-auto">
+                            <p class="mb-2"><strong class="text-pve-orange"><i class="ph-fill ph-arrow-circle-up mr-1 text-sm align-text-bottom"></i>Alta Intensidade:</strong> Média Geral ≤ 3.25. Foco prioritário estrutural para bater a meta.</p>
+                            <p><strong class="text-pve-green"><i class="ph-fill ph-check-circle mr-1 text-sm align-text-bottom"></i>Refinamento:</strong> Média Geral > 3.25. Foco na manutenção da excelência e ajustes finos.</p>
                         </div>
                     </div>
-                </div>
+				</div>
 
                 <div class="col-span-1 md:col-span-2 flex flex-col sm:flex-row justify-between items-start sm:items-end border-b border-slate-200 pb-3 mt-8 mb-2 gap-4">
                     <div>
@@ -469,7 +489,7 @@
                         
                         <div class="lg:col-span-1 bg-white p-6 md:p-8 flex flex-col">
                             <h4 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1">Interpretação de Resultados</h4>
-                            <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">O que significa este recorte selecionado?</p>
+                            <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">O que significa o gráfico para este recorte selecionado</p>
                             
                             <div id="radarInsightContent" class="space-y-4 flex-1 mt-4">
                                 <!-- Preenchido via JS -->
@@ -1846,6 +1866,10 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
         function updateExecutiveView() {
             const numMun = currentData.length;
             document.getElementById('kpiOpMun').innerText = numMun;
+            
+            // NOVO: Atualiza o número de municípios na legenda da Linha de Tendência
+            const trendLineCountEl = document.getElementById('trendLineCount');
+            if (trendLineCountEl) trendLineCountEl.innerText = numMun;
             const rankMetricSelect = document.getElementById('rankingFrenteSelect');
             const rankMetric = rankMetricSelect ? rankMetricSelect.value : 'geral';
 
@@ -1895,7 +1919,7 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
             setKpiUI('Global', avgGlobal, true); setKpiUI('Gedu', avgGedu); setKpiUI('Gesc', avgGesc); setKpiUI('Mob', avgMob);
         }
 
-        function updateRadarInsights(avgSelection, avgGlobal) {
+       function updateRadarInsights(avgSelection, avgGlobal) {
             const insightBox = document.getElementById('radarInsightContent');
             if(!insightBox) return;
 
@@ -1903,15 +1927,31 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
             const labels = radarLabels[currentViewFrente];
             const nomeFrente = {'mob':'Mobilização Social', 'gesc':'Gestão Escolar', 'gedu':'Gestão Educacional'}[currentViewFrente];
 
-            let highestVal = 0; let highestCompIndex = -1; let highestComp = '';
-            let lowestVal = 999; let lowestCompIndex = -1; let lowestComp = '';
+            // CORREÇÃO CRÍTICA: Fórmula matemática embutida para evitar que a tela fique em branco
+            const getDistanceToNextLevel = (val) => {
+                let v = Number(val);
+                if (v <= 2.50) return { next: 2.51, dist: 2.51 - v, targetLevel: 2 };
+                if (v <= 3.25) return { next: 3.26, dist: 3.26 - v, targetLevel: 3 };
+                if (v <= 3.70) return { next: 3.71, dist: 3.71 - v, targetLevel: 4 };
+                return { next: 4.0, dist: 999, targetLevel: 4 }; 
+            };
+
             let sumSel = 0; let sumGlob = 0;
+            let comps = [];
             
+            // 1. Mapeia e calcula a distância para todas as competências
             for(let i=0; i<numCols; i++) {
                 if(avgSelection[i] > 0) {
-                    sumSel += avgSelection[i]; sumGlob += avgGlobal[i];
-                    if(avgSelection[i] > highestVal) { highestVal = avgSelection[i]; highestComp = labels[i]; highestCompIndex = i; }
-                    if(avgSelection[i] < lowestVal) { lowestVal = avgSelection[i]; lowestComp = labels[i]; lowestCompIndex = i; }
+                    sumSel += avgSelection[i]; 
+                    sumGlob += avgGlobal[i];
+                    let dInfo = getDistanceToNextLevel(avgSelection[i]);
+                    comps.push({
+                        name: labels[i],
+                        val: avgSelection[i],
+                        dist: dInfo.dist,
+                        nextLvlNum: dInfo.next,
+                        id: `${currentViewFrente}_c${i + 1}`
+                    });
                 }
             }
             
@@ -1935,22 +1975,49 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
 
             let html = `<div class="space-y-4"><p class="text-sm text-slate-700 leading-relaxed">Analisando a matriz de ${nomeFrente}, ${selectionText} apresenta nível de maturidade <strong class="${statusGeral.textClass} uppercase">${statusGeral.label}</strong> (Média ${avgTotal.toFixed(2)}).</p><p class="text-sm text-slate-700 leading-relaxed mb-4">${analiseContexto}</p>`;
 
-            if (lowestComp !== '' && lowestCompIndex !== -1) {
-                let compId = `${currentViewFrente}_c${lowestCompIndex + 1}`;
-                let textoGargalo = insightsPedagogicos[compId] ? insightsPedagogicos[compId].gargalo : 'Foco principal das próximas formações.';
-                let statusColor = lowestVal <= 2.50 ? 'red' : 'amber';
-                let icon = lowestVal <= 2.50 ? 'ph-warning-octagon' : 'ph-warning';
-                let alertText = lowestVal <= 2.50 ? 'Prioridade Crítica de Ação' : 'Ponto de Atenção';
+            // 2. Lógica da Tríade de Recomendação (Idêntico ao Relatório de Formadores)
+            let pool = [...comps];
+            
+            // Gargalo: A menor nota absoluta
+            pool.sort((a, b) => a.val - b.val);
+            let gargalo = pool.length > 0 ? pool.shift() : null;
 
-                html += `<div class="bg-${statusColor}-50 border-l-4 border-${statusColor}-500 p-3 rounded-r-lg shadow-sm"><h5 class="text-[11px] font-bold text-${statusColor}-800 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ${icon} mr-1 text-${statusColor}-600 text-sm"></i> ${alertText}</h5><p class="text-sm text-slate-700">A competência a focar neste eixo é <strong>${lowestComp}</strong> (Nota <strong>${lowestVal.toFixed(2)}</strong>). ${textoGargalo}</p></div>`;
+            // Fortaleza: A maior nota absoluta
+            pool.sort((a, b) => b.val - a.val);
+            let fortaleza = pool.length > 0 ? pool.shift() : null;
+
+            // Ampliação: A menor distância para bater a próxima meta
+            pool.sort((a, b) => a.dist - b.dist);
+            let ampliacao = pool.length > 0 ? pool.shift() : null;
+
+            // 3. Constrói os Cards Visuais
+            if (gargalo) {
+                let textoGargalo = insightsPedagogicos[gargalo.id] ? insightsPedagogicos[gargalo.id].gargalo : 'Foco principal de recomposição.';
+                html += `<div class="bg-rose-50 border-l-4 border-rose-500 p-3 rounded-r-lg shadow-sm mt-4">
+                    <h5 class="text-[11px] font-bold text-rose-800 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-warning-octagon mr-1 text-rose-600 text-sm"></i> O que Desenvolver (Gargalo)</h5>
+                    <p class="text-sm text-slate-700">A competência crítica é <strong>${gargalo.name}</strong> (Nota <strong>${gargalo.val.toFixed(2)}</strong>). ${textoGargalo}</p>
+                </div>`;
             }
-            
-            if (highestComp !== '' && highestCompIndex !== -1) {
-                let compId = `${currentViewFrente}_c${highestCompIndex + 1}`;
-                let textoAlavanca = insightsPedagogicos[compId] ? insightsPedagogicos[compId].alavanca : 'Reconheça este esforço como ponte.';
-                html += `<div class="bg-emerald-50 border-l-4 border-emerald-500 p-3 rounded-r-lg shadow-sm mt-4"><h5 class="text-[11px] font-bold text-emerald-800 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-trend-up mr-1 text-emerald-600 text-sm"></i> Alavanca Positiva</h5><p class="text-sm text-slate-700">O destaque é <strong>${highestComp}</strong> (Nota <strong>${highestVal.toFixed(2)}</strong>). ${textoAlavanca}</p></div>`;
+
+            if (ampliacao) {
+                let txtAmpliacao = ampliacao.dist < 999 
+                    ? `Foque em <strong>${ampliacao.name}</strong> (Nota <strong>${ampliacao.val.toFixed(2)}</strong>). Faltam apenas <strong>${ampliacao.dist.toFixed(2)} pontos</strong> para atingir a meta ${ampliacao.nextLvlNum.toFixed(2)} e saltar de nível. Use-a como um "quick-win" (avanço rápido).`
+                    : `Foque em <strong>${ampliacao.name}</strong> (Nota <strong>${ampliacao.val.toFixed(2)}</strong>). Esta área já se encontra em nível máximo de excelência.`;
+
+                html += `<div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded-r-lg shadow-sm mt-4">
+                    <h5 class="text-[11px] font-bold text-amber-800 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-arrows-out-line-horizontal mr-1 text-amber-600 text-sm"></i> Ampliação (Avançar)</h5>
+                    <p class="text-sm text-slate-700">${txtAmpliacao}</p>
+                </div>`;
             }
-            
+
+            if (fortaleza) {
+                let textoAlavanca = insightsPedagogicos[fortaleza.id] ? insightsPedagogicos[fortaleza.id].alavanca : 'Reconheça este esforço como ponte.';
+                html += `<div class="bg-emerald-50 border-l-4 border-emerald-500 p-3 rounded-r-lg shadow-sm mt-4">
+                    <h5 class="text-[11px] font-bold text-emerald-800 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-anchor-simple mr-1 text-emerald-600 text-sm"></i> O que Manter (Fortaleza)</h5>
+                    <p class="text-sm text-slate-700">O destaque é <strong>${fortaleza.name}</strong> (Nota <strong>${fortaleza.val.toFixed(2)}</strong>). ${textoAlavanca}</p>
+                </div>`;
+            }
+
             html += `</div>`;
             insightBox.innerHTML = html;
         }
@@ -2340,11 +2407,19 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
                     responsive: true, maintainAspectRatio: false,
                     scales: { 
                         x: { stacked: true, grid: {display: false}, ticks: {font: {weight: 'bold'}} }, 
-                        y: { stacked: true, beginAtZero: true, title: {display: true, text: 'Nº Municípios'}, grid: {borderDash: [4,4]} } 
+                        y: { stacked: true, beginAtZero: true, title: {display: true, text: 'Nº Municípios'}, grid: {borderDash: [4,4]}, position: 'left' },
+                        // ADICIONADO: Eixo secundário para a Linha de Média
+                        y2: { type: 'linear', position: 'right', min: 1, max: 4, title: {display: true, text: 'Nota Média'}, grid: {display: false}, ticks: {font: {weight: 'bold'}} }
                     },
                     plugins: { 
                         legend: { display: false },
-                        datalabels: { display: false } 
+                        datalabels: { 
+                            // ADICIONADO: Exibe o número apenas na bolinha da linha, escondendo nas barras
+                            display: function(context) { return context.dataset.type === 'line'; },
+                            color: '#1E293B', font: { weight: '900', size: 14, family: 'Inter' },
+                            align: 'bottom', offset: 8,
+                            formatter: (val) => val > 0 ? val.toFixed(2) : ''
+                        } 
                     } 
                 }
             });
@@ -2553,12 +2628,13 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
         function updateCharts() {
             try {
                 const levels = {
-                    fragil: { label: 'Frágil', color: '#EF4444', data: [0,0,0] },
-                    cons: { label: 'Em Consolidação', color: '#F59E0B', data: [0,0,0] },
-                    consolidado: { label: 'Consolidado', color: '#10B981', data: [0,0,0] },
-                    robusto: { label: 'Robusto', color: '#3B82F6', data: [0,0,0] }
+                    fragil: { label: 'Frágil (≤ 2.50)', color: '#EF4444', data: [0,0,0] },
+                    cons: { label: 'Em Consolidação (2.51 - 3.25)', color: '#F59E0B', data: [0,0,0] },
+                    consolidado: { label: 'Consolidado (3.26 - 3.70)', color: '#10B981', data: [0,0,0] },
+                    robusto: { label: 'Robusto (> 3.70)', color: '#3B82F6', data: [0,0,0] }
                 };
 
+                // As BARRAS olham para o currentData (obedecem aos filtros)
                 currentData.forEach(row => {
                     ['gedu', 'gesc', 'mob'].forEach((frente, idx) => {
                         const score = row[frente];
@@ -2571,9 +2647,36 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
                     });
                 });
 
-                chartInstances.dist.data.datasets = Object.values(levels).map(l => ({
+                let datasets = Object.values(levels).map(l => ({
+                    type: 'bar', yAxisID: 'y',
                     label: l.label, data: l.data, backgroundColor: l.color, barThickness: 60, borderRadius: 4
                 }));
+
+                // A LINHA olha para o dbData (Média Global Fixa e imutável)
+                let sumGeduGlobal = 0, countGeduGlobal = 0;
+                let sumGescGlobal = 0, countGescGlobal = 0;
+                let sumMobGlobal = 0, countMobGlobal = 0;
+
+                dbData.forEach(row => {
+                    if(row.gedu > 0) { sumGeduGlobal += row.gedu; countGeduGlobal++; }
+                    if(row.gesc > 0) { sumGescGlobal += row.gesc; countGescGlobal++; }
+                    if(row.mob > 0) { sumMobGlobal += row.mob; countMobGlobal++; }
+                });
+
+                const avgGeduFixa = countGeduGlobal > 0 ? sumGeduGlobal / countGeduGlobal : 0;
+                const avgGescFixa = countGescGlobal > 0 ? sumGescGlobal / countGescGlobal : 0;
+                const avgMobFixa = countMobGlobal > 0 ? sumMobGlobal / countMobGlobal : 0;
+
+                datasets.push({
+                    type: 'line', yAxisID: 'y2',
+                    label: 'Média Global PVE (Fixa)',
+                    data: [avgGeduFixa, avgGescFixa, avgMobFixa],
+                    borderColor: '#1E293B', backgroundColor: '#1E293B',
+                    borderWidth: 3, pointRadius: 6, pointBackgroundColor: '#FBBF24',
+                    fill: false
+                });
+
+                chartInstances.dist.data.datasets = datasets;
                 chartInstances.dist.update();
             } catch(e) { console.error("Error Dist Chart:", e); }
 
