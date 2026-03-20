@@ -585,24 +585,85 @@
                                 <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold mt-1">Defina o cruzamento de eixos com toda a matriz</p>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                
+                                <!-- Eixo X -->
                                 <div>
                                     <label class="block text-xs font-bold text-pve-green mb-1">Eixo Horizontal (X)</label>
                                     <select id="selEixoX" class="w-full text-xs border border-slate-300 rounded-lg px-2 py-2 focus:ring-pve-green focus:border-pve-green bg-white font-medium shadow-sm" onchange="updateClusters()">
-                                        <optgroup label="Médias Gerais"><option value="gesc">Média Gestão Escolar (GESC)</option><option value="gedu">Média Gestão Educ. (GEDU)</option><option value="mob" selected>Média Mobilização (MOB)</option></optgroup>
-                                        <optgroup label="Gestão Escolar (GESC)"><option value="gesc_c1">C1 - Processos de gestão</option><option value="gesc_c2">C2 - Registro e doc.</option><option value="gesc_c3">C3 - Acompanhamento aprend.</option><option value="gesc_c4">C4 - Equipe colaborativa</option><option value="gesc_c5">C5 - Parcerias/Mobilização</option><option value="gesc_c6">C6 - Articulação de redes</option><option value="gesc_c7">C7 - Formação continuada</option><option value="gesc_c8">C8 - Gestão de recursos</option></optgroup>
-                                        <optgroup label="Gestão Educacional (GEDU)"><option value="gedu_c1">C1 - Processos de gestão</option><option value="gedu_c2">C2 - Registro e doc.</option><option value="gedu_c3">C3 - Acompanhamento aprend.</option><option value="gedu_c4">C4 - Equipe colaborativa</option><option value="gedu_c5">C5 - Parcerias/Mobilização</option><option value="gesc_c6">C6 - Articulação de redes</option><option value="gedu_c7">C7 - Formação continuada</option><option value="gedu_c8">C8 - Gestão de recursos</option></optgroup>
-                                        <optgroup label="Mobilização Social (MOB)"><option value="mob_c1">C1 - Conhecimento</option><option value="mob_c2">C2 - Atitude</option><option value="mob_c3">C3 - Estrutura</option><option value="mob_c4">C4 - Vitalidade</option><option value="mob_c5">C5 - Cobertura</option></optgroup>
+                                        <optgroup label="Médias Gerais">
+                                            <option value="gesc">[Média] Gestão Escolar (GESC)</option>
+                                            <option value="gedu">[Média] Gestão Educ. (GEDU)</option>
+                                            <option value="mob" selected>[Média] Mobilização (MOB)</option>
+                                        </optgroup>
+                                        <optgroup label="Gestão Escolar (GESC)">
+                                            <option value="gesc_c1">[GESC] C1 - Processos de gestão</option>
+                                            <option value="gesc_c2">[GESC] C2 - Registro e doc.</option>
+                                            <option value="gesc_c3">[GESC] C3 - Acompanhamento aprend.</option>
+                                            <option value="gesc_c4">[GESC] C4 - Equipe colaborativa</option>
+                                            <option value="gesc_c5">[GESC] C5 - Parcerias/Mobilização</option>
+                                            <option value="gesc_c6">[GESC] C6 - Articulação de redes</option>
+                                            <option value="gesc_c7">[GESC] C7 - Formação continuada</option>
+                                            <option value="gesc_c8">[GESC] C8 - Gestão de recursos</option>
+                                        </optgroup>
+                                        <optgroup label="Gestão Educacional (GEDU)">
+                                            <option value="gedu_c1">[GEDU] C1 - Processos de gestão</option>
+                                            <option value="gedu_c2">[GEDU] C2 - Registro e doc.</option>
+                                            <option value="gedu_c3">[GEDU] C3 - Acompanhamento aprend.</option>
+                                            <option value="gedu_c4">[GEDU] C4 - Equipe colaborativa</option>
+                                            <option value="gedu_c5">[GEDU] C5 - Parcerias/Mobilização</option>
+                                            <option value="gedu_c6">[GEDU] C6 - Articulação de redes</option>
+                                            <option value="gedu_c7">[GEDU] C7 - Formação continuada</option>
+                                            <option value="gedu_c8">[GEDU] C8 - Gestão de recursos</option>
+                                        </optgroup>
+                                        <optgroup label="Mobilização Social (MOB)">
+                                            <option value="mob_c1">[MOB] C1 - Conhecimento</option>
+                                            <option value="mob_c2">[MOB] C2 - Atitude</option>
+                                            <option value="mob_c3">[MOB] C3 - Estrutura</option>
+                                            <option value="mob_c4">[MOB] C4 - Vitalidade</option>
+                                            <option value="mob_c5">[MOB] C5 - Cobertura</option>
+                                        </optgroup>
                                     </select>
-                                </div>
+                                </div> <!-- Esta foi a div que ficou sem o fecho no seu código -->
+                                
+                                <!-- Eixo Y -->
                                 <div>
                                     <label class="block text-xs font-bold text-pve-green mb-1">Eixo Vertical (Y)</label>
                                     <select id="selEixoY" class="w-full text-xs border border-slate-300 rounded-lg px-2 py-2 focus:ring-pve-green focus:border-pve-green bg-white font-medium shadow-sm" onchange="updateClusters()">
-                                        <optgroup label="Médias Gerais"><option value="gedu">Média Gestão Educ. (GEDU)</option><option value="gesc" selected>Média Gestão Escolar (GESC)</option><option value="mob">Média Mobilização (MOB)</option></optgroup>
-                                        <optgroup label="Gestão Escolar (GESC)"><option value="gesc_c1">C1 - Processos de gestão</option><option value="gesc_c2">C2 - Registro e doc.</option><option value="gesc_c3">C3 - Acompanhamento aprend.</option><option value="gesc_c4">C4 - Equipe colaborativa</option><option value="gesc_c5">C5 - Parcerias/Mobilização</option><option value="gesc_c6">C6 - Articulação de redes</option><option value="gesc_c7">C7 - Formação continuada</option><option value="gesc_c8">C8 - Gestão de recursos</option></optgroup>
-                                        <optgroup label="Gestão Educacional (GEDU)"><option value="gedu_c1">C1 - Processos de gestão</option><option value="gedu_c2">C2 - Registro e doc.</option><option value="gedu_c3">C3 - Acompanhamento aprend.</option><option value="gedu_c4">C4 - Equipe colaborativa</option><option value="gedu_c5">C5 - Parcerias/Mobilização</option><option value="gesc_c6">C6 - Articulação de redes</option><option value="gedu_c7">C7 - Formação continuada</option><option value="gedu_c8">C8 - Gestão de recursos</option></optgroup>
-                                        <optgroup label="Mobilização Social (MOB)"><option value="mob_c1">C1 - Conhecimento</option><option value="mob_c2">C2 - Atitude</option><option value="mob_c3">C3 - Estrutura</option><option value="mob_c4">C4 - Vitalidade</option><option value="mob_c5">C5 - Cobertura</option></optgroup>
+                                        <optgroup label="Médias Gerais">
+                                            <option value="gedu">[Média] Gestão Educ. (GEDU)</option>
+                                            <option value="gesc" selected>[Média] Gestão Escolar (GESC)</option>
+                                            <option value="mob">[Média] Mobilização (MOB)</option>
+                                        </optgroup>
+                                        <optgroup label="Gestão Escolar (GESC)">
+                                            <option value="gesc_c1">[GESC] C1 - Processos de gestão</option>
+                                            <option value="gesc_c2">[GESC] C2 - Registro e doc.</option>
+                                            <option value="gesc_c3">[GESC] C3 - Acompanhamento aprend.</option>
+                                            <option value="gesc_c4">[GESC] C4 - Equipe colaborativa</option>
+                                            <option value="gesc_c5">[GESC] C5 - Parcerias/Mobilização</option>
+                                            <option value="gesc_c6">[GESC] C6 - Articulação de redes</option>
+                                            <option value="gesc_c7">[GESC] C7 - Formação continuada</option>
+                                            <option value="gesc_c8">[GESC] C8 - Gestão de recursos</option>
+                                        </optgroup>
+                                        <optgroup label="Gestão Educacional (GEDU)">
+                                            <option value="gedu_c1">[GEDU] C1 - Processos de gestão</option>
+                                            <option value="gedu_c2">[GEDU] C2 - Registro e doc.</option>
+                                            <option value="gedu_c3">[GEDU] C3 - Acompanhamento aprend.</option>
+                                            <option value="gedu_c4">[GEDU] C4 - Equipe colaborativa</option>
+                                            <option value="gedu_c5">[GEDU] C5 - Parcerias/Mobilização</option>
+                                            <option value="gedu_c6">[GEDU] C6 - Articulação de redes</option>
+                                            <option value="gedu_c7">[GEDU] C7 - Formação continuada</option>
+                                            <option value="gedu_c8">[GEDU] C8 - Gestão de recursos</option>
+                                        </optgroup>
+                                        <optgroup label="Mobilização Social (MOB)">
+                                            <option value="mob_c1">[MOB] C1 - Conhecimento</option>
+                                            <option value="mob_c2">[MOB] C2 - Atitude</option>
+                                            <option value="mob_c3">[MOB] C3 - Estrutura</option>
+                                            <option value="mob_c4">[MOB] C4 - Vitalidade</option>
+                                            <option value="mob_c5">[MOB] C5 - Cobertura</option>
+                                        </optgroup>
                                     </select>
                                 </div>
+                                
                             </div>
                         </div>
                         <div class="p-6 flex-1 flex flex-col">
@@ -617,7 +678,7 @@
                                     <div class="bg-emerald-50 border-l-2 border-pve-green p-2 rounded shadow-sm"><span class="font-bold text-emerald-700 block mb-1">Nível 3: Consolidado (3.26-3.70)</span><span class="text-slate-600">Conhecimento pleno. Práticas rotineiras e estabelecidas.</span></div>
                                     <div class="bg-blue-50 border-l-2 border-pve-blueDark p-2 rounded shadow-sm"><span class="font-bold text-blue-700 block mb-1">Nível 4: Robusto (> 3.70)</span><span class="text-slate-600">Conhecimento avançado. Rotinas formalizadas e consistentes.</span></div>
                                 </div>
-                                <p class="text-[9px] text-slate-400 mt-3 text-center uppercase tracking-widest font-bold">O tamanho da bolha reflete a média da frente correspondente ao Eixo X.</p>
+                               <p class="text-[9px] text-slate-400 mt-3 text-center uppercase tracking-widest font-bold">O tamanho e a cor da bolha refletem a <span class="text-slate-600">Média Geral (Global)</span> do município, adicionando uma 3ª dimensão à análise.</p>
                             </div>
                         </div>
                     </div>
@@ -2589,23 +2650,26 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
             chartInstances.cluster.options.scales.x.title.text = selectX.options[selectX.selectedIndex].text;
             chartInstances.cluster.options.scales.y.title.text = selectY.options[selectY.selectedIndex].text;
 
-            const clusters = {
-                fragil: { label: 'Nível 1: Frágil (< 2.50)', color: 'rgba(239, 68, 68, 0.7)', border: '#B91C1C', data: [] },
-                cons: { label: 'Nível 2: Em Consolidação (2.50 - 2.99)', color: 'rgba(245, 158, 11, 0.7)', border: '#B45309', data: [] },
-                consolidado: { label: 'Nível 3: Consolidado (3.0 - 3.49)', color: 'rgba(16, 185, 129, 0.7)', border: '#047857', data: [] },
-                robusto: { label: 'Nível 4: Robusto (≥ 3.50)', color: 'rgba(59, 130, 246, 0.7)', border: '#1D4ED8', data: [] }
+          const clusters = {
+                fragil: { label: 'Nível 1: Frágil (≤ 2.50)', color: 'rgba(239, 68, 68, 0.7)', border: '#B91C1C', data: [] },
+                cons: { label: 'Nível 2: Em Consolidação (2.51 a 3.25)', color: 'rgba(245, 158, 11, 0.7)', border: '#B45309', data: [] },
+                consolidado: { label: 'Nível 3: Consolidado (3.26 a 3.70)', color: 'rgba(16, 185, 129, 0.7)', border: '#047857', data: [] },
+                robusto: { label: 'Nível 4: Robusto (> 3.70)', color: 'rgba(59, 130, 246, 0.7)', border: '#1D4ED8', data: [] }
             };
 
             currentData.forEach(row => {
                 const x = parseFloat(row[valX]);
                 const y = parseFloat(row[valY]);
                 if(!isNaN(x) && !isNaN(y) && x > 0 && y > 0) {
-                    let bubbleBase = valX.includes('mob') ? parseFloat(row.mob) : (valX.includes('gesc') ? parseFloat(row.gesc) : parseFloat(row.gedu));
-                    const point = { x: x, y: y, r: Math.max(5, bubbleBase * 4), municipio: row.municipio };
+                    // A bolha agora reflete a Média Geral do município (nossa 3ª dimensão valiosa)
+                    let bubbleBase = parseFloat(row.geral);
                     
-                    if(bubbleBase < 2.5) clusters.fragil.data.push(point);
-                    else if(bubbleBase < 3.0) clusters.cons.data.push(point);
-                    else if(bubbleBase < 3.5) clusters.consolidado.data.push(point);
+                    // Ajustamos o multiplicador levemente para a bolha ficar com um tamanho visual harmonioso
+                    const point = { x: x, y: y, r: Math.max(6, bubbleBase * 4.5), municipio: row.municipio };
+                    
+                    if(bubbleBase <= 2.50) clusters.fragil.data.push(point);
+                    else if(bubbleBase <= 3.25) clusters.cons.data.push(point);
+                    else if(bubbleBase <= 3.70) clusters.consolidado.data.push(point);
                     else clusters.robusto.data.push(point);
                 }
             });
