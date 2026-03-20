@@ -867,12 +867,11 @@
                 <!-- NOVA PROPOSTA DE UX: Tabela Interativa e Expansível (Acompanhamento)      -->
                 <!-- ========================================================================= -->
                 <div id="ux-report-section" class="mt-16 border-t-2 border-dashed border-slate-300 pt-8 pb-8">
-                    <div class="bg-gradient-to-r from-slate-800 to-slate-900 rounded-t-xl p-6 text-white flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div class="bg-pve-blueDark rounded-t-xl p-6 text-white flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                         <div>
                             <h3 class="font-bold text-xl flex items-center"><i class="ph-bold ph-lightbulb mr-2 text-pve-yellow"></i> Proposta UX: Visão Expandida e Acompanhamento</h3>
-                            <p class="text-xs text-slate-300 mt-1">Alternativa com Quick-Filters, barras de esforço e detalhamento lado a lado (ideal para reuniões e prints).</p>
+                            <p class="text-xs text-blue-100 mt-1">Alternativa com Quick-Filters, barras de esforço e detalhamento lado a lado (ideal para reuniões e prints).</p>
                         </div>
-                        <!-- NOVO: Chamada da nossa função inteligente de impressão -->
                         <button onclick="printUXReport()" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-2 rounded-lg text-xs font-bold transition-colors flex items-center shrink-0">
                             <i class="ph-bold ph-printer mr-2"></i> Salvar PDF / Imprimir
                         </button>
@@ -891,12 +890,11 @@
                         <!-- Tabela UX -->
                         <div class="overflow-x-auto max-h-[600px]"> 
                             <table class="min-w-full text-sm">
-                                <thead class="sticky top-0 z-20 shadow-sm bg-slate-100 border-b border-slate-200">
-                                    <tr class="text-slate-600 uppercase text-[10px] font-bold tracking-wider leading-normal">
-                                        <th class="py-4 px-6 text-left border-r border-slate-200 w-1/4">Município</th>
-                                        <th class="py-4 px-4 text-center border-r border-slate-200 w-32">Nível Atual</th>
-                                        <th class="py-4 px-6 text-left border-r border-slate-200">Progresso para Meta 500</th>
-                                        <!-- NOVO: Adicionada a classe col-acoes -->
+                                <thead class="sticky top-0 z-20 shadow-sm">
+                                    <tr class="bg-pve-blueDark text-white uppercase text-[10px] font-bold tracking-wider leading-normal">
+                                        <th class="py-4 px-6 text-left border-r border-white/20 w-1/4">Município</th>
+                                        <th class="py-4 px-4 text-center border-r border-white/20 w-32">Nível Atual</th>
+                                        <th class="py-4 px-6 text-left border-r border-white/20">Progresso para Meta 500</th>
                                         <th class="py-4 px-4 text-center w-40 col-acoes">Ações (Estratégia)</th>
                                     </tr>
                                 </thead>
