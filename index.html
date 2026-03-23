@@ -2759,12 +2759,26 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
                     },
                     plugins: { 
                         legend: { display: false },
+                        // AJUSTE AQUI: Configuração específica para destacar a Linha de Média
                         datalabels: { 
-                            // ADICIONADO: Exibe o número apenas na bolinha da linha, escondendo nas barras
+                            // 1. Filtro vital: Exibe o texto APENAS na linha, escondendo-o nas barras
                             display: function(context) { return context.dataset.type === 'line'; },
-                            color: '#1E293B', font: { weight: '900', size: 14, family: 'Inter' },
-                            align: 'bottom', offset: 8,
-                            formatter: (val) => val > 0 ? val.toFixed(2) : ''
+                            
+                            // 2. Estilização do Texto
+                            color: '#ffffff', // Texto branco para contrastar com o fundo
+                            font: { weight: 'bold', size: 10, family: 'Inter' },
+                            
+                            // 3. Estilização da "Etiqueta" (fundo)
+                            backgroundColor: '#1E293B', // Fundo azul escuro (padrão do painel)
+                            borderRadius: 4,
+                            padding: { top: 4, bottom: 4, left: 6, right: 6 },
+                            
+                            // 4. Posicionamento: Acima do ponto da linha
+                            align: 'top', 
+                            offset: 10, // Distância do ponto
+                            
+                            // 5. O Texto a ser exibido: "Média: X.XX"
+                            formatter: (val) => val > 0 ? `Média dos 33 municípios: ${val.toFixed(2)}` : ''
                         } 
                     } 
                 }
