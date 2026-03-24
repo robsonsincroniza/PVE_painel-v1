@@ -819,7 +819,7 @@
                 </div>
                 <!-- FIM DA EXPLICAÇÃO DAS METAS -->
 				
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                     <div class="bg-white rounded-xl shadow-md p-6 border border-slate-100 flex flex-col justify-center">
                         <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 flex items-center"><i class="ph-fill ph-target text-slate-500 mr-2"></i> Municípios Analisados</h4>
                         <span id="metaTotalMun" class="text-4xl font-bold text-slate-800 mt-2">-</span>
@@ -836,39 +836,11 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 gap-8">
-                    <!-- Tabela Expandida -->
-                    <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden flex flex-col">
-                        <div class="p-6 border-b border-slate-100 bg-slate-50 flex justify-between items-center flex-wrap gap-4">
-                            <div>
-                                <h3 class="font-bold text-slate-800 text-lg">Detalhamento Estratégico por Município</h3>
-                                <p class="text-xs text-slate-500 mt-1"><strong class="text-pve-green">Passe o cursor sobre as metas</strong> para visualizar a estratégia equilibrada: o que é <strong>mais rápido de evoluir</strong> vs o que é <strong>mais crítico</strong> (menores notas).</p>
-                            </div>
-                        </div>
-                        <div class="overflow-x-auto max-h-[500px] pb-32"> 
-                            <table class="min-w-full text-sm relative z-10">
-                                <thead class="sticky top-0 z-20 shadow-sm">
-                                    <tr class="bg-pve-blueDark text-white uppercase text-[10px] font-bold tracking-wider leading-normal">
-                                        <th class="py-3 px-6 text-left border-r border-white/20">MUNICÍPIO (UF)</th>
-                                        <th class="py-3 px-4 text-center border-r border-white/20">NÍVEL ATUAL</th>
-                                        <th class="py-3 px-4 text-center bg-slate-100 text-slate-400 border-r border-white/20 font-medium">META 100</th>
-                                        <th class="py-3 px-4 text-center bg-slate-100 text-slate-400 border-r border-white/20 font-medium">META 300</th>
-                                        <th class="py-3 px-4 text-center bg-pve-green text-white font-black shadow-md text-xs border-b-4 border-pve-greenDark">META 500 🎯</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="metasBody" class="text-slate-700 font-medium"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-				<!-- ========================================================================= -->
-                <!-- NOVA PROPOSTA DE UX: Tabela Interativa e Expansível (Acompanhamento)      -->
-                <!-- ========================================================================= -->
-                <div id="ux-report-section" class="mt-16 border-t-2 border-dashed border-slate-300 pt-8 pb-8">
+                <div id="ux-report-section" class="pb-8">
                     <div class="bg-pve-blueDark rounded-t-xl p-6 text-white flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                         <div>
-                            <h3 class="font-bold text-xl flex items-center"><i class="ph-bold ph-lightbulb mr-2 text-pve-yellow"></i> Proposta: Visão Expandida e Acompanhamento</h3>
-                            <p class="text-xs text-blue-100 mt-1">Alternativa com Quick-Filters, barras de esforço e detalhamento lado a lado (ideal para reuniões e prints).</p>
+                            <h3 class="font-bold text-xl flex items-center"><i class="ph-bold ph-strategy mr-2 text-pve-yellow"></i> Acompanhamento e Estratégia de Metas</h3>
+                            <p class="text-xs text-blue-100 mt-1">Visão detalhada do esforço por município, com filtros rápidos e foco nos gargalos e avanços.</p>
                         </div>
                         <button onclick="printUXReport()" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-4 py-2 rounded-lg text-xs font-bold transition-colors flex items-center shrink-0">
                             <i class="ph-bold ph-printer mr-2"></i> Salvar PDF / Imprimir
@@ -876,7 +848,6 @@
                     </div>
                     
                     <div class="bg-white border-x border-b border-slate-200 rounded-b-xl shadow-lg flex flex-col overflow-hidden">
-                        <!-- Quick Filters Toolbar -->
                         <div id="ux-filters-toolbar" class="p-4 border-b border-slate-100 bg-slate-50 flex gap-2 overflow-x-auto items-center">
                             <span class="text-xs font-bold text-slate-500 uppercase tracking-widest flex items-center mr-2 shrink-0"><i class="ph-bold ph-funnel mr-1"></i> Filtros Rápidos:</span>
                             <button onclick="renderMetasUX('all')" id="btnFilterUX-all" class="px-4 py-2 rounded-full text-xs font-bold bg-slate-800 text-white transition-colors shadow-md shrink-0">Todos</button>
@@ -885,18 +856,16 @@
                             <button onclick="renderMetasUX('perto')" id="btnFilterUX-perto" class="px-4 py-2 rounded-full text-xs font-bold bg-white border border-slate-300 text-slate-600 hover:bg-blue-50 hover:text-blue-700 transition-colors shrink-0"><i class="ph-fill ph-target mr-1"></i> A 1 ou 2 passos da Meta</button>
                         </div>
 
-                        <!-- Tabela UX -->
                         <div class="overflow-x-auto max-h-[600px]"> 
                             <table class="min-w-full text-sm">
                                 <thead class="sticky top-0 z-20 shadow-sm">
                                     <tr class="bg-pve-blueDark text-white uppercase text-[10px] font-bold tracking-wider leading-normal">
                                         <th class="py-4 px-6 text-left border-r border-white/20 w-1/4">Município</th>
-                                        <th class="py-4 px-4 text-center border-r border-white/20 w-28">Nível Atual</th>
-                                        <th class="py-4 px-2 text-center border-r border-white/20 w-24 text-blue-200">Meta 100</th>
-                                        <th class="py-4 px-2 text-center border-r border-white/20 w-24 text-blue-200">Meta 300</th>
-                                        <!-- COLUNA PRINCIPAL COM DESTAQUE VERDE -->
-                                        <th class="py-4 px-6 text-left border-r border-white/20 shadow-md" style="background-color: #008b45;">Progresso Meta 500 🎯</th>
-                                        <th class="py-4 px-4 text-center w-36 col-acoes">Ações</th>
+                                        <th class="py-4 px-4 text-center border-r border-white/20 w-24">Nível Atual</th>
+                                        <th class="py-4 px-2 text-center border-r border-white/20 w-16 text-blue-200">Meta 100</th>
+                                        <th class="py-4 px-4 text-center border-r border-white/20 shadow-md w-1/5" style="background-color: #E85D04;">Progresso Meta 300 🚩</th>
+                                        <th class="py-4 px-4 text-left border-r border-white/20 shadow-md w-1/5" style="background-color: #008b45;">Progresso Meta 500 🎯</th>
+                                        <th class="py-4 px-4 text-center w-32 col-acoes">Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody id="metasBodyUX" class="text-slate-700 font-medium"></tbody>
@@ -904,8 +873,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- ================== FIM NOVA PROPOSTA DE UX ============================== -->
-            </div>
+                </div>
 			
 			
             <!-- PÁGINA 6: LEGENDAS -->
@@ -2540,8 +2508,7 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
             return `<span class="px-2 py-1 rounded text-[10px] font-bold shadow-sm bg-blue-100 text-blue-800 border border-blue-200">Nível 4</span>`;
         }
 
-        // 3. O construtor da Tabela Interativa
-        // 3. O construtor da Tabela Interativa
+       // 3. O construtor da Tabela Interativa
         function renderMetasUX(filterType = currentUXFilter) {
             currentUXFilter = filterType;
             
@@ -2558,6 +2525,32 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
             const tbody = document.getElementById('metasBodyUX');
             if(!tbody) return;
             tbody.innerHTML = '';
+
+            // =========================================================================
+            // NOVO: ALIMENTAR OS CARDS DO TOPO
+            // =========================================================================
+            let countAlta = 0;
+            let countRef = 0;
+
+            currentData.forEach(row => {
+                const subInfo = getSubLevelInfo(row.geral);
+                let targetText = subInfo.m500 || '';
+                if (targetText.includes('7') || targetText.includes('8') || targetText.includes('9') || targetText.includes('10')) {
+                    countAlta++;
+                } else {
+                    countRef++;
+                }
+            });
+
+            const elTotal = document.getElementById('metaTotalMun');
+            if (elTotal) elTotal.innerText = currentData.length;
+            
+            const elAlta = document.getElementById('metaAltaIntensidade');
+            if (elAlta) elAlta.innerText = countAlta;
+            
+            const elRef = document.getElementById('metaRefinamento');
+            if (elRef) elRef.innerText = countRef;
+            // =========================================================================
 
             let sortedData = [...currentData].sort((a, b) => a.geral - b.geral);
 
@@ -2610,7 +2603,6 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
 
                 const rowId = `ux-details-${idx}`;
 
-                // MÁGICA DE UX: Inversão da ordem (500 primeiro, depois 300, depois 100)
                 let htmlAvanço = '';
                 if (n500 === 0) {
                     htmlAvanço = `<li class="text-xs text-slate-500 italic">Todas as competências encontram-se no nível máximo (Robusto).</li>`;
@@ -2619,18 +2611,17 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
                     let f300 = validComps.slice(n100, n300);
                     let f500 = validComps.slice(n300, n500);
 
-                    // Imprime a Meta 500 no topo
                     if (f500.length > 0) {
                         htmlAvanço += `<div class="mb-2"><span class="text-[9px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded uppercase tracking-wider shadow-sm">Passo 3: Meta 500 🎯</span></div>`;
                         f500.forEach(c => htmlAvanço += `<li class="flex items-center text-xs mb-2 text-slate-700 leading-tight pl-1"><i class="ph-bold ph-check-circle text-emerald-500 mr-2 text-sm shrink-0"></i> <span><strong>${c.name}</strong> <span class="text-slate-400 ml-1">(Faltam ${c.dist.toFixed(2)} pts)</span></span></li>`);
                     }
-                    // Imprime a Meta 300 no meio
                     if (f300.length > 0) {
-                        let margin = f500.length > 0 ? "mt-3" : ""; // Dá espaço se a 500 já estiver impressa
-                        htmlAvanço += `<div class="mb-2 ${margin}"><span class="text-[9px] font-bold bg-slate-200 text-slate-700 px-2 py-0.5 rounded uppercase tracking-wider">Passo 2: Meta 300</span></div>`;
-                        f300.forEach(c => htmlAvanço += `<li class="flex items-center text-xs mb-2 text-slate-700 leading-tight pl-1"><i class="ph-bold ph-caret-right text-emerald-400 mr-2 text-sm shrink-0"></i> <span><strong>${c.name}</strong> <span class="text-slate-400 ml-1">(Faltam ${c.dist.toFixed(2)} pts)</span></span></li>`);
+                        let margin = f500.length > 0 ? "mt-3" : ""; 
+                        // Fundo laranja (#E85D04), texto branco e a bandeirinha adicionada!
+                        htmlAvanço += `<div class="mb-2 ${margin}"><span class="text-[9px] font-bold text-white px-2 py-0.5 rounded uppercase tracking-wider shadow-sm" style="background-color: #E85D04;">Passo 2: Meta 300 🚩</span></div>`;
+                        
+                        f300.forEach(c => htmlAvanço += `<li class="flex items-center text-xs mb-2 text-slate-700 leading-tight pl-1"><i class="ph-bold ph-caret-right text-orange-500 mr-2 text-sm shrink-0"></i> <span><strong>${c.name}</strong> <span class="text-slate-400 ml-1">(Faltam ${c.dist.toFixed(2)} pts)</span></span></li>`);
                     }
-                    // Imprime a Meta 100 no fim
                     if (f100.length > 0) {
                         let margin = (f500.length > 0 || f300.length > 0) ? "mt-3" : "";
                         htmlAvanço += `<div class="mb-2 ${margin}"><span class="text-[9px] font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded uppercase tracking-wider">Passo 1: Meta 100</span></div>`;
@@ -2656,15 +2647,14 @@ Mobilização social,Competência 1 - Conhecimento,Conhecer papéis e atribuiç�
                             </div>
                         </td>
 
-                        <td class="py-4 px-3 text-center border-r border-slate-100">
-                            <div class="text-[10px] font-bold ${n300===0 ? 'text-blue-500' : 'text-slate-400'} mb-1">${n300===0 ? 'Atingida' : subInfo.m300}</div>
-                            <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-                                <div class="h-full rounded-full ${n300===0 ? 'bg-blue-400' : 'bg-slate-400'} transition-all duration-500" style="width: ${pct300}%"></div>
+                        <td class="py-4 px-4 text-center border-r border-slate-100 bg-orange-50/30">
+                            <div class="text-xs font-bold ${n300===0 ? 'text-blue-600' : 'text-slate-800'} mb-1">${n300===0 ? 'Meta Atingida' : subInfo.m300}</div>
+                            <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden shadow-inner">
+                                <div class="h-full rounded-full ${n300===0 ? 'bg-blue-500' : 'bg-orange-500'} transition-all duration-500" style="width: ${pct300}%"></div>
                             </div>
                         </td>
 
-                        <!-- Barra Principal Meta 500 -->
-                        <td class="py-4 px-6 text-left border-r border-slate-100 bg-emerald-50/30">
+                        <td class="py-4 px-4 text-left border-r border-slate-100 bg-emerald-50/30">
                             <div class="flex justify-between items-center mb-2">
                                 <span class="text-xs font-bold text-slate-800">${targetText}</span>
                                 ${n500 === 0 ? '<span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded font-bold uppercase tracking-wider ml-2">Meta Concluída</span>' : effortBadge}
