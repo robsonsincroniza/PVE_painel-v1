@@ -199,7 +199,7 @@
                 <div class="border-l-4 border-pve-green pl-4 mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
                         <h2 class="text-2xl font-bold text-slate-900">Planos de Ação</h2>
-                        <p class="mt-1 text-slate-600">Gestão da execução das tarefas por GEDU e MOB.</p>
+                        <p class="mt-1 text-slate-600">Gestão preditiva da execução das tarefas por GEDU e MOB.</p>
                     </div>
                     <div class="flex items-center gap-3">
                         <span class="text-xs font-bold text-slate-500 uppercase tracking-widest"><i class="ph-fill ph-funnel"></i> Frente:</span>
@@ -211,76 +211,122 @@
                     </div>
                 </div>
 
-                <div class="flex space-x-4 border-b border-slate-200 mb-2 overflow-x-auto">
-                    <button onclick="switchSubTabPlanos('geral')" id="btnTabPlanos-geral" class="sub-tab-btn active whitespace-nowrap"><i class="ph-bold ph-squares-four mr-1"></i> Visão Geral & Raio-X</button>
-                    <button onclick="switchSubTabPlanos('crono')" id="btnTabPlanos-crono" class="sub-tab-btn whitespace-nowrap"><i class="ph-bold ph-calendar-blank mr-1"></i> Cronograma & Prazos</button>
-                    <button onclick="switchSubTabPlanos('pessoas')" id="btnTabPlanos-pessoas" class="sub-tab-btn whitespace-nowrap"><i class="ph-bold ph-users mr-1"></i> Esforço & Responsáveis</button>
+                <div class="flex space-x-2 border-b border-slate-200 mb-2 overflow-x-auto pb-1">
+                    <button onclick="switchSubTabPlanos('geral')" id="btnTabPlanos-geral" class="sub-tab-btn active whitespace-nowrap text-xs"><i class="ph-bold ph-squares-four mr-1"></i> Visão Geral & Alertas</button>
+                    <button onclick="switchSubTabPlanos('territorio')" id="btnTabPlanos-territorio" class="sub-tab-btn whitespace-nowrap text-xs"><i class="ph-bold ph-map-pin mr-1"></i> Território & Municípios</button>
+                    <button onclick="switchSubTabPlanos('esforco')" id="btnTabPlanos-esforco" class="sub-tab-btn whitespace-nowrap text-xs"><i class="ph-bold ph-target mr-1"></i> Esforço Pedagógico</button>
+                    <button onclick="switchSubTabPlanos('crono')" id="btnTabPlanos-crono" class="sub-tab-btn whitespace-nowrap text-xs"><i class="ph-bold ph-calendar-blank mr-1"></i> Cronograma & Entregas</button>
+                    <button onclick="switchSubTabPlanos('pessoas')" id="btnTabPlanos-pessoas" class="sub-tab-btn whitespace-nowrap text-xs"><i class="ph-bold ph-users mr-1"></i> Pessoas & Parceiros</button>
                 </div>
 
                 <div id="subtab-geral" class="space-y-6 block fade-update">
-                    
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-2">
-                        <div class="bg-rose-50 border border-rose-200 rounded-lg p-3 flex items-center shadow-sm">
-                            <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 mr-4 shrink-0"><i class="ph-bold ph-warning text-xl"></i></div>
+                        <div class="bg-rose-50 border border-rose-200 rounded-lg p-3 flex items-start shadow-sm">
+                            <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 mr-3 shrink-0 mt-1"><i class="ph-bold ph-warning text-xl"></i></div>
                             <div>
-                                <h4 class="text-xs font-bold text-rose-800 uppercase tracking-widest">Alerta Crítico</h4>
-                                <p class="text-sm text-rose-700"><span id="alertAtrasadasCount" class="font-bold text-lg">0</span> tarefas encontram-se classificadas como Atrasadas/Paradas.</p>
+                                <h4 class="text-xs font-bold text-rose-800 uppercase tracking-widest mb-1">Alerta Crítico</h4>
+                                <div class="flex items-baseline gap-1">
+                                    <span id="alertAtrasadasCount" class="font-black text-2xl text-rose-700">0</span>
+                                    <span class="text-sm font-bold text-rose-700">tarefas</span>
+                                </div>
+                                <p class="text-[10px] text-rose-600 leading-tight mt-1">Ações com prazo de término expirado ou marcadas como paradas.</p>
                             </div>
                         </div>
-                        <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 flex items-center shadow-sm">
-                            <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 mr-4 shrink-0"><i class="ph-bold ph-clock-countdown text-xl"></i></div>
+                        <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 flex items-start shadow-sm">
+                            <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 mr-3 shrink-0 mt-1"><i class="ph-bold ph-clock-countdown text-xl"></i></div>
                             <div>
-                                <h4 class="text-xs font-bold text-amber-800 uppercase tracking-widest">Atenção ao Prazo</h4>
-                                <p class="text-sm text-amber-700"><span id="alertVencendoCount" class="font-bold text-lg">0</span> tarefas estão planejadas para vencer nos próximos 15 dias.</p>
+                                <h4 class="text-xs font-bold text-amber-800 uppercase tracking-widest mb-1">Atenção ao Prazo</h4>
+                                <div class="flex items-baseline gap-1">
+                                    <span id="alertVencendoCount" class="font-black text-2xl text-amber-700">0</span>
+                                    <span class="text-sm font-bold text-amber-700">tarefas</span>
+                                </div>
+                                <p class="text-[10px] text-amber-600 leading-tight mt-1">Ações planeadas para vencer nos próximos 15 dias.</p>
                             </div>
                         </div>
-                        <div class="bg-orange-50 border border-orange-200 rounded-lg p-3 flex items-center shadow-sm">
-                            <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mr-4 shrink-0"><i class="ph-bold ph-calendar-x text-xl"></i></div>
+                        <div class="bg-orange-50 border border-orange-200 rounded-lg p-3 flex items-start shadow-sm">
+                            <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mr-3 shrink-0 mt-1"><i class="ph-bold ph-calendar-x text-xl"></i></div>
                             <div>
-                                <h4 class="text-xs font-bold text-orange-800 uppercase tracking-widest">Datas Ausentes</h4>
-                                <p class="text-sm text-orange-700"><span id="alertSemDataCount" class="font-bold text-lg">0</span> tarefas válidas sem data de Início ou Término.</p>
+                                <h4 class="text-xs font-bold text-orange-800 uppercase tracking-widest mb-1">Datas Ausentes</h4>
+                                <div class="flex items-baseline gap-1">
+                                    <span id="alertSemDataCount" class="font-black text-2xl text-orange-700">0</span>
+                                    <span class="text-sm font-bold text-orange-700">tarefas</span>
+                                </div>
+                                <p class="text-[10px] text-orange-600 leading-tight mt-1">Ações validadas sem preenchimento de data de início ou término.</p>
                             </div>
                         </div>
                     </div>
-
+                    
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div class="bg-white rounded-xl shadow-sm p-5 border border-slate-200 hover:shadow-md transition">
+                        <div class="bg-white rounded-xl shadow-sm p-5 border border-slate-200 hover:shadow-md transition flex flex-col">
                             <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest flex items-center"><i class="ph-fill ph-list-checks mr-1 text-lg"></i> Tarefas Válidas</span>
                             <span id="kpiPlanosTotal" class="text-3xl font-black text-slate-800 mt-2 block">-</span>
+                            <p class="text-[10px] text-slate-500 mt-auto pt-3 border-t border-slate-100 leading-tight">Total de ações estruturadas e ativas no sistema.</p>
                         </div>
-                        <div class="bg-white rounded-xl shadow-sm p-5 border border-slate-200 hover:shadow-md transition">
+                        <div class="bg-white rounded-xl shadow-sm p-5 border border-slate-200 hover:shadow-md transition flex flex-col">
                             <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest flex items-center"><i class="ph-fill ph-map-pin mr-1 text-lg text-blue-500"></i> Adesão da Rede</span>
                             <span id="kpiPlanosAdesao" class="text-3xl font-black text-blue-600 mt-2 block">-</span>
-                            <p class="text-[10px] text-slate-500 mt-1 pt-1 border-t border-slate-100">Municípios c/ registros</p>
+                            <p class="text-[10px] text-slate-500 mt-auto pt-3 border-t border-slate-100 leading-tight">Proporção de municípios com planos de ação ativos.</p>
                         </div>
-                        <div class="bg-emerald-50 rounded-xl shadow-sm p-5 border border-emerald-100 border-b-4 border-b-emerald-500 hover:shadow-md transition">
-                            <span class="text-emerald-700 text-[10px] font-bold uppercase tracking-widest flex items-center"><i class="ph-fill ph-check-circle mr-1 text-lg"></i> Taxa de Execução</span>
+                        <div class="bg-emerald-50 rounded-xl shadow-sm p-5 border border-emerald-100 border-b-4 border-b-emerald-500 hover:shadow-md transition flex flex-col">
+                            <span class="text-emerald-700 text-[10px] font-bold uppercase tracking-widest flex items-center"><i class="ph-fill ph-check-circle mr-1 text-lg"></i> Taxa Execução</span>
                             <span id="kpiPlanosConcluido" class="text-3xl font-black text-emerald-600 mt-2 block">-</span>
+                            <p class="text-[10px] text-emerald-600 mt-auto pt-3 border-t border-emerald-200/50 leading-tight">Percentual do portefólio já concluído ou finalizado.</p>
                         </div>
-                        <div class="bg-rose-50 rounded-xl shadow-sm p-5 border border-rose-100 border-b-4 border-b-rose-500 hover:shadow-md transition">
+                        <div class="bg-rose-50 rounded-xl shadow-sm p-5 border border-rose-100 border-b-4 border-b-rose-500 hover:shadow-md transition flex flex-col">
                             <span class="text-rose-700 text-[10px] font-bold uppercase tracking-widest flex items-center"><i class="ph-fill ph-warning-octagon mr-1 text-lg"></i> Índice de Risco</span>
                             <span id="kpiPlanosAtrasado" class="text-3xl font-black text-rose-600 mt-2 block">-</span>
+                            <p class="text-[10px] text-rose-600 mt-auto pt-3 border-t border-rose-200/50 leading-tight">Percentual de tarefas que estão atrasadas ou paradas.</p>
                         </div>
                     </div>
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col md:w-1/2">
+                        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1">Status de Entrega</h3>
+                        <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">Saúde do portfólio de ações na rede.</p>
+                        <div class="chart-container flex-1 min-h-[250px]"><canvas id="chartPlanosStatus"></canvas></div>
+                    </div>
+                </div>
 
+                <div id="subtab-territorio" class="space-y-6 hidden fade-update">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
-                            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1">Status de Entrega</h3>
-                            <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">Saúde do portfólio</p>
-                            <div class="chart-container flex-1 min-h-[250px]"><canvas id="chartPlanosStatus"></canvas></div>
+                        <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
+                            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1">Top 15 Engajamento (Municípios)</h3>
+                            <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">Volume total de tarefas válidas estruturadas no sistema.</p>
+                            <div class="chart-container flex-1 min-h-[350px]"><canvas id="chartPlanosEngajamento"></canvas></div>
+                        </div>
+                        <div class="lg:col-span-1 bg-white rounded-xl shadow-sm p-6 border border-rose-200 flex flex-col border-t-4 border-t-pve-red">
+                            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1 text-rose-800 flex items-center"><i class="ph-bold ph-warning-circle text-lg mr-2"></i> Risco de Inércia</h3>
+                            <p class="text-xs text-rose-600 mb-4 pb-4 border-b border-rose-100">Municípios analisados nos filtros que <strong>NÃO</strong> possuem nenhuma tarefa planeada.</p>
+                            <ul id="listMunicipiosInercia" class="space-y-2 overflow-y-auto max-h-[300px] pr-2"></ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="subtab-esforco" class="space-y-6 hidden fade-update">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-1 bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
+                            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1">Balanço de Frentes</h3>
+                            <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">Intencionalidade: % de tarefas alocadas.</p>
+                            <div class="chart-container flex-1 min-h-[250px]"><canvas id="chartPlanosBalanco"></canvas></div>
                         </div>
                         <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
-                            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1">Top 10: Foco Estratégico</h3>
-                            <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">Volume de tarefas alocadas por competência</p>
-                            <div class="chart-container flex-1 min-h-[250px]"><canvas id="chartPlanosCompetencias"></canvas></div>
+                            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1">Radar de Foco Estratégico</h3>
+                            <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">Top 10 competências com maior volume de tarefas planejadas.</p>
+                            <div class="chart-container flex-1 min-h-[300px]"><canvas id="chartPlanosRadar"></canvas></div>
                         </div>
                     </div>
+                </div>
 
+                <div id="subtab-crono" class="space-y-6 hidden fade-update">
+                    <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
+                        <div class="mb-4 border-b border-slate-100 pb-4">
+                            <h3 class="text-lg font-bold text-slate-800">Termômetro de Entregas (Stacked)</h3>
+                            <p class="text-xs text-slate-500 mt-1">Status das tarefas cruzado com os meses de vencimento.</p>
+                        </div>
+                        <div class="chart-container flex-1 min-h-[350px]"><canvas id="chartPlanosCronograma"></canvas></div>
+                    </div>
+                    
                     <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden mt-8">
                         <div class="p-5 border-b border-slate-100 bg-pve-blueDark text-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                            <div>
-                                <h3 class="font-bold text-lg flex items-center"><i class="ph-fill ph-table mr-2 text-pve-yellow"></i> Tabela Raio-X</h3>
-                            </div>
+                            <div><h3 class="font-bold text-lg flex items-center"><i class="ph-fill ph-table mr-2 text-pve-yellow"></i> Auditoria Raio-X</h3></div>
                             <div class="relative w-full sm:w-72">
                                 <i class="ph-bold ph-magnifying-glass absolute left-3 top-2.5 text-slate-400"></i>
                                 <input type="text" id="searchPlanos" placeholder="Buscar tarefa, município..." onkeyup="updatePlanosView()" class="w-full pl-9 pr-4 py-2 text-sm border-0 rounded-lg text-slate-800 focus:ring-2 focus:ring-pve-green outline-none shadow-inner">
@@ -290,13 +336,7 @@
                             <table class="min-w-full text-sm">
                                 <thead class="sticky top-0 z-10 shadow-sm bg-slate-100">
                                     <tr class="text-slate-600 uppercase text-[10px] font-bold tracking-wider text-left border-b border-slate-200">
-                                        <th class="py-3 px-4">Município</th>
-                                        <th class="py-3 px-4">Frente</th>
-                                        <th class="py-3 px-4 w-1/4">Competência</th>
-                                        <th class="py-3 px-4 w-1/4">Tarefa Prática</th>
-                                        <th class="py-3 px-4 text-center">Início</th>
-                                        <th class="py-3 px-4 text-center">Término</th>
-                                        <th class="py-3 px-4 text-center">Status</th>
+                                        <th class="py-3 px-4">Município</th><th class="py-3 px-4">Frente</th><th class="py-3 px-4 w-1/4">Competência</th><th class="py-3 px-4 w-1/4">Tarefa Prática</th><th class="py-3 px-4 text-center">Início</th><th class="py-3 px-4 text-center">Término</th><th class="py-3 px-4 text-center">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody id="planosBody" class="text-slate-700"></tbody>
@@ -305,44 +345,28 @@
                     </div>
                 </div>
 
-                <div id="subtab-crono" class="space-y-6 hidden fade-update">
-                    <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
-                        <div class="mb-4 border-b border-slate-100 pb-4">
-                            <h3 class="text-lg font-bold text-slate-800">Curva de Entregas (Projeção Mensal)</h3>
-                            <p class="text-xs text-slate-500 mt-1">Antecipe gargalos verificando a concentração de prazos de término nos próximos meses.</p>
-                        </div>
-                        <div class="chart-container flex-1 min-h-[350px]"><canvas id="chartPlanosCronograma"></canvas></div>
-                    </div>
-                </div>
-
                 <div id="subtab-pessoas" class="space-y-6 hidden fade-update">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200">
-                            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest border-b border-slate-100 pb-3 mb-4 flex items-center">
-                                <i class="ph-bold ph-users mr-2 text-pve-blueDark text-lg"></i> Top 10: Responsáveis c/ Mais Tarefas
-                            </h3>
+                            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest border-b border-slate-100 pb-3 mb-4 flex items-center"><i class="ph-bold ph-users mr-2 text-pve-blueDark text-lg"></i> Top 10: Responsáveis c/ Mais Tarefas</h3>
                             <p class="text-xs text-slate-500 mb-4">Volume de tarefas "Não Iniciadas" ou "Em Andamento".</p>
                             <ul id="listTopResponsaveis" class="space-y-2 max-h-[350px] overflow-y-auto pr-2"></ul>
                         </div>
                         <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200">
-                            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest border-b border-slate-100 pb-3 mb-4 flex items-center">
-                                <i class="ph-bold ph-handshake mr-2 text-pve-orange text-lg"></i> Engajamento de Parceiros (MOB)
-                            </h3>
+                            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest border-b border-slate-100 pb-3 mb-4 flex items-center"><i class="ph-bold ph-handshake mr-2 text-pve-orange text-lg"></i> Parceiros Mobilizados (MOB)</h3>
                             <p class="text-xs text-slate-500 mb-4">Os parceiros mais frequentemente citados.</p>
                             <ul id="listTopParceiros" class="space-y-2 max-h-[350px] overflow-y-auto pr-2"></ul>
                         </div>
                     </div>
-                    
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
                         <div class="mb-4 border-b border-slate-100 pb-4">
-                            <h3 class="text-lg font-bold text-slate-800">Mapa de Esforço (Volume de Tarefas por Responsável)</h3>
-                            <p class="text-xs text-slate-500 mt-1">O tamanho e a altura da bolha representam a quantidade de tarefas ativas alocadas a essa pessoa.</p>
+                            <h3 class="text-lg font-bold text-slate-800">Mapa de Esforço (Bolhas por Responsável)</h3>
+                            <p class="text-xs text-slate-500 mt-1">O tamanho e a altura representam a quantidade de tarefas ativas alocadas à pessoa.</p>
                         </div>
                         <div class="chart-container flex-1 min-h-[350px]"><canvas id="chartPlanosBolhas"></canvas></div>
                     </div>
                 </div>
             </div>
-
             <div id="page-visao" class="page-section space-y-6 fade-update block">
                 <div class="border-l-4 border-pve-green pl-4 mb-4">
                     <h2 class="text-2xl font-bold text-slate-900">Resultados e Maturidade Geral</h2>
@@ -1279,7 +1303,7 @@
 
         const pageTitles = {
             'page-visao': 'Visão Executiva PVE',
-            'page-planos': 'Acompanhamento das ações',
+            'page-planos': 'Plano de Ação',
             'page-regua': 'Régua de Maturidade e Gaps',
             'page-mapa': 'Diagnóstico & Raio-X',
             'page-cluster': 'Trilhas & Clusters',
@@ -1295,9 +1319,9 @@
             return { label: 'Robusto', color: '#3B82F6', bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200', textClass: 'text-blue-600' };
         }
 
-        // Funções para Controle das Sub-Abas e Datas
+       // Funções para Controle das Sub-Abas e Datas
         function switchSubTabPlanos(tabId) {
-            ['geral', 'crono', 'pessoas'].forEach(id => {
+            ['geral', 'territorio', 'esforco', 'crono', 'pessoas'].forEach(id => {
                 const btn = document.getElementById(`btnTabPlanos-${id}`);
                 const div = document.getElementById(`subtab-${id}`);
                 if(btn && div) {
@@ -1312,14 +1336,17 @@
                     }
                 }
             });
-            if(tabId === 'crono' && chartInstances.planosCronograma) {
-                setTimeout(() => { chartInstances.planosCronograma.resize(); chartInstances.planosCronograma.update(); }, 50);
-            }
-            if(tabId === 'pessoas' && chartInstances.planosBolhas) {
-                setTimeout(() => { chartInstances.planosBolhas.resize(); chartInstances.planosBolhas.update(); }, 50);
-            }
+            // Redimensionar gráficos na aba visível
+            setTimeout(() => {
+                if(tabId === 'territorio' && chartInstances.planosEngajamento) { chartInstances.planosEngajamento.resize(); chartInstances.planosEngajamento.update(); }
+                if(tabId === 'esforco') {
+                    if(chartInstances.planosBalanco) { chartInstances.planosBalanco.resize(); chartInstances.planosBalanco.update(); }
+                    if(chartInstances.planosRadar) { chartInstances.planosRadar.resize(); chartInstances.planosRadar.update(); }
+                }
+                if(tabId === 'crono' && chartInstances.planosCronograma) { chartInstances.planosCronograma.resize(); chartInstances.planosCronograma.update(); }
+                if(tabId === 'pessoas' && chartInstances.planosBolhas) { chartInstances.planosBolhas.resize(); chartInstances.planosBolhas.update(); }
+            }, 50);
         }
-
         function parseDataTermino(dataString) {
             if(!dataString) return null;
             let val = String(dataString).trim().substring(0, 10);
@@ -1521,91 +1548,123 @@
             const totalMunicipiosFiltro = new Set(currentData.map(d => d.municipio)).size || 1; 
 
             let concluidas = 0, atrasadas = 0, emAndamento = 0, naoIniciadas = 0;
-            let aVencerCount = 0;
-            let semDataCount = 0;
+            let aVencerCount = 0; let semDataCount = 0;
 
+            const munCount = {};
+            const frenteCount = { 'GEDU': 0, 'MOB': 0 };
             const compCount = {}; 
-            const monthCount = {}; 
+            const monthStatusCount = {}; 
             const respCount = {}; 
             const parcCount = {}; 
 
             validTasks.forEach(t => {
                 const s = (t.status || '').toLowerCase();
-                if (s.includes('concluída') || s.includes('finalizada')) concluidas++;
-                else if (s.includes('atrasada') || s.includes('parada')) atrasadas++;
-                else if (s.includes('andamento')) emAndamento++;
-                else naoIniciadas++;
+                let statusKey = 'nao_iniciadas';
+                
+                if (s.includes('concluída') || s.includes('finalizada')) { concluidas++; statusKey = 'concluidas'; }
+                else if (s.includes('atrasada') || s.includes('parada')) { atrasadas++; statusKey = 'atrasadas'; }
+                else if (s.includes('andamento')) { emAndamento++; statusKey = 'em_andamento'; }
+                else { naoIniciadas++; }
 
                 if (!s.includes('concluída') && !s.includes('finalizada')) {
                     if(checkVencimento(t.data_termino)) aVencerCount++;
                 }
 
-                if (!String(t.data_inicio || '').trim() || !String(t.data_termino || '').trim()) {
-                    semDataCount++;
-                }
+                if (!String(t.data_inicio || '').trim() || !String(t.data_termino || '').trim()) semDataCount++;
+
+                // Frentes e Municípios
+                const f = (t.frente || '').toUpperCase();
+                if(f === 'GEDU' || f === 'MOB') frenteCount[f]++;
+                
+                const mPuro = String(t.municipio).split('-')[0].trim();
+                munCount[mPuro] = (munCount[mPuro] || 0) + 1;
 
                 const c = t.competencia ? `[${t.frente}] ${t.competencia}` : 'Não Informada';
                 compCount[c] = (compCount[c] || 0) + 1;
 
+                // Cronograma (Apenas tarefas ATIVAS)
                 if (!s.includes('concluída')) {
                     let dInfo = parseDataTermino(t.data_termino);
                     if(dInfo) {
                         const key = `${dInfo.year}-${dInfo.month}`; 
-                        monthCount[key] = (monthCount[key] || { count: 0, label: dInfo.label });
-                        monthCount[key].count++;
+                        if (!monthStatusCount[key]) monthStatusCount[key] = { label: dInfo.label, concluidas: 0, em_andamento: 0, nao_iniciadas: 0, atrasadas: 0 };
+                        monthStatusCount[key][statusKey]++;
                     }
                 }
 
                 if (!s.includes('concluída')) {
                     let r = String(t.responsavel || '').trim();
                     if(r && r !== '-') respCount[r] = (respCount[r] || 0) + 1;
-                    
                     let p = String(t.parceiros || '').trim();
                     if(p && p !== '-' && t.frente === 'MOB') parcCount[p] = (parcCount[p] || 0) + 1;
                 }
             });
 
+            // 1. Atualizar KPIs Gerais
             const pctConcluido = totalTarefas > 0 ? ((concluidas / totalTarefas) * 100).toFixed(1) : 0;
             const pctAtrasado = totalTarefas > 0 ? ((atrasadas / totalTarefas) * 100).toFixed(1) : 0;
 
-            const elTot = document.getElementById('kpiPlanosTotal'); if(elTot) elTot.innerText = totalTarefas;
-            const elAdesao = document.getElementById('kpiPlanosAdesao'); if(elAdesao) elAdesao.innerText = `${munsComPlano}/${totalMunicipiosFiltro}`;
-            const elConc = document.getElementById('kpiPlanosConcluido'); if(elConc) elConc.innerText = `${pctConcluido}%`;
-            const elAtras = document.getElementById('kpiPlanosAtrasado'); if(elAtras) elAtras.innerText = `${pctAtrasado}%`;
-
-            const elAlertAtr = document.getElementById('alertAtrasadasCount'); if(elAlertAtr) elAlertAtr.innerText = atrasadas;
-            const elAlertVen = document.getElementById('alertVencendoCount'); if(elAlertVen) elAlertVen.innerText = aVencerCount;
-            const elAlertSemData = document.getElementById('alertSemDataCount'); if(elAlertSemData) elAlertSemData.innerText = semDataCount; 
+            const setKPI = (id, val) => { const el = document.getElementById(id); if(el) el.innerText = val; };
+            setKPI('kpiPlanosTotal', totalTarefas); setKPI('kpiPlanosAdesao', `${munsComPlano}/${totalMunicipiosFiltro}`);
+            setKPI('kpiPlanosConcluido', `${pctConcluido}%`); setKPI('kpiPlanosAtrasado', `${pctAtrasado}%`);
+            setKPI('alertAtrasadasCount', atrasadas); setKPI('alertVencendoCount', aVencerCount); setKPI('alertSemDataCount', semDataCount); 
 
             if (chartInstances.planosStatus) {
                 chartInstances.planosStatus.data.datasets[0].data = [concluidas, emAndamento, naoIniciadas, atrasadas];
                 chartInstances.planosStatus.update();
             }
 
-            const sortedComps = Object.keys(compCount).map(k => ({name: k, count: compCount[k]})).sort((a,b) => b.count - a.count).slice(0, 10);
-            if (chartInstances.planosCompetencias) {
-                chartInstances.planosCompetencias.data.labels = sortedComps.map(c => c.name.length > 25 ? c.name.substring(0, 25) + '...' : c.name);
-                chartInstances.planosCompetencias.data.datasets[0].data = sortedComps.map(c => c.count);
-                chartInstances.planosCompetencias.update();
+            // 2. Território: Gráfico e Lista de Inércia
+            const sortedMuns = Object.keys(munCount).map(k => ({name: k, count: munCount[k]})).sort((a,b) => b.count - a.count).slice(0, 15);
+            if (chartInstances.planosEngajamento) {
+                chartInstances.planosEngajamento.data.labels = sortedMuns.map(m => m.name.length > 20 ? m.name.substring(0, 20) + '...' : m.name);
+                chartInstances.planosEngajamento.data.datasets[0].data = sortedMuns.map(m => m.count);
+                chartInstances.planosEngajamento.update();
             }
 
-            const sortedMonths = Object.keys(monthCount).sort(); 
+            const ulInercia = document.getElementById('listMunicipiosInercia');
+            if(ulInercia) {
+                ulInercia.innerHTML = '';
+                const baseMuns = currentData.map(d => d.municipio.split('-')[0].trim());
+                const munsComPlanoNomes = Object.keys(munCount);
+                const munsSemPlano = baseMuns.filter(m => !munsComPlanoNomes.includes(m));
+                
+                if (munsSemPlano.length === 0) ulInercia.innerHTML = '<li class="text-xs text-emerald-600 font-bold bg-emerald-50 p-2 rounded border border-emerald-100"><i class="ph-bold ph-check-circle"></i> Todos os municípios selecionados possuem ações registadas!</li>';
+                else munsSemPlano.forEach(m => ulInercia.innerHTML += `<li class="text-sm font-bold text-rose-800 bg-rose-50 p-2 rounded border border-rose-100">${m}</li>`);
+            }
+
+            // 3. Esforço: Balanço e Radar
+            if (chartInstances.planosBalanco) {
+                chartInstances.planosBalanco.data.datasets[0].data = [frenteCount.GEDU, frenteCount.MOB];
+                chartInstances.planosBalanco.update();
+            }
+            const sortedComps = Object.keys(compCount).map(k => ({name: k, count: compCount[k]})).sort((a,b) => b.count - a.count).slice(0, 10);
+            if (chartInstances.planosRadar) {
+                chartInstances.planosRadar.data.labels = sortedComps.map(c => c.name.length > 25 ? c.name.substring(0, 25) + '...' : c.name);
+                chartInstances.planosRadar.data.datasets[0].data = sortedComps.map(c => c.count);
+                chartInstances.planosRadar.update();
+            }
+
+            // 4. Cronograma (Stacked Bars)
+            const sortedMonths = Object.keys(monthStatusCount).sort(); 
             if (chartInstances.planosCronograma) {
-                chartInstances.planosCronograma.data.labels = sortedMonths.map(k => monthCount[k].label);
-                chartInstances.planosCronograma.data.datasets[0].data = sortedMonths.map(k => monthCount[k].count);
+                chartInstances.planosCronograma.data.labels = sortedMonths.map(k => monthStatusCount[k].label);
+                chartInstances.planosCronograma.data.datasets = [
+                    { label: 'Atrasadas', data: sortedMonths.map(k => monthStatusCount[k].atrasadas), backgroundColor: '#EF4444' },
+                    { label: 'Em Andamento', data: sortedMonths.map(k => monthStatusCount[k].em_andamento), backgroundColor: '#3B82F6' },
+                    { label: 'Não Iniciadas', data: sortedMonths.map(k => monthStatusCount[k].nao_iniciadas), backgroundColor: '#94A3B8' }
+                ];
                 chartInstances.planosCronograma.update();
             }
 
+            // 5. Pessoas e Parceiros
             const sortedResp = Object.keys(respCount).map(k => ({nome: k, count: respCount[k]})).sort((a,b) => b.count - a.count);
-
             const ulResp = document.getElementById('listTopResponsaveis');
             if(ulResp) {
                 ulResp.innerHTML = '';
                 const top10Resp = sortedResp.slice(0, 10); 
-                if(top10Resp.length === 0) ulResp.innerHTML = '<li class="text-xs text-slate-400 italic">Nenhum responsável com tarefas pendentes.</li>';
-                top10Resp.forEach((r, idx) => {
-                    ulResp.innerHTML += `<li class="flex justify-between items-center py-2 border-b border-slate-50"><span class="text-sm text-slate-700 font-medium"><span class="text-slate-400 font-bold mr-2">${idx+1}º</span>${r.nome}</span><span class="bg-blue-100 text-blue-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase">${r.count} tarefas</span></li>`;
-                });
+                if(top10Resp.length === 0) ulResp.innerHTML = '<li class="text-xs text-slate-400 italic">Nenhum responsável pendente.</li>';
+                top10Resp.forEach((r, idx) => { ulResp.innerHTML += `<li class="flex justify-between items-center py-2 border-b border-slate-50"><span class="text-sm text-slate-700 font-medium"><span class="text-slate-400 font-bold mr-2">${idx+1}º</span>${r.nome}</span><span class="bg-blue-100 text-blue-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase">${r.count} tarefas</span></li>`; });
             }
 
             const ulParc = document.getElementById('listTopParceiros');
@@ -1613,49 +1672,25 @@
                 ulParc.innerHTML = '';
                 const sortedParc = Object.keys(parcCount).map(k => ({nome: k, count: parcCount[k]})).sort((a,b) => b.count - a.count).slice(0, 10);
                 if(sortedParc.length === 0) ulParc.innerHTML = '<li class="text-xs text-slate-400 italic">Nenhum parceiro registrado.</li>';
-                sortedParc.forEach((p, idx) => {
-                    ulParc.innerHTML += `<li class="flex justify-between items-center py-2 border-b border-slate-50"><span class="text-sm text-slate-700 font-medium"><span class="text-slate-400 font-bold mr-2">${idx+1}º</span>${p.nome}</span><span class="bg-orange-100 text-orange-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase">${p.count} menções</span></li>`;
-                });
+                sortedParc.forEach((p, idx) => { ulParc.innerHTML += `<li class="flex justify-between items-center py-2 border-b border-slate-50"><span class="text-sm text-slate-700 font-medium"><span class="text-slate-400 font-bold mr-2">${idx+1}º</span>${p.nome}</span><span class="bg-orange-100 text-orange-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase">${p.count} menções</span></li>`; });
             }
 
             if (chartInstances.planosBolhas && typeof sortedResp !== 'undefined') {
                 const topRespBolhas = sortedResp.slice(0, 15);
-                let bubbleData = topRespBolhas.map((r, index) => ({
-                    x: index,
-                    y: r.count, 
-                    r: Math.max(10, Math.min(r.count * 6, 50)), 
-                    count: r.count,
-                    nome: r.nome
-                }));
-                
-                chartInstances.planosBolhas.data.datasets = [{
-                    label: 'Responsáveis',
-                    data: bubbleData,
-                    backgroundColor: 'rgba(232, 93, 4, 0.6)', 
-                    borderColor: '#E85D04',
-                    borderWidth: 2
-                }];
+                let bubbleData = topRespBolhas.map((r, index) => ({ x: index, y: r.count, r: Math.max(10, Math.min(r.count * 6, 50)), count: r.count, nome: r.nome }));
+                chartInstances.planosBolhas.data.datasets = [{ label: 'Responsáveis', data: bubbleData, backgroundColor: 'rgba(232, 93, 4, 0.6)', borderColor: '#E85D04', borderWidth: 2 }];
                 chartInstances.planosBolhas.options.scales.x.max = topRespBolhas.length;
                 chartInstances.planosBolhas.update();
             }
 
+            // Renderizar Tabela (Permanece igual com Início e Fim)
             const tbody = document.getElementById('planosBody');
             if (!tbody) return;
             tbody.innerHTML = '';
 
             let filteredForTable = validTasks;
-            if (termoBusca) {
-                filteredForTable = validTasks.filter(t => 
-                    (t.tarefa || '').toLowerCase().includes(termoBusca) || 
-                    (t.municipio || '').toLowerCase().includes(termoBusca) ||
-                    (t.competencia || '').toLowerCase().includes(termoBusca)
-                );
-            }
-
-            if(filteredForTable.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" class="text-center py-6 text-slate-500 italic">Nenhuma tarefa validada encontrada.</td></tr>';
-                return;
-            }
+            if (termoBusca) filteredForTable = validTasks.filter(t => (t.tarefa || '').toLowerCase().includes(termoBusca) || (t.municipio || '').toLowerCase().includes(termoBusca) || (t.competencia || '').toLowerCase().includes(termoBusca));
+            if(filteredForTable.length === 0) { tbody.innerHTML = '<tr><td colspan="7" class="text-center py-6 text-slate-500 italic">Nenhuma tarefa encontrada.</td></tr>'; return; }
 
             filteredForTable.slice(0, 150).forEach(row => {
                 const s = (row.status || '').toLowerCase();
@@ -1664,12 +1699,18 @@
                 else if (s.includes('atrasada') || s.includes('parada')) badgeClass = 'bg-rose-100 text-rose-800 font-bold border border-rose-200';
                 else if (s.includes('andamento')) badgeClass = 'bg-blue-100 text-blue-800 font-bold';
 
+             
+                let acaoMacroLimpa = String(row.acao_macro || '');
+                if (acaoMacroLimpa.includes('GMT') || acaoMacroLimpa.includes('Standard Time')) {
+                    acaoMacroLimpa = 'Ação da Competência'; // Substitui o erro por um texto neutro ou deixe vazio ''
+                }
+
                 let tr = document.createElement('tr');
                 tr.className = 'border-b border-slate-100 hover:bg-slate-50 transition-colors';
                 tr.innerHTML = `
                     <td class="py-4 px-4 font-bold text-slate-800">${row.municipio} <br><span class="text-[10px] text-slate-400 font-normal uppercase tracking-widest">${row.uf}</span></td>
                     <td class="py-4 px-4"><span class="bg-slate-200 text-slate-700 px-2 py-1 rounded text-[10px] font-bold tracking-widest uppercase">${row.frente}</span></td>
-                    <td class="py-4 px-4"><div class="text-xs font-bold text-pve-blueDark line-clamp-2 mb-1" title="${row.competencia}">${row.competencia}</div><div class="text-[10px] text-slate-500 line-clamp-1">${row.acao_macro || ''}</div></td>
+                    <td class="py-4 px-4"><div class="text-xs font-bold text-pve-blueDark line-clamp-2 mb-1" title="${row.competencia}">${row.competencia}</div><div class="text-[10px] text-slate-500 line-clamp-1">${acaoMacroLimpa}</div></td>
                     <td class="py-4 px-4"><div class="text-xs text-slate-700 leading-relaxed line-clamp-3" title="${row.tarefa}">${row.tarefa}</div></td>
                     <td class="py-4 px-4 text-center"><div class="text-xs font-medium text-slate-600 bg-slate-50 px-2 py-1 rounded inline-block border border-slate-200">${row.data_inicio || '-'}</div></td>
                     <td class="py-4 px-4 text-center"><div class="text-xs font-medium text-slate-600 bg-slate-50 px-2 py-1 rounded inline-block border border-slate-200">${row.data_termino || '-'}</div></td>
@@ -2276,25 +2317,34 @@
                 options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'bottom', labels: { font: {family: 'Inter', size: 10} } }, datalabels: { display: true, color: '#fff', font: {weight: 'bold', size: 14}, formatter: (val) => val > 0 ? val : '' } } }
             });
 
-            chartInstances.planosCompetencias = new Chart(document.getElementById('chartPlanosCompetencias'), {
+            // GRÁFICO TERRITÓRIO: Engajamento Municípios
+            chartInstances.planosEngajamento = new Chart(document.getElementById('chartPlanosEngajamento'), {
                 type: 'bar', data: { labels: [], datasets: [{ label: 'Tarefas', data: [], backgroundColor: '#008B45', borderRadius: 4 }] },
                 options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', scales: { x: { beginAtZero: true, grid: {borderDash: [4,4]} }, y: { grid: {display: false}, ticks: {font: {size: 10, family: 'Inter'}} } }, plugins: { legend: { display: false }, datalabels: { display: true, anchor: 'end', align: 'right', color: '#475569', font: {weight: 'bold', size: 10} } } }
             });
+
+            // GRÁFICO ESFORÇO: Balanço Frentes
+            chartInstances.planosBalanco = new Chart(document.getElementById('chartPlanosBalanco'), {
+                type: 'doughnut', data: { labels: ['GEDU', 'MOB'], datasets: [{ data: [0, 0], backgroundColor: ['#1e3a8a', '#E85D04'], borderWidth: 2, borderColor: '#ffffff' }] },
+                options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'bottom', labels: { font: {family: 'Inter', size: 11} } }, datalabels: { display: true, color: '#fff', font: {weight: 'bold', size: 14}, formatter: (val) => val > 0 ? val : '' } } }
+            });
+
+            // GRÁFICO ESFORÇO: Radar Competências
+            chartInstances.planosRadar = new Chart(document.getElementById('chartPlanosRadar'), {
+                type: 'polarArea', data: { labels: [], datasets: [{ data: [], backgroundColor: ['rgba(0,139,69,0.7)', 'rgba(30,58,138,0.7)', 'rgba(232,93,4,0.7)', 'rgba(245,158,11,0.7)', 'rgba(16,185,129,0.7)'] }] },
+                options: { responsive: true, maintainAspectRatio: false, scales: { r: { ticks: {display: false} } }, plugins: { legend: { position: 'right', labels: {font: {size: 10, family: 'Inter'}} }, datalabels: { display: true, color: '#fff', font: {weight: 'bold'} } } }
+            });
             
+            // GRÁFICO CRONOGRAMA: Termômetro Mensal (Stacked)
             chartInstances.planosCronograma = new Chart(document.getElementById('chartPlanosCronograma'), {
-                type: 'bar', data: { labels: [], datasets: [{ label: 'Tarefas Previstas', data: [], backgroundColor: '#1e3a8a', borderRadius: 6 }] },
+                type: 'bar', data: { labels: [], datasets: [] },
                 options: { 
                     responsive: true, maintainAspectRatio: false,
                     scales: { 
-                        y: { 
-                            beginAtZero: true, 
-                            grid: {borderDash: [4,4]}, 
-                            title: {display: true, text: 'Nº de Tarefas que Vencem'},
-                            ticks: { precision: 0 }
-                        },
-                        x: { grid: {display: false}, ticks: {font: {weight: 'bold', family: 'Inter'}} }
+                        x: { stacked: true, grid: {display: false}, ticks: {font: {weight: 'bold', family: 'Inter'}} },
+                        y: { stacked: true, beginAtZero: true, grid: {borderDash: [4,4]}, title: {display: true, text: 'Nº de Tarefas'}, ticks: { precision: 0 } }
                     },
-                    plugins: { legend: { display: false }, datalabels: { display: true, anchor: 'end', align: 'top', color: '#1e3a8a', font: {weight: 'black', size: 12} } } 
+                    plugins: { legend: { position: 'top' }, datalabels: { display: true, color: '#fff', font: {weight: 'bold', size: 10}, formatter: (val) => val > 0 ? val : '' } } 
                 }
             });
             
