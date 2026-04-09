@@ -2432,6 +2432,35 @@
                 chartInstances.dist.update();
             } catch(e) {}
 
+			// ATUALIZA O TERMÔMETRO DE METAS (Visão Executiva)
+            try {
+                let countAlta = 0;
+                let countRef = 0;
+                currentData.forEach(row => {
+                    if (row.geral > 0) {
+                        if (row.geral <= 3.25) countAlta++;
+                        else countRef++;
+                    }
+                });
+                
+                if (chartInstances.miniMetas) {
+                    chartInstances.miniMetas.data.datasets[0].data = [countAlta, countRef];
+                    chartInstances.miniMetas.update();
+                    
+                    const summaryEl = document.getElementById('miniMetasSummary');
+                    if (summaryEl) {
+                        const totalValidos = countAlta + countRef;
+                        if (totalValidos > 0) {
+                            const pctAlta = Math.round((countAlta / totalValidos) * 100);
+                            const pctRef = Math.round((countRef / totalValidos) * 100);
+                            summaryEl.innerHTML = `<span class="text-pve-orange font-bold">${pctAlta}% Alta Intens.</span> <span class="mx-2 text-slate-300">|</span> <span class="text-pve-green font-bold">${pctRef}% Refinamento</span>`;
+                        } else {
+                            summaryEl.innerHTML = "Sem dados suficientes.";
+                        }
+                    }
+                }
+            } catch(e) {}
+
             try {
                 const nivelCounts = [0, 0, 0, 0]; const nivelNames = [[], [], [], []];
                 const nivelColors = ['#EF4444', '#F59E0B', '#10B981', '#3B82F6'];
