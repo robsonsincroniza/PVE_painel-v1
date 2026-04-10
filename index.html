@@ -199,7 +199,7 @@
                 <div class="border-l-4 border-pve-green pl-4 mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
                         <h2 class="text-2xl font-bold text-slate-900">Planos de Ação</h2>
-                        <p class="mt-1 text-slate-600">Gestão da execução das tarefas por GEDU e MOB.</p>
+                        <p class="mt-1 text-slate-600">Gestão preditiva da execução das tarefas por GEDU e MOB.</p>
                     </div>
                     <div class="flex items-center gap-3">
                         <span class="text-xs font-bold text-slate-500 uppercase tracking-widest"><i class="ph-fill ph-funnel"></i> Frente:</span>
@@ -211,82 +211,55 @@
                     </div>
                 </div>
 
-                <div class="flex space-x-2 border-b border-slate-200 mb-2 overflow-x-auto pb-1">
+               <div class="flex space-x-2 border-b border-slate-200 mb-2 overflow-x-auto pb-1">
                     <button onclick="switchSubTabPlanos('geral')" id="btnTabPlanos-geral" class="sub-tab-btn active whitespace-nowrap text-xs"><i class="ph-bold ph-squares-four mr-1"></i> Visão Geral & Alertas</button>
-                    <button onclick="switchSubTabPlanos('territorio')" id="btnTabPlanos-territorio" class="sub-tab-btn whitespace-nowrap text-xs"><i class="ph-bold ph-map-pin mr-1"></i> Território & Municípios</button>
-                    <button onclick="switchSubTabPlanos('esforco')" id="btnTabPlanos-esforco" class="sub-tab-btn whitespace-nowrap text-xs"><i class="ph-bold ph-target mr-1"></i> Esforço Pedagógico</button>
-                    <button onclick="switchSubTabPlanos('crono')" id="btnTabPlanos-crono" class="sub-tab-btn whitespace-nowrap text-xs"><i class="ph-bold ph-calendar-blank mr-1"></i> Cronograma & Entregas</button>
-                    <button onclick="switchSubTabPlanos('pessoas')" id="btnTabPlanos-pessoas" class="sub-tab-btn whitespace-nowrap text-xs"><i class="ph-bold ph-users mr-1"></i> Pessoas & Parceiros</button>
+                    <button onclick="switchSubTabPlanos('esforco')" id="btnTabPlanos-esforco" class="sub-tab-btn whitespace-nowrap text-xs"><i class="ph-bold ph-target mr-1"></i> Competências em Ação</button>
+                    <button onclick="switchSubTabPlanos('crono')" id="btnTabPlanos-crono" class="sub-tab-btn whitespace-nowrap text-xs"><i class="ph-bold ph-calendar-blank mr-1"></i> Detalhamento & Prazos</button>
+                    <button onclick="switchSubTabPlanos('pessoas')" id="btnTabPlanos-pessoas" class="sub-tab-btn whitespace-nowrap text-xs"><i class="ph-bold ph-users mr-1"></i> Responsáveis</button>
                 </div>
 
                 <div id="subtab-geral" class="space-y-6 block fade-update">
+                    
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-2">
-                        <div class="bg-rose-50 border border-rose-200 rounded-lg p-3 flex items-start shadow-sm">
-                            <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 mr-3 shrink-0 mt-1"><i class="ph-bold ph-warning text-xl"></i></div>
-                            <div>
-                                <h4 class="text-xs font-bold text-rose-800 uppercase tracking-widest mb-1">Alerta Crítico</h4>
-                                <div class="flex items-baseline gap-1">
-                                    <span id="alertAtrasadasCount" class="font-black text-2xl text-rose-700">0</span>
-                                    <span class="text-sm font-bold text-rose-700">tarefas</span>
-                                </div>
-                                <p class="text-[10px] text-rose-600 leading-tight mt-1">Ações com prazo de término expirado ou marcadas como paradas.</p>
-                            </div>
+                        <div class="bg-white rounded-xl shadow-sm p-5 border border-slate-200 hover:shadow-md transition flex flex-col">
+                            <span class="text-slate-500 text-[10px] font-bold uppercase tracking-widest flex items-center"><i class="ph-fill ph-map-pin mr-1 text-lg"></i> Adesão da Rede</span>
+                            <span id="kpiPlanosAdesao" class="text-3xl font-black text-slate-800 mt-2 block">-</span>
+                            <p class="text-[10px] text-slate-500 mt-auto pt-3 border-t border-slate-100 leading-tight">Proporção de municípios com planos ativos.</p>
                         </div>
-                        <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 flex items-start shadow-sm">
-                            <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 mr-3 shrink-0 mt-1"><i class="ph-bold ph-clock-countdown text-xl"></i></div>
-                            <div>
-                                <h4 class="text-xs font-bold text-amber-800 uppercase tracking-widest mb-1">Atenção ao Prazo</h4>
-                                <div class="flex items-baseline gap-1">
-                                    <span id="alertVencendoCount" class="font-black text-2xl text-amber-700">0</span>
-                                    <span class="text-sm font-bold text-amber-700">tarefas</span>
-                                </div>
-                                <p class="text-[10px] text-amber-600 leading-tight mt-1">Ações planeadas para vencer nos próximos 15 dias.</p>
-                            </div>
+                        <div class="bg-white rounded-xl shadow-sm p-5 border border-slate-200 hover:shadow-md transition flex flex-col">
+                            <span class="text-slate-500 text-[10px] font-bold uppercase tracking-widest flex items-center"><i class="ph-fill ph-list-checks mr-1 text-lg"></i> Tarefas Mapeadas</span>
+                            <span id="kpiPlanosTotal" class="text-3xl font-black text-slate-800 mt-2 block">-</span>
+                            <p class="text-[10px] text-slate-500 mt-auto pt-3 border-t border-slate-100 leading-tight">Total de ações válidas e estruturadas no sistema.</p>
                         </div>
-                        <div class="bg-orange-50 border border-orange-200 rounded-lg p-3 flex items-start shadow-sm">
-                            <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mr-3 shrink-0 mt-1"><i class="ph-bold ph-calendar-x text-xl"></i></div>
-                            <div>
-                                <h4 class="text-xs font-bold text-orange-800 uppercase tracking-widest mb-1">Datas Ausentes</h4>
-                                <div class="flex items-baseline gap-1">
-                                    <span id="alertSemDataCount" class="font-black text-2xl text-orange-700">0</span>
-                                    <span class="text-sm font-bold text-orange-700">tarefas</span>
-                                </div>
-                                <p class="text-[10px] text-orange-600 leading-tight mt-1">Ações validadas sem preenchimento de data de início ou término.</p>
+                        <div class="bg-white rounded-xl shadow-sm p-5 border border-slate-200 hover:shadow-md transition flex flex-col">
+                            <span class="text-slate-500 text-[10px] font-bold uppercase tracking-widest flex items-center"><i class="ph-fill ph-clock-countdown mr-1 text-lg"></i> Atenção ao Prazo</span>
+                            <div class="flex items-baseline gap-1 mt-2">
+                                <span id="alertVencendoCount" class="text-3xl font-black text-slate-800 block">-</span>
+                                <span class="text-xs font-bold text-slate-600">tarefas</span>
                             </div>
+                            <p class="text-[10px] text-slate-500 mt-auto pt-3 border-t border-slate-100 leading-tight">Ações planeadas para vencer nos próximos 15 dias.</p>
                         </div>
                     </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div class="bg-white rounded-xl shadow-sm p-5 border border-slate-200 hover:shadow-md transition flex flex-col">
-                            <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest flex items-center"><i class="ph-fill ph-list-checks mr-1 text-lg"></i> Tarefas Válidas</span>
-                            <span id="kpiPlanosTotal" class="text-3xl font-black text-slate-800 mt-2 block">-</span>
-                            <p class="text-[10px] text-slate-500 mt-auto pt-3 border-t border-slate-100 leading-tight">Total de ações estruturadas e ativas no sistema.</p>
-                        </div>
-                        <div class="bg-white rounded-xl shadow-sm p-5 border border-slate-200 hover:shadow-md transition flex flex-col">
-                            <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest flex items-center"><i class="ph-fill ph-map-pin mr-1 text-lg text-blue-500"></i> Adesão da Rede</span>
-                            <span id="kpiPlanosAdesao" class="text-3xl font-black text-blue-600 mt-2 block">-</span>
-                            <p class="text-[10px] text-slate-500 mt-auto pt-3 border-t border-slate-100 leading-tight">Proporção de municípios com planos de ação ativos.</p>
-                        </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-2">
                         <div class="bg-emerald-50 rounded-xl shadow-sm p-5 border border-emerald-100 border-b-4 border-b-emerald-500 hover:shadow-md transition flex flex-col">
-                            <span class="text-emerald-700 text-[10px] font-bold uppercase tracking-widest flex items-center"><i class="ph-fill ph-check-circle mr-1 text-lg"></i> Taxa Execução</span>
-                            <span id="kpiPlanosConcluido" class="text-3xl font-black text-emerald-600 mt-2 block">-</span>
-                            <p class="text-[10px] text-emerald-600 mt-auto pt-3 border-t border-emerald-200/50 leading-tight">Percentual do portefólio já concluído ou finalizado.</p>
+                            <span class="text-emerald-700 text-[10px] font-bold uppercase tracking-widest flex items-center"><i class="ph-fill ph-check-circle mr-1 text-lg"></i> Taxa Finalização</span>
+                            <span id="kpiPlanosConcluido" class="text-3xl font-black text-emerald-700 mt-2 block">-</span>
+                            <p class="text-[10px] text-emerald-600 mt-auto pt-3 border-t border-emerald-200/50 leading-tight">Percentual do portfólio já concluído ou finalizado.</p>
+                        </div>
+                        <div class="bg-amber-50 rounded-xl shadow-sm p-5 border border-amber-100 border-b-4 border-b-amber-500 hover:shadow-md transition flex flex-col">
+                            <span class="text-amber-700 text-[10px] font-bold uppercase tracking-widest flex items-center"><i class="ph-fill ph-spinner-gap mr-1 text-lg"></i> Taxa Execução</span>
+                            <span id="kpiPlanosAndamento" class="text-3xl font-black text-amber-700 mt-2 block">-</span>
+                            <p class="text-[10px] text-amber-600 mt-auto pt-3 border-t border-amber-200/50 leading-tight">Percentual de tarefas sinalizadas em andamento.</p>
                         </div>
                         <div class="bg-rose-50 rounded-xl shadow-sm p-5 border border-rose-100 border-b-4 border-b-rose-500 hover:shadow-md transition flex flex-col">
                             <span class="text-rose-700 text-[10px] font-bold uppercase tracking-widest flex items-center"><i class="ph-fill ph-warning-octagon mr-1 text-lg"></i> Índice de Risco</span>
-                            <span id="kpiPlanosAtrasado" class="text-3xl font-black text-rose-600 mt-2 block">-</span>
-                            <p class="text-[10px] text-rose-600 mt-auto pt-3 border-t border-rose-200/50 leading-tight">Percentual de tarefas que estão atrasadas ou paradas.</p>
+                            <span id="kpiPlanosAtrasado" class="text-3xl font-black text-rose-700 mt-2 block">-</span>
+                            <p class="text-[10px] text-rose-600 mt-auto pt-3 border-t border-rose-200/50 leading-tight">Percentual de tarefas atrasadas ou paradas.</p>
                         </div>
                     </div>
-                    <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col md:w-1/2">
-                        <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1">Status de Entrega</h3>
-                        <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">Saúde do portfólio de ações na rede.</p>
-                        <div class="chart-container flex-1 min-h-[250px]"><canvas id="chartPlanosStatus"></canvas></div>
-                    </div>
-                </div>
 
-                <div id="subtab-territorio" class="space-y-6 hidden fade-update">
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
                         <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
                             <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1">Top 15 Engajamento (Municípios)</h3>
                             <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">Volume total de tarefas válidas estruturadas no sistema.</p>
@@ -298,35 +271,79 @@
                             <ul id="listMunicipiosInercia" class="space-y-2 overflow-y-auto max-h-[300px] pr-2"></ul>
                         </div>
                     </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
+                            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1">Status de Entrega</h3>
+                            <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">Saúde do portfólio.</p>
+                            <div class="chart-container flex-1 min-h-[250px]"><canvas id="chartPlanosStatus"></canvas></div>
+                        </div>
+                        <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
+                            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1">Top 10: Foco Estratégico</h3>
+                            <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">Volume de tarefas alocadas por competência.</p>
+                            <div class="chart-container flex-1 min-h-[250px]"><canvas id="chartPlanosCompetencias"></canvas></div>
+                        </div>
+                    </div>
                 </div>
 
                 <div id="subtab-esforco" class="space-y-6 hidden fade-update">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="lg:col-span-1 bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
+                        <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
                             <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1">Balanço de Frentes</h3>
                             <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">Intencionalidade: % de tarefas alocadas.</p>
                             <div class="chart-container flex-1 min-h-[250px]"><canvas id="chartPlanosBalanco"></canvas></div>
                         </div>
-                        <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
-                            <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest mb-1">Radar de Foco Estratégico</h3>
-                            <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">Top 10 competências com maior volume de tarefas planejadas.</p>
-                            <div class="chart-container flex-1 min-h-[300px]"><canvas id="chartPlanosRadar"></canvas></div>
+                        <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
+                            <h3 class="text-sm font-bold text-pve-blueDark uppercase tracking-widest mb-1 flex items-center"><i class="ph-bold ph-books mr-2 text-lg"></i> Foco: GEDU</h3>
+                            <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">Volume de tarefas estruturadas em Gestão Educacional.</p>
+                            <div class="chart-container flex-1 min-h-[250px]"><canvas id="chartPlanosCompGedu"></canvas></div>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
+                            <h3 class="text-sm font-bold text-pve-orange uppercase tracking-widest mb-1 flex items-center"><i class="ph-bold ph-users-three mr-2 text-lg"></i> Foco: MOB</h3>
+                            <p class="text-xs text-slate-500 mb-6 pb-4 border-b border-slate-100">Volume de tarefas estruturadas em Mobilização Social.</p>
+                            <div class="chart-container flex-1 min-h-[250px]"><canvas id="chartPlanosCompMob"></canvas></div>
                         </div>
                     </div>
                 </div>
 
                 <div id="subtab-crono" class="space-y-6 hidden fade-update">
-                    <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
-                        <div class="mb-4 border-b border-slate-100 pb-4">
-                            <h3 class="text-lg font-bold text-slate-800">Termômetro de Entregas (Stacked)</h3>
-                            <p class="text-xs text-slate-500 mt-1">Status das tarefas cruzado com os meses de vencimento.</p>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col">
+                            <div class="mb-4 border-b border-slate-100 pb-4">
+                                <h3 class="text-lg font-bold text-slate-800">Curva de Entregas (Projeção)</h3>
+                                <p class="text-xs text-slate-500 mt-1">Evolução comparativa de tarefas pendentes vs concluídas por mês de prazo.</p>
+                            </div>
+                            <div class="chart-container flex-1 min-h-[300px]"><canvas id="chartPlanosCronograma"></canvas></div>
                         </div>
-                        <div class="chart-container flex-1 min-h-[350px]"><canvas id="chartPlanosCronograma"></canvas></div>
+                        
+                        <div class="lg:col-span-1 flex flex-col gap-4">
+                            <div class="bg-rose-50 rounded-xl shadow-sm p-5 border border-rose-200 flex items-center">
+                                <div class="w-12 h-12 rounded-full bg-rose-100 flex items-center justify-center text-rose-600 mr-4 shrink-0"><i class="ph-bold ph-warning-octagon text-2xl"></i></div>
+                                <div>
+                                    <h4 class="text-xs font-bold text-rose-800 uppercase tracking-widest">Atrasadas</h4>
+                                    <p class="text-sm text-rose-700"><span id="urgenciaAtrasadas" class="font-black text-xl">0</span> tarefas vencidas.</p>
+                                </div>
+                            </div>
+                            <div class="bg-orange-50 rounded-xl shadow-sm p-5 border border-orange-200 flex items-center">
+                                <div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 mr-4 shrink-0"><i class="ph-bold ph-fire text-2xl"></i></div>
+                                <div>
+                                    <h4 class="text-xs font-bold text-orange-800 uppercase tracking-widest">Curto Prazo</h4>
+                                    <p class="text-sm text-orange-700"><span id="urgenciaCurto" class="font-black text-xl">0</span> vencem em até 30 dias.</p>
+                                </div>
+                            </div>
+                            <div class="bg-amber-50 rounded-xl shadow-sm p-5 border border-amber-200 flex items-center">
+                                <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 mr-4 shrink-0"><i class="ph-bold ph-hourglass-medium text-2xl"></i></div>
+                                <div>
+                                    <h4 class="text-xs font-bold text-amber-800 uppercase tracking-widest">Médio Prazo</h4>
+                                    <p class="text-sm text-amber-700"><span id="urgenciaMedio" class="font-black text-xl">0</span> vencem em 31 a 90 dias.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
                     <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden mt-8">
                         <div class="p-5 border-b border-slate-100 bg-pve-blueDark text-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                            <div><h3 class="font-bold text-lg flex items-center"><i class="ph-fill ph-table mr-2 text-pve-yellow"></i> Detalhamento das ações</h3></div>
+                            <div><h3 class="font-bold text-lg flex items-center"><i class="ph-fill ph-table mr-2 text-pve-yellow"></i> Auditoria Raio-X</h3></div>
                             <div class="relative w-full sm:w-72">
                                 <i class="ph-bold ph-magnifying-glass absolute left-3 top-2.5 text-slate-400"></i>
                                 <input type="text" id="searchPlanos" placeholder="Buscar tarefa, município..." onkeyup="updatePlanosView()" class="w-full pl-9 pr-4 py-2 text-sm border-0 rounded-lg text-slate-800 focus:ring-2 focus:ring-pve-green outline-none shadow-inner">
@@ -1319,9 +1336,8 @@
             return { label: 'Robusto', color: '#3B82F6', bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200', textClass: 'text-blue-600' };
         }
 
-       // Funções para Controle das Sub-Abas e Datas
-        function switchSubTabPlanos(tabId) {
-            ['geral', 'territorio', 'esforco', 'crono', 'pessoas'].forEach(id => {
+       function switchSubTabPlanos(tabId) {
+            ['geral', 'esforco', 'crono', 'pessoas'].forEach(id => {
                 const btn = document.getElementById(`btnTabPlanos-${id}`);
                 const div = document.getElementById(`subtab-${id}`);
                 if(btn && div) {
@@ -1338,10 +1354,16 @@
             });
             // Redimensionar gráficos na aba visível
             setTimeout(() => {
-                if(tabId === 'territorio' && chartInstances.planosEngajamento) { chartInstances.planosEngajamento.resize(); chartInstances.planosEngajamento.update(); }
+                if(tabId === 'geral') {
+                    if(chartInstances.planosEngajamento) { chartInstances.planosEngajamento.resize(); chartInstances.planosEngajamento.update(); }
+                    if(chartInstances.planosStatus) { chartInstances.planosStatus.resize(); chartInstances.planosStatus.update(); }
+                    if(chartInstances.planosCompetencias) { chartInstances.planosCompetencias.resize(); chartInstances.planosCompetencias.update(); }
+                }
                 if(tabId === 'esforco') {
                     if(chartInstances.planosBalanco) { chartInstances.planosBalanco.resize(); chartInstances.planosBalanco.update(); }
-                    if(chartInstances.planosRadar) { chartInstances.planosRadar.resize(); chartInstances.planosRadar.update(); }
+                    if(chartInstances.planosCompGedu) { chartInstances.planosCompGedu.resize(); chartInstances.planosCompGedu.update(); }
+                    if(chartInstances.planosCompMob) { chartInstances.planosCompMob.resize(); chartInstances.planosCompMob.update(); }
+                
                 }
                 if(tabId === 'crono' && chartInstances.planosCronograma) { chartInstances.planosCronograma.resize(); chartInstances.planosCronograma.update(); }
                 if(tabId === 'pessoas' && chartInstances.planosBolhas) { chartInstances.planosBolhas.resize(); chartInstances.planosBolhas.update(); }
@@ -1535,7 +1557,7 @@
             updateKPIs(); updateExecutiveView(); updateCharts(); updateReguaTable(); updateMetasTab(); renderMetasUX(); updatePlanosView(); changeViewFrente(currentViewFrente);
         }
 
-        function updatePlanosView() {
+      function updatePlanosView() {
             const selFrente = document.getElementById('filtroFrentePlanos');
             const frenteValue = selFrente ? selFrente.value : 'Todas';
             const termoBusca = (document.getElementById('searchPlanos')?.value || '').toLowerCase();
@@ -1547,12 +1569,19 @@
             const munsComPlano = new Set(validTasks.map(t => t.municipio)).size;
             const totalMunicipiosFiltro = new Set(currentData.map(d => d.municipio)).size || 1; 
 
+            // Contadores Gerais
             let concluidas = 0, atrasadas = 0, emAndamento = 0, naoIniciadas = 0;
-            let aVencerCount = 0; let semDataCount = 0;
+            let aVencerCount = 0;
+            
+            // Novos Contadores de Urgência
+            let urgenciaCurto = 0; 
+            let urgenciaMedio = 0;
 
             const munCount = {};
             const frenteCount = { 'GEDU': 0, 'MOB': 0 };
-            const compCount = {}; 
+            const compCount = {}; // <-- VOLTOU: Contador para o Foco Estratégico Geral
+            const compCountGedu = {}; 
+            const compCountMob = {}; 
             const monthStatusCount = {}; 
             const respCount = {}; 
             const parcCount = {}; 
@@ -1570,8 +1599,6 @@
                     if(checkVencimento(t.data_termino)) aVencerCount++;
                 }
 
-                if (!String(t.data_inicio || '').trim() || !String(t.data_termino || '').trim()) semDataCount++;
-
                 // Frentes e Municípios
                 const f = (t.frente || '').toUpperCase();
                 if(f === 'GEDU' || f === 'MOB') frenteCount[f]++;
@@ -1579,22 +1606,40 @@
                 const mPuro = String(t.municipio).split('-')[0].trim();
                 munCount[mPuro] = (munCount[mPuro] || 0) + 1;
 
-                const c = t.competencia ? `[${t.frente}] ${t.competencia}` : 'Não Informada';
-                compCount[c] = (compCount[c] || 0) + 1;
+                // Competências: Juntas (Visão Geral) e Separadas (Esforço)
+                const cName = t.competencia ? t.competencia : 'Não Informada';
+                compCount[cName] = (compCount[cName] || 0) + 1; // <-- VOLTOU: Soma global
+                if (f === 'GEDU') compCountGedu[cName] = (compCountGedu[cName] || 0) + 1;
+                if (f === 'MOB') compCountMob[cName] = (compCountMob[cName] || 0) + 1;
 
-                // Cronograma (Apenas tarefas ATIVAS)
-                if (!s.includes('concluída')) {
-                    let dInfo = parseDataTermino(t.data_termino);
-                    if(dInfo) {
-                        const key = `${dInfo.year}-${dInfo.month}`; 
-                        if (!monthStatusCount[key]) monthStatusCount[key] = { label: dInfo.label, concluidas: 0, em_andamento: 0, nao_iniciadas: 0, atrasadas: 0 };
-                        monthStatusCount[key][statusKey]++;
+                // Cronograma e Urgências (O novo motor da curva de entregas)
+                let dInfo = parseDataTermino(t.data_termino);
+                if(dInfo) {
+                    const key = `${dInfo.year}-${dInfo.month}`; 
+                    if (!monthStatusCount[key]) monthStatusCount[key] = { label: dInfo.label, concluidas: 0, pendentes: 0 };
+                    
+                    if (s.includes('concluída') || s.includes('finalizada')) {
+                        monthStatusCount[key].concluidas++;
+                    } else {
+                        monthStatusCount[key].pendentes++;
+                        
+                        // Cálculo de Urgência em Dias
+                        let d = new Date(dInfo.year, dInfo.month - 1, dInfo.day);
+                        let diffDays = Math.ceil((d.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+                        
+                        if (diffDays >= 0 && diffDays <= 30) urgenciaCurto++;
+                        else if (diffDays > 30 && diffDays <= 90) urgenciaMedio++;
                     }
                 }
 
-                if (!s.includes('concluída')) {
+                if (!s.includes('concluída') && !s.includes('finalizada')) {
                     let r = String(t.responsavel || '').trim();
-                    if(r && r !== '-') respCount[r] = (respCount[r] || 0) + 1;
+                    if(r && r !== '-') {
+                        // Agrupa por Nome + Municipio + Frente para não misturar homónimos
+                        let mPuroLocal = String(t.municipio).split('-')[0].trim();
+                        let chaveResp = `${r}|${mPuroLocal}|${t.frente}`;
+                        respCount[chaveResp] = (respCount[chaveResp] || 0) + 1;
+                    }
                     let p = String(t.parceiros || '').trim();
                     if(p && p !== '-' && t.frente === 'MOB') parcCount[p] = (parcCount[p] || 0) + 1;
                 }
@@ -1602,19 +1647,33 @@
 
             // 1. Atualizar KPIs Gerais
             const pctConcluido = totalTarefas > 0 ? ((concluidas / totalTarefas) * 100).toFixed(1) : 0;
+            const pctEmAndamento = totalTarefas > 0 ? ((emAndamento / totalTarefas) * 100).toFixed(1) : 0;
             const pctAtrasado = totalTarefas > 0 ? ((atrasadas / totalTarefas) * 100).toFixed(1) : 0;
 
             const setKPI = (id, val) => { const el = document.getElementById(id); if(el) el.innerText = val; };
-            setKPI('kpiPlanosTotal', totalTarefas); setKPI('kpiPlanosAdesao', `${munsComPlano}/${totalMunicipiosFiltro}`);
-            setKPI('kpiPlanosConcluido', `${pctConcluido}%`); setKPI('kpiPlanosAtrasado', `${pctAtrasado}%`);
-            setKPI('alertAtrasadasCount', atrasadas); setKPI('alertVencendoCount', aVencerCount); setKPI('alertSemDataCount', semDataCount); 
+            
+            setKPI('kpiPlanosAdesao', `${munsComPlano}/${totalMunicipiosFiltro}`);
+            setKPI('kpiPlanosTotal', totalTarefas);
+            setKPI('alertVencendoCount', aVencerCount);
+            
+            setKPI('kpiPlanosConcluido', `${pctConcluido}%`);
+            setKPI('kpiPlanosAndamento', `${pctEmAndamento}%`);
+            setKPI('kpiPlanosAtrasado', `${pctAtrasado}%`);
 
             if (chartInstances.planosStatus) {
                 chartInstances.planosStatus.data.datasets[0].data = [concluidas, emAndamento, naoIniciadas, atrasadas];
                 chartInstances.planosStatus.update();
             }
 
-            // 2. Território: Gráfico e Lista de Inércia
+            // <-- VOLTOU: Alimentar o Top 10 Foco Estratégico (Visão Geral)
+            const sortedComps = Object.keys(compCount).map(k => ({name: k, count: compCount[k]})).sort((a,b) => b.count - a.count).slice(0, 10);
+            if (chartInstances.planosCompetencias) {
+                chartInstances.planosCompetencias.data.labels = sortedComps.map(c => c.name.length > 25 ? c.name.substring(0, 25) + '...' : c.name);
+                chartInstances.planosCompetencias.data.datasets[0].data = sortedComps.map(c => c.count);
+                chartInstances.planosCompetencias.update();
+            }
+
+            // 2. Território
             const sortedMuns = Object.keys(munCount).map(k => ({name: k, count: munCount[k]})).sort((a,b) => b.count - a.count).slice(0, 15);
             if (chartInstances.planosEngajamento) {
                 chartInstances.planosEngajamento.data.labels = sortedMuns.map(m => m.name.length > 20 ? m.name.substring(0, 20) + '...' : m.name);
@@ -1633,38 +1692,72 @@
                 else munsSemPlano.forEach(m => ulInercia.innerHTML += `<li class="text-sm font-bold text-rose-800 bg-rose-50 p-2 rounded border border-rose-100">${m}</li>`);
             }
 
-            // 3. Esforço: Balanço e Radar
+            // 3. Competências em Ação (Balanço, GEDU e MOB)
             if (chartInstances.planosBalanco) {
                 chartInstances.planosBalanco.data.datasets[0].data = [frenteCount.GEDU, frenteCount.MOB];
                 chartInstances.planosBalanco.update();
             }
-            const sortedComps = Object.keys(compCount).map(k => ({name: k, count: compCount[k]})).sort((a,b) => b.count - a.count).slice(0, 10);
-            if (chartInstances.planosRadar) {
-                chartInstances.planosRadar.data.labels = sortedComps.map(c => c.name.length > 25 ? c.name.substring(0, 25) + '...' : c.name);
-                chartInstances.planosRadar.data.datasets[0].data = sortedComps.map(c => c.count);
-                chartInstances.planosRadar.update();
+            
+            const sortedGedu = Object.keys(compCountGedu).map(k => ({name: k, count: compCountGedu[k]})).sort((a,b) => b.count - a.count).slice(0, 8);
+            if (chartInstances.planosCompGedu) {
+                chartInstances.planosCompGedu.data.labels = sortedGedu.map(c => c.name.length > 25 ? c.name.substring(0, 25) + '...' : c.name);
+                chartInstances.planosCompGedu.data.datasets[0].data = sortedGedu.map(c => c.count);
+                chartInstances.planosCompGedu.update();
             }
 
-            // 4. Cronograma (Stacked Bars)
+            const sortedMob = Object.keys(compCountMob).map(k => ({name: k, count: compCountMob[k]})).sort((a,b) => b.count - a.count).slice(0, 8);
+            if (chartInstances.planosCompMob) {
+                chartInstances.planosCompMob.data.labels = sortedMob.map(c => c.name.length > 25 ? c.name.substring(0, 25) + '...' : c.name);
+                chartInstances.planosCompMob.data.datasets[0].data = sortedMob.map(c => c.count);
+                chartInstances.planosCompMob.update();
+            }
+
+            // 4. Cartões de Urgência e Gráfico da Curva
+            setKPI('urgenciaAtrasadas', atrasadas);
+            setKPI('urgenciaCurto', urgenciaCurto);
+            setKPI('urgenciaMedio', urgenciaMedio);
+
             const sortedMonths = Object.keys(monthStatusCount).sort(); 
             if (chartInstances.planosCronograma) {
                 chartInstances.planosCronograma.data.labels = sortedMonths.map(k => monthStatusCount[k].label);
                 chartInstances.planosCronograma.data.datasets = [
-                    { label: 'Atrasadas', data: sortedMonths.map(k => monthStatusCount[k].atrasadas), backgroundColor: '#EF4444' },
-                    { label: 'Em Andamento', data: sortedMonths.map(k => monthStatusCount[k].em_andamento), backgroundColor: '#3B82F6' },
-                    { label: 'Não Iniciadas', data: sortedMonths.map(k => monthStatusCount[k].nao_iniciadas), backgroundColor: '#94A3B8' }
+                    { 
+                        label: 'Pendentes a Vencer', 
+                        data: sortedMonths.map(k => monthStatusCount[k].pendentes), 
+                        borderColor: '#E85D04', backgroundColor: 'rgba(232, 93, 4, 0.1)', 
+                        borderWidth: 3, fill: true, tension: 0.4, pointRadius: 4
+                    },
+                    { 
+                        label: 'Já Concluídas', 
+                        data: sortedMonths.map(k => monthStatusCount[k].concluidas), 
+                        borderColor: '#10B981', backgroundColor: 'rgba(16, 185, 129, 0.1)', 
+                        borderWidth: 3, fill: true, tension: 0.4, pointRadius: 4
+                    }
                 ];
                 chartInstances.planosCronograma.update();
             }
 
-            // 5. Pessoas e Parceiros
-            const sortedResp = Object.keys(respCount).map(k => ({nome: k, count: respCount[k]})).sort((a,b) => b.count - a.count);
+          // 5. Responsáveis e Parceiros
+            const sortedResp = Object.keys(respCount).map(k => {
+                const partes = k.split('|');
+                return { nome: partes[0], mun: partes[1], frente: partes[2], count: respCount[k] };
+            }).sort((a,b) => b.count - a.count);
+
             const ulResp = document.getElementById('listTopResponsaveis');
             if(ulResp) {
                 ulResp.innerHTML = '';
                 const top10Resp = sortedResp.slice(0, 10); 
                 if(top10Resp.length === 0) ulResp.innerHTML = '<li class="text-xs text-slate-400 italic">Nenhum responsável pendente.</li>';
-                top10Resp.forEach((r, idx) => { ulResp.innerHTML += `<li class="flex justify-between items-center py-2 border-b border-slate-50"><span class="text-sm text-slate-700 font-medium"><span class="text-slate-400 font-bold mr-2">${idx+1}º</span>${r.nome}</span><span class="bg-blue-100 text-blue-800 text-[10px] px-2 py-0.5 rounded font-bold uppercase">${r.count} tarefas</span></li>`; });
+                top10Resp.forEach((r, idx) => { 
+                    ulResp.innerHTML += `
+                    <li class="flex justify-between items-center py-2 border-b border-slate-50">
+                        <div class="flex flex-col">
+                            <span class="text-sm text-slate-800 font-bold"><span class="text-slate-400 mr-1">${idx+1}º</span>${r.nome}</span>
+                            <span class="text-[10px] text-slate-500 uppercase tracking-wider mt-0.5"><i class="ph-fill ph-map-pin mr-1"></i>${r.mun} <span class="mx-1">•</span> ${r.frente}</span>
+                        </div>
+                        <span class="bg-blue-100 text-blue-800 text-[10px] px-2 py-1 rounded font-bold uppercase shrink-0">${r.count} tarefas</span>
+                    </li>`; 
+                });
             }
 
             const ulParc = document.getElementById('listTopParceiros');
@@ -1677,13 +1770,19 @@
 
             if (chartInstances.planosBolhas && typeof sortedResp !== 'undefined') {
                 const topRespBolhas = sortedResp.slice(0, 15);
-                let bubbleData = topRespBolhas.map((r, index) => ({ x: index, y: r.count, r: Math.max(10, Math.min(r.count * 6, 50)), count: r.count, nome: r.nome }));
+                let bubbleData = topRespBolhas.map((r, index) => ({ 
+                    x: index, 
+                    y: r.count, 
+                    r: Math.max(10, Math.min(r.count * 6, 50)), 
+                    count: r.count, 
+                    nome: `${r.nome} (${r.mun})` // O gráfico de bolhas também passa a mostrar o município!
+                }));
                 chartInstances.planosBolhas.data.datasets = [{ label: 'Responsáveis', data: bubbleData, backgroundColor: 'rgba(232, 93, 4, 0.6)', borderColor: '#E85D04', borderWidth: 2 }];
                 chartInstances.planosBolhas.options.scales.x.max = topRespBolhas.length;
                 chartInstances.planosBolhas.update();
             }
 
-            // Renderizar Tabela (Permanece igual com Início e Fim)
+            // Renderizar Tabela Raio-X
             const tbody = document.getElementById('planosBody');
             if (!tbody) return;
             tbody.innerHTML = '';
@@ -1699,14 +1798,12 @@
                 else if (s.includes('atrasada') || s.includes('parada')) badgeClass = 'bg-rose-100 text-rose-800 font-bold border border-rose-200';
                 else if (s.includes('andamento')) badgeClass = 'bg-blue-100 text-blue-800 font-bold';
 
-             
                 let acaoMacroLimpa = String(row.acao_macro || '');
                 if (acaoMacroLimpa.includes('GMT') || acaoMacroLimpa.includes('Standard Time')) {
-                    acaoMacroLimpa = 'Ação da Competência'; // Substitui o erro por um texto neutro ou deixe vazio ''
+                    acaoMacroLimpa = 'Ação da Competência'; 
                 }
 
-                let tr = document.createElement('tr');
-                tr.className = 'border-b border-slate-100 hover:bg-slate-50 transition-colors';
+                let tr = document.createElement('tr'); tr.className = 'border-b border-slate-100 hover:bg-slate-50 transition-colors';
                 tr.innerHTML = `
                     <td class="py-4 px-4 font-bold text-slate-800">${row.municipio} <br><span class="text-[10px] text-slate-400 font-normal uppercase tracking-widest">${row.uf}</span></td>
                     <td class="py-4 px-4"><span class="bg-slate-200 text-slate-700 px-2 py-1 rounded text-[10px] font-bold tracking-widest uppercase">${row.frente}</span></td>
@@ -2316,6 +2413,25 @@
                 type: 'doughnut', data: { labels: ['Concluídas', 'Em Andamento', 'Não Iniciadas', 'Atrasadas'], datasets: [{ data: [0, 0, 0, 0], backgroundColor: ['#10B981', '#3B82F6', '#94A3B8', '#EF4444'], borderWidth: 2, borderColor: '#ffffff' }] },
                 options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'bottom', labels: { font: {family: 'Inter', size: 10} } }, datalabels: { display: true, color: '#fff', font: {weight: 'bold', size: 14}, formatter: (val) => val > 0 ? val : '' } } }
             });
+			
+			// GRÁFICO VISÃO GERAL: Top 10 Foco Estratégico (Competências Globais)
+            chartInstances.planosCompetencias = new Chart(document.getElementById('chartPlanosCompetencias'), {
+                type: 'bar', 
+                data: { labels: [], datasets: [{ label: 'Tarefas Mapeadas', data: [], backgroundColor: '#3B82F6', borderRadius: 4 }] },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false, 
+                    indexAxis: 'y', // Barras horizontais para facilitar a leitura
+                    scales: { 
+                        x: { beginAtZero: true, grid: {borderDash: [4,4]}, ticks: { precision: 0 } }, 
+                        y: { grid: {display: false}, ticks: {font: {size: 10, family: 'Inter'}} } 
+                    }, 
+                    plugins: { 
+                        legend: { display: false }, 
+                        datalabels: { display: true, anchor: 'end', align: 'right', color: '#475569', font: {weight: 'bold', size: 10} } 
+                    } 
+                }
+            });
 
             // GRÁFICO TERRITÓRIO: Engajamento Municípios
             chartInstances.planosEngajamento = new Chart(document.getElementById('chartPlanosEngajamento'), {
@@ -2329,22 +2445,34 @@
                 options: { responsive: true, maintainAspectRatio: false, cutout: '65%', plugins: { legend: { position: 'bottom', labels: { font: {family: 'Inter', size: 11} } }, datalabels: { display: true, color: '#fff', font: {weight: 'bold', size: 14}, formatter: (val) => val > 0 ? val : '' } } }
             });
 
-            // GRÁFICO ESFORÇO: Radar Competências
-            chartInstances.planosRadar = new Chart(document.getElementById('chartPlanosRadar'), {
-                type: 'polarArea', data: { labels: [], datasets: [{ data: [], backgroundColor: ['rgba(0,139,69,0.7)', 'rgba(30,58,138,0.7)', 'rgba(232,93,4,0.7)', 'rgba(245,158,11,0.7)', 'rgba(16,185,129,0.7)'] }] },
-                options: { responsive: true, maintainAspectRatio: false, scales: { r: { ticks: {display: false} } }, plugins: { legend: { position: 'right', labels: {font: {size: 10, family: 'Inter'}} }, datalabels: { display: true, color: '#fff', font: {weight: 'bold'} } } }
+            // GRÁFICOS DE COMPETÊNCIAS EM AÇÃO (GEDU e MOB separados)
+            const commonCompOptions = { responsive: true, maintainAspectRatio: false, indexAxis: 'y', scales: { x: { beginAtZero: true, grid: {borderDash: [4,4]}, ticks: { precision: 0 } }, y: { grid: {display: false}, ticks: {font: {size: 10, family: 'Inter'}} } }, plugins: { legend: { display: false }, datalabels: { display: true, anchor: 'end', align: 'right', color: '#475569', font: {weight: 'bold', size: 10} } } };
+            
+            chartInstances.planosCompGedu = new Chart(document.getElementById('chartPlanosCompGedu'), {
+                type: 'bar', data: { labels: [], datasets: [{ label: 'Tarefas GEDU', data: [], backgroundColor: '#1e3a8a', borderRadius: 4 }] },
+                options: commonCompOptions
+            });
+
+            chartInstances.planosCompMob = new Chart(document.getElementById('chartPlanosCompMob'), {
+                type: 'bar', data: { labels: [], datasets: [{ label: 'Tarefas MOB', data: [], backgroundColor: '#E85D04', borderRadius: 4 }] },
+                options: commonCompOptions
             });
             
-            // GRÁFICO CRONOGRAMA: Termômetro Mensal (Stacked)
+            // GRÁFICO CRONOGRAMA: Curva Suave (Line/Area Chart)
             chartInstances.planosCronograma = new Chart(document.getElementById('chartPlanosCronograma'), {
-                type: 'bar', data: { labels: [], datasets: [] },
+                type: 'line', data: { labels: [], datasets: [] },
                 options: { 
                     responsive: true, maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false }, // Mostra os dois dados quando passa o rato
                     scales: { 
-                        x: { stacked: true, grid: {display: false}, ticks: {font: {weight: 'bold', family: 'Inter'}} },
-                        y: { stacked: true, beginAtZero: true, grid: {borderDash: [4,4]}, title: {display: true, text: 'Nº de Tarefas'}, ticks: { precision: 0 } }
+                        x: { grid: {display: false}, ticks: {font: {weight: 'bold', family: 'Inter'}} },
+                        y: { beginAtZero: true, grid: {borderDash: [4,4]}, ticks: { precision: 0 } }
                     },
-                    plugins: { legend: { position: 'top' }, datalabels: { display: true, color: '#fff', font: {weight: 'bold', size: 10}, formatter: (val) => val > 0 ? val : '' } } 
+                    plugins: { 
+                        legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8, font: {family: 'Inter', weight: 'bold'} } }, 
+                        datalabels: { display: false }, // Desliga os rótulos poluentes neste gráfico
+                        tooltip: { backgroundColor: 'rgba(30, 41, 59, 0.9)', titleFont: {size: 13}, padding: 12 }
+                    } 
                 }
             });
             
@@ -2431,7 +2559,7 @@
                 chartInstances.dist.data.datasets = datasets;
                 chartInstances.dist.update();
             } catch(e) {}
-
+			
 			// ATUALIZA O TERMÔMETRO DE METAS (Visão Executiva)
             try {
                 let countAlta = 0;
