@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PVE Gestão — Acesso</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pve: {
+                            green: '#008B45', greenDark: '#006834', greenLight: '#E6F4EA',
+                            orange: '#E85D04', red: '#C8102E', blueDark: '#1e3a8a',
+                            blueDarker: '#172554', yellow: '#FBBF24'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; }
+
+        body {
+            min-height: 100vh;
+            background-color: #0f172a;
+            background-image:
+                radial-gradient(ellipse 80% 50% at 20% 20%, rgba(0, 139, 69, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 80%, rgba(30, 58, 138, 0.2) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 60% at 50% 50%, rgba(232, 93, 4, 0.05) 0%, transparent 70%);
+        }
+
+        /* Grid sutil no fundo */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .card-inner {
+            background: #ffffff;
+            border-radius: 1rem;
+        }
+
+        /* Input focus */
+        .input-field:focus {
+            border-color: #008B45;
+            box-shadow: 0 0 0 3px rgba(0, 139, 69, 0.12);
+            outline: none;
+        }
+
+        /* Botão pulse no loading */
+        @keyframes pulse-green {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(0,139,69,0.4); }
+            50% { box-shadow: 0 0 0 8px rgba(0,139,69,0); }
+        }
+        .btn-loading { animation: pulse-green 1.2s ease-in-out infinite; }
+
+        /* Spinner */
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .spin { animation: spin 0.8s linear infinite; display: inline-block; }
+
+        /* Fade in */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-up { animation: fadeUp 0.5s ease-out forwards; }
+
+        /* Toast */
+        #toast {
+            transition: all 0.3s ease;
+            transform: translateY(-20px);
+            opacity: 0;
+            pointer-events: none;
+        }
+        #toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Tabs */
+        .tab-btn { transition: all 0.2s ease; }
+        .tab-btn.active {
+            background: #008B45;
+            color: white;
+            box-shadow: 0 2px 8px rgba(0,139,69,0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 relative z-10">
+
+    <div id="toast" class="fixed top-4 right-4 z-50 max-w-sm w-full">
+        <div id="toastInner" class="flex items-start gap-3 px-4 py-3 rounded-xl shadow-lg border text-sm font-medium">
+            <i id="toastIcon" class="text-lg mt-0.5 flex-shrink-0"></i>
+            <span id="toastText"></span>
+        </div>
+    </div>
+
+    <div class="w-full max-w-md relative z-10 fade-up">
+
+        <div class="text-center mb-6">
+            <div class="inline-flex items-center justify-center w-full mb-3">
+                <div class="bg-white rounded-xl px-6 py-3 shadow-lg border border-white/20 inline-block">
+                    <img src="https://raw.githubusercontent.com/robsonsincroniza/PVE_painel-v1/main/image%20(31).png"
+                         alt="Logo PVE"
+                         class="h-10 object-contain"
+                         onerror="this.style.display='none'; document.getElementById('logoFallback').classList.remove('hidden');">
+                    <span id="logoFallback" class="hidden text-pve-blueDark font-black text-2xl tracking-widest flex items-center">
+                        <i class="ph-fill ph-graduation-cap mr-2 text-pve-green"></i> PVE
+                    </span>
+                </div>
+            </div>
+            <h1 class="text-white font-bold text-xl tracking-tight">PVE Gestão</h1>
+            <p class="text-slate-400 text-sm mt-1">Painel Estratégico · Acesso Restrito</p>
+        </div>
+
+        <div class="card-inner shadow-2xl overflow-hidden">
+
+            <div class="bg-pve-blueDark px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i class="ph-fill ph-shield-check text-pve-yellow text-xl"></i>
+                    <span class="text-white text-sm font-bold tracking-wide">Ambiente Seguro</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <div class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
+                    <span class="text-emerald-300 text-[10px] font-bold uppercase tracking-widest">Conexão Ativa</span>
+                </div>
+            </div>
+
+            <div class="flex p-4 gap-2 bg-slate-50 border-b border-slate-100">
+                <button id="tabLogin" onclick="showTab('login')"
+                    class="tab-btn active flex-1 py-2 rounded-lg text-sm font-bold text-slate-600 flex items-center justify-center gap-1.5">
+                    <i class="ph-bold ph-sign-in text-base"></i> Entrar
+                </button>
+                <button id="tabReset" onclick="showTab('reset')"
+                    class="tab-btn flex-1 py-2 rounded-lg text-sm font-bold text-slate-400 flex items-center justify-center gap-1.5">
+                    <i class="ph-bold ph-key text-base"></i> Redefinir Senha
+                </button>
+            </div>
+
+            <div id="panelLogin" class="p-6">
+                <p class="text-slate-500 text-xs mb-5 text-center">
+                    Use as credenciais fornecidas para acessar o painel.
+                </p>
+
+                <div id="loginError" class="hidden mb-4 bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-sm flex items-start gap-2">
+                    <i class="ph-bold ph-warning-circle text-lg mt-0.5 flex-shrink-0"></i>
+                    <span id="loginErrorText">Credenciais inválidas.</span>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-widest mb-1.5">
+                            E-mail Corporativo
+                        </label>
+                        <div class="relative">
+                            <i class="ph-bold ph-envelope absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-base pointer-events-none"></i>
+                            <input type="email" id="loginEmail" autocomplete="email" required
+                                class="input-field w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 transition"
+                                placeholder="seu@email.com.br">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <label class="block text-xs font-bold text-slate-600 uppercase tracking-widest">
+                                Senha
+                            </label>
+                            <button type="button" onclick="showTab('reset')"
+                                class="text-xs font-bold text-pve-blueDark hover:text-pve-green transition-colors">
+                                Esqueceu a senha?
+                            </button>
+                        </div>
+                        <div class="relative">
+                            <i class="ph-bold ph-lock-key absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-base pointer-events-none"></i>
+                            <input type="password" id="loginPassword" autocomplete="current-password" required
+                                class="input-field w-full pl-10 pr-12 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 transition"
+                                placeholder="••••••••••"
+                                onkeydown="if(event.key==='Enter') doLogin()">
+                            <button type="button" onclick="togglePassword('loginPassword','eyeIconLogin')"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-pve-blueDark transition-colors focus:outline-none p-1"
+                                title="Mostrar/ocultar senha">
+                                <i id="eyeIconLogin" class="ph-bold ph-eye text-lg pointer-events-none"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <label class="flex items-center gap-2 cursor-pointer select-none">
+                        <input type="checkbox" id="rememberMe" class="w-4 h-4 rounded accent-pve-green cursor-pointer">
+                        <span class="text-sm text-slate-600">Manter conectado neste dispositivo</span>
+                    </label>
+
+                    <button id="btnLogin" onclick="doLogin()"
+                        class="w-full bg-pve-green hover:bg-pve-greenDark text-white font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg mt-2">
+                        <span id="btnLoginText">Acessar Painel</span>
+                        <i id="btnLoginIcon" class="ph-bold ph-arrow-right text-lg pointer-events-none"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="panelReset" class="p-6 hidden">
+                <div id="resetStep1">
+                    <div class="flex items-center gap-3 mb-5">
+                        <div class="w-10 h-10 rounded-full bg-pve-greenLight flex items-center justify-center flex-shrink-0">
+                            <i class="ph-fill ph-key text-pve-greenDark text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-slate-800 text-sm">Redefinir Senha</h3>
+                            <p class="text-xs text-slate-500">Informe o e-mail cadastrado e enviaremos um link seguro.</p>
+                        </div>
+                    </div>
+
+                    <div id="resetError" class="hidden mb-4 bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-sm flex items-start gap-2">
+                        <i class="ph-bold ph-warning-circle text-lg mt-0.5 flex-shrink-0"></i>
+                        <span id="resetErrorText">E-mail não encontrado.</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 uppercase tracking-widest mb-1.5">
+                                E-mail Cadastrado
+                            </label>
+                            <div class="relative">
+                                <i class="ph-bold ph-envelope absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-base pointer-events-none"></i>
+                                <input type="email" id="resetEmail" autocomplete="email"
+                                    class="input-field w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 transition"
+                                    placeholder="seu@email.com.br"
+                                    onkeydown="if(event.key==='Enter') doResetPassword()">
+                            </div>
+                        </div>
+                        <button id="btnReset" onclick="doResetPassword()"
+                            class="w-full bg-pve-blueDark hover:bg-pve-blueDarker text-white font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md">
+                            <span id="btnResetText">Enviar Link de Redefinição</span>
+                            <i id="btnResetIcon" class="ph-bold ph-paper-plane-right text-lg pointer-events-none"></i>
+                        </button>
+                        <button onclick="showTab('login')" class="w-full text-center text-sm text-slate-500 hover:text-pve-blueDark transition-colors font-medium py-2">
+                            ← Voltar para o login
+                        </button>
+                    </div>
+                </div>
+
+                <div id="resetStep2" class="hidden text-center py-4">
+                    <div class="w-16 h-16 bg-pve-greenLight rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="ph-fill ph-check-circle text-pve-greenDark text-4xl"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-lg mb-2">E-mail enviado!</h3>
+                    <p class="text-sm text-slate-500 mb-2">Verifique sua caixa de entrada em <strong id="sentToEmail" class="text-pve-blueDark"></strong></p>
+                    <p class="text-xs text-slate-400 mb-6 leading-relaxed">O link é válido por <strong>60 minutos</strong>. Se não encontrar o e-mail, verifique a pasta de spam.</p>
+                    <button onclick="showTab('login')"
+                        class="w-full bg-pve-green text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 hover:bg-pve-greenDark transition">
+                        <i class="ph-bold ph-sign-in"></i> Voltar ao Login
+                    </button>
+                </div>
+            </div>
+
+            <div id="panelNewPassword" class="p-6 hidden">
+                <div class="flex items-center gap-3 mb-5">
+                    <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
+                        <i class="ph-fill ph-lock-key-open text-amber-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-sm">Criar Nova Senha</h3>
+                        <p class="text-xs text-slate-500">Escolha uma senha forte de no mínimo 8 caracteres.</p>
+                    </div>
+                </div>
+
+                <div id="newPassError" class="hidden mb-4 bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-sm flex items-start gap-2">
+                    <i class="ph-bold ph-warning-circle text-lg mt-0.5 flex-shrink-0"></i>
+                    <span id="newPassErrorText">As senhas não coincidem.</span>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-widest mb-1.5">Nova Senha</label>
+                        <div class="relative">
+                            <i class="ph-bold ph-lock-key absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-base pointer-events-none"></i>
+                            <input type="password" id="newPassword"
+                                class="input-field w-full pl-10 pr-12 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 transition"
+                                placeholder="Mínimo 8 caracteres"
+                                oninput="checkPasswordStrength()">
+                            <button type="button" onclick="togglePassword('newPassword','eyeNewPass')"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-pve-blueDark transition-colors focus:outline-none p-1">
+                                <i id="eyeNewPass" class="ph-bold ph-eye text-lg pointer-events-none"></i>
+                            </button>
+                        </div>
+                        <div class="mt-2 flex gap-1">
+                            <div id="str1" class="h-1 flex-1 rounded-full bg-slate-200 transition-colors"></div>
+                            <div id="str2" class="h-1 flex-1 rounded-full bg-slate-200 transition-colors"></div>
+                            <div id="str3" class="h-1 flex-1 rounded-full bg-slate-200 transition-colors"></div>
+                            <div id="str4" class="h-1 flex-1 rounded-full bg-slate-200 transition-colors"></div>
+                        </div>
+                        <p id="strLabel" class="text-[10px] text-slate-400 mt-1"></p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 uppercase tracking-widest mb-1.5">Confirmar Nova Senha</label>
+                        <div class="relative">
+                            <i class="ph-bold ph-lock-key absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-base pointer-events-none"></i>
+                            <input type="password" id="confirmPassword"
+                                class="input-field w-full pl-10 pr-12 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-800 transition"
+                                placeholder="Repita a nova senha"
+                                onkeydown="if(event.key==='Enter') doUpdatePassword()">
+                            <button type="button" onclick="togglePassword('confirmPassword','eyeConfirm')"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-pve-blueDark transition-colors focus:outline-none p-1">
+                                <i id="eyeConfirm" class="ph-bold ph-eye text-lg pointer-events-none"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <button id="btnNewPass" onclick="doUpdatePassword()"
+                        class="w-full bg-pve-green hover:bg-pve-greenDark text-white font-bold py-3 px-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md">
+                        <span id="btnNewPassText">Salvar Nova Senha</span>
+                        <i id="btnNewPassIcon" class="ph-bold ph-check text-lg pointer-events-none"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 border-t border-slate-100 px-6 py-3 flex items-center justify-between">
+                <span class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">PVE © 2024</span>
+                <div class="flex items-center gap-1.5">
+                    <i class="ph-fill ph-lock-simple text-slate-300 text-xs"></i>
+                    <span class="text-[10px] text-slate-400">Dados criptografados</span>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-center text-slate-600 text-xs mt-4">
+            <i class="ph-fill ph-info text-slate-500 mr-1"></i>
+            Acesso exclusivo à equipe do programa PVE
+        </p>
+    </div>
+
+    <script>
+    // ==================== CONFIGURAÇÃO SUPABASE ====================
+    const SUPABASE_URL = 'https://yzkbseflilacfkdmuwrc.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl6a2JzZWZsaWxhY2ZrZG11d3JjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3MTIyODAsImV4cCI6MjA5MDI4ODI4MH0.FOjS83TrgSjTRb8puu-qLwJcvL5x7Xrt7p5Fy3oLiWQ';
+    const PAINEL_URL = 'https://robsonsincroniza.github.io/PVE_painel-v1/'; // Altere para o nome exato do arquivo do seu painel
+
+    const { createClient } = window.supabase;
+    const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // ==================== INICIALIZAÇÃO ====================
+    window.addEventListener('DOMContentLoaded', async () => {
+        const hash = window.location.hash;
+        const params = new URLSearchParams(hash.replace('#', '?'));
+        const type = params.get('type');
+        const accessToken = params.get('access_token');
+
+        if (type === 'recovery' && accessToken) {
+            await sb.auth.setSession({ access_token: accessToken, refresh_token: params.get('refresh_token') || '' });
+            showPanel('panelNewPassword');
+            hideTabs();
+            return;
+        }
+
+        const { data: { session } } = await sb.auth.getSession();
+        if (session) {
+            redirectToPainel();
+            return;
+        }
+
+        const savedEmail = localStorage.getItem('pve_saved_email');
+        if (savedEmail) {
+            document.getElementById('loginEmail').value = savedEmail;
+            document.getElementById('rememberMe').checked = true;
+        }
+    });
+
+    // ==================== TABS ====================
+    function showTab(tab) {
+        const isLogin = tab === 'login';
+        document.getElementById('panelLogin').classList.toggle('hidden', !isLogin);
+        document.getElementById('panelReset').classList.toggle('hidden', isLogin);
+        document.getElementById('tabLogin').classList.toggle('active', isLogin);
+        document.getElementById('tabReset').classList.toggle('active', !isLogin);
+        if (!isLogin) {
+            document.getElementById('resetStep1').classList.remove('hidden');
+            document.getElementById('resetStep2').classList.add('hidden');
+        }
+    }
+
+    function showPanel(panelId) {
+        ['panelLogin','panelReset','panelNewPassword'].forEach(id => {
+            document.getElementById(id).classList.add('hidden');
+        });
+        document.getElementById(panelId).classList.remove('hidden');
+    }
+
+    function hideTabs() {
+        document.querySelector('.flex.p-4.gap-2').classList.add('hidden');
+    }
+
+    // ==================== LOGIN ====================
+    async function doLogin() {
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        const remember = document.getElementById('rememberMe').checked;
+
+        if (!email || !password) {
+            showLoginError('Preencha e-mail e senha para continuar.');
+            return;
+        }
+
+        setButtonLoading('btnLogin', 'btnLoginText', 'btnLoginIcon', true, 'Autenticando...');
+        hideLoginError();
+
+        try {
+            const { data, error } = await sb.auth.signInWithPassword({ email, password });
+
+            if (error) {
+                const msgs = {
+                    'Invalid login credentials': 'E-mail ou senha incorretos. Verifique suas credenciais.',
+                    'Email not confirmed': 'Seu e-mail ainda não foi confirmado.',
+                    'Too many requests': 'Muitas tentativas. Aguarde alguns minutos.',
+                };
+                showLoginError(msgs[error.message] || 'Erro ao conectar: ' + error.message);
+                setButtonLoading('btnLogin', 'btnLoginText', 'btnLoginIcon', false, 'Acessar Painel', 'ph-arrow-right');
+            } else {
+                if (remember) localStorage.setItem('pve_saved_email', email);
+                else localStorage.removeItem('pve_saved_email');
+
+                setButtonSuccess('btnLogin', 'btnLoginText', 'btnLoginIcon', 'Acesso Liberado!', 'ph-check-circle');
+                showToast('success', 'Bem-vindo(a) ao PVE Gestão! Carregando painel...');
+                setTimeout(redirectToPainel, 1200);
+            }
+        } catch (err) {
+            showLoginError('Erro inesperado. Verifique sua conexão.');
+            setButtonLoading('btnLogin', 'btnLoginText', 'btnLoginIcon', false, 'Acessar Painel', 'ph-arrow-right');
+        }
+    }
+
+    // ==================== RESET DE SENHA ====================
+    async function doResetPassword() {
+        const email = document.getElementById('resetEmail').value.trim();
+        if (!email) {
+            showResetError('Informe seu e-mail para receber o link.');
+            return;
+        }
+
+        setButtonLoading('btnReset', 'btnResetText', 'btnResetIcon', true, 'Enviando...');
+        document.getElementById('resetError').classList.add('hidden');
+
+        try {
+            const redirectTo = window.location.href.split('#')[0];
+            const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo });
+
+            if (error) {
+                showResetError('Erro ao enviar: ' + error.message);
+                setButtonLoading('btnReset', 'btnResetText', 'btnResetIcon', false, 'Enviar Link de Redefinição', 'ph-paper-plane-right');
+            } else {
+                document.getElementById('sentToEmail').textContent = email;
+                document.getElementById('resetStep1').classList.add('hidden');
+                document.getElementById('resetStep2').classList.remove('hidden');
+                showToast('success', 'Link enviado! Verifique seu e-mail.');
+            }
+        } catch (err) {
+            showResetError('Erro inesperado. Verifique sua conexão.');
+            setButtonLoading('btnReset', 'btnResetText', 'btnResetIcon', false, 'Enviar Link de Redefinição', 'ph-paper-plane-right');
+        }
+    }
+
+    // ==================== ATUALIZAR SENHA ====================
+    async function doUpdatePassword() {
+        const newPass = document.getElementById('newPassword').value;
+        const confirm = document.getElementById('confirmPassword').value;
+
+        if (!newPass || newPass.length < 8) {
+            showNewPassError('A senha deve ter no mínimo 8 caracteres.');
+            return;
+        }
+        if (newPass !== confirm) {
+            showNewPassError('As senhas não coincidem. Verifique e tente novamente.');
+            return;
+        }
+
+        setButtonLoading('btnNewPass', 'btnNewPassText', 'btnNewPassIcon', true, 'Salvando...');
+        document.getElementById('newPassError').classList.add('hidden');
+
+        try {
+            const { error } = await sb.auth.updateUser({ password: newPass });
+            if (error) {
+                showNewPassError('Erro ao atualizar: ' + error.message);
+                setButtonLoading('btnNewPass', 'btnNewPassText', 'btnNewPassIcon', false, 'Salvar Nova Senha', 'ph-check');
+            } else {
+                setButtonSuccess('btnNewPass', 'btnNewPassText', 'btnNewPassIcon', 'Senha Atualizada!', 'ph-check-circle');
+                showToast('success', 'Senha redefinida com sucesso! Redirecionando...');
+                setTimeout(redirectToPainel, 1500);
+            }
+        } catch (err) {
+            showNewPassError('Erro inesperado. Tente novamente.');
+            setButtonLoading('btnNewPass', 'btnNewPassText', 'btnNewPassIcon', false, 'Salvar Nova Senha', 'ph-check');
+        }
+    }
+
+    // ==================== FORÇA DA SENHA ====================
+    function checkPasswordStrength() {
+        const p = document.getElementById('newPassword').value;
+        const bars = ['str1','str2','str3','str4'];
+        const labels = ['','Fraca','Regular','Boa','Forte'];
+        const colors = ['','bg-red-400','bg-amber-400','bg-yellow-400','bg-pve-green'];
+
+        let strength = 0;
+        if (p.length >= 8) strength++;
+        if (/[A-Z]/.test(p)) strength++;
+        if (/[0-9]/.test(p)) strength++;
+        if (/[^A-Za-z0-9]/.test(p)) strength++;
+
+        bars.forEach((id, i) => {
+            const el = document.getElementById(id);
+            el.className = `h-1 flex-1 rounded-full transition-colors ${i < strength ? colors[strength] : 'bg-slate-200'}`;
+        });
+        document.getElementById('strLabel').textContent = p.length > 0 ? `Força: ${labels[strength] || 'Muito fraca'}` : '';
+    }
+
+    // ==================== UTILITÁRIOS ====================
+    function togglePassword(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        const isPass = input.type === 'password';
+        input.type = isPass ? 'text' : 'password';
+        icon.className = `ph-bold ${isPass ? 'ph-eye-slash text-pve-green' : 'ph-eye'} text-lg pointer-events-none`;
+    }
+
+    function redirectToPainel() {
+        window.location.href = PAINEL_URL;
+    }
+
+    function showLoginError(msg) {
+        document.getElementById('loginErrorText').textContent = msg;
+        document.getElementById('loginError').classList.remove('hidden');
+    }
+    function hideLoginError() {
+        document.getElementById('loginError').classList.add('hidden');
+    }
+    function showResetError(msg) {
+        document.getElementById('resetErrorText').textContent = msg;
+        document.getElementById('resetError').classList.remove('hidden');
+    }
+    function showNewPassError(msg) {
+        document.getElementById('newPassErrorText').textContent = msg;
+        document.getElementById('newPassError').classList.remove('hidden');
+    }
+
+    function setButtonLoading(btnId, textId, iconId, loading, text, iconClass = '') {
+        const btn = document.getElementById(btnId);
+        document.getElementById(textId).textContent = text;
+        if (loading) {
+            document.getElementById(iconId).className = 'spin text-lg pointer-events-none';
+            document.getElementById(iconId).innerHTML = '↻';
+            btn.disabled = true;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+        } else {
+            document.getElementById(iconId).innerHTML = '';
+            document.getElementById(iconId).className = `ph-bold ${iconClass} text-lg pointer-events-none`;
+            btn.disabled = false;
+            btn.classList.remove('opacity-75', 'cursor-not-allowed');
+        }
+    }
+
+    function setButtonSuccess(btnId, textId, iconId, text, iconClass) {
+        const btn = document.getElementById(btnId);
+        btn.className = btn.className.replace('bg-pve-green', 'bg-emerald-500').replace('bg-pve-blueDark','bg-emerald-500');
+        document.getElementById(textId).textContent = text;
+        document.getElementById(iconId).innerHTML = '';
+        document.getElementById(iconId).className = `ph-bold ${iconClass} text-lg pointer-events-none`;
+        btn.disabled = true;
+    }
+
+    function showToast(type, message) {
+        const toast = document.getElementById('toast');
+        const inner = document.getElementById('toastInner');
+        const icon = document.getElementById('toastIcon');
+        const text = document.getElementById('toastText');
+
+        const styles = {
+            success: { bg: 'bg-emerald-50 border-emerald-200 text-emerald-800', icon: 'ph-fill ph-check-circle text-emerald-500' },
+            error: { bg: 'bg-rose-50 border-rose-200 text-rose-800', icon: 'ph-fill ph-warning-circle text-rose-500' },
+            info: { bg: 'bg-blue-50 border-blue-200 text-blue-800', icon: 'ph-fill ph-info text-blue-500' }
+        };
+
+        const s = styles[type] || styles.info;
+        inner.className = `flex items-start gap-3 px-4 py-3 rounded-xl shadow-lg border text-sm font-medium ${s.bg}`;
+        icon.className = `${s.icon} text-lg mt-0.5 flex-shrink-0`;
+        text.textContent = message;
+
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+    </script>
+</body>
+</html>
