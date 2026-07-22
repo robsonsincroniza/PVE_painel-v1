@@ -2215,7 +2215,7 @@
             else lMun.innerText = munBoxes.length === 0 ? "Município: Nenhum" : `Municípios (${munBoxes.length})`;
         }
 
-        function applyFilters() {
+      function applyFilters() {
             let ufs = Array.from(document.querySelectorAll('.chk-estado')).filter(cb => cb.checked).map(cb => cb.value);
             let muns = Array.from(document.querySelectorAll('.chk-municipio')).filter(cb => cb.checked).map(cb => cb.value);
             
@@ -2227,8 +2227,18 @@
             });
 
             currentPlanos = dbPlanos.filter(row => {
-                let munPuro = row.municipio ? row.municipio.split('-')[0].trim() : "";
-                return (isTodosUf || ufs.includes(row.uf)) && (isTodosMun || muns.includes(munPuro) || muns.includes(row.municipio));
+                // 1. Limpa o nome removendo extensões indesejadas (.xlsx) se existirem no banco antigo
+                let nomeLimpo = row.municipio ? row.municipio.replace(/\.[^/.]+$/, "").trim() : "";
+                
+                // 2. Extrai apenas a cidade
+                let munPuro = nomeLimpo.split('-')[0].trim();
+                
+                let matchMun = (isTodosMun || muns.includes(munPuro) || muns.includes(nomeLimpo));
+                
+                // 3. Bypass de segurança: se a UF falhou no banco (N/A), o filtro confia apenas no nome da cidade
+                let matchUf = (isTodosUf || ufs.includes(row.uf) || (row.uf === 'N/A' && matchMun));
+                
+                return matchUf && matchMun;
             });
 
             updateKPIs(); 
@@ -2239,7 +2249,6 @@
             renderMetasUX(); 
             updatePlanosView(); 
             changeViewFrente(currentViewFrente);
-            
             updateEvolucaoView();
         }
 
