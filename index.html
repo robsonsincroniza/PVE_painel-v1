@@ -2215,7 +2215,7 @@
             else lMun.innerText = munBoxes.length === 0 ? "Município: Nenhum" : `Municípios (${munBoxes.length})`;
         }
 
-      function applyFilters() {
+     function applyFilters() {
             let ufs = Array.from(document.querySelectorAll('.chk-estado')).filter(cb => cb.checked).map(cb => cb.value);
             let muns = Array.from(document.querySelectorAll('.chk-municipio')).filter(cb => cb.checked).map(cb => cb.value);
             
@@ -2226,16 +2226,15 @@
                 return (isTodosUf || ufs.includes(row.uf)) && (isTodosMun || muns.includes(row.municipio));
             });
 
+            // 🔥 CORREÇÃO: Cria uma lista de municípios toda em minúsculas e sem acentos
+            let munsNormalizados = muns.map(m => normalizeMunName(m));
+
             currentPlanos = dbPlanos.filter(row => {
-                // 1. Limpa o nome removendo extensões indesejadas (.xlsx) se existirem no banco antigo
-                let nomeLimpo = row.municipio ? row.municipio.replace(/\.[^/.]+$/, "").trim() : "";
+                // 🔥 CORREÇÃO: Transforma o nome que vem do banco (ex: "Encruzilhada Do Sul - RS") para o padrão minúsculo
+                let munPuroNormalizado = normalizeMunName(row.municipio);
                 
-                // 2. Extrai apenas a cidade
-                let munPuro = nomeLimpo.split('-')[0].trim();
-                
-                let matchMun = (isTodosMun || muns.includes(munPuro) || muns.includes(nomeLimpo));
-                
-                // 3. Bypass de segurança: se a UF falhou no banco (N/A), o filtro confia apenas no nome da cidade
+                // Agora o JavaScript compara "encruzilhada do sul" com "encruzilhada do sul" (Match Perfeito!)
+                let matchMun = (isTodosMun || munsNormalizados.includes(munPuroNormalizado));
                 let matchUf = (isTodosUf || ufs.includes(row.uf) || (row.uf === 'N/A' && matchMun));
                 
                 return matchUf && matchMun;
