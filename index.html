@@ -2154,32 +2154,50 @@
             }
         });
 
-        async function loadData() {
-            try {
-                const [resAvaliacoes, resPlanos, resAvaliacoes2024] = await Promise.all([
-                    supabaseClient.from('avaliacoes_pve').select('*'),
-                    supabaseClient.from('planos_acao_pve').select('*').limit(100000),
-                    supabaseClient.from('avaliacoes_pve_2024').select('*')
-                ]);
+       async function loadData() {
+    try {
+        const [resAvaliacoes, resPlanos, resAvaliacoes2024] = await Promise.all([
+            supabaseClient.from('avaliacoes_pve').select('*'),
+            supabaseClient.from('planos_acao_pve').select('*').limit(100000),
+            supabaseClient.from('avaliacoes_pve_2024').select('*')
+        ]);
 
-                dbData = resAvaliacoes.data || [];
-                currentData = [...dbData];
+        dbData = resAvaliacoes.data || [];
 
-                dbPlanos = resPlanos.data || [];
-                currentPlanos = [...dbPlanos];
-
-                dbData2024 = resAvaliacoes2024.data || []; 
-
-                renderMultiSelects(); 
-                initCharts();
-                currentViewFrente = 'mob';
-                
-                applyFilters();       
-                switchPage('page-visao');
-            } catch (error) { 
-                console.error("Erro fatal ao carregar o painel:", error);
+        // --- INÍCIO DA INJEÇÃO DOS NOVOS MUNICÍPIOS ---
+        const novosMuns = [
+            { municipio: 'São Miguel Arcanjo', uf: 'SP' },
+            { municipio: 'Jarinu', uf: 'SP' },
+            { municipio: 'Jacupiranga', uf: 'SP' },
+            { municipio: 'Limoeiro', uf: 'PE' },
+            { municipio: 'Palmares', uf: 'PE' }
+        ];
+        
+        novosMuns.forEach(nm => {
+            // Adiciona no filtro apenas se ele ainda não estiver vindo do banco
+            if (!dbData.find(d => d.municipio === nm.municipio)) {
+                dbData.push({ municipio: nm.municipio, uf: nm.uf, geral: 0, gedu: 0, gesc: 0, mob: 0 }); 
             }
-        }
+        });
+        // --- FIM DA INJEÇÃO ---
+
+        currentData = [...dbData];
+
+        dbPlanos = resPlanos.data || [];
+        currentPlanos = [...dbPlanos];
+
+        dbData2024 = resAvaliacoes2024.data || []; 
+
+        renderMultiSelects(); 
+        initCharts();
+        currentViewFrente = 'mob';
+
+        applyFilters();       
+        switchPage('page-visao');
+    } catch (error) { 
+        console.error("Erro fatal ao carregar o painel:", error);
+    }
+}
 
         function renderMultiSelects() {
             const listEst = document.getElementById('listEstados');
