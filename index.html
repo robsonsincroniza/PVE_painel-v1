@@ -218,22 +218,37 @@
                     <h2 class="text-2xl font-bold text-slate-900">Resultados e Maturidade Geral</h2>
                     <p class="mt-1 text-slate-600">Acompanhamento do impacto, esforço da rede e atingimento de metas do PVE.</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-gradient-to-br from-pve-orange to-pve-red rounded-xl shadow-md p-6 text-white flex flex-col justify-center relative overflow-hidden">
-                        <i class="ph-fill ph-student absolute -right-4 -top-4 text-7xl text-white opacity-10"></i>
-                        <span class="text-orange-200 text-xs font-bold uppercase tracking-wider">Métrica de Impacto Final</span>
-                        <span class="text-4xl font-black mt-2 mb-2">Ideb +</span>
-                        <p class="text-xs text-orange-100 mb-3 max-w-sm leading-relaxed">A elevação dos índices de aprendizagem e da qualidade do ensino é o objetivo central de todas as ações de gestão e mobilização do programa.</p>
-                        <span class="text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider bg-white/20 border border-white/30 inline-block w-max">Foco na Aprendizagem</span>
-                    </div>
-                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-center">
-                        <span class="text-slate-400 text-xs font-bold uppercase tracking-widest flex items-center">
-                            <i class="ph-fill ph-map-pin mr-2 text-pve-orange text-lg"></i> Municípios Analisados
-                        </span>
-                        <span id="kpiOpMun" class="text-5xl font-bold text-slate-800 mt-2">-</span>
-                        <p class="text-xs text-slate-500 mt-3 border-t border-slate-100 pt-3">Volume exato de territórios abrangidos pelo recorte de filtros atual no topo da página.</p>
-                    </div>
-                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="bg-gradient-to-br from-pve-orange to-pve-red rounded-xl shadow-md p-6 text-white flex flex-col justify-center relative overflow-hidden">
+        <i class="ph-fill ph-student absolute -right-4 -top-4 text-7xl text-white opacity-10"></i>
+        <span class="text-orange-200 text-xs font-bold uppercase tracking-wider">Métrica de Impacto Final</span>
+        <span class="text-4xl font-black mt-2 mb-2">Ideb +</span>
+        <p class="text-xs text-orange-100 mb-3 max-w-sm leading-relaxed">A elevação dos índices de aprendizagem e da qualidade do ensino é o objetivo central de todas as ações de gestão e mobilização do programa.</p>
+        <span class="text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider bg-white/20 border border-white/30 inline-block w-max">Foco na Aprendizagem</span>
+    </div>
+    
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-center">
+        <span class="text-slate-400 text-xs font-bold uppercase tracking-widest flex items-center">
+            <i class="ph-fill ph-map-pin mr-2 text-pve-orange text-lg"></i> Municípios Analisados
+        </span>
+        <span id="kpiOpMun" class="text-5xl font-bold text-slate-800 mt-2">-</span>
+        <p class="text-xs text-slate-500 mt-3 border-t border-slate-100 pt-3">Volume exato de territórios abrangidos pelo recorte de filtros atual no topo da página.</p>
+    </div>
+
+    <!-- NOVO CARD: Municípios Ingressantes -->
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-center">
+        <span class="text-slate-400 text-xs font-bold uppercase tracking-widest flex items-center mb-3 border-b border-slate-100 pb-2">
+            <i class="ph-fill ph-plus-circle mr-2 text-pve-green text-lg"></i> Novos Municípios (2025)
+        </span>
+        <ul class="text-sm font-semibold text-slate-700 space-y-1.5 mt-1">
+            <li class="flex items-center"><i class="ph-bold ph-caret-right text-pve-green mr-2 text-lg"></i> São Miguel Arcanjo/SP</li>
+            <li class="flex items-center"><i class="ph-bold ph-caret-right text-pve-green mr-2 text-lg"></i> Jarinu/SP</li>
+            <li class="flex items-center"><i class="ph-bold ph-caret-right text-pve-green mr-2 text-lg"></i> Jacupiranga/SP</li>
+            <li class="flex items-center"><i class="ph-bold ph-caret-right text-pve-green mr-2 text-lg"></i> Limoeiro/PE</li>
+            <li class="flex items-center"><i class="ph-bold ph-caret-right text-pve-green mr-2 text-lg"></i> Palmares/PE</li>
+        </ul>
+    </div>
+</div>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                     <div class="bg-white rounded-xl shadow-sm p-6 border border-slate-200 flex flex-col items-center justify-center hover:shadow-md transition">
                         <span class="text-slate-400 text-[11px] font-bold uppercase tracking-widest">Média Global PVE</span>
