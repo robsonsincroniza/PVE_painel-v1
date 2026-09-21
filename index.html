@@ -2293,11 +2293,14 @@
             if (frenteValue !== 'Todas') validTasks = validTasks.filter(row => row.frente === frenteValue);
 
             const totalTarefas = validTasks.length;
-            const munsComPlano = new Set(validTasks.map(t => t.municipio)).size;
-            const totalMunicipiosFiltro = new Set(currentData.map(d => d.municipio)).size || 1; 
+const munsComPlano = new Set(validTasks.map(t => t.municipio)).size;
 
-            let concluidas = 0, atrasadas = 0, emAndamento = 0, naoIniciadas = 0;
-            let aVencerCount = 0; let urgenciaCurto = 0; let urgenciaMedio = 0;
+// Se o filtro estiver em "Todos", a meta de adesão fica cravada em 32. 
+// Caso contrário, mostra o total de municípios filtrados no momento.
+const isTodosMun = document.getElementById('chkMunTodos').checked;
+const totalMunicipiosFiltro = isTodosMun ? 32 : (new Set(currentData.map(d => d.municipio)).size || 1); 
+
+let concluidas = 0, atrasadas = 0, emAndamento = 0, naoIniciadas = 0;
 
             const munCount = {}; const frenteCount = { 'GEDU': 0, 'MOB': 0 };
             const compCount = {}; const compCountGedu = {}; const compCountMob = {}; 
